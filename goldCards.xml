@@ -1,0 +1,20 @@
+<goldCards>
+    <objectGoldCard>
+        <frontCorner pos="1"/>
+        <frontCorner pos="2"/>
+        <frontCorner pos="3" obj="Quill"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <!-- ** -->
+        <kingdom>Fungi</kingdom>
+        <!-- * -->
+        <requirements>
+            <Fungi>2</Fungi>
+            <Animal>1</Animal>
+        </requirements>
+        <!-- simile a ** -->
+        <specialObject>Quill</specialObject>
+    </objectGoldCard>
+</goldCards>

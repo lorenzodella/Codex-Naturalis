@@ -1,0 +1,31 @@
+<starterCards>
+    <!-- prima carta -->
+    <starterCard>
+        <frontCorner pos="0"/>
+        <frontCorner pos="1" res="Plant"/>
+        <frontCorner pos="2" res="Insect"/>
+        <frontCorner pos="3"/>
+        <backCorner pos="0" res="Fungi"/>
+        <backCorner pos="1" res="Plant"/>
+        <backCorner pos="2" res="Insect"/>
+        <backCorner pos="3" res="Animal"/>
+        <!-- *** -->
+        <resources>
+            <Insect/>
+        </resources>
+    </starterCard>
+    <!-- seconda carta -->
+    <starterCard>
+        <frontCorner pos="0"/>
+        <frontCorner pos="1" res="Plant"/>
+        <frontCorner pos="2" res="Insect"/>
+        <frontCorner pos="3"/>
+        <backCorner pos="0" res="Fungi"/>
+        <backCorner pos="1" res="Plant"/>
+        <backCorner pos="2" res="Insect"/>
+        <backCorner pos="3" res="Animal"/>
+        <resources>
+            <Insect/>
+        </resources>
+    </starterCard>
+</starterCards>
