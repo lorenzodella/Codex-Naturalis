@@ -1,3 +1,5 @@
+package org.example.src.main.java;
+
 public class ResourceCard extends PlayableCard implements PointsProvider{
     private Kingdom kingdom;
     private int point;

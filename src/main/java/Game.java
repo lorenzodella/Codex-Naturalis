@@ -1,3 +1,6 @@
+package org.example.src.main.java;
+import java.util.*;
+
 public class Game {
     private List<Player>  players;
     private Deck resourceDeck;

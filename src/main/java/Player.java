@@ -1,3 +1,5 @@
+package org.example.src.main.java;
+
 public class Player {
     private int score;
     private String nickname;
