@@ -5,40 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f1718e31-e987-4e2f-8344-5ece8d6aa868" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/test/java/it/polimi/ingsw/AppTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/Card.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/ConfigurationFinder.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/Corner.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/CornerGoldCard.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/Deck.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/DiagonalConfigurationObjectiveCard.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/DynamicMatrix.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/Game.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/GoldCard.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/Kingdom.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/ObjectGoldCard.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/ObjectiveCard.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/PairOfObjectsObjectiveCard.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/PlayableCard.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/Player.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/PlayerStats.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/PlayerTable.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/PointsGoldCard.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/PointsProvider.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/ResourceCard.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/SpecialObject.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/StarterCard.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/TrioOfObjectsObjectiveCard.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/TrioOfResourcesObjectiveCard.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/VerticalConfigurationObjectiveCard.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/test/java/org/example/AppTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/it/polimi/ingsw/AppTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,23 +41,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "dev",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/matti/IdeaProjects/IS24-AM20",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;dev&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/matti/IdeaProjects/IS24-AM20&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-21.0.2-openjdk-21.0.2-4caba194b151-4f524021" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -98,10 +75,23 @@
       <updated>1710588335541</updated>
       <workItem from="1710588336653" duration="77000" />
       <workItem from="1710588602633" duration="973000" />
+      <workItem from="1710610961832" duration="24000" />
+      <workItem from="1710611152891" duration="141000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
