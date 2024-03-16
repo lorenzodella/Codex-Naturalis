@@ -1,4 +1,4 @@
 package it.polimi.ingsw;
 
-public class DynamicMatrix {
+public class DynamicMatrix<T> {
 }

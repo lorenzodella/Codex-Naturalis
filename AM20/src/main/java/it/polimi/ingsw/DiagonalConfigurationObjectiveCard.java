@@ -2,7 +2,7 @@ package it.polimi.ingsw;
 
 public class DiagonalConfigurationObjectiveCard extends ObjectiveCard implements ConfigurationFinder{
     private Kingdom kingdom;
-    private char direction;
+    private int coveredCorner;
 
     @Override
     public int findConfiguration(DynamicMatrix<PlayableCard> mat) {

@@ -5254,7 +5254,7 @@
 											"top": 549,
 											"width": 340.955078125,
 											"height": 13,
-											"text": "-direction: char",
+											"text": "-corner: int",
 											"horizontalAlignment": 0
 										},
 										{
@@ -5539,30 +5539,13 @@
 											"height": 13,
 											"text": "-corner: int",
 											"horizontalAlignment": 0
-										},
-										{
-											"_type": "UMLAttributeView",
-											"_id": "AAAAAAGOKOkuH5Yqnpk=",
-											"_parent": {
-												"$ref": "AAAAAAGOKN7/mpWoQfk="
-											},
-											"model": {
-												"$ref": "AAAAAAGOKOkuFJYnbPw="
-											},
-											"font": "Arial;13;0",
-											"left": 3133,
-											"top": 715,
-											"width": 340.955078125,
-											"height": 13,
-											"text": "-points: int",
-											"horizontalAlignment": 0
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 3128,
 									"top": 665,
 									"width": 350.955078125,
-									"height": 68
+									"height": 53
 								},
 								{
 									"_type": "UMLOperationCompartmentView",
@@ -5585,7 +5568,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 3133,
-											"top": 738,
+											"top": 723,
 											"width": 340.955078125,
 											"height": 13,
 											"text": "+computePoints(table: PlayerTable): int",
@@ -5602,7 +5585,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 3133,
-											"top": 753,
+											"top": 738,
 											"width": 340.955078125,
 											"height": 13,
 											"text": "+findConfiguration(mat: DinamicMatrix<PlayableCard>): int",
@@ -5611,7 +5594,7 @@
 									],
 									"font": "Arial;13;0",
 									"left": 3128,
-									"top": 733,
+									"top": 718,
 									"width": 350.955078125,
 									"height": 38
 								},
@@ -13342,9 +13325,9 @@
 							"_parent": {
 								"$ref": "AAAAAAGOKN66qJV2I2U="
 							},
-							"name": "direction",
+							"name": "corner",
 							"visibility": "private",
-							"type": "char"
+							"type": "int"
 						},
 						{
 							"_type": "UMLAttribute",
@@ -13498,16 +13481,6 @@
 								"$ref": "AAAAAAGOKN7/l5WgYyc="
 							},
 							"name": "corner",
-							"visibility": "private",
-							"type": "int"
-						},
-						{
-							"_type": "UMLAttribute",
-							"_id": "AAAAAAGOKOkuFJYnbPw=",
-							"_parent": {
-								"$ref": "AAAAAAGOKN7/l5WgYyc="
-							},
-							"name": "points",
 							"visibility": "private",
 							"type": "int"
 						}
