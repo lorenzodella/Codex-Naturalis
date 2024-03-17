@@ -43,4 +43,16 @@ public class Corner {
                     '}';
         else return "Empty corner";
     }
+
+    public boolean isHidden() {
+        return hidden;
+    }
+
+    public SpecialObject getContentObject() {
+        return contentObject;
+    }
+
+    public Kingdom getContentKingdom() {
+        return contentKingdom;
+    }
 }

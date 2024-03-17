@@ -8,12 +8,12 @@ public class Game {
     private ObjectiveCard[] commonObjectives;
     private Player currPlayer;
 
-    /*
-    // costruttore non sono sicuro
-    public class Game(Player firstPlayer){
-        players = new ArrayList<Player>();
-        players.
+    //TODO:
+    // volgiamo istanziare solamente il primo player oppure instanziamo già tutti i Player ttamite il controller? Io dico di passare al costruttore del Game già la lsita dei player dal controller
+    public Game(List<Player> players){
+        this.players = players;
+        currPlayer = players.get(0);
+    }
 
 
-    }*/
 }

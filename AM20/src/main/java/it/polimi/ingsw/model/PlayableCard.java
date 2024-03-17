@@ -1,11 +1,26 @@
 package it.polimi.ingsw.model;
 
 import java.util.Arrays;
+import java.util.HashMap;
 
 public abstract class PlayableCard extends Card{
     // playableCard è abstract Class
     private Corner[] frontCorners;
+
+    public Corner[] getFrontCorners() {
+        return frontCorners;
+    }
+
+    public Corner[] getBackCorners() {
+        return backCorners;
+    }
+
     private Corner[] backCorners;
+
+    public boolean isFront() {
+        return front;
+    }
+
     private boolean front;
 
     public PlayableCard(String ID, Corner[] frontCorners, Corner[] backCorners) {
@@ -37,5 +52,9 @@ public abstract class PlayableCard extends Card{
                 ", backCorners=" + Arrays.toString(backCorners) +
                 ", ";
     }
+
+    public HashMap getKingdoms(){return null;}
+    public HashMap getObjects(){return null;}
+    public HashMap getRequirements(){return null;}
 }
 
