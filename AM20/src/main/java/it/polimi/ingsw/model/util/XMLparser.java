@@ -16,12 +16,6 @@ import java.util.ArrayList;
 
 public class XMLparser {
 
-    public static void main(String[] args) {
-        //per provare se funziona
-        ArrayList<StarterCard> list = parseStarterCards("starterCards.xml");
-        System.out.println(list);
-    }
-
     public static ArrayList<StarterCard> parseStarterCards(String filePath){
         //lista da ritornare
         ArrayList<StarterCard> starterCards = new ArrayList<>();
