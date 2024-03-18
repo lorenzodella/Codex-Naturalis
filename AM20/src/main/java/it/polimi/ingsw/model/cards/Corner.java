@@ -1,4 +1,4 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.model.cards;
 
 import java.util.Objects;
 
@@ -8,6 +8,14 @@ public class Corner {
     private boolean hidden;
 
     public Corner(){
+    }
+
+    public Corner(SpecialObject contentObject) {
+        this.contentObject = contentObject;
+    }
+
+    public Corner(Kingdom contentKingdom){
+        this.contentKingdom = contentKingdom;
     }
 
     @Override
@@ -21,14 +29,6 @@ public class Corner {
     @Override
     public int hashCode() {
         return Objects.hash(contentObject, contentKingdom);
-    }
-
-    public Corner(SpecialObject contentObject) {
-        this.contentObject = contentObject;
-    }
-
-    public Corner(Kingdom contentKingdom){
-        this.contentKingdom = contentKingdom;
     }
 
     @Override

@@ -1,4 +1,6 @@
 package it.polimi.ingsw.model;
+import it.polimi.ingsw.model.cards.ObjectiveCard;
+
 import java.util.*;
 
 public class Game {

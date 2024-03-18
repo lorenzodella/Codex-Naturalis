@@ -1,8 +1,8 @@
 package it.polimi.ingsw.model.util;
 
-import it.polimi.ingsw.model.Corner;
-import it.polimi.ingsw.model.Kingdom;
-import it.polimi.ingsw.model.StarterCard;
+import it.polimi.ingsw.model.cards.Corner;
+import it.polimi.ingsw.model.cards.Kingdom;
+import it.polimi.ingsw.model.cards.StarterCard;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

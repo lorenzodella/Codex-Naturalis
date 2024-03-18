@@ -1,4 +1,4 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.model.cards;
 
 import java.util.*;
 
@@ -13,9 +13,9 @@ public class StarterCard extends PlayableCard{
 
     @Override
     public boolean equals(Object o) {
-        if (!super.equals(o)) return false;
         if (this == o) return true;
-        if (getClass() != o.getClass()) return false;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
         StarterCard that = (StarterCard) o;
         return Objects.equals(resources, that.resources);
     }
@@ -35,7 +35,7 @@ public class StarterCard extends PlayableCard{
 
 
     // TODO: da controllare e da fare JAVADoc e da fare testing (forse si può snellire il codice)
-    public HashMap getKingdoms(){
+    public HashMap<Kingdom, Integer> getKingdoms(){
         HashMap<Kingdom, Integer> res = new HashMap<>();
         int numFungi = 0;
         int numAnimal = 0;

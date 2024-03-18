@@ -1,4 +1,4 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.model.cards;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -6,6 +6,14 @@ import java.util.HashMap;
 public abstract class PlayableCard extends Card{
     // playableCard è abstract Class
     private Corner[] frontCorners;
+    private Corner[] backCorners;
+    private boolean front;
+
+    public PlayableCard(String ID, Corner[] frontCorners, Corner[] backCorners) {
+        super(ID);
+        this.frontCorners = frontCorners;
+        this.backCorners = backCorners;
+    }
 
     public Corner[] getFrontCorners() {
         return frontCorners;
@@ -15,25 +23,19 @@ public abstract class PlayableCard extends Card{
         return backCorners;
     }
 
-    private Corner[] backCorners;
-
     public boolean isFront() {
         return front;
     }
 
-    private boolean front;
-
-    public PlayableCard(String ID, Corner[] frontCorners, Corner[] backCorners) {
-        super(ID);
-        this.frontCorners = frontCorners;
-        this.backCorners = backCorners;
-    }
+    public HashMap<Kingdom, Integer> getKingdoms(){return null;}
+    public HashMap<SpecialObject, Integer> getObjects(){return null;}
+    public HashMap<Kingdom, Integer> getRequirements(){return null;}
 
     @Override
     public boolean equals(Object o) {
-        if (!super.equals(o)) return false;
         if (this == o) return true;
-        if (getClass() != o.getClass()) return false;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
         PlayableCard that = (PlayableCard) o;
         return Arrays.equals(frontCorners, that.frontCorners) && Arrays.equals(backCorners, that.backCorners);
     }
@@ -52,9 +54,5 @@ public abstract class PlayableCard extends Card{
                 ", backCorners=" + Arrays.toString(backCorners) +
                 ", ";
     }
-
-    public HashMap getKingdoms(){return null;}
-    public HashMap getObjects(){return null;}
-    public HashMap getRequirements(){return null;}
 }
 

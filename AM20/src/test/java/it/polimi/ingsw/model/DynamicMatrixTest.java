@@ -10,40 +10,40 @@ class DynamicMatrixTest {
 
     @Test
     void firstElementIsCenter() throws TargetNotPresentException {
-        DynamicMatrix<Character> m = new DynamicMatrix<>('a');
+        DynamicMatrix<Character,Character> m = new DynamicMatrix<>('a', 'a');
         assertArrayEquals(new int[]{1,1}, m.find('a'));
     }
 
     @Test
     void insertUL() throws TargetNotPresentException, InvalidPositionException {
-        DynamicMatrix<Character> m = new DynamicMatrix<>('a');
-        m.insert('b','a',0);
+        DynamicMatrix<Character,Character> m = new DynamicMatrix<>('a', 'a');
+        m.insert('b','b', 'a',0);
         assertArrayEquals(new int[]{1,2}, m.find('a'));
         assertArrayEquals(new int[]{1,1}, m.find('b'));
-        assertEquals(3, m.mat.size());
-        assertEquals(4, m.mat.get(0).size());
+        assertEquals(3, m.height());
+        assertEquals(4, m.width());
     }
 
     @Test
     void insertUR() throws TargetNotPresentException, InvalidPositionException {
-        DynamicMatrix<Character> m = new DynamicMatrix<>('a');
-        m.insert('b','a',1);
+        DynamicMatrix<Character,Character> m = new DynamicMatrix<>('a', 'a');
+        m.insert('b','b', 'a',1);
         assertArrayEquals(new int[]{2,1}, m.find('a'));
         assertArrayEquals(new int[]{1,2}, m.find('b'));
-        assertEquals(4, m.mat.size());
-        assertEquals(4, m.mat.get(0).size());
+        assertEquals(4, m.height());
+        assertEquals(4, m.width());
     }
 
     @Test
     void insertPosInvalid() throws TargetNotPresentException {
-        DynamicMatrix<Character> m = new DynamicMatrix<>('a');
-        assertThrows(InvalidPositionException.class, ()->m.insert('b','a',5));
+        DynamicMatrix<Character,Character> m = new DynamicMatrix<>('a', 'a');
+        assertThrows(InvalidPositionException.class, ()->m.insert('b', 'b','a',5));
     }
 
     @Test
     void insertTargetNonPresent() throws InvalidPositionException {
-        DynamicMatrix<Character> m = new DynamicMatrix<>('a');
-        assertThrows(TargetNotPresentException.class, ()->m.insert('b','c',1));
+        DynamicMatrix<Character,Character> m = new DynamicMatrix<>('a', 'a');
+        assertThrows(TargetNotPresentException.class, ()->m.insert('b', 'b','c',1));
     }
 
 }

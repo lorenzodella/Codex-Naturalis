@@ -1,9 +1,9 @@
 package it.polimi.ingsw.model.util;
 
-import it.polimi.ingsw.model.Corner;
-import it.polimi.ingsw.model.Kingdom;
-import it.polimi.ingsw.model.SpecialObject;
-import it.polimi.ingsw.model.StarterCard;
+import it.polimi.ingsw.model.cards.Corner;
+import it.polimi.ingsw.model.cards.Kingdom;
+import it.polimi.ingsw.model.cards.SpecialObject;
+import it.polimi.ingsw.model.cards.StarterCard;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
