@@ -1,11 +1,12 @@
 package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.cards.ObjectiveCard;
+import it.polimi.ingsw.model.util.XMLparser;
 
 import java.util.*;
 
 public class Game {
     private List<Player>  players;
-    private Deck resourceDeck;
+    private Deck resourceCardDeck;
     private Deck goldCardDeck;
     private ObjectiveCard[] commonObjectives;
     private Player currPlayer;
@@ -15,6 +16,15 @@ public class Game {
     public Game(List<Player> players){
         this.players = players;
         currPlayer = players.get(0);
+    }
+
+    public void initDecks(){
+        resourceCardDeck = new Deck(XMLparser.parseResourceCards("resourceCards.xml"));
+        resourceCardDeck.shuffle();
+        resourceCardDeck.initVisibleCards();
+        goldCardDeck = new Deck(XMLparser.parseGoldCards("goldCards.xml"));
+        goldCardDeck.shuffle();
+        goldCardDeck.initVisibleCards();
     }
 
 

@@ -13,10 +13,10 @@ import java.util.LinkedList;
  */
 public class DynamicMatrix<K,T> {
 
-    static class MatrixElement<K,T> {
+    private static class MatrixElement<K,T> {
         K key;
         T value;
-        public MatrixElement(K key, T value){
+        private MatrixElement(K key, T value){
             this.key = key;
             this.value = value;
         }

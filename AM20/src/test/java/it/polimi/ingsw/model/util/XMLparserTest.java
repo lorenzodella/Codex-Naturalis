@@ -2,6 +2,7 @@ package it.polimi.ingsw.model.util;
 
 import it.polimi.ingsw.model.cards.Corner;
 import it.polimi.ingsw.model.cards.Kingdom;
+import it.polimi.ingsw.model.cards.PlayableCard;
 import it.polimi.ingsw.model.cards.StarterCard;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +14,7 @@ class XMLparserTest {
 
     @Test
     void parseStarterCards() {
-        ArrayList<StarterCard> starterCards = XMLparser.parseStarterCards("starterCards.xml");
+        ArrayList<PlayableCard> starterCards = XMLparser.parseStarterCards("starterCards.xml");
         Corner[] frontCorners = new Corner[4];
         frontCorners[0] = new Corner();
         frontCorners[1] = new Corner(Kingdom.Plant);

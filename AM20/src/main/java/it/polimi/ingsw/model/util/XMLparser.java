@@ -1,9 +1,6 @@
 package it.polimi.ingsw.model.util;
 
-import it.polimi.ingsw.model.cards.Corner;
-import it.polimi.ingsw.model.cards.Kingdom;
-import it.polimi.ingsw.model.cards.SpecialObject;
-import it.polimi.ingsw.model.cards.StarterCard;
+import it.polimi.ingsw.model.cards.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -16,9 +13,9 @@ import java.util.ArrayList;
 
 public class XMLparser {
 
-    public static ArrayList<StarterCard> parseStarterCards(String filePath){
+    public static ArrayList<PlayableCard> parseStarterCards(String filePath){
         //lista da ritornare
-        ArrayList<StarterCard> starterCards = new ArrayList<>();
+        ArrayList<PlayableCard> starterCards = new ArrayList<>();
         try {
             File file = new File(filePath);
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -65,6 +62,15 @@ public class XMLparser {
         }
         return starterCards;
     }
+
+    //TODO
+    public static ArrayList<PlayableCard> parseGoldCards(String filePath){return null;}
+
+    //TODO
+    public static ArrayList<PlayableCard> parseResourceCards(String filePath){return null;}
+
+    //TODO
+    public static ArrayList<PlayableCard> parseObjectiveCards(String filePath){return null;}
 
     private static Corner[] getCorners(NodeList list){
         //inizializzo le var tmp
