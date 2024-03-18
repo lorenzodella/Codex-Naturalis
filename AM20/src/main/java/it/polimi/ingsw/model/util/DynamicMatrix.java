@@ -1,4 +1,4 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.model.util;
 
 import it.polimi.ingsw.model.exceptions.InvalidPositionException;
 import it.polimi.ingsw.model.exceptions.TargetNotPresentException;

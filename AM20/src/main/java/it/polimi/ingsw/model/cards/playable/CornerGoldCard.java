@@ -1,6 +1,8 @@
-package it.polimi.ingsw.model.cards;
+package it.polimi.ingsw.model.cards.playable;
 
 import it.polimi.ingsw.model.PlayerTable;
+import it.polimi.ingsw.model.cards.Corner;
+import it.polimi.ingsw.model.cards.Kingdom;
 
 import java.util.HashMap;
 

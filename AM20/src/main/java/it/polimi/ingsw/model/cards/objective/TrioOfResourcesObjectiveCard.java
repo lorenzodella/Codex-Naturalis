@@ -1,6 +1,7 @@
-package it.polimi.ingsw.model.cards;
+package it.polimi.ingsw.model.cards.objective;
 
 import it.polimi.ingsw.model.PlayerTable;
+import it.polimi.ingsw.model.cards.Kingdom;
 
 import java.util.Objects;
 

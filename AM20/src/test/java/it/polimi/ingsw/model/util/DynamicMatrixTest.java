@@ -1,7 +1,8 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.model.util;
 
 import it.polimi.ingsw.model.exceptions.InvalidPositionException;
 import it.polimi.ingsw.model.exceptions.TargetNotPresentException;
+import it.polimi.ingsw.model.util.DynamicMatrix;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

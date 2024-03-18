@@ -1,18 +1,22 @@
-package it.polimi.ingsw.model.cards;
+package it.polimi.ingsw.model.cards.playable;
+
 
 import it.polimi.ingsw.model.PlayerTable;
+import it.polimi.ingsw.model.cards.Corner;
+import it.polimi.ingsw.model.cards.Kingdom;
+import it.polimi.ingsw.model.cards.SpecialObject;
 
 import java.util.HashMap;
 import java.util.Objects;
 
-public class PointsGoldCard extends GoldCard{
-    private int points;
+public class ObjectGoldCard extends GoldCard{
+    private SpecialObject specialObject;
 
-    public PointsGoldCard(String ID, Corner[] frontCorners, Corner[] backCorners,
+    public ObjectGoldCard(String ID, Corner[] frontCorners, Corner[] backCorners,
                           Kingdom kingdom, HashMap<Kingdom, Integer> requirements,
-                          int points) {
+                          SpecialObject specialObject) {
         super(ID, frontCorners, backCorners, kingdom, requirements);
-        this.points = points;
+        this.specialObject = specialObject;
     }
 
     @Override
@@ -20,20 +24,20 @@ public class PointsGoldCard extends GoldCard{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        PointsGoldCard that = (PointsGoldCard) o;
-        return points == that.points;
+        ObjectGoldCard that = (ObjectGoldCard) o;
+        return specialObject == that.specialObject;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), points);
+        return Objects.hash(super.hashCode(), specialObject);
     }
 
     @Override
     public String toString() {
-        return "PointsGoldCard{" +
+        return "ObjectGoldCard{" +
                 super.toString() +
-                "points=" + points +
+                "specialObject=" + specialObject +
                 "}";
     }
 

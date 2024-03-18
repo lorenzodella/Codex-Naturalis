@@ -1,8 +1,12 @@
-package it.polimi.ingsw.model.cards;
+package it.polimi.ingsw.model.cards.playable;
 
 import it.polimi.ingsw.model.PlayerTable;
-import it.polimi.ingsw.model.PointsProvider;
+import it.polimi.ingsw.model.cards.Corner;
+import it.polimi.ingsw.model.cards.Kingdom;
+import it.polimi.ingsw.model.cards.PointsProvider;
+import it.polimi.ingsw.model.cards.SpecialObject;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 public class ResourceCard extends PlayableCard implements PointsProvider {
@@ -36,6 +40,26 @@ public class ResourceCard extends PlayableCard implements PointsProvider {
                 "kingdom=" + kingdom +
                 ", points=" + points +
                 "}";
+    }
+
+    @Override
+    public HashMap<Kingdom, Integer> getKingdoms(){
+        if(isFront())
+            return super.getKingdoms();
+        else {
+            HashMap<Kingdom, Integer> res = Kingdom.createEmptyMap();
+            res.put(kingdom, 1);
+            return res;
+        }
+    }
+
+    @Override
+    public HashMap<SpecialObject, Integer> getSpecialObjects(){
+        if(isFront())
+            return super.getSpecialObjects();
+        else {
+            return SpecialObject.createEmptyMap();
+        }
     }
 
     @Override

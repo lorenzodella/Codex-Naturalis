@@ -1,5 +1,5 @@
 package it.polimi.ingsw.model;
-import it.polimi.ingsw.model.cards.ObjectiveCard;
+import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.model.util.XMLparser;
 
 import java.util.*;

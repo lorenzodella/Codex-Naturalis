@@ -1,4 +1,4 @@
-package it.polimi.ingsw.model.cards;
+package it.polimi.ingsw.model.cards.objective;
 
 import it.polimi.ingsw.model.PlayerTable;
 

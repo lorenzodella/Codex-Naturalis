@@ -1,6 +1,7 @@
-package it.polimi.ingsw.model.cards;
+package it.polimi.ingsw.model.cards.objective;
 
-import it.polimi.ingsw.model.PointsProvider;
+import it.polimi.ingsw.model.cards.Card;
+import it.polimi.ingsw.model.cards.PointsProvider;
 
 import java.util.Objects;
 

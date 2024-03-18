@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model.util;
 
 import it.polimi.ingsw.model.cards.*;
+import it.polimi.ingsw.model.cards.playable.PlayableCard;
+import it.polimi.ingsw.model.cards.playable.StarterCard;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;

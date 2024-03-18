@@ -1,9 +1,14 @@
-package it.polimi.ingsw.model.cards;
+package it.polimi.ingsw.model.cards.playable;
+
+import it.polimi.ingsw.model.cards.Card;
+import it.polimi.ingsw.model.cards.Corner;
+import it.polimi.ingsw.model.cards.Kingdom;
+import it.polimi.ingsw.model.cards.SpecialObject;
 
 import java.util.Arrays;
 import java.util.HashMap;
 
-public abstract class PlayableCard extends Card{
+public abstract class PlayableCard extends Card {
     // playableCard è abstract Class
     private Corner[] frontCorners;
     private Corner[] backCorners;
@@ -13,6 +18,7 @@ public abstract class PlayableCard extends Card{
         super(ID);
         this.frontCorners = frontCorners;
         this.backCorners = backCorners;
+        this.front = true;
     }
 
     public Corner[] getFrontCorners() {
@@ -27,9 +33,32 @@ public abstract class PlayableCard extends Card{
         return front;
     }
 
-    public HashMap<Kingdom, Integer> getKingdoms(){return null;}
-    public HashMap<SpecialObject, Integer> getObjects(){return null;}
-    public HashMap<Kingdom, Integer> getRequirements(){return null;}
+    public void setFront(boolean isFront){
+        front = isFront;
+    }
+
+    public HashMap<Kingdom, Integer> getKingdoms(){
+        HashMap<Kingdom, Integer> map = Kingdom.createEmptyMap();
+        for (Corner tmp : isFront() ? getFrontCorners() : getBackCorners()){
+            if(tmp!=null && !tmp.isHidden()) {
+                map.computeIfPresent(tmp.getContentKingdom(), (k,v)->v+1);
+            }
+        }
+        return map;
+    }
+    public HashMap<SpecialObject, Integer> getSpecialObjects(){
+        HashMap<SpecialObject, Integer> map = SpecialObject.createEmptyMap();
+        for (Corner tmp : isFront() ? getFrontCorners() : getBackCorners()){
+            if(tmp!=null && !tmp.isHidden()) {
+                map.computeIfPresent(tmp.getContentObject(), (k,v)->v+1);
+            }
+        }
+        return map;
+    }
+
+    public HashMap<Kingdom, Integer> getRequirements(){
+        return Kingdom.createEmptyMap();
+    }
 
     @Override
     public boolean equals(Object o) {

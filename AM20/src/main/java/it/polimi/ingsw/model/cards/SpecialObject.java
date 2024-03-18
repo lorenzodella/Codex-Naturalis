@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model.cards;
 
+import java.util.HashMap;
+
 public enum SpecialObject {
     Quill,
     Inkwell,
@@ -16,5 +18,13 @@ public enum SpecialObject {
             default:
                 return null;
         }
+    }
+
+    public static HashMap<SpecialObject, Integer> createEmptyMap(){
+        HashMap<SpecialObject, Integer> map = new HashMap<>();
+        map.put(SpecialObject.Quill, 0);
+        map.put(SpecialObject.Inkwell, 0);
+        map.put(SpecialObject.Manuscript, 0);
+        return map;
     }
 }

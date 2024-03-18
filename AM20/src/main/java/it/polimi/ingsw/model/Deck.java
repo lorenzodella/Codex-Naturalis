@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.cards.PlayableCard;
+import it.polimi.ingsw.model.cards.playable.PlayableCard;
 
 import java.util.ArrayList;
 import java.util.Collections;

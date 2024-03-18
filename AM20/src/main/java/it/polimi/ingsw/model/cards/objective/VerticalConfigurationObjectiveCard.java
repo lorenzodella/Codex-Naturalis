@@ -1,7 +1,9 @@
-package it.polimi.ingsw.model.cards;
+package it.polimi.ingsw.model.cards.objective;
 
 import it.polimi.ingsw.model.ConfigurationFinder;
-import it.polimi.ingsw.model.DynamicMatrix;
+import it.polimi.ingsw.model.cards.Kingdom;
+import it.polimi.ingsw.model.cards.playable.PlayableCard;
+import it.polimi.ingsw.model.util.DynamicMatrix;
 import it.polimi.ingsw.model.PlayerTable;
 
 import java.util.Objects;
