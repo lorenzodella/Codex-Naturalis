@@ -18,6 +18,10 @@ public class Corner {
         this.contentKingdom = contentKingdom;
     }
 
+    public void setHidden(boolean hidden) {
+        this.hidden = hidden;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

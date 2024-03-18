@@ -39,18 +39,18 @@ public abstract class PlayableCard extends Card {
 
     public HashMap<Kingdom, Integer> getKingdoms(){
         HashMap<Kingdom, Integer> map = Kingdom.createEmptyMap();
-        for (Corner tmp : isFront() ? getFrontCorners() : getBackCorners()){
-            if(tmp!=null && !tmp.isHidden()) {
-                map.computeIfPresent(tmp.getContentKingdom(), (k,v)->v+1);
+        for (Corner corner : isFront() ? getFrontCorners() : getBackCorners()){
+            if(corner!=null && !corner.isHidden()) {
+                map.computeIfPresent(corner.getContentKingdom(), (k,v)->v+1);
             }
         }
         return map;
     }
     public HashMap<SpecialObject, Integer> getSpecialObjects(){
         HashMap<SpecialObject, Integer> map = SpecialObject.createEmptyMap();
-        for (Corner tmp : isFront() ? getFrontCorners() : getBackCorners()){
-            if(tmp!=null && !tmp.isHidden()) {
-                map.computeIfPresent(tmp.getContentObject(), (k,v)->v+1);
+        for (Corner corner : isFront() ? getFrontCorners() : getBackCorners()){
+            if(corner!=null && !corner.isHidden()) {
+                map.computeIfPresent(corner.getContentObject(), (k,v)->v+1);
             }
         }
         return map;

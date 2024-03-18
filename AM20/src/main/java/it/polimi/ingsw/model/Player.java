@@ -30,6 +30,6 @@ public class Player {
     }
 
     public void positionStarterCard(boolean front){
-        table.insertStarterCard(front, this.starterCard);
+        //table.insertStarterCard(front, this.starterCard);
     }
 }

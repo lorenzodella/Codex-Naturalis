@@ -1,8 +1,12 @@
 package it.polimi.ingsw.model;
+
 import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
+import it.polimi.ingsw.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.model.util.XMLparser;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Game {
     private List<Player>  players;
@@ -28,7 +32,7 @@ public class Game {
     }
 
     public void initStarterCard(){
-        ArrayList<PlayableCard> starterCards = new ArrayList<>(XMLparser.parseStarterCards("starterCards.xml"));
+        ArrayList<PlayableCard> starterCards = XMLparser.parseStarterCards("starterCards.xml");
         Collections.shuffle(starterCards);
         this.giveInitialCards(starterCards);
     }

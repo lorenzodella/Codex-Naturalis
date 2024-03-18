@@ -3,7 +3,6 @@ package it.polimi.ingsw.model.cards.playable;
 import it.polimi.ingsw.model.cards.Corner;
 import it.polimi.ingsw.model.cards.Kingdom;
 import it.polimi.ingsw.model.cards.SpecialObject;
-import it.polimi.ingsw.model.cards.playable.ResourceCard;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +16,6 @@ class ResourceCardTest {
     @BeforeEach
     void setUp() {
         Corner[] frontCorners = new Corner[4];
-        frontCorners[0] = new Corner();
         frontCorners[1] = new Corner(Kingdom.Plant);
         frontCorners[2] = new Corner(SpecialObject.Inkwell);
         frontCorners[3] = new Corner();
@@ -33,14 +31,17 @@ class ResourceCardTest {
     void testGetKingdoms() {
         HashMap<Kingdom, Integer> map = Kingdom.createEmptyMap();
         map.put(Kingdom.Plant, 1);
-
         assertEquals(map, resourceCard.getKingdoms());
 
-        resourceCard.setFront(false);
+        //hide a corner
+        resourceCard.getFrontCorners()[1].setHidden(true);
+        map = Kingdom.createEmptyMap();
+        assertEquals(map, resourceCard.getKingdoms());
 
+        //turn card to the back
+        resourceCard.setFront(false);
         map = Kingdom.createEmptyMap();
         map.put(Kingdom.Animal, 1);
-
         assertEquals(map, resourceCard.getKingdoms());
     }
 
@@ -51,8 +52,8 @@ class ResourceCardTest {
 
         assertEquals(map, resourceCard.getSpecialObjects());
 
+        //turn card to the back
         resourceCard.setFront(false);
-
         map = SpecialObject.createEmptyMap();
         assertEquals(map, resourceCard.getSpecialObjects());
     }

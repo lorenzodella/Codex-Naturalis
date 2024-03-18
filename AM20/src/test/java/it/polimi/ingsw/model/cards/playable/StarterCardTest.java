@@ -3,14 +3,13 @@ package it.polimi.ingsw.model.cards.playable;
 import it.polimi.ingsw.model.cards.Corner;
 import it.polimi.ingsw.model.cards.Kingdom;
 import it.polimi.ingsw.model.cards.SpecialObject;
-import it.polimi.ingsw.model.cards.playable.StarterCard;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class StarterCardTest {
     StarterCard s;
@@ -37,23 +36,20 @@ class StarterCardTest {
         HashMap<Kingdom, Integer> map = Kingdom.createEmptyMap();
         map.put(Kingdom.Plant, 1);
         map.put(Kingdom.Insect, 2);
-
         assertEquals(map, s.getKingdoms());
 
+        //turn card to the back
         s.setFront(false);
-
         map.put(Kingdom.Fungi, 1);
         map.put(Kingdom.Animal, 1);
         map.put(Kingdom.Plant, 1);
         map.put(Kingdom.Insect, 1);
-
         assertEquals(map, s.getKingdoms());
     }
 
     @Test
     void getSpecialObjects(){
         HashMap<SpecialObject, Integer> map = SpecialObject.createEmptyMap();
-
         assertEquals(map, s.getSpecialObjects());
     }
 
