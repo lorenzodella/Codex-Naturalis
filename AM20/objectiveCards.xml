@@ -1,0 +1,96 @@
+<objectiveCards>
+
+    <pairOfObjectsCard>
+        <specialObject>Manuscript</specialObject>
+        <points>2</points>
+    </pairOfObjectsCard>
+
+    <pairOfObjectsCard>
+        <specialObject>Inkwell</specialObject>
+        <points>2</points>
+    </pairOfObjectsCard>
+
+    <pairOfObjectsCard>
+        <specialObject>Quill</specialObject>
+        <points>2</points>
+    </pairOfObjectsCard>
+
+
+    <trioOfObjectsObjectiveCard>
+        <points> 3 </points>
+    </trioOfObjectsObjectiveCard>
+
+    <trioOfResourcesObjectiveCard>
+        <resorcesKingdom> Insect </resorcesKingdom>
+        <points> 2 </points>
+    </trioOfResourcesObjectiveCard>
+
+    <trioOfResourcesObjectiveCard>
+        <resorcesKingdom> Animal </resorcesKingdom>
+        <points> 2 </points>
+    </trioOfResourcesObjectiveCard>
+
+    <trioOfResourcesObjectiveCard>
+        <resorcesKingdom> Plant </resorcesKingdom>
+        <points> 2 </points>
+    </trioOfResourcesObjectiveCard>
+
+    <trioOfResourcesObjectiveCard>
+        <resorcesKingdom> Fungi </resorcesKingdom>
+        <points> 2 </points>
+    </trioOfResourcesObjectiveCard>
+
+    <verticalConfigurationObjectiveCard>
+        <kingdom1>Animal</kingdom1>
+        <kingdom2>Insect</kingdom2>
+        <corner>3</corner>
+        <points>3</points>
+    </verticalConfigurationObjectiveCard>
+
+    <verticalConfigurationObjectiveCard>
+        <kingdom1>Fungi</kingdom1>
+        <kingdom2>Animal</kingdom2>
+        <corner>2</corner>
+        <points>3</points>
+    </verticalConfigurationObjectiveCard>
+
+    <verticalConfigurationObjectiveCard>
+        <kingdom1>Insect</kingdom1>
+        <kingdom2>Plant</kingdom2>
+        <corner>1</corner>
+        <points>3</points>
+    </verticalConfigurationObjectiveCard>
+
+    <verticalConfigurationObjectiveCard>
+        <kingdom1>Plant</kingdom1>
+        <kingdom2>Fungi</kingdom2>
+        <corner>0</corner>
+        <points>3</points>
+    </verticalConfigurationObjectiveCard>
+
+
+    <diagonalConfigurationObjectiveCard>
+        <kingdom>Insect</kingdom>
+        <direction>3</direction>
+        <points>2</points>
+    </diagonalConfigurationObjectiveCard>
+
+    <diagonalConfigurationObjectiveCard>
+        <kingdom>Animal</kingdom>
+        <direction>2</direction>
+        <points>2</points>
+    </diagonalConfigurationObjectiveCard>
+
+    <diagonalConfigurationObjectiveCard>
+        <kingdom>Plant</kingdom>
+        <direction>3</direction>
+        <points>2</points>
+    </diagonalConfigurationObjectiveCard>
+
+    <diagonalConfigurationObjectiveCard>
+        <kingdom>Fungi</kingdom>
+        <direction>2</direction>
+        <points>2</points>
+    </diagonalConfigurationObjectiveCard>
+
+</objectiveCards>

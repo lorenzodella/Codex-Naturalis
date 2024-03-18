@@ -1,0 +1,601 @@
+<goldCards>
+    <ObjectGoldCard>
+        <frontCorner pos="1"/>
+        <frontCorner pos="2"/>
+        <frontCorner pos="3" obj="Quill"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Fungi</kingdom>
+        <requirements>
+            <Fungi>2</Fungi>
+            <Animal>1</Animal>
+        </requirements>
+        <specialObject>Quill</specialObject>
+    </ObjectGoldCard>
+
+    <ObjectGoldCard>
+        <frontCorner pos="0"/>
+        <frontCorner pos="1" obj="Inkwell"/>
+        <frontCorner pos="3"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Fungi</kingdom>
+        <requirements>
+            <Fungi>2</Fungi>
+            <Plant>1</Plant>
+        </requirements>
+        <specialObject>Inkwell</specialObject>
+    </ObjectGoldCard>
+
+    <ObjectGoldCard>
+        <frontCorner pos="0" obj="Manuscript"/>
+        <frontCorner pos="1"/>
+        <frontCorner pos="2"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Fungi</kingdom>
+        <requirements>
+            <Fungi>2</Fungi>
+            <Insect>1</Insect>
+        </requirements>
+        <specialObject>Manuscript</specialObject>
+    </ObjectGoldCard>
+
+    <ObjectGoldCard>
+        <frontCorner pos="0" obj="Quill"/>
+        <frontCorner pos="1"/>
+        <frontCorner pos="2"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Plant</kingdom>
+        <requirements>
+            <Plant>2</Plant>
+            <Insect>1</Insect>
+        </requirements>
+        <specialObject>Quill</specialObject>
+    </ObjectGoldCard>
+
+    <ObjectGoldCard>
+        <frontCorner pos="0"/>
+        <frontCorner pos="1" obj="Manuscript"/>
+        <frontCorner pos="3"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Plant</kingdom>
+        <requirements>
+            <Plant>2</Plant>
+            <Fungi>1</Fungi>
+        </requirements>
+        <specialObject>Manuscript</specialObject>
+    </ObjectGoldCard>
+
+    <ObjectGoldCard>
+        <frontCorner pos="0"/>
+        <frontCorner pos="2" obj="Inkwell"/>
+        <frontCorner pos="3"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Plant</kingdom>
+        <requirements>
+            <Plant>2</Plant>
+            <Animal>1</Animal>
+        </requirements>
+        <specialObject>Inkwell</specialObject>
+    </ObjectGoldCard>
+
+    <ObjectGoldCard>
+        <frontCorner pos="0" obj="Inkwell"/>
+        <frontCorner pos="1"/>
+        <frontCorner pos="2"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Animal</kingdom>
+        <requirements>
+            <Animal>2</Animal>
+            <Insect>1</Insect>
+        </requirements>
+        <specialObject>Inkwell</specialObject>
+    </ObjectGoldCard>
+
+    <ObjectGoldCard>
+        <frontCorner pos="1"/>
+        <frontCorner pos="2"/>
+        <frontCorner pos="3" obj="Manuscript"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Animal</kingdom>
+        <requirements>
+            <Animal>2</Animal>
+            <Plant>1</Plant>
+        </requirements>
+        <specialObject>Manuscript</specialObject>
+    </ObjectGoldCard>
+
+    <ObjectGoldCard>
+        <frontCorner pos="0"/>
+        <frontCorner pos="2" obj="Quill"/>
+        <frontCorner pos="3"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Animal</kingdom>
+        <requirements>
+            <Animal>2</Animal>
+            <Fungi>1</Fungi>
+        </requirements>
+        <specialObject>Quill</specialObject>
+    </ObjectGoldCard>
+
+    <ObjectGoldCard>
+        <frontCorner pos="0"/>
+        <frontCorner pos="1" obj="Quill"/>
+        <frontCorner pos="3"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Insect</kingdom>
+        <requirements>
+            <Insect>2</Insect>
+            <Plant>1</Plant>
+        </requirements>
+        <specialObject>Quill</specialObject>
+    </ObjectGoldCard>
+
+    <ObjectGoldCard>
+        <frontCorner pos="0"/>
+        <frontCorner pos="2" obj="Manuscript"/>
+        <frontCorner pos="3"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Insect</kingdom>
+        <requirements>
+            <Insect>2</Insect>
+            <Animal>1</Animal>
+        </requirements>
+        <specialObject>Manuscript</specialObject>
+    </ObjectGoldCard>
+
+    <ObjectGoldCard>
+        <frontCorner pos="1"/>
+        <frontCorner pos="2"/>
+        <frontCorner pos="3" obj="Inkwell"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Insect</kingdom>
+        <requirements>
+            <Insect>2</Insect>
+            <Fungi>1</Fungi>
+        </requirements>
+        <specialObject>Inkwell</specialObject>
+    </ObjectGoldCard>
+
+
+    <CornerGoldCard>
+        <frontCorner pos="0"/>
+        <frontCorner pos="1"/>
+        <frontCorner pos="3"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Fungi</kingdom>
+        <requirements>
+            <Fungi>3</Fungi>
+            <Animal>1</Animal>
+        </requirements>
+    </CornerGoldCard>
+
+    <CornerGoldCard>
+        <frontCorner pos="0"/>
+        <frontCorner pos="1"/>
+        <frontCorner pos="2"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Fungi</kingdom>
+        <requirements>
+            <Fungi>3</Fungi>
+            <Plant>1</Plant>
+        </requirements>
+    </CornerGoldCard>
+
+    <CornerGoldCard>
+        <frontCorner pos="0"/>
+        <frontCorner pos="2"/>
+        <frontCorner pos="3"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Fungi</kingdom>
+        <requirements>
+            <Fungi>3</Fungi>
+            <Insect>1</Insect>
+        </requirements>
+    </CornerGoldCard>
+
+    <CornerGoldCard>
+        <frontCorner pos="1"/>
+        <frontCorner pos="2"/>
+        <frontCorner pos="3"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Plant</kingdom>
+        <requirements>
+            <Plant>3</Plant>
+            <Insect>1</Insect>
+        </requirements>
+    </CornerGoldCard>
+
+    <CornerGoldCard>
+        <frontCorner pos="0"/>
+        <frontCorner pos="1"/>
+        <frontCorner pos="2"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Plant</kingdom>
+        <requirements>
+            <Plant>3</Plant>
+            <Animal>1</Animal>
+        </requirements>
+    </CornerGoldCard>
+
+    <CornerGoldCard>
+        <frontCorner pos="0"/>
+        <frontCorner pos="2"/>
+        <frontCorner pos="3"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Plant</kingdom>
+        <requirements>
+            <Plant>3</Plant>
+            <Fungi>1</Fungi>
+        </requirements>
+    </CornerGoldCard>
+
+    <CornerGoldCard>
+        <frontCorner pos="0"/>
+        <frontCorner pos="1"/>
+        <frontCorner pos="3"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Animal</kingdom>
+        <requirements>
+            <Animal>3</Animal>
+            <Insect>1</Insect>
+        </requirements>
+    </CornerGoldCard>
+
+    <CornerGoldCard>
+        <frontCorner pos="0"/>
+        <frontCorner pos="2"/>
+        <frontCorner pos="3"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Animal</kingdom>
+        <requirements>
+            <Animal>3</Animal>
+            <Fungi>1</Fungi>
+        </requirements>
+    </CornerGoldCard>
+
+    <CornerGoldCard>
+        <frontCorner pos="1"/>
+        <frontCorner pos="2"/>
+        <frontCorner pos="3"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Animal</kingdom>
+        <requirements>
+            <Animal>3</Animal>
+            <Plant>1</Plant>
+        </requirements>
+    </CornerGoldCard>
+
+    <CornerGoldCard>
+        <frontCorner pos="0"/>
+        <frontCorner pos="1"/>
+        <frontCorner pos="3"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Insect</kingdom>
+        <requirements>
+            <Insect>3</Insect>
+            <Animal>1</Animal>
+        </requirements>
+    </CornerGoldCard>
+
+    <CornerGoldCard>
+        <frontCorner pos="0"/>
+        <frontCorner pos="1"/>
+        <frontCorner pos="2"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Insect</kingdom>
+        <requirements>
+            <Insect>3</Insect>
+            <Plant>1</Plant>
+        </requirements>
+    </CornerGoldCard>
+
+    <CornerGoldCard>
+        <frontCorner pos="0"/>
+        <frontCorner pos="2"/>
+        <frontCorner pos="3"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Insect</kingdom>
+        <requirements>
+            <Insect>3</Insect>
+            <Fungi>1</Fungi>
+        </requirements>
+    </CornerGoldCard>
+
+
+
+    <PointsGoldCard>
+        <frontCorner pos="0"/>
+        <frontCorner pos="2" obj="Inkwell"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Fungi</kingdom>
+        <requirements>
+            <Fungi>3</Fungi>
+        </requirements>
+        <points>3</points>
+    </PointsGoldCard>
+
+    <PointsGoldCard>
+        <frontCorner pos="0" obj="Quill"/>
+        <frontCorner pos="1"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Fungi</kingdom>
+        <requirements>
+            <Fungi>3</Fungi>
+        </requirements>
+        <points>3</points>
+    </PointsGoldCard>
+
+    <PointsGoldCard>
+        <frontCorner pos="1" obj="Manuscript"/>
+        <frontCorner pos="3"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Fungi</kingdom>
+        <requirements>
+            <Fungi>3</Fungi>
+        </requirements>
+        <points>3</points>
+    </PointsGoldCard>
+
+    <PointsGoldCard>
+        <frontCorner pos="0"/>
+        <frontCorner pos="2"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Fungi</kingdom>
+        <requirements>
+            <Fungi>5</Fungi>
+        </requirements>
+        <points>5</points>
+    </PointsGoldCard>
+
+    <PointsGoldCard>
+        <frontCorner pos="0"/>
+        <frontCorner pos="2" obj="Quill"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Plant</kingdom>
+        <requirements>
+            <Plant>3</Plant>
+        </requirements>
+        <points>3</points>
+    </PointsGoldCard>
+
+    <PointsGoldCard>
+        <frontCorner pos="0" obj="Manuscript"/>
+        <frontCorner pos="1"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Plant</kingdom>
+        <requirements>
+            <Plant>3</Plant>
+        </requirements>
+        <points>3</points>
+    </PointsGoldCard>
+
+    <PointsGoldCard>
+        <frontCorner pos="1" obj="Inkwell"/>
+        <frontCorner pos="3"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Plant</kingdom>
+        <requirements>
+            <Plant>3</Plant>
+        </requirements>
+        <points>3</points>
+    </PointsGoldCard>
+
+    <PointsGoldCard>
+        <frontCorner pos="0"/>
+        <frontCorner pos="1"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Plant</kingdom>
+        <requirements>
+            <Plant>5</Plant>
+        </requirements>
+        <points>5</points>
+    </PointsGoldCard>
+
+    <PointsGoldCard>
+        <frontCorner pos="0"/>
+        <frontCorner pos="2" obj="Manuscript"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Animal</kingdom>
+        <requirements>
+            <Animal>3</Animal>
+        </requirements>
+        <points>3</points>
+    </PointsGoldCard>
+
+    <PointsGoldCard>
+        <frontCorner pos="0"/>
+        <frontCorner pos="1" obj="Inkwell"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Animal</kingdom>
+        <requirements>
+            <Animal>3</Animal>
+        </requirements>
+        <points>3</points>
+    </PointsGoldCard>
+
+    <PointsGoldCard>
+        <frontCorner pos="1"/>
+        <frontCorner pos="3" obj="Quill"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Animal</kingdom>
+        <requirements>
+            <Animal>3</Animal>
+        </requirements>
+        <points>3</points>
+    </PointsGoldCard>
+
+    <PointsGoldCard>
+        <frontCorner pos="1"/>
+        <frontCorner pos="3"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Animal</kingdom>
+        <requirements>
+            <Animal>5</Animal>
+        </requirements>
+        <points>5</points>
+    </PointsGoldCard>
+
+    <PointsGoldCard>
+        <frontCorner pos="0" obj="Inkwell"/>
+        <frontCorner pos="2"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Insect</kingdom>
+        <requirements>
+            <Insect>3</Insect>
+        </requirements>
+        <points>3</points>
+    </PointsGoldCard>
+
+    <PointsGoldCard>
+        <frontCorner pos="0"/>
+        <frontCorner pos="1" obj="Manuscript"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Insect</kingdom>
+        <requirements>
+            <Insect>3</Insect>
+        </requirements>
+        <points>3</points>
+    </PointsGoldCard>
+
+    <PointsGoldCard>
+        <frontCorner pos="2" obj="Quill"/>
+        <frontCorner pos="3"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Insect</kingdom>
+        <requirements>
+            <Insect>3</Insect>
+        </requirements>
+        <points>3</points>
+    </PointsGoldCard>
+
+    <PointsGoldCard>
+        <frontCorner pos="0"/>
+        <frontCorner pos="1"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Insect</kingdom>
+        <requirements>
+            <Insect>5</Insect>
+        </requirements>
+        <points>5</points>
+    </PointsGoldCard>
+
+</goldCards>
