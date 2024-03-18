@@ -27,5 +27,28 @@ public class Game {
         goldCardDeck.initVisibleCards();
     }
 
+    public void initStarterCard(){
+        ArrayList<PlayableCard> starterCards = new ArrayList<>(XMLparser.parseStarterCards("starterCards.xml"));
+        Collections.shuffle(starterCards);
+        this.giveInitialCards(starterCards);
+    }
+
+    private void giveInitialCards(ArrayList<PlayableCard> starterCards) {
+        // metodo fittizio per mandare le due carte tra cui sscegliere ai player nel controller: giveStartercardPlayer(PlayableCard c1, PlayableCard c2, Player p);
+        /*for(int i=0;i<players.size(); i++){
+            res = chooseStarterCardPlayer(starterCards.get(i), starterCards.get(i+1), players.get(i));
+            players.get(i).setStarterCard(res);
+        }*/
+
+
+    }
+
+    public void chooseStarterCard(boolean front, Player p){
+        p.positionStarterCard(front);
+    }
+
+
+
+
 
 }
