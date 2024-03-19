@@ -5,10 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f1718e31-e987-4e2f-8344-5ece8d6aa868" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/goldCards.xml" beforeDir="false" afterPath="$PROJECT_DIR$/goldCards.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/objectiveCards.xml" beforeDir="false" afterPath="$PROJECT_DIR$/objectiveCards.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/util/XMLparser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/util/XMLparser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../uml_1.mdj" beforeDir="false" afterPath="$PROJECT_DIR$/../uml_1.mdj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resourceCards.xml" beforeDir="false" afterPath="$PROJECT_DIR$/resourceCards.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/starterCards.xml" beforeDir="false" afterPath="$PROJECT_DIR$/starterCards.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,7 +97,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-21.0.1-openjdk-21.0.1-4caba194b151-9b16c6e2" />
+        <option value="jdk-21.0.2-openjdk-21.0.2-4caba194b151-4f524021" />
       </set>
     </attachedChunks>
   </component>
@@ -121,6 +121,7 @@
       <workItem from="1710795847322" duration="1168000" />
       <workItem from="1710851675798" duration="688000" />
       <workItem from="1710856790368" duration="2822000" />
+      <workItem from="1710861131972" duration="2445000" />
     </task>
     <servers />
   </component>

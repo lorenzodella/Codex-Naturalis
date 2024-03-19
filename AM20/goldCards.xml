@@ -1,5 +1,6 @@
 <goldCards>
     <objectGoldCard>
+        <id>41</id>
         <frontCorner pos="1"/>
         <frontCorner pos="2"/>
         <frontCorner pos="3" obj="Quill"/>
@@ -16,6 +17,7 @@
     </objectGoldCard>
 
     <objectGoldCard>
+        <id>42</id>
         <frontCorner pos="0"/>
         <frontCorner pos="1" obj="Inkwell"/>
         <frontCorner pos="3"/>
@@ -32,6 +34,7 @@
     </objectGoldCard>
 
     <objectGoldCard>
+        <id>43</id>
         <frontCorner pos="0" obj="Manuscript"/>
         <frontCorner pos="1"/>
         <frontCorner pos="2"/>
@@ -48,6 +51,7 @@
     </objectGoldCard>
 
     <objectGoldCard>
+        <id>51</id>
         <frontCorner pos="0" obj="Quill"/>
         <frontCorner pos="1"/>
         <frontCorner pos="2"/>
@@ -64,6 +68,7 @@
     </objectGoldCard>
 
     <objectGoldCard>
+        <id>52</id>
         <frontCorner pos="0"/>
         <frontCorner pos="1" obj="Manuscript"/>
         <frontCorner pos="3"/>
@@ -80,6 +85,7 @@
     </objectGoldCard>
 
     <objectGoldCard>
+        <id>53</id>
         <frontCorner pos="0"/>
         <frontCorner pos="2" obj="Inkwell"/>
         <frontCorner pos="3"/>
@@ -96,6 +102,7 @@
     </objectGoldCard>
 
     <objectGoldCard>
+        <id>61</id>
         <frontCorner pos="0" obj="Inkwell"/>
         <frontCorner pos="1"/>
         <frontCorner pos="2"/>
@@ -112,6 +119,7 @@
     </objectGoldCard>
 
     <objectGoldCard>
+        <id>62</id>
         <frontCorner pos="1"/>
         <frontCorner pos="2"/>
         <frontCorner pos="3" obj="Manuscript"/>
@@ -128,6 +136,7 @@
     </objectGoldCard>
 
     <objectGoldCard>
+        <id>63</id>
         <frontCorner pos="0"/>
         <frontCorner pos="2" obj="Quill"/>
         <frontCorner pos="3"/>
@@ -144,6 +153,7 @@
     </objectGoldCard>
 
     <objectGoldCard>
+        <id>71</id>
         <frontCorner pos="0"/>
         <frontCorner pos="1" obj="Quill"/>
         <frontCorner pos="3"/>
@@ -160,6 +170,7 @@
     </objectGoldCard>
 
     <objectGoldCard>
+        <id>72</id>
         <frontCorner pos="0"/>
         <frontCorner pos="2" obj="Manuscript"/>
         <frontCorner pos="3"/>
@@ -176,6 +187,7 @@
     </objectGoldCard>
 
     <objectGoldCard>
+        <id>73</id>
         <frontCorner pos="1"/>
         <frontCorner pos="2"/>
         <frontCorner pos="3" obj="Inkwell"/>
@@ -193,6 +205,7 @@
 
 
     <cornerGoldCard>
+        <id>44</id>
         <frontCorner pos="0"/>
         <frontCorner pos="1"/>
         <frontCorner pos="3"/>
@@ -208,6 +221,7 @@
     </cornerGoldCard>
 
     <cornerGoldCard>
+        <id>45</id>
         <frontCorner pos="0"/>
         <frontCorner pos="1"/>
         <frontCorner pos="2"/>
@@ -223,6 +237,7 @@
     </cornerGoldCard>
 
     <cornerGoldCard>
+        <id>46</id>
         <frontCorner pos="0"/>
         <frontCorner pos="2"/>
         <frontCorner pos="3"/>
@@ -238,6 +253,7 @@
     </cornerGoldCard>
 
     <cornerGoldCard>
+        <id>54</id>
         <frontCorner pos="1"/>
         <frontCorner pos="2"/>
         <frontCorner pos="3"/>
@@ -253,6 +269,7 @@
     </cornerGoldCard>
 
     <cornerGoldCard>
+        <id>55</id>
         <frontCorner pos="0"/>
         <frontCorner pos="1"/>
         <frontCorner pos="2"/>
@@ -268,6 +285,7 @@
     </cornerGoldCard>
 
     <cornerGoldCard>
+        <id>56</id>
         <frontCorner pos="0"/>
         <frontCorner pos="2"/>
         <frontCorner pos="3"/>
@@ -283,6 +301,7 @@
     </cornerGoldCard>
 
     <cornerGoldCard>
+        <id>64</id>
         <frontCorner pos="0"/>
         <frontCorner pos="1"/>
         <frontCorner pos="3"/>
@@ -298,6 +317,7 @@
     </cornerGoldCard>
 
     <cornerGoldCard>
+        <id>65</id>
         <frontCorner pos="0"/>
         <frontCorner pos="2"/>
         <frontCorner pos="3"/>
@@ -313,6 +333,7 @@
     </cornerGoldCard>
 
     <cornerGoldCard>
+        <id>66</id>
         <frontCorner pos="1"/>
         <frontCorner pos="2"/>
         <frontCorner pos="3"/>
@@ -328,6 +349,7 @@
     </cornerGoldCard>
 
     <cornerGoldCard>
+        <id>74</id>
         <frontCorner pos="0"/>
         <frontCorner pos="1"/>
         <frontCorner pos="3"/>
@@ -343,6 +365,7 @@
     </cornerGoldCard>
 
     <cornerGoldCard>
+        <id>75</id>
         <frontCorner pos="0"/>
         <frontCorner pos="1"/>
         <frontCorner pos="2"/>
@@ -358,6 +381,7 @@
     </cornerGoldCard>
 
     <cornerGoldCard>
+        <id>76</id>
         <frontCorner pos="0"/>
         <frontCorner pos="2"/>
         <frontCorner pos="3"/>
@@ -375,6 +399,7 @@
 
 
     <pointsGoldCard>
+        <id>47</id>
         <frontCorner pos="0"/>
         <frontCorner pos="2" obj="Inkwell"/>
         <backCorner pos="0"/>
@@ -389,6 +414,7 @@
     </pointsGoldCard>
 
     <pointsGoldCard>
+        <id>48</id>
         <frontCorner pos="0" obj="Quill"/>
         <frontCorner pos="1"/>
         <backCorner pos="0"/>
@@ -403,6 +429,7 @@
     </pointsGoldCard>
 
     <pointsGoldCard>
+        <id>49</id>
         <frontCorner pos="1" obj="Manuscript"/>
         <frontCorner pos="3"/>
         <backCorner pos="0"/>
@@ -417,6 +444,7 @@
     </pointsGoldCard>
 
     <pointsGoldCard>
+        <id>50</id>
         <frontCorner pos="0"/>
         <frontCorner pos="2"/>
         <backCorner pos="0"/>
@@ -431,6 +459,7 @@
     </pointsGoldCard>
 
     <pointsGoldCard>
+        <id>57</id>
         <frontCorner pos="0"/>
         <frontCorner pos="2" obj="Quill"/>
         <backCorner pos="0"/>
@@ -445,6 +474,7 @@
     </pointsGoldCard>
 
     <pointsGoldCard>
+        <id>58</id>
         <frontCorner pos="0" obj="Manuscript"/>
         <frontCorner pos="1"/>
         <backCorner pos="0"/>
@@ -459,6 +489,7 @@
     </pointsGoldCard>
 
     <pointsGoldCard>
+        <id>59</id>
         <frontCorner pos="1" obj="Inkwell"/>
         <frontCorner pos="3"/>
         <backCorner pos="0"/>
@@ -473,6 +504,7 @@
     </pointsGoldCard>
 
     <pointsGoldCard>
+        <id>60</id>
         <frontCorner pos="0"/>
         <frontCorner pos="1"/>
         <backCorner pos="0"/>
@@ -487,6 +519,7 @@
     </pointsGoldCard>
 
     <pointsGoldCard>
+        <id>67</id>
         <frontCorner pos="0"/>
         <frontCorner pos="2" obj="Manuscript"/>
         <backCorner pos="0"/>
@@ -501,6 +534,7 @@
     </pointsGoldCard>
 
     <pointsGoldCard>
+        <id>68</id>
         <frontCorner pos="0"/>
         <frontCorner pos="1" obj="Inkwell"/>
         <backCorner pos="0"/>
@@ -515,6 +549,7 @@
     </pointsGoldCard>
 
     <pointsGoldCard>
+        <id>69</id>
         <frontCorner pos="1"/>
         <frontCorner pos="3" obj="Quill"/>
         <backCorner pos="0"/>
@@ -529,6 +564,7 @@
     </pointsGoldCard>
 
     <pointsGoldCard>
+        <id>70</id>
         <frontCorner pos="1"/>
         <frontCorner pos="3"/>
         <backCorner pos="0"/>
@@ -543,6 +579,7 @@
     </pointsGoldCard>
 
     <pointsGoldCard>
+        <id>77</id>
         <frontCorner pos="0" obj="Inkwell"/>
         <frontCorner pos="2"/>
         <backCorner pos="0"/>
@@ -557,6 +594,7 @@
     </pointsGoldCard>
 
     <pointsGoldCard>
+        <id>78</id>
         <frontCorner pos="0"/>
         <frontCorner pos="1" obj="Manuscript"/>
         <backCorner pos="0"/>
@@ -571,6 +609,7 @@
     </pointsGoldCard>
 
     <pointsGoldCard>
+        <id>79</id>
         <frontCorner pos="2" obj="Quill"/>
         <frontCorner pos="3"/>
         <backCorner pos="0"/>
@@ -585,6 +624,7 @@
     </pointsGoldCard>
 
     <pointsGoldCard>
+        <id>80</id>
         <frontCorner pos="0"/>
         <frontCorner pos="1"/>
         <backCorner pos="0"/>
