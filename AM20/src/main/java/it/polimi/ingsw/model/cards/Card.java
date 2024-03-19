@@ -9,6 +9,8 @@ public abstract class Card {
         this.ID = ID;
     }
 
+    public String getID(){return this.ID;}
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

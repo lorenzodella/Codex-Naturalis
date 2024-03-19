@@ -2,6 +2,7 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
+import it.polimi.ingsw.model.cards.playable.StarterCard;
 import it.polimi.ingsw.model.util.XMLparser;
 
 import java.util.ArrayList;
@@ -34,12 +35,23 @@ public class Game {
     public void initStarterCard(){
         ArrayList<PlayableCard> starterCards = XMLparser.parseStarterCards("starterCards.xml");
         Collections.shuffle(starterCards);
-        this.giveInitialCards(starterCards);
+        //this.giveInitialCards(starterCards);
+        //metodo del controller che dice al gicoatore scegli quale deelle due starterCard HP: metodo chiamto PlayableCard selStarterCard(PlayableCard c1, PlayableCard c2, Player p)
+
+
+        for(int i=0; i<players.size();i++){
+            players.get(i).setStarterCard((StarterCard)starterCards.get(i));
+        }
+
     }
 
+    //TODO:
     private void giveInitialCards(ArrayList<PlayableCard> starterCards) {
+
+
+        /*
         // metodo fittizio per mandare le due carte tra cui sscegliere ai player nel controller: giveStartercardPlayer(PlayableCard c1, PlayableCard c2, Player p);
-        /*for(int i=0;i<players.size(); i++){
+        for(int i=0;i<players.size(); i++){
             res = chooseStarterCardPlayer(starterCards.get(i), starterCards.get(i+1), players.get(i));
             players.get(i).setStarterCard(res);
         }*/
@@ -47,12 +59,8 @@ public class Game {
 
     }
 
-    public void chooseStarterCard(boolean front, Player p){
+    public void chooseStarterCardSide(int front, Player p){
         p.positionStarterCard(front);
     }
-
-
-
-
 
 }

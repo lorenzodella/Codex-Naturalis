@@ -1,14 +1,11 @@
 package it.polimi.ingsw.model.cards.objective;
 
-import it.polimi.ingsw.model.ConfigurationFinder;
 import it.polimi.ingsw.model.cards.Kingdom;
-import it.polimi.ingsw.model.cards.playable.PlayableCard;
-import it.polimi.ingsw.model.util.DynamicMatrix;
 import it.polimi.ingsw.model.PlayerTable;
 
 import java.util.Objects;
 
-public class VerticalConfigurationObjectiveCard extends ObjectiveCard implements ConfigurationFinder {
+public class VerticalConfigurationObjectiveCard extends ObjectiveCard {
     private Kingdom kingdom1;
     private Kingdom kingdom2;
     private int coveredCorner;
@@ -42,11 +39,6 @@ public class VerticalConfigurationObjectiveCard extends ObjectiveCard implements
                 ", kingdom2=" + kingdom2 +
                 ", coveredCorner=" + coveredCorner +
                 "}";
-    }
-
-    @Override
-    public int findConfiguration(DynamicMatrix<String, PlayableCard> mat) {
-        return 0;
     }
 
     @Override

@@ -34,12 +34,12 @@ class ResourceCardTest {
         assertEquals(map, resourceCard.getKingdoms());
 
         //hide a corner
-        resourceCard.getFrontCorners()[1].setHidden(true);
+        resourceCard.getFrontCorners()[Corner.UR].setHidden(true);
         map = Kingdom.createEmptyMap();
         assertEquals(map, resourceCard.getKingdoms());
 
         //turn card to the back
-        resourceCard.setFront(false);
+        resourceCard.setFront(PlayableCard.BACK);
         map = Kingdom.createEmptyMap();
         map.put(Kingdom.Animal, 1);
         assertEquals(map, resourceCard.getKingdoms());
@@ -53,7 +53,7 @@ class ResourceCardTest {
         assertEquals(map, resourceCard.getSpecialObjects());
 
         //turn card to the back
-        resourceCard.setFront(false);
+        resourceCard.setFront(PlayableCard.BACK);
         map = SpecialObject.createEmptyMap();
         assertEquals(map, resourceCard.getSpecialObjects());
     }

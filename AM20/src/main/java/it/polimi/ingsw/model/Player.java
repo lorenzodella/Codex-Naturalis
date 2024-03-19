@@ -12,14 +12,20 @@ public class Player {
     private ObjectiveCard[] secretObjective;
     private PlayerTable table;
 
-    public Player(int score, String nickname, PlayableCard[] cards, StarterCard starterCard, ObjectiveCard[] secretObjective, PlayerTable table) {
+    public Player(String nickname){
+        this.nickname = nickname;
+        this.score = 0;
+        this.table = new PlayerTable();
+    }
+
+    /*public Player(int score, String nickname, PlayableCard[] cards, StarterCard starterCard, ObjectiveCard[] secretObjective, PlayerTable table) {
         this.score = score;
         this.nickname = nickname;
         this.cards = cards;
         this.starterCard = starterCard;
         this.secretObjective = secretObjective;
         this.table = table;
-    }
+    }*/
 
     public void setStarterCard(StarterCard starterCard) {
         this.starterCard = starterCard;
@@ -29,7 +35,9 @@ public class Player {
         return starterCard;
     }
 
-    public void positionStarterCard(boolean front){
-        //table.insertStarterCard(front, this.starterCard);
+    public void positionStarterCard(int front){
+
+        table.insertStarterCard(front, this.starterCard);
+        this.starterCard.setFront(front);
     }
 }

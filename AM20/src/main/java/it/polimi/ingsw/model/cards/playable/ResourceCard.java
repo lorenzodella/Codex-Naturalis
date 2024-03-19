@@ -44,7 +44,7 @@ public class ResourceCard extends PlayableCard implements PointsProvider {
 
     @Override
     public HashMap<Kingdom, Integer> getKingdoms(){
-        if(isFront())
+        if(getSide() == PlayableCard.FRONT)
             return super.getKingdoms();
         else {
             HashMap<Kingdom, Integer> res = Kingdom.createEmptyMap();
@@ -55,7 +55,7 @@ public class ResourceCard extends PlayableCard implements PointsProvider {
 
     @Override
     public HashMap<SpecialObject, Integer> getSpecialObjects(){
-        if(isFront())
+        if(getSide() == PlayableCard.FRONT)
             return super.getSpecialObjects();
         else {
             return SpecialObject.createEmptyMap();

@@ -23,6 +23,10 @@ public class StarterCard extends PlayableCard{
         return Objects.equals(resources, that.resources);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int hashCode() {
         return Objects.hash(resources);
@@ -36,12 +40,16 @@ public class StarterCard extends PlayableCard{
                 "}";
     }
 
+    /*public String getID(){
+        return
+    }*/
+
 
     // TODO: da controllare e da fare JAVADoc e da fare testing (forse si può snellire il codice)
     @Override
     public HashMap<Kingdom, Integer> getKingdoms(){
         HashMap<Kingdom, Integer> res = new HashMap<>(super.getKingdoms());
-        if(isFront())
+        if(getSide() == PlayableCard.FRONT)
             for(Kingdom kingdom : resources){
                 res.computeIfPresent(kingdom, (k,v)->v+1);
             }

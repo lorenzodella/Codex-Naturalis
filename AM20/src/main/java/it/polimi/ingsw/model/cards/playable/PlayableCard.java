@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.cards.playable;
 
+import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.cards.Card;
 import it.polimi.ingsw.model.cards.Corner;
 import it.polimi.ingsw.model.cards.Kingdom;
@@ -9,17 +10,21 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 public abstract class PlayableCard extends Card {
+    public static int FRONT = 1;
+    public static int BACK = 0;
     // playableCard è abstract Class
     private Corner[] frontCorners;
     private Corner[] backCorners;
-    private boolean front;
+    private int side;
 
     public PlayableCard(String ID, Corner[] frontCorners, Corner[] backCorners) {
         super(ID);
         this.frontCorners = frontCorners;
         this.backCorners = backCorners;
-        this.front = true;
+        this.side = FRONT;
     }
+
+
 
     public Corner[] getFrontCorners() {
         return frontCorners;
@@ -29,17 +34,19 @@ public abstract class PlayableCard extends Card {
         return backCorners;
     }
 
-    public boolean isFront() {
-        return front;
+    public int getSide() {
+        return side;
     }
 
-    public void setFront(boolean isFront){
-        front = isFront;
+    public void setFront(int side){
+        this.side = side;
     }
+
+    //public abstract String getID();
 
     public HashMap<Kingdom, Integer> getKingdoms(){
         HashMap<Kingdom, Integer> map = Kingdom.createEmptyMap();
-        for (Corner corner : isFront() ? getFrontCorners() : getBackCorners()){
+        for (Corner corner : getSide() == PlayableCard.FRONT ? getFrontCorners() : getBackCorners()){
             if(corner!=null && !corner.isHidden()) {
                 map.computeIfPresent(corner.getContentKingdom(), (k,v)->v+1);
             }
@@ -48,7 +55,7 @@ public abstract class PlayableCard extends Card {
     }
     public HashMap<SpecialObject, Integer> getSpecialObjects(){
         HashMap<SpecialObject, Integer> map = SpecialObject.createEmptyMap();
-        for (Corner corner : isFront() ? getFrontCorners() : getBackCorners()){
+        for (Corner corner : getSide() == PlayableCard.FRONT ? getFrontCorners() : getBackCorners()){
             if(corner!=null && !corner.isHidden()) {
                 map.computeIfPresent(corner.getContentObject(), (k,v)->v+1);
             }

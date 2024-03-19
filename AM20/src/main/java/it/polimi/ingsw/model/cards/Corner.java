@@ -3,6 +3,10 @@ package it.polimi.ingsw.model.cards;
 import java.util.Objects;
 
 public class Corner {
+    public static int UL = 0;
+    public static int UR = 1;
+    public static int DL = 2;
+    public static int DR = 3;
     private SpecialObject contentObject;
     private Kingdom contentKingdom;
     private boolean hidden;
