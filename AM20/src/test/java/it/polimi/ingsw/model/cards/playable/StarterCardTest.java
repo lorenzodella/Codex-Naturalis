@@ -39,7 +39,7 @@ class StarterCardTest {
         assertEquals(map, s.getKingdoms());
 
         //turn card to the back
-        s.setFront(PlayableCard.BACK);
+        s.setSide(PlayableCard.BACK);
         map.put(Kingdom.Fungi, 1);
         map.put(Kingdom.Animal, 1);
         map.put(Kingdom.Plant, 1);

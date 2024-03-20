@@ -38,6 +38,6 @@ public class Player {
     public void positionStarterCard(int front){
 
         table.insertStarterCard(front, this.starterCard);
-        this.starterCard.setFront(front);
+        this.starterCard.setSide(front);
     }
 }

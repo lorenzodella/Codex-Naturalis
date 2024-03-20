@@ -6,8 +6,8 @@ import it.polimi.ingsw.model.exceptions.TargetNotPresentException;
 import java.util.LinkedList;
 
 /**
- * Dynamic matrix which changes it size after every insert operation, so that it is always present
- * one empty row above and below, one empty column to the left and to the right
+ * Dynamic matrix which changes it size before every insert operation
+ * in order to use as little space as possible
  * @param <K> type of the elements key of the matrix
  * @param <T> type of the elements of the matrix
  */
@@ -32,10 +32,6 @@ public class DynamicMatrix<K,T> {
         mat = new LinkedList<>();
         mat.add(new LinkedList<>());
         mat.get(0).add(new MatrixElement<>(key, centerEl));
-        addColumnDX();
-        addColumnSX();
-        addRowDOWN();
-        addRowUP();
     }
 
     /**
@@ -58,7 +54,7 @@ public class DynamicMatrix<K,T> {
      * Insert an element in the matrix. Position is related to the target object.
      * @param key key of the element
      * @param el element to be inserted
-     * @param targetKey object near which the element must be inserted
+     * @param targetKey key of the object near which the element must be inserted
      * @param pos 0 = one cell on the left, 1 = one cell on the right and one above,
      *            2 = one cell on the left and one below, 3 = one cell on the right
      * @throws TargetNotPresentException if target object is not present
@@ -86,6 +82,38 @@ public class DynamicMatrix<K,T> {
     }
 
     /**
+     * Get the element at a certain position relative to a particular object
+     * @param targetKey key of the object near which the element is
+     * @param pos 0 = one cell on the left, 1 = one cell on the right and one above,
+     *            2 = one cell on the left and one below, 3 = one cell on the right
+     * @return element at that position
+     * @throws TargetNotPresentException if target object is not present
+     * @throws InvalidPositionException if pos is not a valid value
+     */
+    public T get(K targetKey, int pos) throws TargetNotPresentException, InvalidPositionException {
+        int[] p = find(targetKey);
+        int i = p[0]; int j = p[1];
+        MatrixElement<K,T> tmp;
+        switch (pos) {
+            case 0:
+                tmp = getL(i, j);
+                break;
+            case 1:
+                tmp = getUR(i, j);
+                break;
+            case 2:
+                tmp = getDL(i, j);
+                break;
+            case 3:
+                tmp = getR(i, j);
+                break;
+            default:
+                throw new InvalidPositionException();
+        }
+        return tmp!=null ? tmp.value : null;
+    }
+
+    /**
      * Find the coordinates of an element in the matrix.
      * @param targetKey key of the element to be found
      * @return an array of two elements: number of row and number of column of the found element
@@ -93,7 +121,7 @@ public class DynamicMatrix<K,T> {
      */
     public int[] find(K targetKey) throws TargetNotPresentException {
         for (int i=0; i<mat.size(); i++) {
-            for (int j=0; j<3; j++) {
+            for (int j=0; j<mat.get(0).size(); j++) {
                 if(mat.get(i).get(j)!=null && mat.get(i).get(j).key.equals(targetKey)){
                     int[] pos = new int[2];
                     pos[0] = i;
@@ -112,9 +140,9 @@ public class DynamicMatrix<K,T> {
      * @param j column of given cell
      */
     private void putL(MatrixElement<K,T> el, int i, int j) {
-        mat.get(i).set(j-1, el);
-        if(j-1 == 0)
-            addColumnSX();
+        if(j == 0) addColumnSX();
+        else j--;
+        mat.get(i).set(j, el);
     }
 
     /**
@@ -124,11 +152,10 @@ public class DynamicMatrix<K,T> {
      * @param j column of given cell
      */
     private void putUR(MatrixElement<K,T> el, int i, int j){
-        mat.get(i-1).set(j+1, el);
-        if(j+1 == mat.get(0).size()-1)
-            addColumnDX();
-        if(i-1 == 0)
-            addRowUP();
+        if(j == mat.get(0).size()-1) addColumnDX();
+        if(i == 0) addRowUP();
+        else i--;
+        mat.get(i).set(j+1, el);
     }
 
     /**
@@ -138,11 +165,10 @@ public class DynamicMatrix<K,T> {
      * @param j column of given cell
      */
     private void putDL(MatrixElement<K,T> el, int i, int j){
-        mat.get(i+1).set(j-1, el);
-        if(j-1 == 0)
-            addColumnSX();
-        if(i+1 == mat.size()-1)
-            addRowDOWN();
+        if(j == 0) addColumnSX();
+        else j--;
+        if(i == mat.size()-1) addRowDOWN();
+        mat.get(i+1).set(j, el);
     }
 
     /**
@@ -152,9 +178,54 @@ public class DynamicMatrix<K,T> {
      * @param j column of given cell
      */
     private void putR(MatrixElement<K,T> el, int i, int j){
+        if(j == mat.get(0).size()-1) addColumnDX();
         mat.get(i).set(j+1, el);
-        if(j+1 == mat.get(0).size()-1)
-            addColumnDX();
+    }
+
+    /**
+     * Get the matrix element one cell on the left of the given cell.
+     * @param i row of given cell
+     * @param j column of given cell
+     * @return the element at that position
+     */
+    private MatrixElement<K,T> getL(int i, int j){
+        if(j == 0) return null;
+        return mat.get(i).get(j-1);
+    }
+
+    /**
+     * Get the matrix element on the right and one above the given cell.
+     * @param i row of given cell
+     * @param j column of given cell
+     * @return the element at that position
+     */
+    private MatrixElement<K,T> getUR(int i, int j){
+        if(j == mat.get(0).size()-1) return null;
+        if(i == 0) return null;
+        return mat.get(i-1).get(j+1);
+    }
+
+    /**
+     * Get the matrix element one cell on the left and one below the given cell.
+     * @param i row of given cell
+     * @param j column of given cell
+     * @return the element at that position
+     */
+    private MatrixElement<K,T> getDL(int i, int j){
+        if(j == 0) return null;
+        if(i == mat.size()-1) return null;
+        return mat.get(i+1).get(j-1);
+    }
+
+    /**
+     * Get the matrix element one cell to the right of the given cell
+     * @param i row of given cell
+     * @param j column of given cell
+     * @return the element at that position
+     */
+    private MatrixElement<K,T> getR(int i, int j){
+        if(j == mat.get(0).size()-1) return null;
+        return  mat.get(i).get(j+1);
     }
 
     /**

@@ -1,6 +1,5 @@
 package it.polimi.ingsw.model.cards.playable;
 
-import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.cards.Card;
 import it.polimi.ingsw.model.cards.Corner;
 import it.polimi.ingsw.model.cards.Kingdom;
@@ -38,7 +37,7 @@ public abstract class PlayableCard extends Card {
         return side;
     }
 
-    public void setFront(int side){
+    public void setSide(int side){
         this.side = side;
     }
 
