@@ -1,0 +1,88 @@
+<starterCards>
+    <starterCard>
+        <frontCorner pos="0"/>
+        <frontCorner pos="1" res="Plant"/>
+        <frontCorner pos="2" res="Insect"/>
+        <frontCorner pos="3"/>
+        <backCorner pos="0" res="Fungi"/>
+        <backCorner pos="1" res="Plant"/>
+        <backCorner pos="2" res="Insect"/>
+        <backCorner pos="3" res="Animal"/>
+        <resources>
+            <Insect/>
+        </resources>
+    </starterCard>
+
+    <starterCard>
+        <frontCorner pos="0" res="Animal"/>
+        <frontCorner pos="1"/>
+        <frontCorner pos="2"/>
+        <frontCorner pos="3" res="Fungi"/>
+        <backCorner pos="0" res="Plant"/>
+        <backCorner pos="1" res="Animal"/>
+        <backCorner pos="2" res="Fungi"/>
+        <backCorner pos="3" res="Insect"/>
+        <resources>
+            <Fungi/>
+        </resources>
+    </starterCard>
+
+    <starterCard>
+        <frontCorner pos="0"/>
+        <frontCorner pos="1"/>
+        <frontCorner pos="2"/>
+        <frontCorner pos="3"/>
+        <backCorner pos="0" res="Insect"/>
+        <backCorner pos="1" res="Animal"/>
+        <backCorner pos="2" res="Fungi"/>
+        <backCorner pos="3" res="Plant"/>
+        <resources>
+            <Plant/>
+            <Fungi/>
+        </resources>
+    </starterCard>
+
+    <starterCard>
+        <frontCorner pos="0"/>
+        <frontCorner pos="1"/>
+        <frontCorner pos="2"/>
+        <frontCorner pos="3"/>
+        <backCorner pos="0" res="Plant"/>
+        <backCorner pos="1" res="Insect"/>
+        <backCorner pos="2" res="Animal"/>
+        <backCorner pos="3" res="Fungi"/>
+        <resources>
+            <Animal/>
+            <Insect/>
+        </resources>
+    </starterCard>
+
+    <starterCard>
+        <frontCorner pos="0"/>
+        <frontCorner pos="1"/>
+        <backCorner pos="0" res="Insect"/>
+        <backCorner pos="1" res="Fungi"/>
+        <backCorner pos="2" res="Plant"/>
+        <backCorner pos="3" res="Animal"/>
+        <resources>
+            <Animal/>
+            <Insect/>
+            <Plant/>
+        </resources>
+    </starterCard>
+
+    <starterCard>
+        <frontCorner pos="0"/>
+        <frontCorner pos="1"/>
+        <backCorner pos="0" res="Fungi"/>
+        <backCorner pos="1" res="Animal"/>
+        <backCorner pos="2" res="Plant"/>
+        <backCorner pos="3" res="Insect"/>
+        <resources>
+            <Plant/>
+            <Animal/>
+            <Fungi/>
+        </resources>
+    </starterCard>
+
+</starterCards>

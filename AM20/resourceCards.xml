@@ -1,0 +1,483 @@
+<resourceCards>
+    <resourceCard>
+        <frontCorner pos="0" res="Fungi"/>
+        <frontCorner pos="1"/>
+        <frontCorner pos="2" res="Fungi"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Fungi</kingdom>
+        <points>0</points>
+    </resourceCard>
+
+    <resourceCard>
+        <frontCorner pos="0" res="Fungi"/>
+        <frontCorner pos="1" res="Fungi"/>
+        <frontCorner pos="3"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Fungi</kingdom>
+        <points>0</points>
+    </resourceCard>
+
+    <resourceCard>
+        <frontCorner pos="0"/>
+        <frontCorner pos="2" res="Fungi"/>
+        <frontCorner pos="3" res="Fungi"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Fungi</kingdom>
+        <points>0</points>
+    </resourceCard>
+
+    <resourceCard>
+        <frontCorner pos="1" res="Fungi"/>
+        <frontCorner pos="2"/>
+        <frontCorner pos="3" res="Fungi"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Fungi</kingdom>
+        <points>0</points>
+    </resourceCard>
+
+    <resourceCard>
+        <frontCorner pos="1" obj="Quill"/>
+        <frontCorner pos="2" res="Plant"/>
+        <frontCorner pos="3" res="Fungi"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Fungi</kingdom>
+        <points>0</points>
+    </resourceCard>
+
+    <resourceCard>
+        <frontCorner pos="0" obj="Inkwell"/>
+        <frontCorner pos="1" res="Fungi"/>
+        <frontCorner pos="3" res="Animal"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Fungi</kingdom>
+        <points>0</points>
+    </resourceCard>
+
+    <resourceCard>
+        <frontCorner pos="0" res="Fungi"/>
+        <frontCorner pos="1" res="Insect"/>
+        <frontCorner pos="2" obj="Manuscript"/>
+        <frontCorner pos="3"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Fungi</kingdom>
+        <points>0</points>
+    </resourceCard>
+
+    <resourceCard>
+        <frontCorner pos="0"/>
+        <frontCorner pos="1" res="Fungi"/>
+        <frontCorner pos="2"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Fungi</kingdom>
+        <points>1</points>
+    </resourceCard>
+
+    <resourceCard>
+        <frontCorner pos="0" res="Fungi"/>
+        <frontCorner pos="2"/>
+        <frontCorner pos="3"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Fungi</kingdom>
+        <points>1</points>
+    </resourceCard>
+
+    <resourceCard>
+        <frontCorner pos="1"/>
+        <frontCorner pos="2" res="Fungi"/>
+        <frontCorner pos="3"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Fungi</kingdom>
+        <points>1</points>
+    </resourceCard>
+
+    <resourceCard>
+        <frontCorner pos="0" res="Plant"/>
+        <frontCorner pos="1"/>
+        <frontCorner pos="2" res="Plant"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Plant</kingdom>
+        <points>0</points>
+    </resourceCard>
+
+    <resourceCard>
+        <frontCorner pos="0" res="Plant"/>
+        <frontCorner pos="1" res="Plant"/>
+        <frontCorner pos="3"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Plant</kingdom>
+        <points>0</points>
+    </resourceCard>
+
+    <resourceCard>
+        <frontCorner pos="0"/>
+        <frontCorner pos="2" res="Plant"/>
+        <frontCorner pos="3"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Plant</kingdom>
+        <points>0</points>
+    </resourceCard>
+
+    <resourceCard>
+        <frontCorner pos="1" res="Plant"/>
+        <frontCorner pos="2"/>
+        <frontCorner pos="3" res="Plant"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Plant</kingdom>
+        <points>0</points>
+    </resourceCard>
+
+    <resourceCard>
+        <frontCorner pos="1" res="Insect"/>
+        <frontCorner pos="2" obj="Quill"/>
+        <frontCorner pos="3" res="Plant"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Plant</kingdom>
+        <points>0</points>
+    </resourceCard>
+
+    <resourceCard>
+        <frontCorner pos="0" res="Fungi"/>
+        <frontCorner pos="1" res="Plant"/>
+        <frontCorner pos="3" obj="Inkwell"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Plant</kingdom>
+        <points>0</points>
+    </resourceCard>
+
+    <resourceCard>
+        <frontCorner pos="0" obj="Manuscript"/>
+        <frontCorner pos="2" res="Plant"/>
+        <frontCorner pos="3" res="Animal"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Plant</kingdom>
+        <points>0</points>
+    </resourceCard>
+
+    <resourceCard>
+        <frontCorner pos="0"/>
+        <frontCorner pos="1"/>
+        <frontCorner pos="2" res="Plant"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Plant</kingdom>
+        <points>1</points>
+    </resourceCard>
+
+    <resourceCard>
+        <frontCorner pos="0"/>
+        <frontCorner pos="1"/>
+        <frontCorner pos="3" res="Plant"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Plant</kingdom>
+        <points>1</points>
+    </resourceCard>
+
+    <resourceCard>
+        <frontCorner pos="1" res="Plant"/>
+        <frontCorner pos="2"/>
+        <frontCorner pos="3"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Plant</kingdom>
+        <points>1</points>
+    </resourceCard>
+
+    <resourceCard>
+        <frontCorner pos="0" res="Animal"/>
+        <frontCorner pos="1" res="Animal"/>
+        <frontCorner pos="2"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Animal</kingdom>
+        <points>0</points>
+    </resourceCard>
+
+    <resourceCard>
+        <frontCorner pos="1"/>
+        <frontCorner pos="2" res="Animal"/>
+        <frontCorner pos="3" res="Animal"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Animal</kingdom>
+        <points>0</points>
+    </resourceCard>
+
+    <resourceCard>
+        <frontCorner pos="0" res="Animal"/>
+        <frontCorner pos="2" res="Animal"/>
+        <frontCorner pos="3"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Animal</kingdom>
+        <points>0</points>
+    </resourceCard>
+
+    <resourceCard>
+        <frontCorner pos="0"/>
+        <frontCorner pos="1" res="Animal"/>
+        <frontCorner pos="3" res="Animal"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Animal</kingdom>
+        <points>0</points>
+    </resourceCard>
+
+    <resourceCard>
+        <frontCorner pos="1" res="Insect"/>
+        <frontCorner pos="2" obj="Inkwell"/>
+        <frontCorner pos="3" res="Animal"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Animal</kingdom>
+        <points>0</points>
+    </resourceCard>
+
+    <resourceCard>
+        <frontCorner pos="0" res="Plant"/>
+        <frontCorner pos="1" res="Animal"/>
+        <frontCorner pos="3" obj="Manuscript"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Animal</kingdom>
+        <points>0</points>
+    </resourceCard>
+
+    <resourceCard>
+        <frontCorner pos="0" obj="Quill"/>
+        <frontCorner pos="2" res="Animal"/>
+        <frontCorner pos="3" res="Fungi"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Animal</kingdom>
+        <points>0</points>
+    </resourceCard>
+
+    <resourceCard>
+        <frontCorner pos="1"/>
+        <frontCorner pos="2" res="Animal"/>
+        <frontCorner pos="3"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Animal</kingdom>
+        <points>1</points>
+    </resourceCard>
+
+    <resourceCard>
+        <frontCorner pos="0"/>
+        <frontCorner pos="2"/>
+        <frontCorner pos="3" res="Animal"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Animal</kingdom>
+        <points>1</points>
+    </resourceCard>
+
+    <resourceCard>
+        <frontCorner pos="0"/>
+        <frontCorner pos="1" res="Animal"/>
+        <frontCorner pos="2"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Animal</kingdom>
+        <points>1</points>
+    </resourceCard>
+
+    <resourceCard>
+        <frontCorner pos="0" res="Insect"/>
+        <frontCorner pos="1" res="Insect"/>
+        <frontCorner pos="2"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Insect</kingdom>
+        <points>0</points>
+    </resourceCard>
+
+    <resourceCard>
+        <frontCorner pos="1"/>
+        <frontCorner pos="2" res="Insect"/>
+        <frontCorner pos="3" res="Insect"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Insect</kingdom>
+        <points>0</points>
+    </resourceCard>
+
+    <resourceCard>
+        <frontCorner pos="0" res="Insect"/>
+        <frontCorner pos="2" res="Insect"/>
+        <frontCorner pos="3"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Insect</kingdom>
+        <points>0</points>
+    </resourceCard>
+
+    <resourceCard>
+        <frontCorner pos="0"/>
+        <frontCorner pos="1" res="Insect"/>
+        <frontCorner pos="3" res="Insect"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Insect</kingdom>
+        <points>0</points>
+    </resourceCard>
+
+    <resourceCard>
+        <frontCorner pos="1" obj="Quill"/>
+        <frontCorner pos="2" res="Animal"/>
+        <frontCorner pos="3" res="Insect"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Insect</kingdom>
+        <points>0</points>
+    </resourceCard>
+
+    <resourceCard>
+        <frontCorner pos="0" obj="Manuscript"/>
+        <frontCorner pos="1" res="Insect"/>
+        <frontCorner pos="3" res="Fungi"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Insect</kingdom>
+        <points>0</points>
+    </resourceCard>
+
+    <resourceCard>
+        <frontCorner pos="0" res="Insect"/>
+        <frontCorner pos="1" res="Plant"/>
+        <frontCorner pos="2" obj="Inkwell"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Insect</kingdom>
+        <points>0</points>
+    </resourceCard>
+
+    <resourceCard>
+        <frontCorner pos="0" res="Insect"/>
+        <frontCorner pos="2"/>
+        <frontCorner pos="3"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Insect</kingdom>
+        <points>1</points>
+    </resourceCard>
+
+    <resourceCard>
+        <frontCorner pos="0"/>
+        <frontCorner pos="1"/>
+        <frontCorner pos="3" res="Insect"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Insect</kingdom>
+        <points>1</points>
+    </resourceCard>
+
+    <resourceCard>
+        <frontCorner pos="1" res="Insect"/>
+        <frontCorner pos="2"/>
+        <frontCorner pos="3"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <kingdom>Insect</kingdom>
+        <points>1</points>
+    </resourceCard>
+
+</resourceCards>

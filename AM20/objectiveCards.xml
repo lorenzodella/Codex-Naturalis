@@ -1,0 +1,96 @@
+<objectiveCards>
+
+    <pairOfObjectObjectiveCard>
+        <specialObject>Manuscript</specialObject>
+        <points>2</points>
+    </pairOfObjectObjectiveCard>
+
+    <pairOfObjectObjectiveCard>
+        <specialObject>Inkwell</specialObject>
+        <points>2</points>
+    </pairOfObjectObjectiveCard>
+
+    <pairOfObjectObjectiveCard>
+        <specialObject>Quill</specialObject>
+        <points>2</points>
+    </pairOfObjectObjectiveCard>
+
+
+    <trioOfObjectsObjectiveCard>
+        <points> 3 </points>
+    </trioOfObjectsObjectiveCard>
+
+    <trioOfResourcesObjectiveCard>
+        <resorcesKingdom> Insect </resorcesKingdom>
+        <points> 2 </points>
+    </trioOfResourcesObjectiveCard>
+
+    <trioOfResourcesObjectiveCard>
+        <resorcesKingdom> Animal </resorcesKingdom>
+        <points> 2 </points>
+    </trioOfResourcesObjectiveCard>
+
+    <trioOfResourcesObjectiveCard>
+        <resorcesKingdom> Plant </resorcesKingdom>
+        <points> 2 </points>
+    </trioOfResourcesObjectiveCard>
+
+    <trioOfResourcesObjectiveCard>
+        <resorcesKingdom> Fungi </resorcesKingdom>
+        <points> 2 </points>
+    </trioOfResourcesObjectiveCard>
+
+    <verticalConfigurationObjectiveCard>
+        <kingdom1>Animal</kingdom1>
+        <kingdom2>Insect</kingdom2>
+        <coveredCorner>3</coveredCorner>
+        <points>3</points>
+    </verticalConfigurationObjectiveCard>
+
+    <verticalConfigurationObjectiveCard>
+        <kingdom1>Fungi</kingdom1>
+        <kingdom2>Animal</kingdom2>
+        <coveredCorner>2</coveredCorner>
+        <points>3</points>
+    </verticalConfigurationObjectiveCard>
+
+    <verticalConfigurationObjectiveCard>
+        <kingdom1>Insect</kingdom1>
+        <kingdom2>Plant</kingdom2>
+        <coveredCorner>1</coveredCorner>
+        <points>3</points>
+    </verticalConfigurationObjectiveCard>
+
+    <verticalConfigurationObjectiveCard>
+        <kingdom1>Plant</kingdom1>
+        <kingdom2>Fungi</kingdom2>
+        <coveredCorner>0</coveredCorner>
+        <points>3</points>
+    </verticalConfigurationObjectiveCard>
+
+
+    <diagonalConfigurationObjectiveCard>
+        <kingdom>Insect</kingdom>
+        <coveredCorner>3</coveredCorner>
+        <points>2</points>
+    </diagonalConfigurationObjectiveCard>
+
+    <diagonalConfigurationObjectiveCard>
+        <kingdom>Animal</kingdom>
+        <coveredCorner>2</coveredCorner>
+        <points>2</points>
+    </diagonalConfigurationObjectiveCard>
+
+    <diagonalConfigurationObjectiveCard>
+        <kingdom>Plant</kingdom>
+        <coveredCorner>3</coveredCorner>
+        <points>2</points>
+    </diagonalConfigurationObjectiveCard>
+
+    <diagonalConfigurationObjectiveCard>
+        <kingdom>Fungi</kingdom>
+        <coveredCorner>2</coveredCorner>
+        <points>2</points>
+    </diagonalConfigurationObjectiveCard>
+
+</objectiveCards>
