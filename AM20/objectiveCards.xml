@@ -1,46 +1,55 @@
 <objectiveCards>
 
     <pairOfObjectObjectiveCard>
+        <id>100</id>
         <specialObject>Manuscript</specialObject>
         <points>2</points>
     </pairOfObjectObjectiveCard>
 
     <pairOfObjectObjectiveCard>
+        <id>101</id>
         <specialObject>Inkwell</specialObject>
         <points>2</points>
     </pairOfObjectObjectiveCard>
 
     <pairOfObjectObjectiveCard>
+        <id>102</id>
         <specialObject>Quill</specialObject>
         <points>2</points>
     </pairOfObjectObjectiveCard>
 
 
     <trioOfObjectsObjectiveCard>
+        <id>99</id>
         <points> 3 </points>
     </trioOfObjectsObjectiveCard>
 
     <trioOfResourcesObjectiveCard>
+        <id>98</id>
         <resorcesKingdom> Insect </resorcesKingdom>
         <points> 2 </points>
     </trioOfResourcesObjectiveCard>
 
     <trioOfResourcesObjectiveCard>
+        <id>97</id>
         <resorcesKingdom> Animal </resorcesKingdom>
         <points> 2 </points>
     </trioOfResourcesObjectiveCard>
 
     <trioOfResourcesObjectiveCard>
+        <id>96</id>
         <resorcesKingdom> Plant </resorcesKingdom>
         <points> 2 </points>
     </trioOfResourcesObjectiveCard>
 
     <trioOfResourcesObjectiveCard>
+        <id>95</id>
         <resorcesKingdom> Fungi </resorcesKingdom>
         <points> 2 </points>
     </trioOfResourcesObjectiveCard>
 
     <verticalConfigurationObjectiveCard>
+        <id>94</id>
         <kingdom1>Animal</kingdom1>
         <kingdom2>Insect</kingdom2>
         <coveredCorner>3</coveredCorner>
@@ -48,6 +57,7 @@
     </verticalConfigurationObjectiveCard>
 
     <verticalConfigurationObjectiveCard>
+        <id>93</id>
         <kingdom1>Fungi</kingdom1>
         <kingdom2>Animal</kingdom2>
         <coveredCorner>2</coveredCorner>
@@ -55,6 +65,7 @@
     </verticalConfigurationObjectiveCard>
 
     <verticalConfigurationObjectiveCard>
+        <id>92</id>
         <kingdom1>Insect</kingdom1>
         <kingdom2>Plant</kingdom2>
         <coveredCorner>1</coveredCorner>
@@ -62,6 +73,7 @@
     </verticalConfigurationObjectiveCard>
 
     <verticalConfigurationObjectiveCard>
+        <id>91</id>
         <kingdom1>Plant</kingdom1>
         <kingdom2>Fungi</kingdom2>
         <coveredCorner>0</coveredCorner>
@@ -70,24 +82,28 @@
 
 
     <diagonalConfigurationObjectiveCard>
+        <id>90</id>
         <kingdom>Insect</kingdom>
         <coveredCorner>3</coveredCorner>
         <points>2</points>
     </diagonalConfigurationObjectiveCard>
 
     <diagonalConfigurationObjectiveCard>
+        <id>89</id>
         <kingdom>Animal</kingdom>
         <coveredCorner>2</coveredCorner>
         <points>2</points>
     </diagonalConfigurationObjectiveCard>
 
     <diagonalConfigurationObjectiveCard>
+        <id>88</id>
         <kingdom>Plant</kingdom>
         <coveredCorner>3</coveredCorner>
         <points>2</points>
     </diagonalConfigurationObjectiveCard>
 
     <diagonalConfigurationObjectiveCard>
+        <id>87</id>
         <kingdom>Fungi</kingdom>
         <coveredCorner>2</coveredCorner>
         <points>2</points>

@@ -1,5 +1,6 @@
 <resourceCards>
     <resourceCard>
+        <id>1</id>
         <frontCorner pos="0" res="Fungi"/>
         <frontCorner pos="1"/>
         <frontCorner pos="2" res="Fungi"/>
@@ -12,6 +13,7 @@
     </resourceCard>
 
     <resourceCard>
+        <id>2</id>
         <frontCorner pos="0" res="Fungi"/>
         <frontCorner pos="1" res="Fungi"/>
         <frontCorner pos="3"/>
@@ -24,6 +26,7 @@
     </resourceCard>
 
     <resourceCard>
+        <id>3</id>
         <frontCorner pos="0"/>
         <frontCorner pos="2" res="Fungi"/>
         <frontCorner pos="3" res="Fungi"/>
@@ -36,6 +39,7 @@
     </resourceCard>
 
     <resourceCard>
+        <id>4</id>
         <frontCorner pos="1" res="Fungi"/>
         <frontCorner pos="2"/>
         <frontCorner pos="3" res="Fungi"/>
@@ -48,6 +52,7 @@
     </resourceCard>
 
     <resourceCard>
+        <id>5</id>
         <frontCorner pos="1" obj="Quill"/>
         <frontCorner pos="2" res="Plant"/>
         <frontCorner pos="3" res="Fungi"/>
@@ -60,6 +65,7 @@
     </resourceCard>
 
     <resourceCard>
+        <id>6</id>
         <frontCorner pos="0" obj="Inkwell"/>
         <frontCorner pos="1" res="Fungi"/>
         <frontCorner pos="3" res="Animal"/>
@@ -72,6 +78,7 @@
     </resourceCard>
 
     <resourceCard>
+        <id>7</id>
         <frontCorner pos="0" res="Fungi"/>
         <frontCorner pos="1" res="Insect"/>
         <frontCorner pos="2" obj="Manuscript"/>
@@ -85,6 +92,7 @@
     </resourceCard>
 
     <resourceCard>
+        <id>8</id>
         <frontCorner pos="0"/>
         <frontCorner pos="1" res="Fungi"/>
         <frontCorner pos="2"/>
@@ -97,6 +105,7 @@
     </resourceCard>
 
     <resourceCard>
+        <id>9</id>
         <frontCorner pos="0" res="Fungi"/>
         <frontCorner pos="2"/>
         <frontCorner pos="3"/>
@@ -109,6 +118,7 @@
     </resourceCard>
 
     <resourceCard>
+        <id>10</id>
         <frontCorner pos="1"/>
         <frontCorner pos="2" res="Fungi"/>
         <frontCorner pos="3"/>
@@ -121,6 +131,7 @@
     </resourceCard>
 
     <resourceCard>
+        <id>11</id>
         <frontCorner pos="0" res="Plant"/>
         <frontCorner pos="1"/>
         <frontCorner pos="2" res="Plant"/>
@@ -133,6 +144,7 @@
     </resourceCard>
 
     <resourceCard>
+        <id>12</id>
         <frontCorner pos="0" res="Plant"/>
         <frontCorner pos="1" res="Plant"/>
         <frontCorner pos="3"/>
@@ -145,9 +157,10 @@
     </resourceCard>
 
     <resourceCard>
+        <id>13</id>
         <frontCorner pos="0"/>
         <frontCorner pos="2" res="Plant"/>
-        <frontCorner pos="3"/>
+        <frontCorner pos="3" res="Plant"/>
         <backCorner pos="0"/>
         <backCorner pos="1"/>
         <backCorner pos="2"/>
@@ -157,6 +170,7 @@
     </resourceCard>
 
     <resourceCard>
+        <id>14</id>
         <frontCorner pos="1" res="Plant"/>
         <frontCorner pos="2"/>
         <frontCorner pos="3" res="Plant"/>
@@ -169,6 +183,7 @@
     </resourceCard>
 
     <resourceCard>
+        <id>15</id>
         <frontCorner pos="1" res="Insect"/>
         <frontCorner pos="2" obj="Quill"/>
         <frontCorner pos="3" res="Plant"/>
@@ -181,6 +196,7 @@
     </resourceCard>
 
     <resourceCard>
+        <id>16</id>
         <frontCorner pos="0" res="Fungi"/>
         <frontCorner pos="1" res="Plant"/>
         <frontCorner pos="3" obj="Inkwell"/>
@@ -193,6 +209,7 @@
     </resourceCard>
 
     <resourceCard>
+        <id>17</id>
         <frontCorner pos="0" obj="Manuscript"/>
         <frontCorner pos="2" res="Plant"/>
         <frontCorner pos="3" res="Animal"/>
@@ -205,6 +222,7 @@
     </resourceCard>
 
     <resourceCard>
+        <id>18</id>
         <frontCorner pos="0"/>
         <frontCorner pos="1"/>
         <frontCorner pos="2" res="Plant"/>
@@ -217,6 +235,7 @@
     </resourceCard>
 
     <resourceCard>
+        <id>19</id>
         <frontCorner pos="0"/>
         <frontCorner pos="1"/>
         <frontCorner pos="3" res="Plant"/>
@@ -229,6 +248,7 @@
     </resourceCard>
 
     <resourceCard>
+        <id>20</id>
         <frontCorner pos="1" res="Plant"/>
         <frontCorner pos="2"/>
         <frontCorner pos="3"/>
@@ -241,6 +261,7 @@
     </resourceCard>
 
     <resourceCard>
+        <id>21</id>
         <frontCorner pos="0" res="Animal"/>
         <frontCorner pos="1" res="Animal"/>
         <frontCorner pos="2"/>
@@ -253,6 +274,7 @@
     </resourceCard>
 
     <resourceCard>
+        <id>22</id>
         <frontCorner pos="1"/>
         <frontCorner pos="2" res="Animal"/>
         <frontCorner pos="3" res="Animal"/>
@@ -265,6 +287,7 @@
     </resourceCard>
 
     <resourceCard>
+        <id>23</id>
         <frontCorner pos="0" res="Animal"/>
         <frontCorner pos="2" res="Animal"/>
         <frontCorner pos="3"/>
@@ -277,6 +300,7 @@
     </resourceCard>
 
     <resourceCard>
+        <id>24</id>
         <frontCorner pos="0"/>
         <frontCorner pos="1" res="Animal"/>
         <frontCorner pos="3" res="Animal"/>
@@ -289,6 +313,7 @@
     </resourceCard>
 
     <resourceCard>
+        <id>25</id>
         <frontCorner pos="1" res="Insect"/>
         <frontCorner pos="2" obj="Inkwell"/>
         <frontCorner pos="3" res="Animal"/>
@@ -301,6 +326,7 @@
     </resourceCard>
 
     <resourceCard>
+        <id>26</id>
         <frontCorner pos="0" res="Plant"/>
         <frontCorner pos="1" res="Animal"/>
         <frontCorner pos="3" obj="Manuscript"/>
@@ -313,6 +339,7 @@
     </resourceCard>
 
     <resourceCard>
+        <id>27</id>
         <frontCorner pos="0" obj="Quill"/>
         <frontCorner pos="2" res="Animal"/>
         <frontCorner pos="3" res="Fungi"/>
@@ -325,6 +352,7 @@
     </resourceCard>
 
     <resourceCard>
+        <id>28</id>
         <frontCorner pos="1"/>
         <frontCorner pos="2" res="Animal"/>
         <frontCorner pos="3"/>
@@ -337,6 +365,7 @@
     </resourceCard>
 
     <resourceCard>
+        <id>29</id>
         <frontCorner pos="0"/>
         <frontCorner pos="2"/>
         <frontCorner pos="3" res="Animal"/>
@@ -349,6 +378,7 @@
     </resourceCard>
 
     <resourceCard>
+        <id>30</id>
         <frontCorner pos="0"/>
         <frontCorner pos="1" res="Animal"/>
         <frontCorner pos="2"/>
@@ -361,6 +391,7 @@
     </resourceCard>
 
     <resourceCard>
+        <id>31</id>
         <frontCorner pos="0" res="Insect"/>
         <frontCorner pos="1" res="Insect"/>
         <frontCorner pos="2"/>
@@ -373,6 +404,7 @@
     </resourceCard>
 
     <resourceCard>
+        <id>32</id>
         <frontCorner pos="1"/>
         <frontCorner pos="2" res="Insect"/>
         <frontCorner pos="3" res="Insect"/>
@@ -385,6 +417,7 @@
     </resourceCard>
 
     <resourceCard>
+        <id>33</id>
         <frontCorner pos="0" res="Insect"/>
         <frontCorner pos="2" res="Insect"/>
         <frontCorner pos="3"/>
@@ -397,6 +430,7 @@
     </resourceCard>
 
     <resourceCard>
+        <id>34</id>
         <frontCorner pos="0"/>
         <frontCorner pos="1" res="Insect"/>
         <frontCorner pos="3" res="Insect"/>
@@ -409,6 +443,7 @@
     </resourceCard>
 
     <resourceCard>
+        <id>35</id>
         <frontCorner pos="1" obj="Quill"/>
         <frontCorner pos="2" res="Animal"/>
         <frontCorner pos="3" res="Insect"/>
@@ -421,6 +456,7 @@
     </resourceCard>
 
     <resourceCard>
+        <id>36</id>
         <frontCorner pos="0" obj="Manuscript"/>
         <frontCorner pos="1" res="Insect"/>
         <frontCorner pos="3" res="Fungi"/>
@@ -433,6 +469,7 @@
     </resourceCard>
 
     <resourceCard>
+        <id>37</id>
         <frontCorner pos="0" res="Insect"/>
         <frontCorner pos="1" res="Plant"/>
         <frontCorner pos="2" obj="Inkwell"/>
@@ -445,6 +482,7 @@
     </resourceCard>
 
     <resourceCard>
+        <id>38</id>
         <frontCorner pos="0" res="Insect"/>
         <frontCorner pos="2"/>
         <frontCorner pos="3"/>
@@ -457,6 +495,7 @@
     </resourceCard>
 
     <resourceCard>
+        <id>39</id>
         <frontCorner pos="0"/>
         <frontCorner pos="1"/>
         <frontCorner pos="3" res="Insect"/>
@@ -469,6 +508,7 @@
     </resourceCard>
 
     <resourceCard>
+        <id>40</id>
         <frontCorner pos="1" res="Insect"/>
         <frontCorner pos="2"/>
         <frontCorner pos="3"/>
