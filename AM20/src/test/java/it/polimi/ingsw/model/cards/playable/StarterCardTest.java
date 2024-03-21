@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.cards.playable;
 
 import it.polimi.ingsw.model.cards.Corner;
+import it.polimi.ingsw.model.util.XMLparser;
 import it.polimi.ingsw.model.cards.Kingdom;
 import it.polimi.ingsw.model.cards.SpecialObject;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,6 +14,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class StarterCardTest {
     StarterCard s;
+
+    StarterCard getExampleStarterCard(){
+        ArrayList<PlayableCard> starterCards = XMLparser.parseStarterCards("starterCards.xml");
+        return (StarterCard) starterCards.stream().filter(x->x.getID().equals("S85")).findAny().orElse(null);
+    }
 
     @BeforeEach
     void setUp(){
@@ -29,13 +35,16 @@ class StarterCardTest {
         ArrayList<Kingdom> res = new ArrayList<>();
         res.add(Kingdom.Insect);
         s = new StarterCard("S0", frontCorners, backCorners, res);
+        //s = getExampleStarterCard();
     }
 
     @Test
     void getKingdoms(){
-        HashMap<Kingdom, Integer> map = Kingdom.createEmptyMap();
+        HashMap<Kingdom, Integer> map = new HashMap<>();
+        map.put(Kingdom.Fungi,0);
         map.put(Kingdom.Plant, 1);
         map.put(Kingdom.Insect, 2);
+        map.put(Kingdom.Animal, 0);
         assertEquals(map, s.getKingdoms());
 
         //turn card to the back
@@ -51,6 +60,12 @@ class StarterCardTest {
     void getSpecialObjects(){
         HashMap<SpecialObject, Integer> map = SpecialObject.createEmptyMap();
         assertEquals(map, s.getSpecialObjects());
+    }
+
+    @Test
+    void getRequirements(){
+        HashMap<Kingdom, Integer> map = Kingdom.createEmptyMap();
+        assertEquals(map, s.getRequirements());
     }
 
 }

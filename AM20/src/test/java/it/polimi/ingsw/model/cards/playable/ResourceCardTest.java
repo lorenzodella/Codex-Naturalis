@@ -57,4 +57,10 @@ class ResourceCardTest {
         map = SpecialObject.createEmptyMap();
         assertEquals(map, resourceCard.getSpecialObjects());
     }
+
+    @Test
+    void getRequirements(){
+        HashMap<Kingdom, Integer> map = Kingdom.createEmptyMap();
+        assertEquals(map, resourceCard.getRequirements());
+    }
 }

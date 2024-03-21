@@ -57,8 +57,11 @@ public class XMLparser {
                     //creo la lista di resources
                     ArrayList<Kingdom> resources = getStarterCardResources(resourcesArray);
 
+                    Node idNode = card.getElementsByTagName("id")
+                            .item(0);
+                    Integer id = Integer.parseInt(idNode.getTextContent());
                     //una volta ottenute tutte le cose creo la carta
-                    String ID = "S" + i;
+                    String ID = "S" + id;
 
                     StarterCard sc = new StarterCard(ID, frontCorners, backCorners, resources);
                     //la aggiungo alla lista
@@ -73,7 +76,6 @@ public class XMLparser {
 
     //GOLD CARDS
     public static ArrayList<PlayableCard> parseGoldCards(String filePath) {
-        int index = 0;
         ArrayList<PlayableCard> goldCards = new ArrayList<>();
 
         try {
@@ -107,8 +109,11 @@ public class XMLparser {
                             .item(0);
                     SpecialObject specialObject = SpecialObject.parseSpecialObject(objectNode.getTextContent());
 
-                    String ID = "G" + index;
-                    index++;
+                    Node idNode = card.getElementsByTagName("id")
+                            .item(0);
+                    Integer id = Integer.parseInt(idNode.getTextContent());
+                    //una volta ottenute tutte le cose creo la carta
+                    String ID = "G" + id;
 
                     ObjectGoldCard ogc = new ObjectGoldCard(ID, frontCorners, backCorners, kingdom, requirements, specialObject);
                     goldCards.add(ogc);
@@ -141,8 +146,11 @@ public class XMLparser {
                             .item(0);
                     Integer points = Integer.parseInt(pointsNode.getTextContent());
 
-                    String ID = "G" + index;
-                    index++;
+                    Node idNode = card.getElementsByTagName("id")
+                            .item(0);
+                    Integer id = Integer.parseInt(idNode.getTextContent());
+                    //una volta ottenute tutte le cose creo la carta
+                    String ID = "G" + id;
 
                     PointsGoldCard pgc = new PointsGoldCard(ID, frontCorners, backCorners, kingdom, requirements, points);
                     goldCards.add(pgc);
@@ -172,8 +180,11 @@ public class XMLparser {
                             .item(0);
                     Kingdom kingdom = Kingdom.parseKingdom(kingdomNode.getTextContent());
 
-                    String ID = "G" + index;
-                    index++;
+                    Node idNode = card.getElementsByTagName("id")
+                            .item(0);
+                    Integer id = Integer.parseInt(idNode.getTextContent());
+                    //una volta ottenute tutte le cose creo la carta
+                    String ID = "G" + id;
 
                     CornerGoldCard cgc = new CornerGoldCard(ID, frontCorners, backCorners, kingdom, requirements);
                     goldCards.add(cgc);
@@ -215,7 +226,11 @@ public class XMLparser {
                             .item(0);
                     Integer points = Integer.parseInt(pointsNode.getTextContent());
 
-                    String ID = "R" + i;
+                    Node idNode = card.getElementsByTagName("id")
+                            .item(0);
+                    Integer id = Integer.parseInt(idNode.getTextContent());
+                    //una volta ottenute tutte le cose creo la carta
+                    String ID = "R" + id;
 
                     ResourceCard rc = new ResourceCard(ID, frontCorners, backCorners, kingdom, points);
                     resourceCard.add(rc);
@@ -229,7 +244,6 @@ public class XMLparser {
 
     //OBJECTIVE CARDS
     public static ArrayList<ObjectiveCard> parseObjectiveCards(String filePath) {
-        int index = 0;
         ArrayList<ObjectiveCard> objectiveCards = new ArrayList<>();
         try {
             File file = new File(filePath);
@@ -254,8 +268,11 @@ public class XMLparser {
                             .item(0);
                     SpecialObject specialObject = SpecialObject.parseSpecialObject(objectNode.getTextContent());
 
-                    String ID = "O" + index;
-                    index++;
+                    Node idNode = card.getElementsByTagName("id")
+                            .item(0);
+                    Integer id = Integer.parseInt(idNode.getTextContent());
+                    //una volta ottenute tutte le cose creo la carta
+                    String ID = "O" + id;
 
                     PairOfObjectsObjectiveCard poc = new PairOfObjectsObjectiveCard(ID, points, specialObject);
                     objectiveCards.add(poc);
@@ -275,8 +292,11 @@ public class XMLparser {
                             .item(0);
                     Integer points = Integer.parseInt(pointsNode.getTextContent());
 
-                    String ID = "O" + index;
-                    index++;
+                    Node idNode = card.getElementsByTagName("id")
+                            .item(0);
+                    Integer id = Integer.parseInt(idNode.getTextContent());
+                    //una volta ottenute tutte le cose creo la carta
+                    String ID = "O" + id;
 
                     TrioOfObjectsObjectiveCard tooc = new TrioOfObjectsObjectiveCard(ID, points);
                     objectiveCards.add(tooc);
@@ -300,8 +320,11 @@ public class XMLparser {
                             .item(0);
                     Kingdom resourcesKingdom = Kingdom.parseKingdom(kingdomNode.getTextContent());
 
-                    String ID = "O" + index;
-                    index++;
+                    Node idNode = card.getElementsByTagName("id")
+                            .item(0);
+                    Integer id = Integer.parseInt(idNode.getTextContent());
+                    //una volta ottenute tutte le cose creo la carta
+                    String ID = "O" + id;
 
                     TrioOfResourcesObjectiveCard torc = new TrioOfResourcesObjectiveCard(ID, points, resourcesKingdom);
                     objectiveCards.add(torc);
@@ -329,8 +352,11 @@ public class XMLparser {
                             .item(0);
                     Integer coveredCorner = Integer.parseInt(coveredCornerNode.getTextContent());
 
-                    String ID = "O" + index;
-                    index++;
+                    Node idNode = card.getElementsByTagName("id")
+                            .item(0);
+                    Integer id = Integer.parseInt(idNode.getTextContent());
+                    //una volta ottenute tutte le cose creo la carta
+                    String ID = "O" + id;
 
                     DiagonalConfigurationObjectiveCard dcoc = new DiagonalConfigurationObjectiveCard(ID, points, kingdom, coveredCorner);
                     objectiveCards.add(dcoc);
@@ -362,8 +388,11 @@ public class XMLparser {
                             .item(0);
                     Integer coveredCorner = Integer.parseInt(coveredCornerNode.getTextContent());
 
-                    String ID = "O" + index;
-                    index++;
+                    Node idNode = card.getElementsByTagName("id")
+                            .item(0);
+                    Integer id = Integer.parseInt(idNode.getTextContent());
+                    //una volta ottenute tutte le cose creo la carta
+                    String ID = "O" + id;
 
                     VerticalConfigurationObjectiveCard vcoc = new VerticalConfigurationObjectiveCard(ID, points, kingdom1, kingdom2, coveredCorner);
                     objectiveCards.add(vcoc);
