@@ -37,6 +37,6 @@ public class PairOfObjectsObjectiveCard extends ObjectiveCard{
 
     @Override
     public int computePoints(PlayerTable table) {
-        return 0;
+        return 2*table.getStats().getNumberOfObjects(this.specialObject);
     }
 }

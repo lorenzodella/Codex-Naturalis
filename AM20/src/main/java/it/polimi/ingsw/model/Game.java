@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.util.XMLparser;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Game {
@@ -46,21 +47,56 @@ public class Game {
     }
 
     //TODO:
-    private void giveInitialCards(ArrayList<PlayableCard> starterCards) {
+    public void giveInitialCards() {
 
+        for(Player p: players){
+            LinkedList<PlayableCard> carte = new LinkedList<>();
 
-        /*
-        // metodo fittizio per mandare le due carte tra cui sscegliere ai player nel controller: giveStartercardPlayer(PlayableCard c1, PlayableCard c2, Player p);
-        for(int i=0;i<players.size(); i++){
-            res = chooseStarterCardPlayer(starterCards.get(i), starterCards.get(i+1), players.get(i));
-            players.get(i).setStarterCard(res);
-        }*/
+            carte.add(resourceCardDeck.draw());
+            carte.add(resourceCardDeck.draw());
+            carte.add(goldCardDeck.draw());
 
+            p.drawInitialPlayableCard(carte);
 
+        }
     }
 
     public void chooseStarterCardSide(int front, Player p){
         p.positionStarterCard(front);
     }
+
+    public void initObjectiveCards(){
+
+        ArrayList<ObjectiveCard> tmp = new ArrayList<>(XMLparser.parseObjectiveCards("objectiveCards.xml"));
+        Collections.shuffle(tmp);
+        commonObjectives = new ObjectiveCard[2];
+        commonObjectives[0] = tmp.get(0);
+        commonObjectives[0] = tmp.get(1);
+
+        for(int i=0; i<players.size();i++){
+            ObjectiveCard[] obj = new ObjectiveCard[2];
+            obj[0] = commonObjectives [i+2];
+            obj[0] = commonObjectives [i+3];
+            players.get(i).setSecretObjective(obj);
+        }
+    }
+
+    public void chooseObjective(int index){}
+
+    public void chooseFirstPlayer(){
+        Collections.shuffle(players);
+    }
+
+    public boolean playCard(int indexCard, int angle, int cardID, boolean front){return true;}
+
+    public boolean pickCard(boolean choiceDeck, boolean visible, int index ) {return true;}
+
+    public boolean checkTheEnd(){return true;}
+
+    public void computePlayerSecretObjectives(){}
+
+    public void computeCommonObjectives(){}
+
+    public Player checkWinner(){return players.get(0);}
 
 }

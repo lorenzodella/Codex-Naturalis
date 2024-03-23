@@ -41,6 +41,6 @@ public class PointsGoldCard extends GoldCard{
 
     @Override
     public int computePoints(PlayerTable table) {
-        return 0;
+        return this.points;
     }
 }

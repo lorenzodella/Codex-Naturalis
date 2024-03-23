@@ -40,6 +40,6 @@ public class DiagonalConfigurationObjectiveCard extends ObjectiveCard{
 
     @Override
     public int computePoints(PlayerTable table) {
-        return 0;
+        return 2*table.findDiagonalConfiguration(this);
     }
 }

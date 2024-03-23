@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.cards.objective.DiagonalConfigurationObjectiveCard;
+import it.polimi.ingsw.model.cards.objective.VerticalConfigurationObjectiveCard;
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.model.util.DynamicMatrix;
 
@@ -11,7 +13,9 @@ public class PlayerTable {
         this.stats = new PlayerStats();
     }
 
-
+    public PlayerStats getStats() {
+        return this.stats;
+    }
 
 
 
@@ -20,4 +24,16 @@ public class PlayerTable {
     public void insertStarterCard(int front, PlayableCard card){
         this.matrix = new DynamicMatrix<>(card.getID(), card );
     }
+    public boolean insertCard(PlayableCard card, int angle, int cardID, boolean front){return true;}
+
+    private boolean isPositionValid(PlayableCard card, int angle, int cardID){return true;}
+
+    private void updateStats(PlayableCard card){}
+
+    public int numOfCoveredCorner(PlayableCard card){return 0;}
+
+    public int findDiagonalConfiguration(DiagonalConfigurationObjectiveCard finder){return 0;}
+
+    public int findVerticalConfiguration(VerticalConfigurationObjectiveCard finder){return 0;}
+
 }

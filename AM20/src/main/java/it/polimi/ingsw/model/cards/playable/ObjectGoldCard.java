@@ -43,6 +43,7 @@ public class ObjectGoldCard extends GoldCard{
 
     @Override
     public int computePoints(PlayerTable table) {
-        return 0;
+        int res = table.getStats().getNumberOfObjects(this.specialObject);
+        return res*1;
     }
 }

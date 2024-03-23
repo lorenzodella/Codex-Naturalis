@@ -43,6 +43,6 @@ public class VerticalConfigurationObjectiveCard extends ObjectiveCard {
 
     @Override
     public int computePoints(PlayerTable table) {
-        return 0;
+        return 3*table.findVerticalConfiguration(this);
     }
 }
