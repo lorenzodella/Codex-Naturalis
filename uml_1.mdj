@@ -2020,7 +2020,7 @@
 											"top": 378,
 											"width": 431.26318359375,
 											"height": 13,
-											"text": "-secretObjective[]: ObjectiveCard",
+											"text": "-secretObjective: ArrayList<ObjectiveCard>",
 											"horizontalAlignment": 0
 										},
 										{
@@ -2071,7 +2071,7 @@
 											"top": 416,
 											"width": 431.26318359375,
 											"height": 13,
-											"text": "+playCard(indexCard : int, angle: int, cardID : int, front: boolean): boolean",
+											"text": "+playCard(indexCard : int, angle: int, targetID: String, side: int): boolean",
 											"horizontalAlignment": 0
 										},
 										{
@@ -2122,7 +2122,7 @@
 											"top": 461,
 											"width": 431.26318359375,
 											"height": 13,
-											"text": "+positionStarterCard(front: boolean): void",
+											"text": "+positionStarterCard(side: int): void",
 											"horizontalAlignment": 0
 										},
 										{
@@ -2524,7 +2524,7 @@
 											"top": 198,
 											"width": 476.8330078125,
 											"height": 13,
-											"text": "+chooseStarterCardSide(front : boolean, Player: p): void",
+											"text": "+chooseStarterCardSide(side: int, Player: p): void",
 											"horizontalAlignment": 0
 										},
 										{
@@ -2592,7 +2592,7 @@
 											"top": 258,
 											"width": 476.8330078125,
 											"height": 13,
-											"text": "+playCard(indexCard: int, angle: int, cardID: int, front: boolean): boolean",
+											"text": "+playCard(indexCard: int, angle: int, targetID: String, side: int): boolean",
 											"horizontalAlignment": 0
 										},
 										{
@@ -2609,7 +2609,7 @@
 											"top": 273,
 											"width": 476.8330078125,
 											"height": 13,
-											"text": "+pickCard(choiceDeck : boolean, visible: boolean, index: int): boolean",
+											"text": "+pickCard(deck: int, visible: boolean, index: int): boolean",
 											"horizontalAlignment": 0
 										},
 										{
@@ -5856,7 +5856,7 @@
 											"top": 716,
 											"width": 458.056640625,
 											"height": 13,
-											"text": "+insertStarterCard(front: boolean, card: PlayableCard): void",
+											"text": "+insertStarterCard(side: int, card: PlayableCard): void",
 											"horizontalAlignment": 0
 										},
 										{
@@ -5873,7 +5873,7 @@
 											"top": 731,
 											"width": 458.056640625,
 											"height": 13,
-											"text": "+insertCard(card : PlayableCard, angle: int, cardID: int, front: boolean): boolean",
+											"text": "+insertCard(card : PlayableCard, angle: int, targetID: String, side: int): boolean",
 											"horizontalAlignment": 0
 										},
 										{
@@ -5890,7 +5890,7 @@
 											"top": 746,
 											"width": 458.056640625,
 											"height": 13,
-											"text": "-isPositionValid(card: PlayableCard, angle: int, cardID: int): boolean",
+											"text": "-isPositionValid(card: PlayableCard, angle: int, targetID: String): boolean",
 											"horizontalAlignment": 0
 										},
 										{
@@ -6088,12 +6088,12 @@
 											"_parent": {
 												"$ref": "AAAAAAGOLeOFBST0rxo="
 											},
+											"visible": false,
 											"font": "Arial;13;0",
 											"left": 213,
 											"top": 885,
 											"width": 228.9443359375,
-											"height": 13,
-											"text": "«T»"
+											"height": 13
 										},
 										{
 											"_type": "LabelView",
@@ -6103,10 +6103,10 @@
 											},
 											"font": "Arial;13;1",
 											"left": 213,
-											"top": 900,
-											"width": 228.9443359375,
+											"top": 887,
+											"width": 300.15234375,
 											"height": 13,
-											"text": "DynamicMatrix"
+											"text": "DynamicMatrix<K,T>"
 										},
 										{
 											"_type": "LabelView",
@@ -6139,8 +6139,8 @@
 									"font": "Arial;13;0",
 									"left": 208,
 									"top": 880,
-									"width": 238.9443359375,
-									"height": 38,
+									"width": 310.15234375,
+									"height": 25,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAGOLeOFBST1hPQ="
 									},
@@ -6193,17 +6193,17 @@
 											},
 											"font": "Arial;13;0",
 											"left": 213,
-											"top": 925,
-											"width": 228.9443359375,
+											"top": 912,
+											"width": 300.15234375,
 											"height": 13,
-											"text": "-mat: LinkedList<LinkedList<T>>",
+											"text": "-mat: LinkedList<LinkedList<MatrixElement<K,T>>>",
 											"horizontalAlignment": 0
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 208,
-									"top": 918,
-									"width": 238.9443359375,
+									"top": 905,
+									"width": 310.15234375,
 									"height": 25
 								},
 								{
@@ -6227,10 +6227,10 @@
 											},
 											"font": "Arial;13;0",
 											"left": 213,
-											"top": 948,
-											"width": 228.9443359375,
+											"top": 935,
+											"width": 300.15234375,
 											"height": 13,
-											"text": "+insert(int i, int j, t T): void",
+											"text": "+insert(key: K, el: T, targetKey: K, pos: int): void",
 											"horizontalAlignment": 0
 										},
 										{
@@ -6244,18 +6244,52 @@
 											},
 											"font": "Arial;13;0",
 											"left": 213,
-											"top": 963,
-											"width": 228.9443359375,
+											"top": 950,
+											"width": 300.15234375,
 											"height": 13,
-											"text": "+get(int i, int j): T",
+											"text": "+get(targetKey: K, pos: int): T",
+											"horizontalAlignment": 0
+										},
+										{
+											"_type": "UMLOperationView",
+											"_id": "AAAAAAGOal0KUFILpvg=",
+											"_parent": {
+												"$ref": "AAAAAAGOLeOFBST6Oig="
+											},
+											"model": {
+												"$ref": "AAAAAAGOal0KOVIIv74="
+											},
+											"font": "Arial;13;0",
+											"left": 213,
+											"top": 965,
+											"width": 300.15234375,
+											"height": 13,
+											"text": "+findPos(targetKey: K): int[2]",
+											"horizontalAlignment": 0
+										},
+										{
+											"_type": "UMLOperationView",
+											"_id": "AAAAAAGOal3TPVSeN94=",
+											"_parent": {
+												"$ref": "AAAAAAGOLeOFBST6Oig="
+											},
+											"model": {
+												"$ref": "AAAAAAGOal3TMFSbVFo="
+											},
+											"font": "Arial;13;0",
+											"left": 213,
+											"top": 980,
+											"width": 300.15234375,
+											"height": 13,
+											"text": "+find(targetKey: K): T",
 											"horizontalAlignment": 0
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 208,
-									"top": 943,
-									"width": 238.9443359375,
-									"height": 38
+									"top": 930,
+									"width": 310.15234375,
+									"height": 68
 								},
 								{
 									"_type": "UMLReceptionCompartmentView",
@@ -6294,7 +6328,7 @@
 							"containerChangeable": true,
 							"left": 208,
 							"top": 880,
-							"width": 237.9443359375,
+							"width": 309.15234375,
 							"height": 118,
 							"nameCompartment": {
 								"$ref": "AAAAAAGOLeOFBST0rxo="
@@ -8783,8 +8817,8 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 312,
-									"top": 845,
+									"left": 332,
+									"top": 848,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 15,
@@ -8804,8 +8838,8 @@
 									},
 									"visible": null,
 									"font": "Arial;13;0",
-									"left": 297,
-									"top": 844,
+									"left": 317,
+									"top": 850,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 30,
@@ -8825,8 +8859,8 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 341,
-									"top": 846,
+									"left": 361,
+									"top": 843,
 									"height": 13,
 									"alpha": -1.5707963267948966,
 									"distance": 15,
@@ -8846,8 +8880,8 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 312,
-									"top": 846,
+									"left": 332,
+									"top": 849,
 									"height": 13,
 									"alpha": 0.5235987755982988,
 									"distance": 30,
@@ -8867,8 +8901,8 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 299,
-									"top": 844,
+									"left": 319,
+									"top": 849,
 									"height": 13,
 									"alpha": 0.7853981633974483,
 									"distance": 40,
@@ -8888,8 +8922,8 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 339,
-									"top": 851,
+									"left": 360,
+									"top": 849,
 									"height": 13,
 									"alpha": -0.5235987755982988,
 									"distance": 25,
@@ -8909,8 +8943,8 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 312,
-									"top": 844,
+									"left": 332,
+									"top": 847,
 									"height": 13,
 									"alpha": -0.5235987755982988,
 									"distance": 30,
@@ -8929,8 +8963,8 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 299,
-									"top": 846,
+									"left": 319,
+									"top": 851,
 									"height": 13,
 									"alpha": -0.7853981633974483,
 									"distance": 40,
@@ -8949,8 +8983,8 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 340,
-									"top": 840,
+									"left": 358,
+									"top": 838,
 									"height": 13,
 									"alpha": 0.5235987755982988,
 									"distance": 25,
@@ -8995,7 +9029,7 @@
 								"$ref": "AAAAAAGOLeOFBSTzNPA="
 							},
 							"lineStyle": 1,
-							"points": "327:879;328:825",
+							"points": "352:879;343:825",
 							"showVisibility": true,
 							"nameLabel": {
 								"$ref": "AAAAAAGOLtv7DTO1Ki8="
@@ -9644,7 +9678,7 @@
 											"top": 690,
 											"width": 377.85400390625,
 											"height": 13,
-											"text": "+getNumberOfObjects(obj: SpecialObject): int",
+											"text": "+getNumberOfSpecialObjects(obj: SpecialObject): int",
 											"horizontalAlignment": 0
 										}
 									],
@@ -11381,11 +11415,9 @@
 							"_parent": {
 								"$ref": "AAAAAAGOGFNMdM5/y3Q="
 							},
-							"name": "secretObjective[]",
+							"name": "secretObjective",
 							"visibility": "private",
-							"type": {
-								"$ref": "AAAAAAGOGImh8+8ZTCA="
-							}
+							"type": "ArrayList<ObjectiveCard>"
 						},
 						{
 							"_type": "UMLAttribute",
@@ -11433,8 +11465,8 @@
 									"_parent": {
 										"$ref": "AAAAAAGOGFbYUNJQ4FQ="
 									},
-									"name": "cardID ",
-									"type": "int"
+									"name": "targetID",
+									"type": "String"
 								},
 								{
 									"_type": "UMLParameter",
@@ -11442,8 +11474,8 @@
 									"_parent": {
 										"$ref": "AAAAAAGOGFbYUNJQ4FQ="
 									},
-									"name": "front",
-									"type": "boolean"
+									"name": "side",
+									"type": "int"
 								},
 								{
 									"_type": "UMLParameter",
@@ -11531,8 +11563,8 @@
 									"_parent": {
 										"$ref": "AAAAAAGOLlMiDyYslso="
 									},
-									"name": "front",
-									"type": "boolean"
+									"name": "side",
+									"type": "int"
 								},
 								{
 									"_type": "UMLParameter",
@@ -11774,8 +11806,8 @@
 									"_parent": {
 										"$ref": "AAAAAAGOLkmGwiYiiO0="
 									},
-									"name": "front ",
-									"type": "boolean"
+									"name": "side",
+									"type": "int"
 								},
 								{
 									"_type": "UMLParameter",
@@ -11895,8 +11927,8 @@
 									"_parent": {
 										"$ref": "AAAAAAGOLez4diVAeGs="
 									},
-									"name": "cardID",
-									"type": "int"
+									"name": "targetID",
+									"type": "String"
 								},
 								{
 									"_type": "UMLParameter",
@@ -11904,8 +11936,8 @@
 									"_parent": {
 										"$ref": "AAAAAAGOLez4diVAeGs="
 									},
-									"name": "front",
-									"type": "boolean"
+									"name": "side",
+									"type": "int"
 								},
 								{
 									"_type": "UMLParameter",
@@ -11932,8 +11964,8 @@
 									"_parent": {
 										"$ref": "AAAAAAGOLhCCvSXI2EA="
 									},
-									"name": "choiceDeck ",
-									"type": "boolean"
+									"name": "deck",
+									"type": "int"
 								},
 								{
 									"_type": "UMLParameter",
@@ -13194,8 +13226,8 @@
 									"_parent": {
 										"$ref": "AAAAAAGOLl+8KiY3Fcs="
 									},
-									"name": "front",
-									"type": "boolean"
+									"name": "side",
+									"type": "int"
 								},
 								{
 									"_type": "UMLParameter",
@@ -13253,8 +13285,8 @@
 									"_parent": {
 										"$ref": "AAAAAAGOLeSu1SUmNXk="
 									},
-									"name": "cardID",
-									"type": "int"
+									"name": "targetID",
+									"type": "String"
 								},
 								{
 									"_type": "UMLParameter",
@@ -13271,8 +13303,8 @@
 									"_parent": {
 										"$ref": "AAAAAAGOLeSu1SUmNXk="
 									},
-									"name": "front",
-									"type": "boolean"
+									"name": "side",
+									"type": "int"
 								}
 							]
 						},
@@ -13320,8 +13352,8 @@
 									"_parent": {
 										"$ref": "AAAAAAGOMtK8dbnkG4I="
 									},
-									"name": "cardID",
-									"type": "int"
+									"name": "targetID",
+									"type": "String"
 								}
 							]
 						},
@@ -13454,7 +13486,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "DynamicMatrix",
+					"name": "DynamicMatrix<K,T>",
 					"ownedElements": [
 						{
 							"_type": "UMLAssociation",
@@ -13485,7 +13517,6 @@
 							}
 						}
 					],
-					"stereotype": "T",
 					"attributes": [
 						{
 							"_type": "UMLAttribute",
@@ -13506,7 +13537,7 @@
 							},
 							"name": "mat",
 							"visibility": "private",
-							"type": "LinkedList<LinkedList<T>>"
+							"type": "LinkedList<LinkedList<MatrixElement<K,T>>>"
 						}
 					],
 					"operations": [
@@ -13520,21 +13551,12 @@
 							"parameters": [
 								{
 									"_type": "UMLParameter",
-									"_id": "AAAAAAGOMssviDJbEX4=",
-									"_parent": {
-										"$ref": "AAAAAAGOLfdd2iVoNkQ="
-									},
-									"type": "void",
-									"direction": "return"
-								},
-								{
-									"_type": "UMLParameter",
 									"_id": "AAAAAAGOMtSnrM6ORw4=",
 									"_parent": {
 										"$ref": "AAAAAAGOLfdd2iVoNkQ="
 									},
-									"name": "int i",
-									"type": ""
+									"name": "key",
+									"type": "K"
 								},
 								{
 									"_type": "UMLParameter",
@@ -13542,8 +13564,8 @@
 									"_parent": {
 										"$ref": "AAAAAAGOLfdd2iVoNkQ="
 									},
-									"name": "int j",
-									"type": ""
+									"name": "el",
+									"type": "T"
 								},
 								{
 									"_type": "UMLParameter",
@@ -13551,8 +13573,26 @@
 									"_parent": {
 										"$ref": "AAAAAAGOLfdd2iVoNkQ="
 									},
-									"name": "t T",
-									"type": ""
+									"name": "targetKey",
+									"type": "K"
+								},
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAGOaltBnUrvijk=",
+									"_parent": {
+										"$ref": "AAAAAAGOLfdd2iVoNkQ="
+									},
+									"name": "pos",
+									"type": "int"
+								},
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAGOaltRkUxtiaI=",
+									"_parent": {
+										"$ref": "AAAAAAGOLfdd2iVoNkQ="
+									},
+									"type": "void",
+									"direction": "return"
 								}
 							]
 						},
@@ -13579,8 +13619,8 @@
 									"_parent": {
 										"$ref": "AAAAAAGOMtLZe72Zobk="
 									},
-									"name": "int i",
-									"type": ""
+									"name": "targetKey",
+									"type": "K"
 								},
 								{
 									"_type": "UMLParameter",
@@ -13588,8 +13628,65 @@
 									"_parent": {
 										"$ref": "AAAAAAGOMtLZe72Zobk="
 									},
-									"name": "int j",
-									"type": ""
+									"name": "pos",
+									"type": "int"
+								}
+							]
+						},
+						{
+							"_type": "UMLOperation",
+							"_id": "AAAAAAGOal0KOVIIv74=",
+							"_parent": {
+								"$ref": "AAAAAAGOLeOFBCTxQcU="
+							},
+							"name": "findPos",
+							"parameters": [
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAGOal0/YVMCdF8=",
+									"_parent": {
+										"$ref": "AAAAAAGOal0KOVIIv74="
+									},
+									"name": "targetKey",
+									"type": "K"
+								},
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAGOal0/YVMD5bM=",
+									"_parent": {
+										"$ref": "AAAAAAGOal0KOVIIv74="
+									},
+									"type": "int",
+									"multiplicity": "2",
+									"direction": "return"
+								}
+							]
+						},
+						{
+							"_type": "UMLOperation",
+							"_id": "AAAAAAGOal3TMFSbVFo=",
+							"_parent": {
+								"$ref": "AAAAAAGOLeOFBCTxQcU="
+							},
+							"name": "find",
+							"parameters": [
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAGOal3tj1WVYZ8=",
+									"_parent": {
+										"$ref": "AAAAAAGOal3TMFSbVFo="
+									},
+									"name": "targetKey",
+									"type": "K"
+								},
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAGOal3tj1WWxnk=",
+									"_parent": {
+										"$ref": "AAAAAAGOal3TMFSbVFo="
+									},
+									"type": "T",
+									"direction": "return"
 								}
 							]
 						}
@@ -13790,7 +13887,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGON4eeXMJtGi8="
 							},
-							"name": "getNumberOfObjects",
+							"name": "getNumberOfSpecialObjects",
 							"parameters": [
 								{
 									"_type": "UMLParameter",

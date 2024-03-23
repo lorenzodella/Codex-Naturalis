@@ -3,6 +3,7 @@ package it.polimi.ingsw.model.util;
 import it.polimi.ingsw.model.exceptions.InvalidPositionException;
 import it.polimi.ingsw.model.exceptions.TargetNotPresentException;
 
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
 /**
@@ -12,6 +13,10 @@ import java.util.LinkedList;
  * @param <T> type of the elements of the matrix
  */
 public class DynamicMatrix<K,T> {
+    public static final int L = 0;
+    public static final int UR = 1;
+    public static final int DL = 2;
+    public static final int R = 3;
 
     private static class MatrixElement<K,T> {
         K key;
@@ -61,20 +66,20 @@ public class DynamicMatrix<K,T> {
      * @throws InvalidPositionException if pos is not a valid value
      */
     public void insert(K key, T el, K targetKey, int pos) throws TargetNotPresentException, InvalidPositionException {
-        int[] p = find(targetKey);
+        int[] p = findPos(targetKey);
         int i = p[0]; int j = p[1];
         switch (pos) {
-            case 0:
-                putL(new MatrixElement<>(key, el), i, j);
+            case L:
+                putLeft(new MatrixElement<>(key, el), i, j);
                 break;
-            case 1:
-                putUR(new MatrixElement<>(key, el), i, j);
+            case UR:
+                putUpRight(new MatrixElement<>(key, el), i, j);
                 break;
-            case 2:
-                putDL(new MatrixElement<>(key, el), i, j);
+            case DL:
+                putDownLeft(new MatrixElement<>(key, el), i, j);
                 break;
-            case 3:
-                putR(new MatrixElement<>(key, el), i, j);
+            case R:
+                putRight(new MatrixElement<>(key, el), i, j);
                 break;
             default:
                 throw new InvalidPositionException();
@@ -91,21 +96,21 @@ public class DynamicMatrix<K,T> {
      * @throws InvalidPositionException if pos is not a valid value
      */
     public T get(K targetKey, int pos) throws TargetNotPresentException, InvalidPositionException {
-        int[] p = find(targetKey);
+        int[] p = findPos(targetKey);
         int i = p[0]; int j = p[1];
         MatrixElement<K,T> tmp;
         switch (pos) {
             case 0:
-                tmp = getL(i, j);
+                tmp = getLeft(i, j);
                 break;
             case 1:
-                tmp = getUR(i, j);
+                tmp = getUpRight(i, j);
                 break;
             case 2:
-                tmp = getDL(i, j);
+                tmp = getDownLeft(i, j);
                 break;
             case 3:
-                tmp = getR(i, j);
+                tmp = getRight(i, j);
                 break;
             default:
                 throw new InvalidPositionException();
@@ -119,7 +124,7 @@ public class DynamicMatrix<K,T> {
      * @return an array of two elements: number of row and number of column of the found element
      * @throws TargetNotPresentException if no element with that key is not present
      */
-    public int[] find(K targetKey) throws TargetNotPresentException {
+    public int[] findPos(K targetKey) throws TargetNotPresentException {
         for (int i=0; i<mat.size(); i++) {
             for (int j=0; j<mat.get(0).size(); j++) {
                 if(mat.get(i).get(j)!=null && mat.get(i).get(j).key.equals(targetKey)){
@@ -134,13 +139,30 @@ public class DynamicMatrix<K,T> {
     }
 
     /**
+     * Get the element in the matrix with the given key.
+     * @param targetKey key of the element to be found
+     * @return the element
+     * @throws TargetNotPresentException if no element with that key is not present
+     */
+    public T find(K targetKey) throws TargetNotPresentException {
+        for (int i=0; i<mat.size(); i++) {
+            for (int j=0; j<mat.get(0).size(); j++) {
+                if(mat.get(i).get(j)!=null && mat.get(i).get(j).key.equals(targetKey)){
+                    return mat.get(i).get(j).value;
+                }
+            }
+        }
+        throw new TargetNotPresentException();
+    }
+
+    /**
      * Insert an element one cell on the left of the given cell.
      * @param el element to be inserted
      * @param i row of given cell
      * @param j column of given cell
      */
-    private void putL(MatrixElement<K,T> el, int i, int j) {
-        if(j == 0) addColumnSX();
+    private void putLeft(MatrixElement<K,T> el, int i, int j) {
+        if(j == 0) addColumnLeft();
         else j--;
         mat.get(i).set(j, el);
     }
@@ -151,9 +173,9 @@ public class DynamicMatrix<K,T> {
      * @param i row of given cell
      * @param j column of given cell
      */
-    private void putUR(MatrixElement<K,T> el, int i, int j){
-        if(j == mat.get(0).size()-1) addColumnDX();
-        if(i == 0) addRowUP();
+    private void putUpRight(MatrixElement<K,T> el, int i, int j){
+        if(j == mat.get(0).size()-1) addColumnRight();
+        if(i == 0) addRowUp();
         else i--;
         mat.get(i).set(j+1, el);
     }
@@ -164,10 +186,10 @@ public class DynamicMatrix<K,T> {
      * @param i row of given cell
      * @param j column of given cell
      */
-    private void putDL(MatrixElement<K,T> el, int i, int j){
-        if(j == 0) addColumnSX();
+    private void putDownLeft(MatrixElement<K,T> el, int i, int j){
+        if(j == 0) addColumnLeft();
         else j--;
-        if(i == mat.size()-1) addRowDOWN();
+        if(i == mat.size()-1) addRowDown();
         mat.get(i+1).set(j, el);
     }
 
@@ -177,8 +199,8 @@ public class DynamicMatrix<K,T> {
      * @param i row of given cell
      * @param j column of given cell
      */
-    private void putR(MatrixElement<K,T> el, int i, int j){
-        if(j == mat.get(0).size()-1) addColumnDX();
+    private void putRight(MatrixElement<K,T> el, int i, int j){
+        if(j == mat.get(0).size()-1) addColumnRight();
         mat.get(i).set(j+1, el);
     }
 
@@ -188,7 +210,7 @@ public class DynamicMatrix<K,T> {
      * @param j column of given cell
      * @return the element at that position
      */
-    private MatrixElement<K,T> getL(int i, int j){
+    private MatrixElement<K,T> getLeft(int i, int j){
         if(j == 0) return null;
         return mat.get(i).get(j-1);
     }
@@ -199,7 +221,7 @@ public class DynamicMatrix<K,T> {
      * @param j column of given cell
      * @return the element at that position
      */
-    private MatrixElement<K,T> getUR(int i, int j){
+    private MatrixElement<K,T> getUpRight(int i, int j){
         if(j == mat.get(0).size()-1) return null;
         if(i == 0) return null;
         return mat.get(i-1).get(j+1);
@@ -211,7 +233,7 @@ public class DynamicMatrix<K,T> {
      * @param j column of given cell
      * @return the element at that position
      */
-    private MatrixElement<K,T> getDL(int i, int j){
+    private MatrixElement<K,T> getDownLeft(int i, int j){
         if(j == 0) return null;
         if(i == mat.size()-1) return null;
         return mat.get(i+1).get(j-1);
@@ -223,7 +245,7 @@ public class DynamicMatrix<K,T> {
      * @param j column of given cell
      * @return the element at that position
      */
-    private MatrixElement<K,T> getR(int i, int j){
+    private MatrixElement<K,T> getRight(int i, int j){
         if(j == mat.get(0).size()-1) return null;
         return  mat.get(i).get(j+1);
     }
@@ -231,7 +253,7 @@ public class DynamicMatrix<K,T> {
     /**
      * Add a column to the right.
      */
-    private void addColumnDX(){
+    private void addColumnRight(){
         for (LinkedList<MatrixElement<K, T>> list : mat) {
             list.addLast(null);
         }
@@ -240,7 +262,7 @@ public class DynamicMatrix<K,T> {
     /**
      * Add a column to the left.
      */
-    private void addColumnSX(){
+    private void addColumnLeft(){
         for (LinkedList<MatrixElement<K, T>> list : mat) {
             list.addFirst(null);
         }
@@ -249,7 +271,7 @@ public class DynamicMatrix<K,T> {
     /**
      * Add a row above.
      */
-    private void addRowUP(){
+    private void addRowUp(){
         LinkedList<MatrixElement<K, T>> l = new LinkedList<>();
         for(int i=0; i<mat.get(0).size(); i++){
             l.add(null);
@@ -260,7 +282,7 @@ public class DynamicMatrix<K,T> {
     /**
      * Add a row below.
      */
-    private void addRowDOWN(){
+    private void addRowDown(){
         LinkedList<MatrixElement<K, T>> l = new LinkedList<>();
         for(int i=0; i<mat.get(0).size(); i++){
             l.add(null);

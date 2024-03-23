@@ -2,7 +2,6 @@ package it.polimi.ingsw.model.util;
 
 import it.polimi.ingsw.model.exceptions.InvalidPositionException;
 import it.polimi.ingsw.model.exceptions.TargetNotPresentException;
-import it.polimi.ingsw.model.util.DynamicMatrix;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,14 +17,14 @@ class DynamicMatrixTest {
 
     @Test
     void firstElementIsCenter() throws TargetNotPresentException {
-        assertArrayEquals(new int[]{0,0}, m.find('a'));
+        assertArrayEquals(new int[]{0,0}, m.findPos('a'));
     }
 
     @Test
     void insertUL() throws TargetNotPresentException, InvalidPositionException {
         m.insert('b','b', 'a',0);
-        assertArrayEquals(new int[]{0,1}, m.find('a'));
-        assertArrayEquals(new int[]{0,0}, m.find('b'));
+        assertArrayEquals(new int[]{0,1}, m.findPos('a'));
+        assertArrayEquals(new int[]{0,0}, m.findPos('b'));
         assertEquals(1, m.height());
         assertEquals(2, m.width());
 
@@ -35,8 +34,8 @@ class DynamicMatrixTest {
     @Test
     void insertUR() throws TargetNotPresentException, InvalidPositionException {
         m.insert('b','b', 'a',1);
-        assertArrayEquals(new int[]{1,0}, m.find('a'));
-        assertArrayEquals(new int[]{0,1}, m.find('b'));
+        assertArrayEquals(new int[]{1,0}, m.findPos('a'));
+        assertArrayEquals(new int[]{0,1}, m.findPos('b'));
         assertEquals(2, m.height());
         assertEquals(2, m.width());
 
@@ -46,8 +45,8 @@ class DynamicMatrixTest {
     @Test
     void insertDL() throws TargetNotPresentException, InvalidPositionException {
         m.insert('b','b', 'a',2);
-        assertArrayEquals(new int[]{0,1}, m.find('a'));
-        assertArrayEquals(new int[]{1,0}, m.find('b'));
+        assertArrayEquals(new int[]{0,1}, m.findPos('a'));
+        assertArrayEquals(new int[]{1,0}, m.findPos('b'));
         assertEquals(2, m.height());
         assertEquals(2, m.width());
 
@@ -57,8 +56,8 @@ class DynamicMatrixTest {
     @Test
     void insertDR() throws TargetNotPresentException, InvalidPositionException {
         m.insert('b','b', 'a',3);
-        assertArrayEquals(new int[]{0,0}, m.find('a'));
-        assertArrayEquals(new int[]{0,1}, m.find('b'));
+        assertArrayEquals(new int[]{0,0}, m.findPos('a'));
+        assertArrayEquals(new int[]{0,1}, m.findPos('b'));
         assertEquals(1, m.height());
         assertEquals(2, m.width());
 
@@ -69,9 +68,9 @@ class DynamicMatrixTest {
     void insertURandDR() throws TargetNotPresentException, InvalidPositionException {
         insertUR();
         m.insert('c','c', 'a',3);
-        assertArrayEquals(new int[]{1,0}, m.find('a'));
-        assertArrayEquals(new int[]{0,1}, m.find('b'));
-        assertArrayEquals(new int[]{1,1}, m.find('c'));
+        assertArrayEquals(new int[]{1,0}, m.findPos('a'));
+        assertArrayEquals(new int[]{0,1}, m.findPos('b'));
+        assertArrayEquals(new int[]{1,1}, m.findPos('c'));
         assertEquals(2, m.height());
         assertEquals(2, m.width());
 
