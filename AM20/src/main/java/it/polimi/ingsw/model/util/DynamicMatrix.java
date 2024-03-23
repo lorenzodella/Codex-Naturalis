@@ -305,4 +305,20 @@ public class DynamicMatrix<K,T> {
         s.append("\n");
         return s.toString();
     }
+
+    /**
+     * Remove the element in the matrix with the given key.
+     * @param targetKey key of the element to be removed
+     * @throws TargetNotPresentException if no element with that key is not present
+     */
+    public void remove(K targetKey) throws TargetNotPresentException {
+        for (int i=0; i<mat.size(); i++) {
+            for (int j=0; j<mat.get(0).size(); j++) {
+                if(mat.get(i).get(j)!=null && mat.get(i).get(j).key.equals(targetKey)){
+                    mat.get(i).set(j, null);
+                }
+            }
+        }
+        throw new TargetNotPresentException();
+    }
 }

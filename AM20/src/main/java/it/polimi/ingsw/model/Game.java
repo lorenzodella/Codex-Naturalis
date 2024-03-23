@@ -71,12 +71,12 @@ public class Game {
         Collections.shuffle(tmp);
         commonObjectives = new ObjectiveCard[2];
         commonObjectives[0] = tmp.get(0);
-        commonObjectives[0] = tmp.get(1);
+        commonObjectives[1] = tmp.get(1);
 
         for(int i=0; i<players.size();i++){
             ObjectiveCard[] obj = new ObjectiveCard[2];
             obj[0] = commonObjectives [i+2];
-            obj[0] = commonObjectives [i+3];
+            obj[1] = commonObjectives [i+3];
             players.get(i).setSecretObjective(obj);
         }
     }
@@ -89,7 +89,11 @@ public class Game {
 
     public boolean playCard(int indexCard, int angle, int cardID, boolean front){return true;}
 
-    public boolean pickCard(boolean choiceDeck, boolean visible, int index ) {return true;}
+    public boolean pickCard(boolean choiceDeck, boolean visible, int index ) {
+        this.currPlayer = this.nextPlayer();
+        return true;}
+
+    private Player nextPlayer(){return players.get(players.indexOf(currPlayer)+1);}
 
     public boolean checkTheEnd(){return true;}
 
