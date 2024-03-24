@@ -18,10 +18,7 @@ public class TrioOfObjectsObjectiveCard extends ObjectiveCard{
                 "}";
     }
 
-    /**
-     * @param table
-     * @return
-     */
+    //TODO da testare
     @Override
     public int computePoints(PlayerTable table) {
         HashMap<SpecialObject, Integer> tmp = new HashMap<>();

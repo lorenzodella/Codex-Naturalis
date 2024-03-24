@@ -47,24 +47,25 @@ public class Player {
         this.secretObjective = secretObjective;
     }
 
-    public void positionStarterCard(int front){
-
-        table.insertStarterCard(front, this.starterCard);
-        this.starterCard.setSide(front);
+    //TODO da testare
+    public void positionStarterCard(int side){
+        table.insertStarterCard(side, this.starterCard);
+        this.starterCard.setSide(side);
     }
 
-    public void playCard(int indexCard, int angle, String cardID, int front) throws TargetNotPresentException, InvalidAngleCoveredException, InvalidPositionException, InsertionException {
-        this.table.insertCard(this.cards.get(indexCard), angle, cardID, front);
+    public void drawInitialPlayableCard(LinkedList<PlayableCard> playableCards){this.cards = playableCards;}
+
+    public void playCard(int indexCard, int angle, String cardID, int side) throws TargetNotPresentException, InvalidAngleCoveredException, InvalidPositionException, InsertionException {
+        this.table.insertCard(this.cards.get(indexCard), angle, cardID, side);
         this.addPoints((PointsProvider) this.cards.get(indexCard));
     }
 
+    //TODO da testare
     private void addPoints(PointsProvider card){
-        card.computePoints(this.table);
+        score += card.computePoints(this.table);
     }
 
     public void drawCard(PlayableCard card){}
-
-    public void drawInitialPlayableCard(LinkedList<PlayableCard> playableCards){this.cards = playableCards;}
 
     public void chooseObjectiveCard(int index){}
 

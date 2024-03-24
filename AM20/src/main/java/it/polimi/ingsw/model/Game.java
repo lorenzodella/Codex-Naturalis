@@ -17,13 +17,12 @@ public class Game {
     private ObjectiveCard[] commonObjectives;
     private Player currPlayer;
 
-    //TODO:
-    // volgiamo istanziare solamente il primo player oppure instanziamo già tutti i Player ttamite il controller? Io dico di passare al costruttore del Game già la lsita dei player dal controller
     public Game(List<Player> players){
         this.players = players;
         currPlayer = players.get(0);
     }
 
+    //TODO da testare
     public void initDecks(){
         resourceCardDeck = new Deck(XMLparser.parseResourceCards("resourceCards.xml"));
         resourceCardDeck.shuffle();
@@ -33,6 +32,7 @@ public class Game {
         goldCardDeck.initVisibleCards();
     }
 
+    //TODO da testare
     public void initStarterCard(){
         ArrayList<PlayableCard> starterCards = XMLparser.parseStarterCards("starterCards.xml");
         Collections.shuffle(starterCards);
@@ -46,9 +46,8 @@ public class Game {
 
     }
 
-    //TODO:
+    //TODO da testare
     public void giveInitialCards() {
-
         for(Player p: players){
             LinkedList<PlayableCard> carte = new LinkedList<>();
 
@@ -61,12 +60,12 @@ public class Game {
         }
     }
 
-    public void chooseStarterCardSide(int front, Player p){
-        p.positionStarterCard(front);
+    //TODO da testare
+    public void chooseStarterCardSide(int side, Player p){
+        p.positionStarterCard(side);
     }
 
     public void initObjectiveCards(){
-
         ArrayList<ObjectiveCard> tmp = new ArrayList<>(XMLparser.parseObjectiveCards("objectiveCards.xml"));
         Collections.shuffle(tmp);
         commonObjectives = new ObjectiveCard[2];
@@ -75,24 +74,28 @@ public class Game {
 
         for(int i=0; i<players.size();i++){
             ObjectiveCard[] obj = new ObjectiveCard[2];
-            obj[0] = commonObjectives [i+2];
-            obj[1] = commonObjectives [i+3];
+            obj[0] = tmp.get(i+2);
+            obj[1] = tmp.get(i+3);
             players.get(i).setSecretObjective(obj);
         }
     }
 
-    public void chooseObjective(int index){}
+    public void chooseObjective(int index, Player p){
+        p.chooseObjectiveCard(index);
+    }
 
+    //TODO da testare
     public void chooseFirstPlayer(){
         Collections.shuffle(players);
     }
 
-    public boolean playCard(int indexCard, int angle, int cardID, boolean front){return true;}
+    public boolean playCard(int indexCard, int angle, int cardID, int side){return true;}
 
     public boolean pickCard(boolean choiceDeck, boolean visible, int index ) {
         this.currPlayer = this.nextPlayer();
         return true;}
 
+    //TODO da testare
     private Player nextPlayer(){return players.get(players.indexOf(currPlayer)+1);}
 
     public boolean checkTheEnd(){return true;}
@@ -101,6 +104,6 @@ public class Game {
 
     public void computeCommonObjectives(){}
 
-    public Player checkWinner(){return players.get(0);}
+    public Player checkWinner(){return null;}
 
 }

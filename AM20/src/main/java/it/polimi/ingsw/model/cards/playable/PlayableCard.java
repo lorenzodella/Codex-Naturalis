@@ -23,7 +23,7 @@ public abstract class PlayableCard extends Card {
         this.side = FRONT;
     }
 
-
+    public Kingdom getCardKingdom(){return null;}
 
     public Corner[] getFrontCorners() {
         return frontCorners;

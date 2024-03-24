@@ -22,35 +22,35 @@ class DynamicMatrixTest {
 
     @Test
     void insertUL() throws TargetNotPresentException, InvalidPositionException {
-        m.insert('b','b', 'a',0);
+        m.insert('b','b', 'a',DynamicMatrix.L);
         assertArrayEquals(new int[]{0,1}, m.findPos('a'));
         assertArrayEquals(new int[]{0,0}, m.findPos('b'));
         assertEquals(1, m.height());
         assertEquals(2, m.width());
 
-        assertEquals('b', m.get('a',0));
+        assertEquals('b', m.get('a',DynamicMatrix.L));
     }
 
     @Test
     void insertUR() throws TargetNotPresentException, InvalidPositionException {
-        m.insert('b','b', 'a',1);
+        m.insert('b','b', 'a',DynamicMatrix.UR);
         assertArrayEquals(new int[]{1,0}, m.findPos('a'));
         assertArrayEquals(new int[]{0,1}, m.findPos('b'));
         assertEquals(2, m.height());
         assertEquals(2, m.width());
 
-        assertEquals('b', m.get('a',1));
+        assertEquals('b', m.get('a',DynamicMatrix.UR));
     }
 
     @Test
     void insertDL() throws TargetNotPresentException, InvalidPositionException {
-        m.insert('b','b', 'a',2);
+        m.insert('b','b', 'a',DynamicMatrix.DL);
         assertArrayEquals(new int[]{0,1}, m.findPos('a'));
         assertArrayEquals(new int[]{1,0}, m.findPos('b'));
         assertEquals(2, m.height());
         assertEquals(2, m.width());
 
-        assertEquals('b', m.get('a',2));
+        assertEquals('b', m.get('a',DynamicMatrix.DL));
     }
 
     @Test
@@ -61,22 +61,35 @@ class DynamicMatrixTest {
         assertEquals(1, m.height());
         assertEquals(2, m.width());
 
-        assertEquals('b', m.get('a',3));
+        assertEquals('b', m.get('a',DynamicMatrix.R));
     }
 
     @Test
     void insertURandDR() throws TargetNotPresentException, InvalidPositionException {
         insertUR();
-        m.insert('c','c', 'a',3);
+        m.insert('c','c', 'a',DynamicMatrix.R);
         assertArrayEquals(new int[]{1,0}, m.findPos('a'));
         assertArrayEquals(new int[]{0,1}, m.findPos('b'));
         assertArrayEquals(new int[]{1,1}, m.findPos('c'));
         assertEquals(2, m.height());
         assertEquals(2, m.width());
 
-        assertEquals('c', m.get('a',3));
+        assertEquals('c', m.get('a',DynamicMatrix.R));
+    }
+    
+    @Test
+    void getU() throws TargetNotPresentException, InvalidPositionException {
+        insertUR();
+        m.insert('c','c', 'b',DynamicMatrix.L);
+        assertEquals('c', m.get('a',DynamicMatrix.U));
     }
 
+    @Test
+    void getD() throws TargetNotPresentException, InvalidPositionException {
+        insertDR();
+        m.insert('c','c', 'b',DynamicMatrix.DL);
+        assertEquals('c', m.get('a',DynamicMatrix.D));
+    }
 
     @Test
     void insertPosInvalid() throws TargetNotPresentException {
@@ -85,15 +98,15 @@ class DynamicMatrixTest {
 
     @Test
     void insertTargetNonPresent() throws InvalidPositionException {
-        assertThrows(TargetNotPresentException.class, ()->m.insert('b', 'b','c',1));
+        assertThrows(TargetNotPresentException.class, ()->m.insert('b', 'b','c',DynamicMatrix.UR));
     }
 
     @Test
     void getElementNotPresent() throws TargetNotPresentException, InvalidPositionException {
-        assertNull(m.get('a', 0));
-        assertNull(m.get('a', 1));
-        assertNull(m.get('a', 2));
-        assertNull(m.get('a', 3));
+        assertNull(m.get('a', DynamicMatrix.L));
+        assertNull(m.get('a', DynamicMatrix.UR));
+        assertNull(m.get('a', DynamicMatrix.DL));
+        assertNull(m.get('a', DynamicMatrix.R));
     }
 
 }

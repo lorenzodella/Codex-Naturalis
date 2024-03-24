@@ -3,7 +3,6 @@ package it.polimi.ingsw.model.util;
 import it.polimi.ingsw.model.exceptions.InvalidPositionException;
 import it.polimi.ingsw.model.exceptions.TargetNotPresentException;
 
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
 /**
@@ -17,6 +16,9 @@ public class DynamicMatrix<K,T> {
     public static final int UR = 1;
     public static final int DL = 2;
     public static final int R = 3;
+
+    public static final int U = 4;
+    public static final int D = 5;
 
     private static class MatrixElement<K,T> {
         K key;
@@ -87,10 +89,21 @@ public class DynamicMatrix<K,T> {
     }
 
     /**
+     * Get the element at those coordinates
+     * @param i row
+     * @param j column
+     * @return the element
+     */
+    public T getElementAt(int i, int j){
+        return mat.get(i).get(j).value;
+    }
+
+    /**
      * Get the element at a certain position relative to a particular object
      * @param targetKey key of the object near which the element is
      * @param pos 0 = one cell on the left, 1 = one cell on the right and one above,
-     *            2 = one cell on the left and one below, 3 = one cell on the right
+     *            2 = one cell on the left and one below, 3 = one cell on the right,
+     *            4 = one cell above, 5 = one cell below
      * @return element at that position
      * @throws TargetNotPresentException if target object is not present
      * @throws InvalidPositionException if pos is not a valid value
@@ -100,17 +113,23 @@ public class DynamicMatrix<K,T> {
         int i = p[0]; int j = p[1];
         MatrixElement<K,T> tmp;
         switch (pos) {
-            case 0:
+            case L:
                 tmp = getLeft(i, j);
                 break;
-            case 1:
+            case UR:
                 tmp = getUpRight(i, j);
                 break;
-            case 2:
+            case DL:
                 tmp = getDownLeft(i, j);
                 break;
-            case 3:
+            case R:
                 tmp = getRight(i, j);
+                break;
+            case U:
+                tmp = getUp(i, j);
+                break;
+            case D:
+                tmp = getDown(i, j);
                 break;
             default:
                 throw new InvalidPositionException();
@@ -149,6 +168,22 @@ public class DynamicMatrix<K,T> {
             for (int j=0; j<mat.get(0).size(); j++) {
                 if(mat.get(i).get(j)!=null && mat.get(i).get(j).key.equals(targetKey)){
                     return mat.get(i).get(j).value;
+                }
+            }
+        }
+        throw new TargetNotPresentException();
+    }
+
+    /**
+     * Remove the element in the matrix with the given key.
+     * @param targetKey key of the element to be removed
+     * @throws TargetNotPresentException if no element with that key is not present
+     */
+    public void remove(K targetKey) throws TargetNotPresentException {
+        for (int i=0; i<mat.size(); i++) {
+            for (int j=0; j<mat.get(0).size(); j++) {
+                if(mat.get(i).get(j)!=null && mat.get(i).get(j).key.equals(targetKey)){
+                    mat.get(i).set(j, null);
                 }
             }
         }
@@ -240,6 +275,28 @@ public class DynamicMatrix<K,T> {
     }
 
     /**
+     * Get the matrix element one cell above the given cell
+     * @param i row of given cell
+     * @param j column of given cell
+     * @return the element at that position
+     */
+    private MatrixElement<K,T> getUp(int i, int j){
+        if(i == 0) return null;
+        return  mat.get(i-1).get(j);
+    }
+
+    /**
+     * Get the matrix element one cell below the given cell
+     * @param i row of given cell
+     * @param j column of given cell
+     * @return the element at that position
+     */
+    private MatrixElement<K,T> getDown(int i, int j){
+        if(i == mat.size()-1) return null;
+        return  mat.get(i+1).get(j);
+    }
+
+    /**
      * Get the matrix element one cell to the right of the given cell
      * @param i row of given cell
      * @param j column of given cell
@@ -304,21 +361,5 @@ public class DynamicMatrix<K,T> {
         }
         s.append("\n");
         return s.toString();
-    }
-
-    /**
-     * Remove the element in the matrix with the given key.
-     * @param targetKey key of the element to be removed
-     * @throws TargetNotPresentException if no element with that key is not present
-     */
-    public void remove(K targetKey) throws TargetNotPresentException {
-        for (int i=0; i<mat.size(); i++) {
-            for (int j=0; j<mat.get(0).size(); j++) {
-                if(mat.get(i).get(j)!=null && mat.get(i).get(j).key.equals(targetKey)){
-                    mat.get(i).set(j, null);
-                }
-            }
-        }
-        throw new TargetNotPresentException();
     }
 }

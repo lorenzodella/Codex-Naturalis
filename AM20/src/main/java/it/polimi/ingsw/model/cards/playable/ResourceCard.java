@@ -43,6 +43,11 @@ public class ResourceCard extends PlayableCard implements PointsProvider {
     }
 
     @Override
+    public Kingdom getCardKingdom() {
+        return kingdom;
+    }
+
+    @Override
     public HashMap<Kingdom, Integer> getKingdoms(){
         if(getSide() == PlayableCard.FRONT)
             return super.getKingdoms();
@@ -62,6 +67,7 @@ public class ResourceCard extends PlayableCard implements PointsProvider {
         }
     }
 
+    //TODO da testare
     @Override
     public int computePoints(PlayerTable table) {
         return this.points;

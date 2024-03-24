@@ -35,6 +35,7 @@ public class TrioOfResourcesObjectiveCard extends ObjectiveCard{
                 "}";
     }
 
+    //TODO da testare
     @Override
     public int computePoints(PlayerTable table) {
         return 2*(table.getStats().getNumberOfResources(this.resourcesKingdom)/3);

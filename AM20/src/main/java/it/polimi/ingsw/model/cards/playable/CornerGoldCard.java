@@ -20,6 +20,7 @@ public class CornerGoldCard extends GoldCard{
                 "}";
     }
 
+    //TODO da testare
     @Override
     public int computePoints(PlayerTable table) {
         int num = table.numOfCoveredCorner(this);

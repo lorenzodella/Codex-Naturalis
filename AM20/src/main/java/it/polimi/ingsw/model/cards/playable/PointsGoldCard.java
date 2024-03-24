@@ -39,6 +39,7 @@ public class PointsGoldCard extends GoldCard{
                 "}";
     }
 
+    //TODO da testare
     @Override
     public int computePoints(PlayerTable table) {
         return this.points;

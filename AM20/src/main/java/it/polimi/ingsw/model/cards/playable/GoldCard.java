@@ -42,6 +42,11 @@ public abstract class GoldCard extends PlayableCard implements PointsProvider {
     }
 
     @Override
+    public Kingdom getCardKingdom() {
+        return kingdom;
+    }
+
+    @Override
     public HashMap<Kingdom, Integer> getKingdoms(){
         if(getSide() == PlayableCard.FRONT)
             return super.getKingdoms();
@@ -61,6 +66,7 @@ public abstract class GoldCard extends PlayableCard implements PointsProvider {
         }
     }
 
+    //TODO da testare
     @Override
     public HashMap<Kingdom, Integer> getRequirements() {
         if(getSide() == PlayableCard.FRONT)

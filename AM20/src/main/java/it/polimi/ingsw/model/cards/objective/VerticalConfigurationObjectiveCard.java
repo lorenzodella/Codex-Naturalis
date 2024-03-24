@@ -41,8 +41,22 @@ public class VerticalConfigurationObjectiveCard extends ObjectiveCard {
                 "}";
     }
 
+    public Kingdom getKingdom1() {
+        return kingdom1;
+    }
+
+    public Kingdom getKingdom2() {
+        return kingdom2;
+    }
+
+    public int getCoveredCorner() {
+        return coveredCorner;
+    }
+
+    //TODO da testare
     @Override
     public int computePoints(PlayerTable table) {
         return 3*table.findVerticalConfiguration(this);
     }
+
 }

@@ -38,6 +38,15 @@ public class DiagonalConfigurationObjectiveCard extends ObjectiveCard{
                 "}";
     }
 
+    public Kingdom getKingdom() {
+        return kingdom;
+    }
+
+    public int getCoveredCorner() {
+        return coveredCorner;
+    }
+
+    //TODO da testare
     @Override
     public int computePoints(PlayerTable table) {
         return 2*table.findDiagonalConfiguration(this);

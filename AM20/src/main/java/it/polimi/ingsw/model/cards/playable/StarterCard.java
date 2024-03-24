@@ -45,7 +45,6 @@ public class StarterCard extends PlayableCard{
     }*/
 
 
-    // TODO: da controllare e da fare JAVADoc e da fare testing (forse si può snellire il codice)
     @Override
     public HashMap<Kingdom, Integer> getKingdoms(){
         HashMap<Kingdom, Integer> res = new HashMap<>(super.getKingdoms());
