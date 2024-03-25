@@ -33,6 +33,7 @@ public class PlayerTable {
         this.matrix = new DynamicMatrix<>(card.getID(), card );
     }
 
+    //TODO
     public void insertCard(PlayableCard card, int angle, String targetID, int side) throws InsertionException, InvalidAngleCoveredException, TargetNotPresentException, InvalidPositionException {
 
         this.matrix.insert(card.getID(), card, targetID, angle);
@@ -75,10 +76,16 @@ public class PlayerTable {
 
         card.setSide(side);
 
+        this.updateCorner(cardsCovered[Corner.UL], Corner.DR);
+        this.updateCorner(cardsCovered[Corner.UR], Corner.DL);
+        this.updateCorner(cardsCovered[Corner.DL], Corner.UR);
+        this.updateCorner(cardsCovered[Corner.DR], Corner.UL);
 
 
 
 
+        //
+        /*
         for(int i=0;i<cardsCovered.length;i++){
             if(cardsCovered[i] != null){
                 Corner[] corners;
@@ -87,7 +94,7 @@ public class PlayerTable {
                 else
                     corners = cardsCovered[i].getBackCorners();
 
-                //this.updateCorner(cardsCovered[i], corner);
+                this.updateCorner(cardsCovered[], corner);
 
 
                 switch (i){
@@ -109,19 +116,24 @@ public class PlayerTable {
                         break;
                 }
             }
-        }
+        }*/
 
         // update stats dopo la giocata della carta
         this.updateStats(card);
     }
 
-    /*private void updateCorner(PlayableCard card, int angle){
-        c.setHi
+    private void updateCorner(PlayableCard card, int angle){
+        if(card != null){
+            Corner[] tmp;
+            if(card.getSide() == PlayableCard.FRONT)
+                tmp = card.getFrontCorners();
+            else
+                tmp = card.getBackCorners();
 
-
-    }*/
-
-
+            tmp[angle].setHidden(true);
+            this.stats.removeKingdomOrObject(tmp[angle].getContentKingdom(), tmp[angle].getContentObject());
+        }
+    }
 
 
 
