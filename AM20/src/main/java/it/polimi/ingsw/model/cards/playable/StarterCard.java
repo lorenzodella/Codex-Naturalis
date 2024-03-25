@@ -7,6 +7,12 @@ import java.util.*;
 
 public class StarterCard extends PlayableCard{
     //TODO: sei sicuro che sia corretto ArrayList di Kingdom?? io ho scritto il codice con arrayList<Kingdom>
+
+    /**
+     * List of all the kingdoms that are shown in the center of the FRONT SIDE of the card.
+     * PS: the rulebook says that these resources are shown on the BACK SIDE of the card but we decided
+     * to do the exact same thing that is shown in the pdf (pdf of every image and side of every card).
+     */
     private ArrayList<Kingdom> resources;
 
     public StarterCard(String ID, Corner[] frontCorners, Corner[] backCorners, ArrayList<Kingdom> resources) {
@@ -46,6 +52,13 @@ public class StarterCard extends PlayableCard{
 
 
     // TODO: da controllare e da fare JAVADoc e da fare testing (forse si può snellire il codice)
+
+    /**
+     * This method calls the upper class method to get kingdoms that are drawn in the corner
+     * of this specific card.
+     * If this card is played on the front side, this method also adds the kingdoms that are in resoruces[]
+     * @return
+     */
     @Override
     public HashMap<Kingdom, Integer> getKingdoms(){
         HashMap<Kingdom, Integer> res = new HashMap<>(super.getKingdoms());

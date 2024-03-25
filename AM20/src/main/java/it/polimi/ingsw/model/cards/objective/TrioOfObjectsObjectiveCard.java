@@ -16,7 +16,10 @@ public class TrioOfObjectsObjectiveCard extends ObjectiveCard{
     }
 
     /**
-     * @param table
+     * After the user plays the card, and thanks to their PlayerTable (given by the param), this method returns
+     * the points of that action.
+     * PS: playertable allows us to know the number of specialObjects that there are on the table
+     * @param table: the table of the player that plays the card
      * @return
      */
     @Override

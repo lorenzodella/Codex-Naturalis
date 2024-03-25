@@ -1,6 +1,5 @@
 package it.polimi.ingsw.model.cards.playable;
 
-import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.cards.Card;
 import it.polimi.ingsw.model.cards.Corner;
 import it.polimi.ingsw.model.cards.Kingdom;
@@ -44,6 +43,12 @@ public abstract class PlayableCard extends Card {
 
     //public abstract String getID();
 
+    /**
+     * This method returns a map that tells you, per each kingdown, how many
+     * occurrences of that kingdowm there are in that specific card.
+     * It basically tells you the kingdoms that are drawn in each card's corner.
+     * @return
+     */
     public HashMap<Kingdom, Integer> getKingdoms(){
         HashMap<Kingdom, Integer> map = Kingdom.createEmptyMap();
         for (Corner corner : getSide() == PlayableCard.FRONT ? getFrontCorners() : getBackCorners()){
@@ -53,6 +58,13 @@ public abstract class PlayableCard extends Card {
         }
         return map;
     }
+
+    /**
+     * This method returns a map that tells you, per each object, how many
+     * occurrences of that object there are in that specific card.
+     * It basically tells you the objects that are drawn in each card's corner.
+     * @return
+     */
     public HashMap<SpecialObject, Integer> getSpecialObjects(){
         HashMap<SpecialObject, Integer> map = SpecialObject.createEmptyMap();
         for (Corner corner : getSide() == PlayableCard.FRONT ? getFrontCorners() : getBackCorners()){
@@ -63,6 +75,11 @@ public abstract class PlayableCard extends Card {
         return map;
     }
 
+    /**
+     * This method returns a map that tells you, per aech kingdom, how many occurrences of that kingdom
+     * the user needs to have on the table to be albe to play the card.
+     * @return
+     */
     public HashMap<Kingdom, Integer> getRequirements(){
         return Kingdom.createEmptyMap();
     }

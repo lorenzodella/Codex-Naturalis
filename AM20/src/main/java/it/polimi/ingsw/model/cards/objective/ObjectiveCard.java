@@ -6,6 +6,9 @@ import it.polimi.ingsw.model.cards.PointsProvider;
 import java.util.Objects;
 
 public abstract class ObjectiveCard extends Card implements PointsProvider {
+    /**
+     * # of the points of that specific card
+     */
     private int points;
 
     public ObjectiveCard(String ID, int points) {

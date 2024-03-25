@@ -9,6 +9,11 @@ import java.util.*;
 
 public abstract class GoldCard extends PlayableCard implements PointsProvider {
     private Kingdom kingdom;
+
+    /**
+     * map that shows the kingdoms and the number of occurrences of that specific kingdoms that
+     * are needed in order to play the card.
+     */
     private HashMap<Kingdom, Integer> requirements;
 
 
@@ -41,6 +46,11 @@ public abstract class GoldCard extends PlayableCard implements PointsProvider {
                 ", ";
     }
 
+    /**
+     * If the card's been played by the front side, this method calls the upper class method.
+     * Otherwise the method returns a map with just a single element (the kingdom of the card).
+     * @return
+     */
     @Override
     public HashMap<Kingdom, Integer> getKingdoms(){
         if(getSide() == PlayableCard.FRONT)
@@ -52,6 +62,11 @@ public abstract class GoldCard extends PlayableCard implements PointsProvider {
         }
     }
 
+    /**
+     * If the card's been played by the front side, this method calls the upper class method.
+     * Otherwise the method returns an empty map.
+     * @return
+     */
     @Override
     public HashMap<SpecialObject, Integer> getSpecialObjects(){
         if(getSide() == PlayableCard.FRONT)
@@ -61,6 +76,11 @@ public abstract class GoldCard extends PlayableCard implements PointsProvider {
         }
     }
 
+    /**
+     * If the card's been played by the front side, this method returns the attribute (requirements).
+     * Otherwise the method returns an empty map.
+     * @return
+     */
     @Override
     public HashMap<Kingdom, Integer> getRequirements() {
         return requirements;

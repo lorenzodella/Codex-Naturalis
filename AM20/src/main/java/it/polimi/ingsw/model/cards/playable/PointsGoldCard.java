@@ -8,6 +8,10 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class PointsGoldCard extends GoldCard{
+
+    /**
+     * # of points that you owe if you play this card (with the needed requirements)
+     */
     private int points;
 
     public PointsGoldCard(String ID, Corner[] frontCorners, Corner[] backCorners,
@@ -39,6 +43,13 @@ public class PointsGoldCard extends GoldCard{
                 "}";
     }
 
+    /**
+     * After the user plays the card, and thanks to their PlayerTable (given by the param), this method returns
+     * the points of that action.
+     * PS: playertable allows us to know the number of the occurences of the specialObject that's on the user's table.
+     * @param table: the table of the player that plays the card
+     * @return
+     */
     @Override
     public int computePoints(PlayerTable table) {
         return 0;
