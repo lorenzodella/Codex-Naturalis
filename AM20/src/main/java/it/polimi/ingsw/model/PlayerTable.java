@@ -11,6 +11,7 @@ import it.polimi.ingsw.model.exceptions.DynamicMatrixException;
 import it.polimi.ingsw.model.cards.playable.ResourceCard;
 import it.polimi.ingsw.model.exceptions.*;
 import it.polimi.ingsw.model.util.DynamicMatrix;
+import jdk.vm.ci.code.site.ConstantReference;
 
 import java.util.ArrayList;
 
@@ -34,6 +35,14 @@ public class PlayerTable {
     public void insertCard(PlayableCard card, int angle, String targetID, int side) throws InsertionException, InvalidAngleCoveredException, TargetNotPresentException, InvalidPositionException {
 
         this.matrix.insert(card.getID(), card, targetID, angle);
+
+        //array delle 4 carte coperte dalla carta che viene posizionata
+        PlayableCard[] cardsCovered = new PlayableCard[4];
+        cardsCovered[Corner.UL] = this.matrix.get(card.getID(), Corner.UL);
+        cardsCovered[Corner.UR] = this.matrix.get(card.getID(), Corner.UR);
+        cardsCovered[Corner.DL] = this.matrix.get(card.getID(), Corner.DL);
+        cardsCovered[Corner.DR] = this.matrix.get(card.getID(), Corner.DR);
+
         try {
             /* TODO PER TIA
             queste variabili ti servono anche dopo perché devi updatare i loro corner se
@@ -41,15 +50,11 @@ public class PlayerTable {
             però invece di usare le posizioni 0,1,2,3 usa direttamente i nomi dei corner.
             ES. coveredCards[Corner.UL] = matrix.get(card.getID(), Corner.UL)
              */
-            PlayableCard ULcard = this.matrix.get(card.getID(), Corner.UL);
-            PlayableCard URcard = this.matrix.get(card.getID(), Corner.UR);
-            PlayableCard DLcard = this.matrix.get(card.getID(), Corner.DL);
-            PlayableCard DRcard = this.matrix.get(card.getID(), Corner.DR);
+            this.isPositionValid(cardsCovered[Corner.UL], Corner.DR);
+            this.isPositionValid(cardsCovered[Corner.UR], Corner.DL);
+            this.isPositionValid(cardsCovered[Corner.DL], Corner.UR);
+            this.isPositionValid(cardsCovered[Corner.DR], Corner.UL);
 
-            this.isPositionValid(ULcard, Corner.DR, ULcard.getSide());
-            this.isPositionValid(URcard, Corner.DL, URcard.getSide());
-            this.isPositionValid(DLcard, Corner.UR, DLcard.getSide());
-            this.isPositionValid(DRcard, Corner.UL, DRcard.getSide());
         } catch (Exception e){
             this.matrix.remove(card.getID());
             throw new InsertionException();
@@ -64,56 +69,42 @@ public class PlayerTable {
         updateCorner(card, corner) che prende una carta e l'angolo che deve diventare hidden,
         sempre in quel metodo puoi anche aggiornare le stats rimuovendo la risorsa che c'era li
          */
-        PlayableCard tmp = this.matrix.find(targetID);
-        tmp.setSide(side); //setta il side della carta
+        //PlayableCard tmp = this.matrix.find(targetID);
+        //tmp.setSide(side); //setta il side della carta
 
-        PlayableCard[] cardsCovered = new PlayableCard[4];
-        cardsCovered[0] = this.matrix.get(card.getID(), Corner.UL);
-        cardsCovered[1] = this.matrix.get(card.getID(), Corner.UR);
-        cardsCovered[2] = this.matrix.get(card.getID(), Corner.DL);
-        cardsCovered[3] = this.matrix.get(card.getID(), Corner.DR);
+        card.setSide(side);
 
 
-        //devo settare a hidden tutti gli angoli coperti
+
+
+
         for(int i=0;i<cardsCovered.length;i++){
             if(cardsCovered[i] != null){
-                switch (i) {
-                    case 0:
-                        if(cardsCovered[i].getSide() == PlayableCard.FRONT){
-                            Corner[] c = tmp.getFrontCorners();
-                            c[Corner.DR].setHidden(true);
-                        }else {
-                            Corner[] c = tmp.getBackCorners();
-                            c[Corner.DR].setHidden(true);
-                        }
-                        break;
-                    case 1:
-                        if(cardsCovered[i].getSide() == PlayableCard.FRONT){
-                            Corner[] c = tmp.getFrontCorners();
-                            c[Corner.DL].setHidden(true);
-                        }else {
-                            Corner[] c = tmp.getBackCorners();
-                            c[Corner.DL].setHidden(true);
-                        }
+                Corner[] corners;
+                if(cardsCovered[i].getSide() == PlayableCard.FRONT)
+                    corners = cardsCovered[i].getFrontCorners();
+                else
+                    corners = cardsCovered[i].getBackCorners();
 
+                //this.updateCorner(cardsCovered[i], corner);
+
+
+                switch (i){
+                    case Corner.UL:
+                        corners[Corner.DR].setHidden(true);
+                        this.stats.removeKingdomOrObject(corners[i].getContentKingdom(), corners[i].getContentObject());
                         break;
-                    case 2:
-                        if(cardsCovered[i].getSide() == PlayableCard.FRONT){
-                            Corner[] c = tmp.getFrontCorners();
-                            c[Corner.UR].setHidden(true);
-                        }else {
-                            Corner[] c = tmp.getBackCorners();
-                            c[Corner.UR].setHidden(true);
-                        }
+                    case Corner.UR:
+                        corners[Corner.DL].setHidden(true);
+                        this.stats.removeKingdomOrObject(corners[i].getContentKingdom(), corners[i].getContentObject());
                         break;
-                    case 3:
-                        if(cardsCovered[i].getSide() == PlayableCard.FRONT){
-                            Corner[] c = tmp.getFrontCorners();
-                            c[Corner.UL].setHidden(true);
-                        }else {
-                            Corner[] c = tmp.getBackCorners();
-                            c[Corner.UL].setHidden(true);
-                        }
+                    case Corner.DL:
+                        corners[Corner.UR].setHidden(true);
+                        this.stats.removeKingdomOrObject(corners[i].getContentKingdom(), corners[i].getContentObject());
+                        break;
+                    case Corner.DR:
+                        corners[Corner.UL].setHidden(true);
+                        this.stats.removeKingdomOrObject(corners[i].getContentKingdom(), corners[i].getContentObject());
                         break;
                 }
             }
@@ -123,24 +114,51 @@ public class PlayerTable {
         this.updateStats(card);
     }
 
+    /*private void updateCorner(PlayableCard card, int angle){
+        c.setHi
+
+
+    }*/
+
+
+
+
+
+
+
     /* TODO PER TIA:
      qua secondo me non serve il parametro side (anche perché non lhai usato)
      ATTENZIONE: controlla che la carta non sia null
      */
-    private void isPositionValid(PlayableCard c, int angle, int side) throws InvalidAngleCoveredException, TargetNotPresentException {
-        Corner[] obj;
-        if(c.getSide() == PlayableCard.FRONT)
-             obj = c.getFrontCorners();
-        else
-             obj = c.getBackCorners();
+    private void isPositionValid(PlayableCard c, int angle) throws InvalidAngleCoveredException, TargetNotPresentException {
 
-        if(obj[angle] == null)
-            throw new InvalidAngleCoveredException();
-        if(obj[angle].isHidden())
-            throw new InvalidAngleCoveredException();
+        if(c != null){
+            Corner[] obj;
+            if(c.getSide() == PlayableCard.FRONT)
+                obj = c.getFrontCorners();
+            else
+                obj = c.getBackCorners();
+
+            if(obj[angle] == null)
+                throw new InvalidAngleCoveredException();
+            if(obj[angle].isHidden())
+                throw new InvalidAngleCoveredException();
+        }
     }
 
     private void updateStats(PlayableCard card){//usi il metodo setResourve(Kingdom, int) che verrà implementato nella Playersatts)
+        Corner[] corners ;
+        if(card.getSide() == PlayableCard.FRONT){
+            corners = card.getFrontCorners();
+        }else
+            corners = card.getBackCorners();
+
+        for(int i=0;i<corners.length;i++){
+            if(corners[i] != null){
+                this.stats.addKingdomOrObject(corners[i].getContentKingdom(),corners[i].getContentObject());
+            }
+        }
+
     }
 
     //TODO da testare
