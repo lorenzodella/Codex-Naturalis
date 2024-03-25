@@ -409,7 +409,7 @@ public class XMLparser {
 //metodo che "crea" hashmap dei req a partire dalla reqList
     private static HashMap<Kingdom, Integer> getGoldCardRequirements(NodeList requirementsList) {
         //inizializzo la lista
-        HashMap<Kingdom, Integer> requirements = new HashMap<>();
+        HashMap<Kingdom, Integer> requirements = Kingdom.createEmptyMap();
         //essendo un tag che ha dentro altri tag
         for (int j = 0; j < requirementsList.getLength(); j++) {
             Node n = requirementsList.item(j);

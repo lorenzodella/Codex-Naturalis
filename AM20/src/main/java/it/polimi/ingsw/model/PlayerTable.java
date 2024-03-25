@@ -14,6 +14,7 @@ import it.polimi.ingsw.model.util.DynamicMatrix;
 import jdk.vm.ci.code.site.ConstantReference;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class PlayerTable {
     private DynamicMatrix<String, PlayableCard> matrix;
@@ -178,8 +179,8 @@ public class PlayerTable {
     //TODO da testare
     public int findDiagonalConfiguration(DiagonalConfigurationObjectiveCard finder){
         PlayableCard card;
-        ArrayList<PlayableCard> alreadyUsedCards = new ArrayList<>();
-        ArrayList<PlayableCard> tmp;
+        HashSet<PlayableCard> alreadyUsedCards = new HashSet<>();
+        HashSet<PlayableCard> tmp;
         int numOfConfigurations = 0;
 
         for(int i=0; i<matrix.height(); i++){
@@ -197,9 +198,9 @@ public class PlayerTable {
         return numOfConfigurations;
     }
 
-    private ArrayList<PlayableCard> checkDiagonally(PlayableCard card, Kingdom kingdom,
-                                                    int corner, ArrayList<PlayableCard> alreadyUsedCards){
-        ArrayList<PlayableCard> tmp = new ArrayList<>();
+    private HashSet<PlayableCard> checkDiagonally(PlayableCard card, Kingdom kingdom,
+                                                    int corner, HashSet<PlayableCard> alreadyUsedCards){
+        HashSet<PlayableCard> tmp = new HashSet<>();
         try {
             for (int n = 0; n < 3; n++) {
                 if (card.getCardKingdom().equals(kingdom) && !alreadyUsedCards.contains(card)) {
@@ -217,8 +218,8 @@ public class PlayerTable {
     //TODO da testare
     public int findVerticalConfiguration(VerticalConfigurationObjectiveCard finder){
         PlayableCard card;
-        ArrayList<PlayableCard> alreadyUsedCards = new ArrayList<>();
-        ArrayList<PlayableCard> tmp;
+        HashSet<PlayableCard> alreadyUsedCards = new HashSet<>();
+        HashSet<PlayableCard> tmp;
         int numOfConfigurations = 0;
 
         for(int i=0; i<matrix.height(); i++){
@@ -236,9 +237,9 @@ public class PlayerTable {
         return numOfConfigurations;
     }
 
-    private ArrayList<PlayableCard> checkVertically(PlayableCard card, Kingdom kingdom1, Kingdom kingdom2,
-                                                    int corner, ArrayList<PlayableCard> alreadyUsedCards){
-        ArrayList<PlayableCard> tmp = new ArrayList<>();
+    private HashSet<PlayableCard> checkVertically(PlayableCard card, Kingdom kingdom1, Kingdom kingdom2,
+                                                    int corner, HashSet<PlayableCard> alreadyUsedCards){
+        HashSet<PlayableCard> tmp = new HashSet<>();
         try {
             if(card.getCardKingdom().equals(kingdom1) && !alreadyUsedCards.contains(card)){
                 tmp.add(card);
