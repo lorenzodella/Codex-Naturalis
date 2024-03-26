@@ -6,10 +6,7 @@ import it.polimi.ingsw.model.cards.playable.StarterCard;
 import it.polimi.ingsw.model.exceptions.*;
 import it.polimi.ingsw.model.util.XMLparser;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class Game {
     private List<Player>  players;
@@ -136,10 +133,29 @@ public class Game {
         return  resourceCardDeck.getVisibleCard(0) != null || resourceCardDeck.getVisibleCard(1) != null || goldCardDeck.getVisibleCard(0) != null || goldCardDeck.getVisibleCard(1) != null;
     }
 
-    public void computePlayerSecretObjectives(){}
+    public void computePlayerSecretObjectives(){
+        for(Player p: players){
+            p.computeSecretObjective();
+        }
+    }
 
-    public void computeCommonObjectives(){}
+    public void computeCommonObjectives(){
+        for(Player p: players){
+            for(ObjectiveCard obj : commonObjectives){
+                p.computeCommonObjective(obj);
+            }
+        }
+    }
 
-    public Player checkWinner(){return null;}
+    //da decidere come gestire il caso di parità
+    public Player checkWinner(){
+        Player winner = players.get(0);
+        for(Player p :players){
+            int point = p.getScore();
+            if(point >= winner.getScore())
+                winner = p;
+        }
+        return winner;
+    }
 
 }

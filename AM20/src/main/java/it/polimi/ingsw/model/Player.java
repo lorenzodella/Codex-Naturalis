@@ -81,7 +81,11 @@ public class Player {
         this.secretObjective[1] = null;
     }
 
-    public void computeSecretObjective(){}
+    public void computeSecretObjective(){
+        this.secretObjective[0].computePoints(this.table);
+    }
 
-    public void computeCommonObjective(ObjectiveCard objectiveCard){}
+    public void computeCommonObjective(ObjectiveCard objectiveCard){
+        objectiveCard.computePoints(this.table);
+    }
 }
