@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
+import it.polimi.ingsw.model.exceptions.finishedCardStack;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,12 +26,17 @@ public class Deck {
         visibleCards[1] = cards.pop();
     }
 
-    public PlayableCard draw(){
-        return cards.pop();
+    public PlayableCard draw() throws finishedCardStack {
+        if(cards.isEmpty())
+            throw new finishedCardStack();
+        else
+            return cards.pop();
     }
 
-    public PlayableCard getVisibleCard(int index){
-        return visibleCards[index];
+    public PlayableCard getVisibleCard(int index) throws finishedCardStack {
+        PlayableCard res = visibleCards[index];
+        this.visibleCards[index] = this.draw();
+        return res;
     }
 
     public boolean isEmpty(){

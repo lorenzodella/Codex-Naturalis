@@ -9,6 +9,7 @@ import it.polimi.ingsw.model.exceptions.InvalidAngleCoveredException;
 import it.polimi.ingsw.model.exceptions.InvalidPositionException;
 import it.polimi.ingsw.model.exceptions.TargetNotPresentException;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -43,6 +44,10 @@ public class Player {
         return starterCard;
     }
 
+    public int getScore() {
+        return score;
+    }
+
     public void setSecretObjective(ObjectiveCard[] secretObjective) {
         this.secretObjective = secretObjective;
     }
@@ -58,6 +63,7 @@ public class Player {
     public void playCard(int indexCard, int angle, String cardID, int side) throws TargetNotPresentException, InvalidAngleCoveredException, InvalidPositionException, InsertionException {
         this.table.insertCard(this.cards.get(indexCard), angle, cardID, side);
         this.addPoints((PointsProvider) this.cards.get(indexCard));
+        this.cards.remove(this.cards.get(indexCard));
     }
 
     //TODO da testare
@@ -65,9 +71,15 @@ public class Player {
         score += card.computePoints(this.table);
     }
 
-    public void drawCard(PlayableCard card){}
+    public void drawCard(PlayableCard card){
+        this.cards.add(card);
+    }
 
-    public void chooseObjectiveCard(int index){}
+    //dopo la chaimata al metodo il secretObjetive sarà sempre in posizione zero e quello in posizione 1 saraà null
+    public void chooseObjectiveCard(int index){
+        this.secretObjective[0] = this.secretObjective[index];
+        this.secretObjective[1] = null;
+    }
 
     public void computeSecretObjective(){}
 

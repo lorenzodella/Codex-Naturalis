@@ -3,6 +3,7 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.model.cards.playable.StarterCard;
+import it.polimi.ingsw.model.exceptions.*;
 import it.polimi.ingsw.model.util.XMLparser;
 
 import java.util.ArrayList;
@@ -51,11 +52,17 @@ public class Game {
         for(Player p: players){
             LinkedList<PlayableCard> carte = new LinkedList<>();
 
-            carte.add(resourceCardDeck.draw());
-            carte.add(resourceCardDeck.draw());
-            carte.add(goldCardDeck.draw());
+            try {
+                carte.add(resourceCardDeck.draw());
+                carte.add(resourceCardDeck.draw());
+                carte.add(goldCardDeck.draw());
 
-            p.drawInitialPlayableCard(carte);
+                p.drawInitialPlayableCard(carte);
+            } catch (finishedCardStack e) {
+                throw new RuntimeException(e);
+            }
+
+
 
         }
     }
@@ -89,16 +96,45 @@ public class Game {
         Collections.shuffle(players);
     }
 
-    public boolean playCard(int indexCard, int angle, int cardID, int side){return true;}
+    public void playCard(int indexCard, int angle, String targetID, int side) throws TargetNotPresentException, InsertionException, InvalidAngleCoveredException, InvalidPositionException {
+        currPlayer.playCard(indexCard, angle, targetID, side);
+    }
 
-    public boolean pickCard(boolean choiceDeck, boolean visible, int index ) {
+
+    // choiceDeck = true resourceCard  choiceDeck = 0 goldCard
+    // visibile = true carta visibile all'indice index
+    public boolean pickCard(int choiceDeck, boolean visible, int index ) throws finishedCardStack {
+        Deck deckChoosen;
+        PlayableCard card;
+        if(choiceDeck == 1 )
+            deckChoosen = resourceCardDeck;
+        else
+            deckChoosen = goldCardDeck;
+
+        if(visible == false)
+            card = deckChoosen.draw();
+        else
+            card = deckChoosen.getVisibleCard(index);
+
+        this.currPlayer.drawCard(card);
+        boolean res = this.checkTheEnd();
         this.currPlayer = this.nextPlayer();
-        return true;}
+        return res;
+
+    }
 
     //TODO da testare
     private Player nextPlayer(){return players.get(players.indexOf(currPlayer)+1);}
 
-    public boolean checkTheEnd(){return true;}
+
+    //metodo chaimato dal controllore appea dopo che chiama playCard e pickCard
+    private boolean checkTheEnd() throws finishedCardStack {
+        return currPlayer.getScore() >= 20 || finishedDeck();
+    }
+
+    private boolean finishedDeck() throws finishedCardStack {
+        return  resourceCardDeck.getVisibleCard(0) != null || resourceCardDeck.getVisibleCard(1) != null || goldCardDeck.getVisibleCard(0) != null || goldCardDeck.getVisibleCard(1) != null;
+    }
 
     public void computePlayerSecretObjectives(){}
 
