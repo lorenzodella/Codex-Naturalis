@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 public abstract class PlayableCard extends Card {
+    public static final int NONE = -1;
     public static final int FRONT = 1;
     public static final int BACK = 0;
     // playableCard è abstract Class

@@ -9,15 +9,27 @@ import it.polimi.ingsw.model.util.XMLparser;
 import java.util.*;
 
 public class Game {
-    private List<Player>  players;
+    private ArrayList<Player>  players;
     private Deck resourceCardDeck;
     private Deck goldCardDeck;
     private ObjectiveCard[] commonObjectives;
     private Player currPlayer;
+    private int turn;
 
-    public Game(List<Player> players){
+    public Game(ArrayList<Player> players){
         this.players = players;
         currPlayer = players.get(0);
+        turn = 0;
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+    public Deck getGoldCardDeck() {
+        return goldCardDeck;
+    }
+    public Deck getResourceCardDeck() {
+        return resourceCardDeck;
     }
 
     //TODO da testare
@@ -31,7 +43,7 @@ public class Game {
     }
 
     //TODO da testare
-    public void initStarterCard(){
+    public void giveStarterCards(){
         ArrayList<PlayableCard> starterCards = XMLparser.parseStarterCards("starterCards.xml");
         Collections.shuffle(starterCards);
         //this.giveInitialCards(starterCards);
@@ -89,21 +101,24 @@ public class Game {
     }
 
     //TODO da testare
-    public void chooseFirstPlayer(){
+    public Player chooseFirstPlayer(){
         Collections.shuffle(players);
+        currPlayer = players.get(0);
+        return currPlayer;
     }
 
-    public void playCard(int indexCard, int angle, String targetID, int side) throws TargetNotPresentException, InsertionException, InvalidAngleCoveredException, InvalidPositionException {
+    public Player playCard(int indexCard, int angle, String targetID, int side) throws TargetNotPresentException, InsertionException, InvalidAngleCoveredException, InvalidPositionException {
         currPlayer.playCard(indexCard, angle, targetID, side);
+        return currPlayer;
     }
 
 
+    public Player pickCard(int deck, boolean visible, int index ) throws finishedCardStack {
     // choiceDeck = true resourceCard  choiceDeck = 0 goldCard
     // visibile = true carta visibile all'indice index
-    public boolean pickCard(int choiceDeck, boolean visible, int index ) throws finishedCardStack {
         Deck deckChoosen;
         PlayableCard card;
-        if(choiceDeck == 1 )
+        if(deck == 1 )
             deckChoosen = resourceCardDeck;
         else
             deckChoosen = goldCardDeck;
@@ -114,18 +129,25 @@ public class Game {
             card = deckChoosen.getVisibleCard(index);
 
         this.currPlayer.drawCard(card);
-        boolean res = this.checkTheEnd();
-        this.currPlayer = this.nextPlayer();
-        return res;
+
+        return currPlayer;
 
     }
 
-    //TODO da testare
-    private Player nextPlayer(){return players.get(players.indexOf(currPlayer)+1);}
+    public boolean nextTurn(){
+        int cur = players.indexOf(currPlayer);
+        if(cur == players.size()-1) {
+            turn++;
+            currPlayer = players.get(0);
+            return true;
+        }
+        this.currPlayer = players.get(cur+1);
+        return false;
+    }
 
 
     //metodo chaimato dal controllore appea dopo che chiama playCard e pickCard
-    private boolean checkTheEnd() throws finishedCardStack {
+    public boolean checkTheEnd() throws finishedCardStack {
         return currPlayer.getScore() >= 20 || finishedDeck();
     }
 

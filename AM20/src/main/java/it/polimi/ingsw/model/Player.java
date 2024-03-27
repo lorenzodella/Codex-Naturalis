@@ -48,6 +48,10 @@ public class Player {
         return score;
     }
 
+    public ObjectiveCard[] getSecretObjective() {
+        return secretObjective;
+    }
+
     public void setSecretObjective(ObjectiveCard[] secretObjective) {
         this.secretObjective = secretObjective;
     }
