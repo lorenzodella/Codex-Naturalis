@@ -11,6 +11,9 @@ import java.util.Objects;
 
 public class ResourceCard extends PlayableCard implements PointsProvider {
     private Kingdom kingdom;
+    /**
+     * in this case point could be 0 or 1
+     */
     private int points;
 
     public ResourceCard(String ID, Corner[] frontCorners, Corner[] backCorners, Kingdom kingdom, int points) {
@@ -47,6 +50,11 @@ public class ResourceCard extends PlayableCard implements PointsProvider {
         return kingdom;
     }
 
+    /**
+     * If the card's been played by the front side, this method calls the upper class method.
+     * Otherwise the method returns a map with just a single element (the kingdom of the card).
+     * @return
+     */
     @Override
     public HashMap<Kingdom, Integer> getKingdoms(){
         if(getSide() == PlayableCard.FRONT)
@@ -58,6 +66,11 @@ public class ResourceCard extends PlayableCard implements PointsProvider {
         }
     }
 
+    /**
+     * If the card's been played by the front side, this method calls the upper class method.
+     * Otherwise the method returns an empty map.
+     * @return
+     */
     @Override
     public HashMap<SpecialObject, Integer> getSpecialObjects(){
         if(getSide() == PlayableCard.FRONT)
@@ -67,6 +80,13 @@ public class ResourceCard extends PlayableCard implements PointsProvider {
         }
     }
 
+    /**
+     * After the user plays the card, and thanks to their PlayerTable (given by the param), this method returns
+     * the points of that action.
+     * PS: all the resource card's points have a specific, established and forever value.
+     * @param table: the table of the player that plays the card
+     * @return
+     */
     //TODO da testare
     @Override
     public int computePoints(PlayerTable table) {

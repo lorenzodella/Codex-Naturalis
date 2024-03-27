@@ -26,6 +26,10 @@ public class Deck {
         visibleCards[1] = cards.pop();
     }
 
+    /**
+     * This method allows to pick a card from the deck.
+     * @return
+     */
     public PlayableCard draw() throws finishedCardStack {
         if(cards.isEmpty())
             throw new finishedCardStack();
@@ -33,6 +37,15 @@ public class Deck {
             return cards.pop();
     }
 
+    /**
+     * This method allows the user to pick one of the two visible cards that are shown on the table.
+     * These two cards are stored as an array of two elements and the card that the user wants to pick up
+     * would be the one that's in the index position.
+     * This method also picks a card A from the top of the deck ( draw() )and replaces the chosen visible card by
+     * putting the A in the index position.
+     * @param index
+     * @return
+     */
     public PlayableCard getVisibleCard(int index) throws finishedCardStack {
         PlayableCard res = visibleCards[index];
         this.visibleCards[index] = this.draw();

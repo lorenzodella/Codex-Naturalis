@@ -7,6 +7,15 @@ import java.util.Objects;
 
 public class DiagonalConfigurationObjectiveCard extends ObjectiveCard{
     private Kingdom kingdom;
+    /**
+     * This attribute says which corner (of the card that's been placed on the top of the configuration)
+     * has been covered.
+     * PS:
+     * 0 = UL
+     * 1 = UR
+     * 2 = DL
+     * 3 = DR
+     */
     private int coveredCorner;
 
     public DiagonalConfigurationObjectiveCard(String ID, int points, Kingdom kingdom, int coveredCorner) {
@@ -47,6 +56,13 @@ public class DiagonalConfigurationObjectiveCard extends ObjectiveCard{
     }
 
     //TODO da testare
+    /**
+     * After the user plays the card, and thanks to their PlayerTable (given by the param), this method returns
+     * the points of that action.
+     * PS: playertable allows us to know the number of this type of diagonal configuration that there are on the table
+     * @param table: the table of the player that plays the card
+     * @return
+     */
     @Override
     public int computePoints(PlayerTable table) {
         return 2*table.findDiagonalConfiguration(this);

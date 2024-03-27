@@ -6,8 +6,18 @@ import it.polimi.ingsw.model.PlayerTable;
 import java.util.Objects;
 
 public class VerticalConfigurationObjectiveCard extends ObjectiveCard {
+    /**
+     * this attribute says the kingdom of the card that has a single occurence in this specific veryical configuration
+     */
     private Kingdom kingdom1;
+    /**
+     * this attribute says the kingdom of the card that has a single occurence in this specific veryical configuration
+     */
     private Kingdom kingdom2;
+    /**
+     * this attribute says which corner (of the card that's been placed on the top of the configuration)
+     * has to be covered in this specific vertical configuration
+     */
     private int coveredCorner;
 
     public VerticalConfigurationObjectiveCard(String ID, int points, Kingdom kingdom1, Kingdom kingdom2, int coveredCorner) {
@@ -54,6 +64,13 @@ public class VerticalConfigurationObjectiveCard extends ObjectiveCard {
     }
 
     //TODO da testare
+    /**
+     * After the user plays the card, and thanks to their PlayerTable (given by the param), this method returns
+     * the points of that action.
+     * PS: playertable allows us to know the number of this type of diagonal configuration that there are on the table
+     * @param table: the table of the player that plays the card
+     * @return
+     */
     @Override
     public int computePoints(PlayerTable table) {
         return 3*table.findVerticalConfiguration(this);

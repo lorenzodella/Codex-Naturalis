@@ -6,6 +6,11 @@ import it.polimi.ingsw.model.cards.SpecialObject;
 import java.util.Objects;
 
 public class PairOfObjectsObjectiveCard extends ObjectiveCard{
+    /**
+     * The player needs to have at least 2 occurences of this specific special object in order to let
+     * the player gain the promised points (points in the upperclass) that this card could give.
+     * PS: This card gives you #points every 2 occureces of the same special object.
+     */
     private SpecialObject specialObject;
 
     public PairOfObjectsObjectiveCard(String ID, int points, SpecialObject specialObject) {
@@ -35,6 +40,13 @@ public class PairOfObjectsObjectiveCard extends ObjectiveCard{
                 "}";
     }
 
+    /**
+     * After the user plays the card, and thanks to their PlayerTable (given by the param), this method returns
+     * the points of that action.
+     * PS: playertable allows us to know the number of specialObjects that there are on the table
+     * @param table: the table of the player that plays the card
+     * @return
+     */
     //TODO da testare
     @Override
     public int computePoints(PlayerTable table) {
