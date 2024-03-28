@@ -1,66 +1,74 @@
 package it.polimi.ingsw.model.cards.playable;
 
-import it.polimi.ingsw.model.cards.Corner;
+import it.polimi.ingsw.model.PlayerTable;
 import it.polimi.ingsw.model.cards.Kingdom;
 import it.polimi.ingsw.model.cards.SpecialObject;
+import it.polimi.ingsw.model.util.XMLparser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ResourceCardTest {
-    ResourceCard resourceCard;
+    ResourceCard s;
+
+    ResourceCard getExampleResourceCard(String id){
+        ArrayList<PlayableCard> ResourceCard = XMLparser.parseResourceCards("resourceCards.xml");
+        return (ResourceCard) ResourceCard.stream().filter(x->x.getID().equals(id)).findAny().orElse(null);
+    }
 
     @BeforeEach
-    void setUp() {
-        Corner[] frontCorners = new Corner[4];
-        frontCorners[1] = new Corner(Kingdom.Plant);
-        frontCorners[2] = new Corner(SpecialObject.Inkwell);
-        frontCorners[3] = new Corner();
-        Corner[] backCorners = new Corner[4];
-        backCorners[0] = new Corner();
-        backCorners[1] = new Corner();
-        backCorners[2] = new Corner();
-        backCorners[3] = new Corner();
-        resourceCard = new ResourceCard("S0", frontCorners, backCorners, Kingdom.Animal, 0);
+    void setUp(){
+        s = getExampleResourceCard("R15");
     }
 
     @Test
-    void testGetKingdoms() {
+    void getKingdoms() {
         HashMap<Kingdom, Integer> map = Kingdom.createEmptyMap();
-        map.put(Kingdom.Plant, 1);
-        assertEquals(map, resourceCard.getKingdoms());
+        map.put(Kingdom.Plant,1);
+        map.put(Kingdom.Insect,1);
+        assertEquals(map, s.getKingdoms());
 
-        //hide a corner
-        resourceCard.getFrontCorners()[Corner.UR].setHidden(true);
         map = Kingdom.createEmptyMap();
-        assertEquals(map, resourceCard.getKingdoms());
-
-        //turn card to the back
-        resourceCard.setSide(PlayableCard.BACK);
-        map = Kingdom.createEmptyMap();
-        map.put(Kingdom.Animal, 1);
-        assertEquals(map, resourceCard.getKingdoms());
+        s.setSide(PlayableCard.BACK);
+        map.put(Kingdom.Plant,1);
+        assertEquals(map, s.getKingdoms());
     }
 
     @Test
-    void testGetSpecialObjects() {
+    void getSpecialObjects() {
         HashMap<SpecialObject, Integer> map = SpecialObject.createEmptyMap();
-        map.put(SpecialObject.Inkwell, 1);
+        s.setSide(PlayableCard.BACK);
+        assertEquals(map,s.getSpecialObjects());
 
-        assertEquals(map, resourceCard.getSpecialObjects());
-
-        //turn card to the back
-        resourceCard.setSide(PlayableCard.BACK);
-        map = SpecialObject.createEmptyMap();
-        assertEquals(map, resourceCard.getSpecialObjects());
+        map.put(SpecialObject.Quill,1);
+        s.setSide(PlayableCard.FRONT);
+        assertEquals(map, s.getSpecialObjects());
     }
 
     @Test
-    void getRequirements(){
+    void testGetRequirements(){
         HashMap<Kingdom, Integer> map = Kingdom.createEmptyMap();
-        assertEquals(map, resourceCard.getRequirements());
+        assertEquals(map, s.getRequirements());
+
+        s.setSide(PlayableCard.BACK);
+        assertEquals(map,s.getRequirements());
     }
+
+    @Test
+    void testComputePoints(){
+        s = getExampleResourceCard("R18");
+        PlayerTable playerTable = new PlayerTable();
+        playerTable.updateStats(s);
+        assertEquals(1,s.computePoints(playerTable));
+
+        s.setSide(PlayableCard.BACK);
+        playerTable = new PlayerTable();
+        playerTable.updateStats(s);
+        assertEquals(0,s.computePoints(playerTable));
+    }
+
 }

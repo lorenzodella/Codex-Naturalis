@@ -316,7 +316,7 @@ public class XMLparser {
                             .item(0);
                     Integer points = Integer.parseInt(pointsNode.getTextContent());
 
-                    Node kingdomNode = card.getElementsByTagName("resourceKingdom")
+                    Node kingdomNode = card.getElementsByTagName("resourcesKingdom")
                             .item(0);
                     Kingdom resourcesKingdom = Kingdom.parseKingdom(kingdomNode.getTextContent());
 

@@ -86,7 +86,6 @@ public abstract class GoldCard extends PlayableCard implements PointsProvider {
      * Otherwise the method returns an empty map.
      * @return
      */
-    //TODO da testare
     @Override
     public HashMap<Kingdom, Integer> getRequirements() {
         if(getSide() == PlayableCard.FRONT)

@@ -30,7 +30,7 @@ public class PlayerStats {
     public void addKingdomOrObject(Kingdom kingdom, SpecialObject object){
         if(kingdom != null)
             this.resources.put(kingdom, this.getNumberOfResources(kingdom)+1);
-        else{
+        else if(object != null){
             this.specialObjects.put(object, this.getNumberOfObjects(object)+1);
         }
     }
@@ -38,7 +38,7 @@ public class PlayerStats {
     public void removeKingdomOrObject(Kingdom kingdom, SpecialObject object){
         if(kingdom != null)
             this.resources.put(kingdom, this.getNumberOfResources(kingdom)-1);
-        else{
+        else if(object != null) {
             this.specialObjects.put(object, this.getNumberOfObjects(object)-1);
         }
     }

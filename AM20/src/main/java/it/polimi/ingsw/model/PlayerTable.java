@@ -11,7 +11,6 @@ import it.polimi.ingsw.model.exceptions.DynamicMatrixException;
 import it.polimi.ingsw.model.cards.playable.ResourceCard;
 import it.polimi.ingsw.model.exceptions.*;
 import it.polimi.ingsw.model.util.DynamicMatrix;
-import jdk.vm.ci.code.site.ConstantReference;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -106,7 +105,7 @@ public class PlayerTable {
         }
     }
 
-    private void updateStats(PlayableCard card){//usi il metodo setResourve(Kingdom, int) che verrà implementato nella Playersatts)
+    public void updateStats(PlayableCard card){//usi il metodo setResourve(Kingdom, int) che verrà implementato nella Playersatts)
         Corner[] corners ;
         if(card.getSide() == PlayableCard.FRONT){
             corners = card.getFrontCorners();
@@ -162,7 +161,7 @@ public class PlayerTable {
         HashSet<PlayableCard> tmp = new HashSet<>();
         try {
             for (int n = 0; n < 3; n++) {
-                if (card.getCardKingdom().equals(kingdom) && !alreadyUsedCards.contains(card)) {
+                if (card.getCardKingdom()!=null && card.getCardKingdom().equals(kingdom) && !alreadyUsedCards.contains(card)) {
                     tmp.add(card);
                     card = matrix.get(card.getID(), corner);
                 } else
@@ -200,15 +199,17 @@ public class PlayerTable {
                                                     int corner, HashSet<PlayableCard> alreadyUsedCards){
         HashSet<PlayableCard> tmp = new HashSet<>();
         try {
-            if(card.getCardKingdom().equals(kingdom1) && !alreadyUsedCards.contains(card)){
+            if(card.getCardKingdom()!=null && card.getCardKingdom().equals(kingdom1) && !alreadyUsedCards.contains(card)){
                 tmp.add(card);
                 card = matrix.get(card.getID(), corner);
-                if(card!=null && card.getCardKingdom().equals(kingdom2) && !alreadyUsedCards.contains(card)){
+                if(card!=null && card.getCardKingdom()!=null &&
+                        card.getCardKingdom().equals(kingdom2) && !alreadyUsedCards.contains(card)){
                     tmp.add(card);
                     // if coveredCorner is one of the upper corners, then I should check if card above is correct,
                     // otherwise I check if card below is correct
                     card = matrix.get(card.getID(), corner < Corner.DL ? DynamicMatrix.U : DynamicMatrix.D);
-                    if(card!=null && card.getCardKingdom().equals(kingdom2) && !alreadyUsedCards.contains(card)){
+                    if(card!=null && card.getCardKingdom()!=null &&
+                            card.getCardKingdom().equals(kingdom2) && !alreadyUsedCards.contains(card)){
                         tmp.add(card);
                         return tmp;
                     }

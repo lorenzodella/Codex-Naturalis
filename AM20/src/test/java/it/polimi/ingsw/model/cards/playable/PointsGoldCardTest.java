@@ -1,6 +1,5 @@
 package it.polimi.ingsw.model.cards.playable;
 
-import it.polimi.ingsw.model.cards.Corner;
 import it.polimi.ingsw.model.cards.Kingdom;
 import it.polimi.ingsw.model.cards.SpecialObject;
 import it.polimi.ingsw.model.util.XMLparser;
@@ -12,17 +11,17 @@ import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ObjectGoldCardTest {
-    ObjectGoldCard s;
+class PointsGoldCardTest {
+    PointsGoldCard s;
 
-    ObjectGoldCard getExampleObjectGoldCard(){
-        ArrayList<PlayableCard> ObjectGoldCard = XMLparser.parseGoldCards("goldCards.xml");
-        return (ObjectGoldCard) ObjectGoldCard.stream().filter(x->x.getID().equals("G42")).findAny().orElse(null);
+    PointsGoldCard getExamplePointsGoldCard(){
+        ArrayList<PlayableCard> PointsGoldCard = XMLparser.parseGoldCards("goldCards.xml");
+        return (PointsGoldCard) PointsGoldCard.stream().filter(x->x.getID().equals("G48")).findAny().orElse(null);
     }
 
     @BeforeEach
     void setUp(){
-        s = getExampleObjectGoldCard();
+        s = getExamplePointsGoldCard();
     }
 
     @Test
@@ -39,25 +38,22 @@ class ObjectGoldCardTest {
     @Test
     void getSpecialObjets(){
         HashMap<SpecialObject, Integer> map = SpecialObject.createEmptyMap();
-        s.setSide(PlayableCard.BACK);
         assertEquals(map,s.getSpecialObjects());
 
-        s.setSide(PlayableCard.FRONT);
-        map.put(SpecialObject.Inkwell,1);
+        s.setSide(PlayableCard.BACK);
         assertEquals(map, s.getSpecialObjects());
     }
 
-   /*@Test
+    @Test
     void getRequirements(){
         HashMap<Kingdom, Integer> map = Kingdom.createEmptyMap();
         //s.setSide(PlayableCard.BACK);
         //assertEquals(map, s.getRequirements());
 
         //s.setSide(PlayableCard.FRONT);
-       map.put(Kingdom.Fungi,2);
-       map.put(Kingdom.Plant, 1);
+       map.put(Kingdom.Fungi,3);
        assertEquals(map,s.getRequirements());
     }
-    */
+
 
 }

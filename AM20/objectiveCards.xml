@@ -21,31 +21,31 @@
 
     <trioOfObjectsObjectiveCard>
         <id>99</id>
-        <points> 3 </points>
+        <points>3</points>
     </trioOfObjectsObjectiveCard>
 
     <trioOfResourcesObjectiveCard>
         <id>98</id>
-        <resorcesKingdom> Insect </resorcesKingdom>
-        <points> 2 </points>
+        <resourcesKingdom>Insect</resourcesKingdom>
+        <points>2</points>
     </trioOfResourcesObjectiveCard>
 
     <trioOfResourcesObjectiveCard>
         <id>97</id>
-        <resorcesKingdom> Animal </resorcesKingdom>
-        <points> 2 </points>
+        <resourcesKingdom>Animal</resourcesKingdom>
+        <points>2</points>
     </trioOfResourcesObjectiveCard>
 
     <trioOfResourcesObjectiveCard>
         <id>96</id>
-        <resorcesKingdom> Plant </resorcesKingdom>
-        <points> 2 </points>
+        <resourcesKingdom>Plant</resourcesKingdom>
+        <points>2</points>
     </trioOfResourcesObjectiveCard>
 
     <trioOfResourcesObjectiveCard>
         <id>95</id>
-        <resorcesKingdom> Fungi </resorcesKingdom>
-        <points> 2 </points>
+        <resourcesKingdom>Fungi</resourcesKingdom>
+        <points>2</points>
     </trioOfResourcesObjectiveCard>
 
     <verticalConfigurationObjectiveCard>
