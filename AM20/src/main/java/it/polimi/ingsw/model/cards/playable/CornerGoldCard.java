@@ -30,7 +30,10 @@ public class CornerGoldCard extends GoldCard{
      */
     @Override
     public int computePoints(PlayerTable table) {
-        int num = table.numOfCoveredCorner(this);
-        return 2*num;
+        if(this.getSide() == PlayableCard.FRONT) {
+            int num = table.numOfCoveredCorner(this);
+            return 2 * num;
+        }else
+            return 0;
     }
 }

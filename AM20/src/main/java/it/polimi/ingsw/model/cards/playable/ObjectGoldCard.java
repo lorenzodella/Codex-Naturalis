@@ -57,7 +57,10 @@ public class ObjectGoldCard extends GoldCard{
     //TODO da testare
     @Override
     public int computePoints(PlayerTable table) {
-        int res = table.getStats().getNumberOfObjects(this.specialObject);
-        return res*1;
+        if(this.getSide() == PlayableCard.FRONT) {
+            int res = table.getStats().getNumberOfObjects(this.specialObject);
+            return res * 1;
+        }else
+            return 0;
     }
 }

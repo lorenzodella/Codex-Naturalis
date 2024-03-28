@@ -90,6 +90,10 @@ public class ResourceCard extends PlayableCard implements PointsProvider {
     //TODO da testare
     @Override
     public int computePoints(PlayerTable table) {
-        return this.points;
+
+        if(this.getSide() == PlayableCard.FRONT)
+            return this.points;
+        else
+            return 0;
     }
 }
