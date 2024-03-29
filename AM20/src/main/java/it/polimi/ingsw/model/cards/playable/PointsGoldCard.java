@@ -50,7 +50,6 @@ public class PointsGoldCard extends GoldCard{
      * @param table: the table of the player that plays the card
      * @return
      */
-    //TODO da testare
     @Override
     public int computePoints(PlayerTable table) {
         if(this.getSide() == PlayableCard.FRONT)

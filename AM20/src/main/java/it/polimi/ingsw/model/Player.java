@@ -56,10 +56,8 @@ public class Player {
         this.secretObjective = secretObjective;
     }
 
-    //TODO da testare
     public void positionStarterCard(int side){
         table.insertStarterCard(side, this.starterCard);
-        this.starterCard.setSide(side);
     }
 
     public void drawInitialPlayableCard(LinkedList<PlayableCard> playableCards){this.cards = playableCards;}

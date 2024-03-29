@@ -30,6 +30,7 @@ public class PlayerTable {
 
     public void insertStarterCard(int side, PlayableCard card){
         this.matrix = new DynamicMatrix<>(card.getID(), card );
+         card.setSide(side);
     }
 
     //TODO

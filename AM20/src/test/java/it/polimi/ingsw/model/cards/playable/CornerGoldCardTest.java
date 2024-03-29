@@ -75,11 +75,11 @@ class CornerGoldCardTest {
         playerTable.insertCard(s, Corner.UR, starterCard.getID(), PlayableCard.FRONT);
         assertEquals(2,s.computePoints(playerTable));
 
-//        starterCard = getExampleStarterCard();
-//        playerTable = new PlayerTable();
-//        playerTable.insertStarterCard(PlayableCard.FRONT, starterCard);
-//        playerTable.insertCard(s, Corner.UR, starterCard.getID(), PlayableCard.BACK);
-//        assertEquals(0,s.computePoints(playerTable));
+        starterCard = getExampleStarterCard();
+        playerTable = new PlayerTable();
+        playerTable.insertStarterCard(PlayableCard.FRONT, starterCard);
+        playerTable.insertCard(s, Corner.UR, starterCard.getID(), PlayableCard.BACK);
+        assertEquals(0,s.computePoints(playerTable));
 
         starterCard = getExampleStarterCard();
         CornerGoldCard s1= getExampleCornerGoldCard("G65");

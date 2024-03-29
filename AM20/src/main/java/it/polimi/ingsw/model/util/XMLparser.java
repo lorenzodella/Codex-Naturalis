@@ -252,7 +252,7 @@ public class XMLparser {
             Document doc = db.parse(file);
 
             //pairOfObjectsCard
-            NodeList cardList = doc.getElementsByTagName("pairOfObjectsObjectiveCard");
+            NodeList cardList = doc.getElementsByTagName("pairOfObjectObjectiveCard");
 
             for (int i = 0; i < cardList.getLength(); i++) {
                 Node node = cardList.item(i);

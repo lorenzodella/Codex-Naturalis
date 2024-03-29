@@ -87,7 +87,6 @@ public class ResourceCard extends PlayableCard implements PointsProvider {
      * @param table: the table of the player that plays the card
      * @return
      */
-    //TODO da testare
     @Override
     public int computePoints(PlayerTable table) {
 
