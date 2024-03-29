@@ -23,9 +23,13 @@ public class DynamicMatrix<K,T> {
     private static class MatrixElement<K,T> {
         K key;
         T value;
+        int order;
+        static int num = 0;
         private MatrixElement(K key, T value){
             this.key = key;
             this.value = value;
+            order = num;
+            num++;
         }
     }
     private final LinkedList<LinkedList<MatrixElement<K,T>>> mat;
@@ -39,6 +43,10 @@ public class DynamicMatrix<K,T> {
         mat = new LinkedList<>();
         mat.add(new LinkedList<>());
         mat.get(0).add(new MatrixElement<>(key, centerEl));
+    }
+
+    public int numOfElements(){
+        return MatrixElement.num;
     }
 
     /**
@@ -184,6 +192,8 @@ public class DynamicMatrix<K,T> {
             for (int j=0; j<mat.get(0).size(); j++) {
                 if(mat.get(i).get(j)!=null && mat.get(i).get(j).key.equals(targetKey)){
                     mat.get(i).set(j, null);
+                    MatrixElement.num--;
+                    return;
                 }
             }
         }
@@ -355,7 +365,10 @@ public class DynamicMatrix<K,T> {
         StringBuilder s = new StringBuilder();
         for (LinkedList<MatrixElement<K, T>> list : mat) {
             for (MatrixElement<K,T> t : list) {
-                s.append(t.key).append(" ");
+                if(t!=null)
+                    s.append(t.key).append(" ");
+                else
+                    s.append("    ");
             }
             s.append("\n");
         }
