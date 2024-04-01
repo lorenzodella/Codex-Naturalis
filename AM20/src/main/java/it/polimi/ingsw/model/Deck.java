@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.cards.Kingdom;
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.model.exceptions.finishedCardStack;
 
@@ -17,6 +18,10 @@ public class Deck {
         visibleCards = new PlayableCard[2];
     }
 
+    public Stack<PlayableCard> getCards() {
+        return cards;
+    }
+
     public void shuffle(){
         Collections.shuffle(cards);
     }
@@ -28,13 +33,21 @@ public class Deck {
 
     /**
      * This method allows to pick a card from the deck.
-     * @return
+     * @return the card on the top of the deck
      */
     public PlayableCard draw() throws finishedCardStack {
         if(cards.isEmpty())
             throw new finishedCardStack();
         else
             return cards.pop();
+    }
+
+    /**
+     * This method is used to see the kingdom of the card on the top of the deck.
+     * @return the kingdom of the card
+     */
+    public Kingdom getTopCardKingdom(){
+        return cards.peek().getCardKingdom();
     }
 
     /**
