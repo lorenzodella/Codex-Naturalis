@@ -58,7 +58,7 @@ public class Deck {
      * putting the A in the index position --> in order to always have two visible cards on the table
      * @param index: this is the position of the card that player picks up
      * @return it returns the card that the player wanted to pick up
-     * @throws finishedCardStack
+     * @throws finishedCardStack if the deck is empty
      */
     public PlayableCard getVisibleCard(int index) throws finishedCardStack {
         PlayableCard res = visibleCards[index];

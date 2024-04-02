@@ -51,10 +51,10 @@ public class PlayerTable {
      * @param angle : this attribute stands for the angle that you want to cover by positioning the card you're playing
      * @param targetID : this attribute stands for the card ID of the card that you want to cover by playing the card
      * @param side : this attribute specifies if the player want to play the card by the front or the back
+     * @throws TargetNotPresentException if the target is not present
+     * @throws InvalidAngleCoveredException if positioning the angle in that spot is incorrect
+     * @throws InvalidPositionException if positioning the card in that spot is incorrect
      * @throws InsertionException
-     * @throws InvalidAngleCoveredException
-     * @throws TargetNotPresentException
-     * @throws InvalidPositionException
      */
     //TODO
     public void insertCard(PlayableCard card, int angle, String targetID, int side) throws InsertionException, InvalidAngleCoveredException, TargetNotPresentException, InvalidPositionException {
@@ -113,10 +113,10 @@ public class PlayerTable {
      * 2. it updates the resources' statistics --> it basically updates the player's statistics because, when the player
      *    plays the card, it may be covering some objects or resources
      * NON SERVE ANCHE CARD ID??
-     * @param c :
-     * @param angle
-     * @throws InvalidAngleCoveredException
-     * @throws TargetNotPresentException
+     * @param c : card that needs to be covered
+     * @param angle : angle of "c" that's going to be covered
+     * @throws TargetNotPresentException if the target is not present
+     * @throws InvalidAngleCoveredException if positioning the angle in that spot is incorrect
      */
     /* TODO PER TIA:
      qua secondo me non serve il parametro side (anche perché non lhai usato)
@@ -180,7 +180,7 @@ public class PlayerTable {
      * This method checks, inside the matrix, if there's a diagonal configuration.
      * Thanks to the finder, the method gets all the needed information for the configuration (such as the kingdom,
      * and the corner that needs to be covered).
-     * @param finder : ...
+     * @param finder : the objective card
      * @return the number of that type of configuration that has been found in the matrix
      */
     //TODO da testare
@@ -225,7 +225,7 @@ public class PlayerTable {
      * This method checks, inside the matrix, if there's a vertical configuration.
      * Thanks to the finder, the method gets all the needed information for the configuration (such as the kingdom,
      * and the corner that needs to be covered).
-     * @param finder : ...
+     * @param finder : the objective card
      * @return the number of that type of configuration that has been found in the matrix
      */
     //TODO da testare

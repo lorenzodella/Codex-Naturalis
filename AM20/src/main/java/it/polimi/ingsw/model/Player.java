@@ -93,9 +93,9 @@ public class Player {
      * @param angle : this attribute stands for the angle that you want to cover by positioning the card you're playing
      * @param cardID : this attribute stands for the card ID of the card that you want to cover by playing the card
      * @param side : this attribute specifies if the player want to play the card by the front or the back
-     * @throws TargetNotPresentException
-     * @throws InvalidAngleCoveredException
-     * @throws InvalidPositionException
+     * @throws TargetNotPresentException if the target is not present
+     * @throws InvalidAngleCoveredException if positioning the angle in that spot is incorrect
+     * @throws InvalidPositionException if positioning the card in that spot is incorrect
      * @throws InsertionException
      */
     public void playCard(int indexCard, int angle, String cardID, int side) throws TargetNotPresentException, InvalidAngleCoveredException, InvalidPositionException, InsertionException {
@@ -116,7 +116,6 @@ public class Player {
     /**
      * This method puts, the card that's just been drawn by the player, into the list of playable cards that the player
      * has in their hands.
-     *
      * @param card: this attribute stands for the card that's just been drawn
      */
     public void drawCard(PlayableCard card){
@@ -145,7 +144,7 @@ public class Player {
     /**
      * This method computes the points of all the common objetives (once at a time) by passing every time a different
      * objective card.
-     * @param objectiveCard
+     * @param objectiveCard : the objective card that needs to be analyzed
      */
     public void computeCommonObjective(ObjectiveCard objectiveCard){
         objectiveCard.computePoints(this.table);

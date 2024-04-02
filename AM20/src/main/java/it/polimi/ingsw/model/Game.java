@@ -172,10 +172,10 @@ public class Game {
      * @param targetID : this attribute stands for the card ID of the card that you want to cover by playing the card
      * @param side : this attribute specifies if the player want to play the card by the front or the back
      * @return the current player that's just played the card
-     * @throws TargetNotPresentException
+     * @throws TargetNotPresentException if the target is not present
      * @throws InsertionException
-     * @throws InvalidAngleCoveredException
-     * @throws InvalidPositionException
+     * @throws InvalidAngleCoveredException if positioning the angle in that spot is incorrect
+     * @throws InvalidPositionException if positioning the card in that spot is incorrect
      */
     public Player playCard(int indexCard, int angle, String targetID, int side) throws TargetNotPresentException, InsertionException, InvalidAngleCoveredException, InvalidPositionException {
         currPlayer.playCard(indexCard, angle, targetID, side);
@@ -192,7 +192,7 @@ public class Game {
      *                from a visible card(...)
      * @param index : this attribute stands for the index of the card that's in the visible cards array
      * @return the current player that's just picked the card
-     * @throws finishedCardStack
+     * @throws finishedCardStack if the deck's done
      */
     public Player pickCard(int deck, boolean visible, int index ) throws finishedCardStack {
     // choiceDeck = true resourceCard  choiceDeck = 0 goldCard
@@ -231,7 +231,7 @@ public class Game {
      * (in that case the first phase of the game ends and the second phase starts) and it also checks if one of the deck
      * is empty (if the cards of that specific deck have been all played).
      * @return 1 if the player has reached 20 points (or more) or if the deck is empty, 0 otherwise
-     * @throws finishedCardStack
+     * @throws finishedCardStack if the deck's done
      */
     //metodo chaimato dal controllore appea dopo che chiama playCard e pickCard
     public boolean checkTheEnd() throws finishedCardStack {
