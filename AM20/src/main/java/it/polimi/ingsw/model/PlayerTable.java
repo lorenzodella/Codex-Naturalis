@@ -16,7 +16,14 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 public class PlayerTable {
+    /**
+     * This is the player's matrix that shows the cards that have been player by this specific player
+     */
     private DynamicMatrix<String, PlayableCard> matrix;
+    /**
+     * This attribute stands for the statistics of this player.
+     * It basically says the number of resources and the number of visible objects.
+     */
     private PlayerStats stats;
 
     public PlayerTable(){
@@ -27,12 +34,28 @@ public class PlayerTable {
         return this.stats;
     }
 
-
+    /**
+     * This method puts down the starter card of this player, by the side that's specified by the indicated "side".
+     * @param side : the side of the card (front or back)
+     * @param card : this is the starter card that the player needs to put down
+     */
     public void insertStarterCard(int side, PlayableCard card){
         this.matrix = new DynamicMatrix<>(card.getID(), card );
          card.setSide(side);
     }
 
+    /**
+     * This method puts down on the player table, the card "card" by the side that's specified by the side "side".
+     * This card needs to be put down by covering the angle "angle" of the card that's marked by the "targetID".
+     * @param card: this attribute stands for the card that the player wants to play
+     * @param angle : this attribute stands for the angle that you want to cover by positioning the card you're playing
+     * @param targetID : this attribute stands for the card ID of the card that you want to cover by playing the card
+     * @param side : this attribute specifies if the player want to play the card by the front or the back
+     * @throws InsertionException
+     * @throws InvalidAngleCoveredException
+     * @throws TargetNotPresentException
+     * @throws InvalidPositionException
+     */
     //TODO
     public void insertCard(PlayableCard card, int angle, String targetID, int side) throws InsertionException, InvalidAngleCoveredException, TargetNotPresentException, InvalidPositionException {
 
@@ -83,9 +106,18 @@ public class PlayerTable {
     }
 
 
-
-
-
+    /**
+     * This method is called every time that a player wants to play a card and:
+     * 1. it checks if the position of the card is valid --> it basically tells you if the way that the player wants to put down the
+     *    card is correct
+     * 2. it updates the resources' statistics --> it basically updates the player's statistics because, when the player
+     *    plays the card, it may be covering some objects or resources
+     * NON SERVE ANCHE CARD ID??
+     * @param c :
+     * @param angle
+     * @throws InvalidAngleCoveredException
+     * @throws TargetNotPresentException
+     */
     /* TODO PER TIA:
      qua secondo me non serve il parametro side (anche perché non lhai usato)
      ATTENZIONE: controlla che la carta non sia null
@@ -106,6 +138,10 @@ public class PlayerTable {
         }
     }
 
+    /**
+     * This method updates the player's stats, every time that a card's played
+     * @param card: the card that's just been played
+     */
     public void updateStats(PlayableCard card){//usi il metodo setResourve(Kingdom, int) che verrà implementato nella Playersatts)
         Corner[] corners ;
         if(card.getSide() == PlayableCard.FRONT){
@@ -121,6 +157,11 @@ public class PlayerTable {
 
     }
 
+    /**
+     * This method returns the number of the covered angles of that card
+     * @param card: this stands for the card that's being analyzed
+     * @return the number of covered corner of that card
+     */
     //TODO da testare
     public int numOfCoveredCorner(PlayableCard card){
         int num=0;
@@ -135,6 +176,13 @@ public class PlayerTable {
         }
     }
 
+    /**
+     * This method checks, inside the matrix, if there's a diagonal configuration.
+     * Thanks to the finder, the method gets all the needed information for the configuration (such as the kingdom,
+     * and the corner that needs to be covered).
+     * @param finder : ...
+     * @return the number of that type of configuration that has been found in the matrix
+     */
     //TODO da testare
     public int findDiagonalConfiguration(DiagonalConfigurationObjectiveCard finder){
         PlayableCard card;
@@ -173,7 +221,13 @@ public class PlayerTable {
             return null;
         }
     }
-
+    /**
+     * This method checks, inside the matrix, if there's a vertical configuration.
+     * Thanks to the finder, the method gets all the needed information for the configuration (such as the kingdom,
+     * and the corner that needs to be covered).
+     * @param finder : ...
+     * @return the number of that type of configuration that has been found in the matrix
+     */
     //TODO da testare
     public int findVerticalConfiguration(VerticalConfigurationObjectiveCard finder){
         PlayableCard card;

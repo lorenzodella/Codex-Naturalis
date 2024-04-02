@@ -7,11 +7,11 @@ import java.util.Objects;
 
 public class VerticalConfigurationObjectiveCard extends ObjectiveCard {
     /**
-     * this attribute says the kingdom of the card that has a single occurence in this specific veryical configuration
+     * this attribute says the kingdom of the card that has a single occurence in this specific vertical configuration
      */
     private Kingdom kingdom1;
     /**
-     * this attribute says the kingdom of the card that has a single occurence in this specific veryical configuration
+     * this attribute says the kingdom of the card that has a single occurence in this specific vertical configuration
      */
     private Kingdom kingdom2;
     /**
@@ -69,7 +69,7 @@ public class VerticalConfigurationObjectiveCard extends ObjectiveCard {
      * the points of that action.
      * PS: playertable allows us to know the number of this type of diagonal configuration that there are on the table
      * @param table: the table of the player that plays the card
-     * @return
+     * @return the number of the points of that action
      */
     @Override
     public int computePoints(PlayerTable table) {

@@ -20,7 +20,7 @@ public class Game {
      */
     private Deck resourceCardDeck;
     /**
-     *  deck of golden cards
+     *  deck of gold cards
      */
     private Deck goldCardDeck;
     /**
@@ -52,9 +52,8 @@ public class Game {
 
     /**
      * This method
-     * 1. create both gold and resource deck card
-     * 2. it shuffles both decks
-     * 3. ???
+     * 1. creates and suffles both gold and resource deck card
+     * 2. displays two visible cards on the table (per each deck)
      */
     //TODO da testare
     public void initDecks(){
@@ -152,7 +151,7 @@ public class Game {
     /**
      * This method shuffles the arrayList of player and sets as first player the one that
      * happens to be in the 0 position
-     * @return
+     * @return the current player
      */
 
     //TODO da testare
@@ -163,12 +162,16 @@ public class Game {
     }
 
     /**
-     * 
-     * @param indexCard
-     * @param angle
-     * @param targetID
-     * @param side
-     * @return
+     * This method:
+     * 1. plays the card that's found at the index position of the cards list (Player)
+     * 2. plays that specific card by the front or the back (depending on the side parameter --> ...)
+     * 3. plays that specific card covering the angle (parameter) of the card that's specified by the targetID
+     * @param indexCard : index of the card that you want to play that's found into the cards list (list of the
+     *                  playable cards of that specific player)
+     * @param angle : this attribute stands for the angle that you want to cover by positioning the card you're playing
+     * @param targetID : this attribute stands for the card ID of the card that you want to cover by playing the card
+     * @param side : this attribute specifies if the player want to play the card by the front or the back
+     * @return the current player that's just played the card
      * @throws TargetNotPresentException
      * @throws InsertionException
      * @throws InvalidAngleCoveredException
@@ -180,11 +183,15 @@ public class Game {
     }
 
     /**
-     *
-     * @param deck
-     * @param visible
-     * @param index
-     * @return
+     * This method picks the card from the top of the spicified deck (deck) or it picks one of the two visible cards.
+     * Specifically, it picks the visible card that's found at the index position of the arraylist of the visible cards.
+     * This method also calls getVisible (that's found in "deck") and this method also
+     * returns the chosen visible card and it adds it at the list cards (that's found in player).
+     * @param deck : this attribute stands for the specific deck that you want to pick a card from
+     * @param visible : this attribute is a boolean that specifies if the player wants to pick a card from the deck or
+     *                from a visible card(...)
+     * @param index : this attribute stands for the index of the card that's in the visible cards array
+     * @return the current player that's just picked the card
      * @throws finishedCardStack
      */
     public Player pickCard(int deck, boolean visible, int index ) throws finishedCardStack {
@@ -219,7 +226,13 @@ public class Game {
         return false;
     }
 
-
+    /**
+     * This method checks, every time that a player ends their turn, if they've reached the 20 points
+     * (in that case the first phase of the game ends and the second phase starts) and it also checks if one of the deck
+     * is empty (if the cards of that specific deck have been all played).
+     * @return 1 if the player has reached 20 points (or more) or if the deck is empty, 0 otherwise
+     * @throws finishedCardStack
+     */
     //metodo chaimato dal controllore appea dopo che chiama playCard e pickCard
     public boolean checkTheEnd() throws finishedCardStack {
         return currPlayer.getScore() >= 20 || finishedDeck();
@@ -229,12 +242,18 @@ public class Game {
         return  resourceCardDeck.getVisibleCard(0) != null || resourceCardDeck.getVisibleCard(1) != null || goldCardDeck.getVisibleCard(0) != null || goldCardDeck.getVisibleCard(1) != null;
     }
 
+    /**
+     * This method, at the end of the game, computes the points of the secret objective of every player
+     */
     public void computePlayerSecretObjectives(){
         for(Player p: players){
             p.computeSecretObjective();
         }
     }
 
+    /**
+     * This method adds, per each player, the points of the common objective
+     */
     public void computeCommonObjectives(){
         for(Player p: players){
             for(ObjectiveCard obj : commonObjectives){
@@ -243,6 +262,10 @@ public class Game {
         }
     }
 
+    /**
+     * This method returns to the controller the player that won the game
+     * @return the player that won
+     */
     //da decidere come gestire il caso di parità
     public Player checkWinner(){
         Player winner = players.get(0);

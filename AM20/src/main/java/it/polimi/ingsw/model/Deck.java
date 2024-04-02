@@ -55,9 +55,10 @@ public class Deck {
      * These two cards are stored as an array of two elements and the card that the user wants to pick up
      * would be the one that's in the index position.
      * This method also picks a card A from the top of the deck ( draw() )and replaces the chosen visible card by
-     * putting the A in the index position.
-     * @param index
-     * @return
+     * putting the A in the index position --> in order to always have two visible cards on the table
+     * @param index: this is the position of the card that player picks up
+     * @return it returns the card that the player wanted to pick up
+     * @throws finishedCardStack
      */
     public PlayableCard getVisibleCard(int index) throws finishedCardStack {
         PlayableCard res = visibleCards[index];

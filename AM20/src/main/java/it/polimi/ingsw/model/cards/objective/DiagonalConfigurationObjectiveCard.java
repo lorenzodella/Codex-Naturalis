@@ -8,8 +8,7 @@ import java.util.Objects;
 public class DiagonalConfigurationObjectiveCard extends ObjectiveCard{
     private Kingdom kingdom;
     /**
-     * This attribute says which corner (of the card that's been placed on the top of the configuration)
-     * has been covered.
+     * This attribute says which corner (of the card that's been placed on the top of the configuration) has been covered.
      * PS:
      * 0 = UL
      * 1 = UR
@@ -60,7 +59,7 @@ public class DiagonalConfigurationObjectiveCard extends ObjectiveCard{
      * the points of that action.
      * PS: playertable allows us to know the number of this type of diagonal configuration that there are on the table
      * @param table: the table of the player that plays the card
-     * @return
+     * @return the number of the points of that action
      */
     @Override
     public int computePoints(PlayerTable table) {

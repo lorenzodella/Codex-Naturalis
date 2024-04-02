@@ -14,7 +14,6 @@ public class ObjectGoldCard extends GoldCard{
      * This attribute points out the type of object of the gold card.
      * You need to count the occurrences of that object (on the playertable) to
      * set the amount of points that the user deserves
-     *
      */
     private SpecialObject specialObject;
 
@@ -52,7 +51,7 @@ public class ObjectGoldCard extends GoldCard{
      * the points of that action.
      * PS: playertable allows us to know the number of the occurences of the specialObject that's on the user's table.
      * @param table: the table of the player that plays the card
-     * @return
+     * @return the number of the points of this action
      */
     @Override
     public int computePoints(PlayerTable table) {

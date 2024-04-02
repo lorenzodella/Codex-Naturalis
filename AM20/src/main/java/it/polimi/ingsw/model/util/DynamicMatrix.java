@@ -50,7 +50,7 @@ public class DynamicMatrix<K,T> {
     }
 
     /**
-     *
+     * This method returns the number of columns that are in the matrix
      * @return number of columns of the matrix
      */
     public int width(){
@@ -58,7 +58,7 @@ public class DynamicMatrix<K,T> {
     }
 
     /**
-     *
+     * This method returns the number of rows that are in the matrix
      * @return number of rows of the matrix
      */
     public int height(){

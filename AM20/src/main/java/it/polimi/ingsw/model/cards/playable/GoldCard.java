@@ -54,7 +54,7 @@ public abstract class GoldCard extends PlayableCard implements PointsProvider {
     /**
      * If the card's been played by the front side, this method calls the upper class method.
      * Otherwise the method returns a map with just a single element (the kingdom of the card).
-     * @return
+     * @return a map with one or more elements
      */
     @Override
     public HashMap<Kingdom, Integer> getKingdoms(){
@@ -70,7 +70,7 @@ public abstract class GoldCard extends PlayableCard implements PointsProvider {
     /**
      * If the card's been played by the front side, this method calls the upper class method.
      * Otherwise the method returns an empty map.
-     * @return
+     * @return a map or an empty map
      */
     @Override
     public HashMap<SpecialObject, Integer> getSpecialObjects(){
@@ -84,7 +84,7 @@ public abstract class GoldCard extends PlayableCard implements PointsProvider {
     /**
      * If the card's been played by the front side, this method returns the attribute (requirements).
      * Otherwise the method returns an empty map.
-     * @return
+     * @return the map requirements or an empty map
      */
     @Override
     public HashMap<Kingdom, Integer> getRequirements() {

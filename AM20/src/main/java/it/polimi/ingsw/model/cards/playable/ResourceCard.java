@@ -53,7 +53,7 @@ public class ResourceCard extends PlayableCard implements PointsProvider {
     /**
      * If the card's been played by the front side, this method calls the upper class method.
      * Otherwise the method returns a map with just a single element (the kingdom of the card).
-     * @return
+     * @return a map or a map with only one element
      */
     @Override
     public HashMap<Kingdom, Integer> getKingdoms(){
@@ -69,7 +69,7 @@ public class ResourceCard extends PlayableCard implements PointsProvider {
     /**
      * If the card's been played by the front side, this method calls the upper class method.
      * Otherwise the method returns an empty map.
-     * @return
+     * @return a map or an empty map
      */
     @Override
     public HashMap<SpecialObject, Integer> getSpecialObjects(){
@@ -85,7 +85,7 @@ public class ResourceCard extends PlayableCard implements PointsProvider {
      * the points of that action.
      * PS: all the resource card's points have a specific, established and forever value.
      * @param table: the table of the player that plays the card
-     * @return
+     * @return the number of the points of this action
      */
     @Override
     public int computePoints(PlayerTable table) {

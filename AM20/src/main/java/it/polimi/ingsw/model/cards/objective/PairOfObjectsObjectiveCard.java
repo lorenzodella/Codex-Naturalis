@@ -45,7 +45,7 @@ public class PairOfObjectsObjectiveCard extends ObjectiveCard{
      * the points of that action.
      * PS: playertable allows us to know the number of specialObjects that there are on the table
      * @param table: the table of the player that plays the card
-     * @return
+     * @return the number of the points of that action
      */
     @Override
     public int computePoints(PlayerTable table) {

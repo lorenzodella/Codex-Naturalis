@@ -25,7 +25,7 @@ public class CornerGoldCard extends GoldCard{
      * the points of that action.
      * PS: playertable allows us to know the number of corners that are covered by this specific card
      * @param table: the table of the player that plays the card
-     * @return
+     * @return the number of the points of this action
      */
     @Override
     public int computePoints(PlayerTable table) {

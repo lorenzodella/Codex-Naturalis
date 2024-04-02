@@ -9,7 +9,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PlayerStats {
+    /**
+     * Hashmap that, per each kingdom, says the number of occurrences of that resource
+     */
     private Map<Kingdom, Integer> resources;
+    /**
+     * Hashmap that, per each object, says the number of occurrences of that object
+     */
     private Map<SpecialObject, Integer> specialObjects;
 
     public PlayerStats(){
@@ -17,10 +23,25 @@ public class PlayerStats {
         specialObjects = SpecialObject.createEmptyMap();
     }
 
+    /**
+     * This method returns the occurences of the kingdom "res"
+     * @param res: the kingdom that's being analyzed
+     * @return the number of occurences of that kingdom
+     */
     public int getNumberOfResources(Kingdom res){ return  resources.get(res);}
-
+    /**
+     * This method returns the occurences of the object "obj"
+     * @param obj: the object that's being analyzed
+     * @return the number of occurences of that object
+     */
     public int getNumberOfObjects(SpecialObject obj){return  specialObjects.get(obj);}
 
+    /**
+     * This method is called every time that a gold card is played and it checks if the
+     * requirements (number of resources) are satisfied
+     * @param req : hashmap that says the number of occurences per each kingdom
+     * @return 1 if the requirments are satified, 0 otherwise
+     */
     //TODO da testare
     public boolean checkRequirements(HashMap<Kingdom, Integer> req){
         return req.entrySet().stream()

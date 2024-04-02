@@ -7,8 +7,17 @@ public class Corner {
     public static final int UR = 1;
     public static final int DL = 2;
     public static final int DR = 3;
+    /**
+     * this attribute says what kind of object is found inside this specific corner
+     */
     private SpecialObject contentObject;
+    /**
+     * this attribute says what kind of resource is found inside this specific corner
+     */
     private Kingdom contentKingdom;
+    /**
+     * this attribute is a boolean that says if the corner is visible or hidden (...)
+     */
     private boolean hidden;
 
     public Corner(){

@@ -48,7 +48,7 @@ public abstract class PlayableCard extends Card {
      * This method returns a map that tells you, per each kingdown, how many
      * occurrences of that kingdowm there are in that specific card.
      * It basically tells you the kingdoms that are drawn in each card's corner.
-     * @return
+     * @return the map that says all the occurences of every kingdom
      */
     public HashMap<Kingdom, Integer> getKingdoms(){
         HashMap<Kingdom, Integer> map = Kingdom.createEmptyMap();
@@ -64,7 +64,7 @@ public abstract class PlayableCard extends Card {
      * This method returns a map that tells you, per each object, how many
      * occurrences of that object there are in that specific card.
      * It basically tells you the objects that are drawn in each card's corner.
-     * @return
+     * @return the map that says all the occurences of every object
      */
     public HashMap<SpecialObject, Integer> getSpecialObjects(){
         HashMap<SpecialObject, Integer> map = SpecialObject.createEmptyMap();
@@ -77,9 +77,9 @@ public abstract class PlayableCard extends Card {
     }
 
     /**
-     * This method returns a map that tells you, per aech kingdom, how many occurrences of that kingdom
-     * the user needs to have on the table to be albe to play the card.
-     * @return
+     * This method returns a map that tells you, per each kingdom, how many occurrences of that kingdom
+     * the user needs to have on their table to be able to play the card.
+     * @return an empty map
      */
     public HashMap<Kingdom, Integer> getRequirements(){
         return Kingdom.createEmptyMap();

@@ -29,10 +29,6 @@ public class StarterCard extends PlayableCard{
         return Objects.equals(resources, that.resources);
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public int hashCode() {
         return Objects.hash(resources);
@@ -57,7 +53,7 @@ public class StarterCard extends PlayableCard{
      * This method calls the upper class method to get kingdoms that are drawn in the corner
      * of this specific card.
      * If this card is played on the front side, this method also adds the kingdoms that are in resoruces[]
-     * @return
+     * @return a map with the occurences per each kingdom
      */
     @Override
     public HashMap<Kingdom, Integer> getKingdoms(){
