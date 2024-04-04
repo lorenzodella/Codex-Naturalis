@@ -1,9 +1,11 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
+import it.polimi.ingsw.model.cards.playable.GoldCard;
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.model.cards.playable.StarterCard;
 import it.polimi.ingsw.model.exceptions.*;
+import it.polimi.ingsw.model.util.InvalidArgumentException;
 import it.polimi.ingsw.model.util.XMLparser;
 
 import java.util.*;
@@ -111,7 +113,9 @@ public class Game {
      * @param p it stands for the player that's taking the action
      */
     //TODO da testare
-    public void chooseStarterCardSide(int side, Player p){
+    public void chooseStarterCardSide(int side, Player p) throws InvalidArgumentException{
+        if(side != PlayableCard.FRONT && side != PlayableCard.BACK)
+            throw new InvalidArgumentException("side", side);
         p.positionStarterCard(side);
     }
 
@@ -144,7 +148,9 @@ public class Game {
      *              secret objectives
      * @param p the player p is the player that's taking the action
      */
-    public void chooseObjective(int index, Player p){
+    public void chooseObjective(int index, Player p) throws InvalidArgumentException{
+        if(index<0 || index>1)
+            throw new InvalidArgumentException("index", index);
         p.chooseObjectiveCard(index);
     }
 
@@ -177,7 +183,9 @@ public class Game {
      * @throws InvalidAngleCoveredException if positioning the angle in that spot is incorrect
      * @throws InvalidPositionException if positioning the card in that spot is incorrect
      */
-    public Player playCard(int indexCard, int angle, String targetID, int side) throws TargetNotPresentException, InsertionException, InvalidAngleCoveredException, InvalidPositionException {
+    public Player playCard(int indexCard, int angle, String targetID, int side) throws InvalidArgumentException, TargetNotPresentException, InsertionException, InvalidAngleCoveredException, InvalidPositionException {
+        if(side != PlayableCard.FRONT && side != PlayableCard.BACK)
+            throw new InvalidArgumentException("side", side);
         currPlayer.playCard(indexCard, angle, targetID, side);
         return currPlayer;
     }
@@ -194,20 +202,22 @@ public class Game {
      * @return the current player that's just picked the card
      * @throws finishedCardStack if the deck's done
      */
-    public Player pickCard(int deck, boolean visible, int index ) throws finishedCardStack {
-    // choiceDeck = true resourceCard  choiceDeck = 0 goldCard
+    public Player pickCard(int deck, boolean visible, int index ) throws finishedCardStack, InvalidArgumentException {
+    // choiceDeck = 1 resourceCard  choiceDeck = 0 goldCard
     // visibile = true carta visibile all'indice index
         Deck deckChoosen;
         PlayableCard card;
-        if(deck == 1 )
+        if(deck == Deck.RESOURCE_CARDS )
             deckChoosen = resourceCardDeck;
-        else
+        else if(deck == Deck.GOLD_CARDS)
             deckChoosen = goldCardDeck;
+        else
+            throw new InvalidArgumentException("deck", deck);
 
         if(visible == false)
             card = deckChoosen.draw();
         else
-            card = deckChoosen.getVisibleCard(index);
+            card = deckChoosen.drawVisibleCard(index);
 
         this.currPlayer.drawCard(card);
 
