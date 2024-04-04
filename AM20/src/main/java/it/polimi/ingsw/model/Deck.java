@@ -9,6 +9,9 @@ import java.util.Collections;
 import java.util.Stack;
 
 public class Deck {
+    public static final int RESOURCE_CARDS = 1;
+    public static final int GOLD_CARDS = 0;
+
     private Stack<PlayableCard> cards;
     private PlayableCard[] visibleCards;
 
@@ -43,11 +46,20 @@ public class Deck {
     }
 
     /**
-     * This method is used to see the kingdom of the card on the top of the deck.
+     * This method allows to see the kingdom of the card on the top of the deck.
      * @return the kingdom of the card
      */
-    public Kingdom getTopCardKingdom(){
+    public Kingdom geFirstCardKingdom(){
         return cards.peek().getCardKingdom();
+    }
+
+    /**
+     * This method allows to see the visible card at the given index.
+     * @param index position of the card to see
+     * @return the requested visible card
+     */
+    public PlayableCard getVisibleCard(int index) {
+        return visibleCards[index];
     }
 
     /**
@@ -60,7 +72,7 @@ public class Deck {
      * @return it returns the card that the player wanted to pick up
      * @throws finishedCardStack if the deck is empty
      */
-    public PlayableCard getVisibleCard(int index) throws finishedCardStack {
+    public PlayableCard drawVisibleCard(int index) throws finishedCardStack {
         PlayableCard res = visibleCards[index];
         this.visibleCards[index] = this.draw();
         return res;

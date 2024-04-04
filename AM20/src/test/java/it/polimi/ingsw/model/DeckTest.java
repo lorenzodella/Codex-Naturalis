@@ -22,7 +22,7 @@ class DeckTest {
     @Test
     void getVisibleCard() throws finishedCardStack {
         PlayableCard oldtop = d.getCards().peek();
-        d.getVisibleCard(0);
+        d.drawVisibleCard(0);
         assertEquals(oldtop, d.getVisibleCard(0));
     }
 
