@@ -1,4 +1,4 @@
 package it.polimi.ingsw.model.exceptions;
 
-public class TargetNotPresentException extends DynamicMatrixException{
+public class TargetNotPresentException extends DynamicMapException {
 }

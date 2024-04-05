@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.exceptions;
 
-public class InvalidPositionException extends DynamicMatrixException{
+public class InvalidPositionException extends DynamicMapException {
     private final int pos;
 
     public InvalidPositionException(int pos){
