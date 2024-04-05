@@ -50,14 +50,14 @@ class PairOfObjectsObjectiveCardTest {
         ResourceCard resourceCard2 = getExampleResourceCard("R17");
         PointsGoldCard pointsGoldCard = getExamplePointsGoldCard("G49");
         PlayerTable playerTable = new PlayerTable();
-        playerTable.insertStarterCard(PlayableCard.BACK, starterCard);
+        playerTable.insertStarterCard(PlayableCard.FRONT, starterCard);
         playerTable.insertCard(resourceCard, Corner.DR, starterCard.getID(), PlayableCard.FRONT);
         playerTable.insertCard(pointsGoldCard, Corner.UR, starterCard.getID(), PlayableCard.FRONT);
         assertEquals(2,s.computePoints(playerTable));
 
         playerTable = new PlayerTable();
         starterCard = getExampleStarterCard();
-        playerTable.insertStarterCard(PlayableCard.BACK, starterCard);
+        playerTable.insertStarterCard(PlayableCard.FRONT, starterCard);
         playerTable.insertCard(resourceCard, Corner.DR, starterCard.getID(), PlayableCard.FRONT);
         playerTable.insertCard(resourceCard2, Corner.DL, starterCard.getID(), PlayableCard.FRONT);
         playerTable.insertCard(pointsGoldCard, Corner.UR, starterCard.getID(), PlayableCard.FRONT);
@@ -67,7 +67,7 @@ class PairOfObjectsObjectiveCardTest {
         playerTable = new PlayerTable();
         ResourceCard resourceCard3 = getExampleResourceCard("R7");
         starterCard = getExampleStarterCard();
-        playerTable.insertStarterCard(PlayableCard.BACK, starterCard);
+        playerTable.insertStarterCard(PlayableCard.FRONT, starterCard);
         playerTable.insertCard(resourceCard, Corner.DR, starterCard.getID(), PlayableCard.FRONT);
         playerTable.insertCard(resourceCard2, Corner.DL, starterCard.getID(), PlayableCard.FRONT);
         playerTable.insertCard(resourceCard3, Corner.UL, starterCard.getID(), PlayableCard.FRONT);

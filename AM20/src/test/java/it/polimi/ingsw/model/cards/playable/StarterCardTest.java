@@ -34,21 +34,23 @@ class StarterCardTest {
         backCorners[3] = new Corner(Kingdom.Animal);
         ArrayList<Kingdom> res = new ArrayList<>();
         res.add(Kingdom.Insect);
-        s = new StarterCard("S0", frontCorners, backCorners, res);
-        //s = getExampleStarterCard();
+        //s = new StarterCard("S0", frontCorners, backCorners, res);
+        s = getExampleStarterCard();
     }
 
     @Test
     void getKingdoms(){
         HashMap<Kingdom, Integer> map = new HashMap<>();
+        s.setSide(PlayableCard.BACK);
         map.put(Kingdom.Fungi,0);
         map.put(Kingdom.Plant, 1);
-        map.put(Kingdom.Insect, 2);
-        map.put(Kingdom.Animal, 0);
+        map.put(Kingdom.Insect, 1);
+        map.put(Kingdom.Animal, 1);
         assertEquals(map, s.getKingdoms());
 
         //turn card to the back
-        s.setSide(PlayableCard.BACK);
+        s.setSide(PlayableCard.FRONT);
+        map = Kingdom.createEmptyMap();
         map.put(Kingdom.Fungi, 1);
         map.put(Kingdom.Animal, 1);
         map.put(Kingdom.Plant, 1);

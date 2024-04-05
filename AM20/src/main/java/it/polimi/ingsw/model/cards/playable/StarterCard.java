@@ -58,7 +58,7 @@ public class StarterCard extends PlayableCard{
     @Override
     public HashMap<Kingdom, Integer> getKingdoms(){
         HashMap<Kingdom, Integer> res = new HashMap<>(super.getKingdoms());
-        if(getSide() == PlayableCard.FRONT)
+        if(getSide() == PlayableCard.BACK)
             for(Kingdom kingdom : resources){
                 res.computeIfPresent(kingdom, (k,v)->v+1);
             }

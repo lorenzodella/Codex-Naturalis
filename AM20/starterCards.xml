@@ -1,14 +1,14 @@
 <starterCards>
     <starterCard>
         <id>81</id>
-        <frontCorner pos="0"/>
-        <frontCorner pos="1" res="Plant"/>
-        <frontCorner pos="2" res="Insect"/>
-        <frontCorner pos="3"/>
-        <backCorner pos="0" res="Fungi"/>
+        <backCorner pos="0"/>
         <backCorner pos="1" res="Plant"/>
         <backCorner pos="2" res="Insect"/>
-        <backCorner pos="3" res="Animal"/>
+        <backCorner pos="3"/>
+        <frontCorner pos="0" res="Fungi"/>
+        <frontCorner pos="1" res="Plant"/>
+        <frontCorner pos="2" res="Insect"/>
+        <frontCorner pos="3" res="Animal"/>
         <resources>
             <Insect/>
         </resources>
@@ -16,14 +16,14 @@
 
     <starterCard>
         <id>82</id>
-        <frontCorner pos="0" res="Animal"/>
-        <frontCorner pos="1"/>
-        <frontCorner pos="2"/>
-        <frontCorner pos="3" res="Fungi"/>
-        <backCorner pos="0" res="Plant"/>
-        <backCorner pos="1" res="Animal"/>
-        <backCorner pos="2" res="Fungi"/>
-        <backCorner pos="3" res="Insect"/>
+        <backCorner pos="0" res="Animal"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3" res="Fungi"/>
+        <frontCorner pos="0" res="Plant"/>
+        <frontCorner pos="1" res="Animal"/>
+        <frontCorner pos="2" res="Fungi"/>
+        <frontCorner pos="3" res="Insect"/>
         <resources>
             <Fungi/>
         </resources>
@@ -31,14 +31,14 @@
 
     <starterCard>
         <id>83</id>
-        <frontCorner pos="0"/>
-        <frontCorner pos="1"/>
-        <frontCorner pos="2"/>
-        <frontCorner pos="3"/>
-        <backCorner pos="0" res="Insect"/>
-        <backCorner pos="1" res="Animal"/>
-        <backCorner pos="2" res="Fungi"/>
-        <backCorner pos="3" res="Plant"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <frontCorner pos="0" res="Insect"/>
+        <frontCorner pos="1" res="Animal"/>
+        <frontCorner pos="2" res="Fungi"/>
+        <frontCorner pos="3" res="Plant"/>
         <resources>
             <Plant/>
             <Fungi/>
@@ -47,14 +47,14 @@
 
     <starterCard>
         <id>84</id>
-        <frontCorner pos="0"/>
-        <frontCorner pos="1"/>
-        <frontCorner pos="2"/>
-        <frontCorner pos="3"/>
-        <backCorner pos="0" res="Plant"/>
-        <backCorner pos="1" res="Insect"/>
-        <backCorner pos="2" res="Animal"/>
-        <backCorner pos="3" res="Fungi"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <backCorner pos="2"/>
+        <backCorner pos="3"/>
+        <frontCorner pos="0" res="Plant"/>
+        <frontCorner pos="1" res="Insect"/>
+        <frontCorner pos="2" res="Animal"/>
+        <frontCorner pos="3" res="Fungi"/>
         <resources>
             <Animal/>
             <Insect/>
@@ -63,12 +63,12 @@
 
     <starterCard>
         <id>85</id>
-        <frontCorner pos="0"/>
-        <frontCorner pos="1"/>
-        <backCorner pos="0" res="Insect"/>
-        <backCorner pos="1" res="Fungi"/>
-        <backCorner pos="2" res="Plant"/>
-        <backCorner pos="3" res="Animal"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <frontCorner pos="0" res="Insect"/>
+        <frontCorner pos="1" res="Fungi"/>
+        <frontCorner pos="2" res="Plant"/>
+        <frontCorner pos="3" res="Animal"/>
         <resources>
             <Animal/>
             <Insect/>
@@ -78,12 +78,12 @@
 
     <starterCard>
         <id>86</id>
-        <frontCorner pos="0"/>
-        <frontCorner pos="1"/>
-        <backCorner pos="0" res="Fungi"/>
-        <backCorner pos="1" res="Animal"/>
-        <backCorner pos="2" res="Plant"/>
-        <backCorner pos="3" res="Insect"/>
+        <backCorner pos="0"/>
+        <backCorner pos="1"/>
+        <frontCorner pos="0" res="Fungi"/>
+        <frontCorner pos="1" res="Animal"/>
+        <frontCorner pos="2" res="Plant"/>
+        <frontCorner pos="3" res="Insect"/>
         <resources>
             <Plant/>
             <Animal/>

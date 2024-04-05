@@ -16,14 +16,14 @@ class XMLparserTest {
     @Test
     void parseStarterCards() {
         ArrayList<PlayableCard> starterCards = XMLparser.parseStarterCards("starterCards.xml");
-        Corner[] frontCorners = new Corner[4];
-        frontCorners[0] = new Corner();
-        frontCorners[1] = new Corner();
         Corner[] backCorners = new Corner[4];
-        backCorners[0] = new Corner(Kingdom.Insect);
-        backCorners[1] = new Corner(Kingdom.Fungi);
-        backCorners[2] = new Corner(Kingdom.Plant);
-        backCorners[3] = new Corner(Kingdom.Animal);
+        backCorners[0] = new Corner();
+        backCorners[1] = new Corner();
+        Corner[] frontCorners = new Corner[4];
+        frontCorners[0] = new Corner(Kingdom.Insect);
+        frontCorners[1] = new Corner(Kingdom.Fungi);
+        frontCorners[2] = new Corner(Kingdom.Plant);
+        frontCorners[3] = new Corner(Kingdom.Animal);
         ArrayList<Kingdom> res = new ArrayList<>();
         res.add(Kingdom.Animal);
         res.add(Kingdom.Insect);
