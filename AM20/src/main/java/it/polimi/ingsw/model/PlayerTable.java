@@ -50,6 +50,7 @@ public class PlayerTable {
         } catch (TargetNotPresentException | InvalidPositionException e) {
             throw new RuntimeException(e);
         }
+        updateStats(card);
     }
 
     /**

@@ -62,6 +62,7 @@ public class Player {
         return starterCard;
     }
 
+    //TODO da testare
     public int getScore() {
         return score;
     }

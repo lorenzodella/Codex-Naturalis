@@ -25,13 +25,12 @@ public class TrioOfObjectsObjectiveCard extends ObjectiveCard{
      * @param table: the table of the player that plays the card
      * @return the number of the points of that action
      */
-    //TODO da testare
     @Override
     public int computePoints(PlayerTable table) {
         HashMap<SpecialObject, Integer> tmp = new HashMap<>();
         tmp.put(SpecialObject.Quill, table.getStats().getNumberOfObjects(SpecialObject.Quill));
         tmp.put(SpecialObject.Inkwell, table.getStats().getNumberOfObjects(SpecialObject.Inkwell));
         tmp.put(SpecialObject.Manuscript, table.getStats().getNumberOfObjects(SpecialObject.Manuscript));
-        return 3*tmp.entrySet().stream().map(x->x.getValue()).min((int1, int2) ->int1<int2 ? int1 : int2).orElse(0);
+        return 3*tmp.values().stream().mapToInt(i->i).min().orElse(0);
     }
 }

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.util;
 
+import it.polimi.ingsw.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.model.exceptions.InvalidPositionException;
 import it.polimi.ingsw.model.exceptions.TargetNotPresentException;
 
@@ -142,8 +143,8 @@ public class DynamicMap<K,T> {
      * @throws InvalidPositionException if pos is not a valid value
      */
     public T getElementAt(K targetKey, int pos) throws TargetNotPresentException, InvalidPositionException {
-        MapElement<T> tmp = getEntryAt(targetKey, pos).getValue();
-        return tmp!=null ? tmp.value : null;
+        Map.Entry<K, MapElement<T>> tmp = getEntryAt(targetKey, pos);
+        return tmp!=null ? tmp.getValue().value : null;
     }
 
     /**

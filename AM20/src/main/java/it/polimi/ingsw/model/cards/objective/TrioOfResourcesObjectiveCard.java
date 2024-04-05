@@ -47,7 +47,6 @@ public class TrioOfResourcesObjectiveCard extends ObjectiveCard{
      * @param table: the table of the player that plays the card
      * @return the number of the points of that action
      */
-    //TODO da testare
     @Override
     public int computePoints(PlayerTable table) {
         return 2*(table.getStats().getNumberOfResources(this.resourcesKingdom)/3);

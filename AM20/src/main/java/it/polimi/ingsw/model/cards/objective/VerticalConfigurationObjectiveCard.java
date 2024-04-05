@@ -63,7 +63,6 @@ public class VerticalConfigurationObjectiveCard extends ObjectiveCard {
         return coveredCorner;
     }
 
-    //TODO da testare
     /**
      * After the user plays the card, and thanks to their PlayerTable (given by the param), this method returns
      * the points of that action.
