@@ -9,19 +9,36 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 public abstract class PlayableCard extends Card {
-    public static final int NONE = -1;
     public static final int FRONT = 1;
     public static final int BACK = 0;
     // playableCard è abstract Class
     private Corner[] frontCorners;
     private Corner[] backCorners;
     private int side;
+    /**
+     * Integer representing the order in which the cards were played
+     */
+    private int order;
 
     public PlayableCard(String ID, Corner[] frontCorners, Corner[] backCorners) {
         super(ID);
         this.frontCorners = frontCorners;
         this.backCorners = backCorners;
         this.side = FRONT;
+        order = -1;
+    }
+
+    public static PlayableCard getDummyInstance(String id){
+        return new PlayableCard(id, Corner.getDummyArray(), Corner.getDummyArray()) {
+            @Override
+            public boolean isValid() {
+                return false;
+            }
+        };
+    }
+
+    public boolean isValid(){
+        return true;
     }
 
     public Kingdom getCardKingdom(){return null;}
@@ -40,6 +57,14 @@ public abstract class PlayableCard extends Card {
 
     public void setSide(int side){
         this.side = side;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
+    }
+
+    public int getOrder() {
+        return order;
     }
 
     //public abstract String getID();

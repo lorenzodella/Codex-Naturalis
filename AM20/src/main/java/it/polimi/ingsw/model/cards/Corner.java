@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.cards;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 public class Corner {
@@ -21,6 +22,7 @@ public class Corner {
     private boolean hidden;
 
     public Corner(){
+        hidden = false;
     }
 
     public Corner(SpecialObject contentObject) {
@@ -29,6 +31,12 @@ public class Corner {
 
     public Corner(Kingdom contentKingdom){
         this.contentKingdom = contentKingdom;
+    }
+
+    public static Corner[] getDummyArray(){
+        Corner[] corners = new Corner[4];
+        Arrays.fill(corners, new Corner());
+        return corners;
     }
 
     public void setHidden(boolean hidden) {

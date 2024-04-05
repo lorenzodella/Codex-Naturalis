@@ -2,29 +2,26 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.cards.Corner;
 import it.polimi.ingsw.model.cards.Kingdom;
-import it.polimi.ingsw.model.cards.Corner;
 import it.polimi.ingsw.model.cards.objective.DiagonalConfigurationObjectiveCard;
 import it.polimi.ingsw.model.cards.objective.VerticalConfigurationObjectiveCard;
-import it.polimi.ingsw.model.cards.playable.GoldCard;
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
-import it.polimi.ingsw.model.exceptions.DynamicMatrixException;
-import it.polimi.ingsw.model.cards.playable.ResourceCard;
+import it.polimi.ingsw.model.exceptions.DynamicMapException;
 import it.polimi.ingsw.model.exceptions.*;
-import it.polimi.ingsw.model.util.DynamicMatrix;
+import it.polimi.ingsw.model.util.DynamicMap;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
 public class PlayerTable {
     /**
-     * This is the player's matrix that shows the cards that have been player by this specific player
+     * This is the player's map that shows the cards that have been player by this specific player
      */
-    private DynamicMatrix<String, PlayableCard> matrix;
+    private DynamicMap<String, PlayableCard> map;
     /**
      * This attribute stands for the statistics of this player.
      * It basically says the number of resources and the number of visible objects.
      */
     private PlayerStats stats;
+    private int numOfCards = 0;
 
     public PlayerTable(){
         this.stats = new PlayerStats();
@@ -34,14 +31,66 @@ public class PlayerTable {
         return this.stats;
     }
 
+    public DynamicMap<String, PlayableCard> getMap() {
+        return map;
+    }
+
     /**
      * This method puts down the starter card of this player, by the side that's specified by the indicated "side".
      * @param side : the side of the card (front or back)
      * @param card : this is the starter card that the player needs to put down
      */
     public void insertStarterCard(int side, PlayableCard card){
-        this.matrix = new DynamicMatrix<>(card.getID(), card );
-         card.setSide(side);
+        card.setSide(side);
+        this.map = new DynamicMap<>(card.getID(), card );
+        card.setOrder(numOfCards++);
+        //aggiungi delle carte fittizie negli angoli "copribili" della carta appena aggiunta
+        try {
+            insertDummyCards(card);
+        } catch (TargetNotPresentException | InvalidPositionException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Inserts dummy cards on the corners of the last inserted card, where it is possible to insert a new card.
+     * These cards are not valid PlayableCards and their ID is built appending to the last inserted card's id
+     * an integer, corresponding to the angle of that card that should be covered by inserting a valid new card
+     * @param lastInsertedCard the valid card that is just been inserted
+     * @throws TargetNotPresentException last inserted card is not present
+     * @throws InvalidPositionException
+     */
+    private void insertDummyCards(PlayableCard lastInsertedCard) throws TargetNotPresentException, InvalidPositionException {
+        String id = lastInsertedCard.getID() + ";";
+        //for each angle...
+        for (int c = Corner.UL; c <= Corner.DR; c++) {
+            PlayableCard tmp = map.get(lastInsertedCard.getID(), c);
+            //if nearby card is not valid...
+            if (tmp == null || !tmp.isValid()) {
+                //add a dummy card and check if his position is valid
+                PlayableCard dummy = PlayableCard.getDummyInstance(id + c);
+                dummy.setOrder(numOfCards);
+                map.insert(dummy.getID(), dummy, lastInsertedCard.getID(), c);
+
+                PlayableCard[] cardsCovered = new PlayableCard[4];
+                cardsCovered[Corner.UL] = map.get(dummy.getID(), Corner.UL);
+                cardsCovered[Corner.UR] = map.get(dummy.getID(), Corner.UR);
+                cardsCovered[Corner.DL] = map.get(dummy.getID(), Corner.DL);
+                cardsCovered[Corner.DR] = map.get(dummy.getID(), Corner.DR);
+
+                try {
+
+                    isPositionValid(cardsCovered[Corner.UL], Corner.DR);
+                    isPositionValid(cardsCovered[Corner.UR], Corner.DL);
+                    isPositionValid(cardsCovered[Corner.DL], Corner.UR);
+                    isPositionValid(cardsCovered[Corner.DR], Corner.UL);
+
+                } catch (Exception e) {
+                    //if no card can be inserted in that position, remove the dummy card
+                    map.remove(dummy.getID());
+                }
+            }
+        }
     }
 
     /**
@@ -56,17 +105,17 @@ public class PlayerTable {
      * @throws InvalidPositionException if positioning the card in that spot is incorrect
      * @throws InsertionException
      */
-    //TODO
+    //TODO controllare eccezioni
     public void insertCard(PlayableCard card, int angle, String targetID, int side) throws InsertionException, InvalidAngleCoveredException, TargetNotPresentException, InvalidPositionException {
 
-        this.matrix.insert(card.getID(), card, targetID, angle);
+        this.map.insert(card.getID(), card, targetID, angle);
 
         //array delle 4 carte coperte dalla carta che viene posizionata
         PlayableCard[] cardsCovered = new PlayableCard[4];
-        cardsCovered[Corner.UL] = this.matrix.get(card.getID(), Corner.UL);
-        cardsCovered[Corner.UR] = this.matrix.get(card.getID(), Corner.UR);
-        cardsCovered[Corner.DL] = this.matrix.get(card.getID(), Corner.DL);
-        cardsCovered[Corner.DR] = this.matrix.get(card.getID(), Corner.DR);
+        cardsCovered[Corner.UL] = this.map.get(card.getID(), Corner.UL);
+        cardsCovered[Corner.UR] = this.map.get(card.getID(), Corner.UR);
+        cardsCovered[Corner.DL] = this.map.get(card.getID(), Corner.DL);
+        cardsCovered[Corner.DR] = this.map.get(card.getID(), Corner.DR);
 
         try {
 
@@ -75,25 +124,27 @@ public class PlayerTable {
             this.isPositionValid(cardsCovered[Corner.DL], Corner.UR);
             this.isPositionValid(cardsCovered[Corner.DR], Corner.UL);
 
-        } catch (Exception e){
-            this.matrix.remove(card.getID());
+        } catch (InvalidAngleCoveredException e){
+            this.map.remove(card.getID());
             throw new InsertionException();
         }
 
         card.setSide(side);
+        card.setOrder(numOfCards++);
 
         this.updateCorner(cardsCovered[Corner.UL], Corner.DR);
         this.updateCorner(cardsCovered[Corner.UR], Corner.DL);
         this.updateCorner(cardsCovered[Corner.DL], Corner.UR);
         this.updateCorner(cardsCovered[Corner.DR], Corner.UL);
 
-
+        //aggiungi delle carte fittizie negli angoli "copribili" della carta appena aggiunta
+        insertDummyCards(card);
         // update stats dopo la giocata della carta
         this.updateStats(card);
     }
 
     private void updateCorner(PlayableCard card, int angle){
-        if(card != null){
+        if(card != null && card.isValid()){
             Corner[] tmp;
             if(card.getSide() == PlayableCard.FRONT)
                 tmp = card.getFrontCorners();
@@ -122,7 +173,7 @@ public class PlayerTable {
      qua secondo me non serve il parametro side (anche perché non lhai usato)
      ATTENZIONE: controlla che la carta non sia null
      */
-    private void isPositionValid(PlayableCard c, int angle) throws InvalidAngleCoveredException, TargetNotPresentException {
+    private void isPositionValid(PlayableCard c, int angle) throws InvalidAngleCoveredException {
 
         if(c != null){
             Corner[] obj;
@@ -165,13 +216,15 @@ public class PlayerTable {
     //TODO da testare
     public int numOfCoveredCorner(PlayableCard card){
         int num=0;
+        PlayableCard tmp;
         try {
             for (int c = Corner.UL; c <= Corner.DR; c++) {
-                if (matrix.get(card.getID(), c) != null)
+                tmp = map.get(card.getID(), c);
+                if (tmp != null && tmp.isValid())
                     num++;
             }
             return num;
-        } catch (DynamicMatrixException e){
+        } catch (DynamicMapException e){
             return 0;
         }
     }
@@ -185,20 +238,28 @@ public class PlayerTable {
      */
     //TODO da testare
     public int findDiagonalConfiguration(DiagonalConfigurationObjectiveCard finder){
-        PlayableCard card;
         HashSet<PlayableCard> alreadyUsedCards = new HashSet<>();
         HashSet<PlayableCard> tmp;
         int numOfConfigurations = 0;
 
-        for(int i=0; i<matrix.height(); i++){
-            for(int j=0; j<matrix.width(); j++){
-                card = matrix.getElementAt(i,j);
-                if(card!=null) {
-                    tmp = checkDiagonally(card, finder.getKingdom(), finder.getCoveredCorner(), alreadyUsedCards);
-                    if (tmp != null) {
-                        numOfConfigurations++;
-                        alreadyUsedCards.addAll(tmp);
-                    }
+//        for(int i=0; i<matrix.height(); i++){
+//            for(int j=0; j<matrix.width(); j++){
+//                card = matrix.getElementAt(i,j);
+//                if(card!=null) {
+//                    tmp = checkDiagonally(card, finder.getKingdom(), finder.getCoveredCorner(), alreadyUsedCards);
+//                    if (tmp != null) {
+//                        numOfConfigurations++;
+//                        alreadyUsedCards.addAll(tmp);
+//                    }
+//                }
+//            }
+//        }
+        for(PlayableCard card : map.values()){
+            if(card!=null) {
+                tmp = checkDiagonally(card, finder.getKingdom(), finder.getCoveredCorner(), alreadyUsedCards);
+                if (tmp != null) {
+                    numOfConfigurations++;
+                    alreadyUsedCards.addAll(tmp);
                 }
             }
         }
@@ -212,12 +273,12 @@ public class PlayerTable {
             for (int n = 0; n < 3; n++) {
                 if (card.getCardKingdom()!=null && card.getCardKingdom().equals(kingdom) && !alreadyUsedCards.contains(card)) {
                     tmp.add(card);
-                    card = matrix.get(card.getID(), corner);
+                    card = map.get(card.getID(), corner);
                 } else
                     return null;
             }
             return tmp;
-        } catch (DynamicMatrixException e){
+        } catch (DynamicMapException e){
             return null;
         }
     }
@@ -230,20 +291,28 @@ public class PlayerTable {
      */
     //TODO da testare
     public int findVerticalConfiguration(VerticalConfigurationObjectiveCard finder){
-        PlayableCard card;
         HashSet<PlayableCard> alreadyUsedCards = new HashSet<>();
         HashSet<PlayableCard> tmp;
         int numOfConfigurations = 0;
 
-        for(int i=0; i<matrix.height(); i++){
-            for(int j=0; j<matrix.width(); j++){
-                card = matrix.getElementAt(i,j);
-                if(card!=null) {
-                    tmp = checkVertically(card, finder.getKingdom1(), finder.getKingdom2(), finder.getCoveredCorner(), alreadyUsedCards);
-                    if (tmp != null) {
-                        numOfConfigurations++;
-                        alreadyUsedCards.addAll(tmp);
-                    }
+//        for(int i=0; i<matrix.height(); i++){
+//            for(int j=0; j<matrix.width(); j++){
+//                card = matrix.getElementAt(i,j);
+//                if(card!=null) {
+//                    tmp = checkVertically(card, finder.getKingdom1(), finder.getKingdom2(), finder.getCoveredCorner(), alreadyUsedCards);
+//                    if (tmp != null) {
+//                        numOfConfigurations++;
+//                        alreadyUsedCards.addAll(tmp);
+//                    }
+//                }
+//            }
+//        }
+        for(PlayableCard card : map.values()){
+            if(card!=null) {
+                tmp = checkVertically(card, finder.getKingdom1(), finder.getKingdom2(), finder.getCoveredCorner(), alreadyUsedCards);
+                if (tmp != null) {
+                    numOfConfigurations++;
+                    alreadyUsedCards.addAll(tmp);
                 }
             }
         }
@@ -256,13 +325,13 @@ public class PlayerTable {
         try {
             if(card.getCardKingdom()!=null && card.getCardKingdom().equals(kingdom1) && !alreadyUsedCards.contains(card)){
                 tmp.add(card);
-                card = matrix.get(card.getID(), corner);
+                card = map.get(card.getID(), corner);
                 if(card!=null && card.getCardKingdom()!=null &&
                         card.getCardKingdom().equals(kingdom2) && !alreadyUsedCards.contains(card)){
                     tmp.add(card);
                     // if coveredCorner is one of the upper corners, then I should check if card above is correct,
                     // otherwise I check if card below is correct
-                    card = matrix.get(card.getID(), corner < Corner.DL ? DynamicMatrix.U : DynamicMatrix.D);
+                    card = map.get(card.getID(), corner < Corner.DL ? DynamicMap.U : DynamicMap.D);
                     if(card!=null && card.getCardKingdom()!=null &&
                             card.getCardKingdom().equals(kingdom2) && !alreadyUsedCards.contains(card)){
                         tmp.add(card);
@@ -271,7 +340,7 @@ public class PlayerTable {
                 }
             }
             return null;
-        } catch (DynamicMatrixException e){
+        } catch (DynamicMapException e){
             return null;
         }
     }

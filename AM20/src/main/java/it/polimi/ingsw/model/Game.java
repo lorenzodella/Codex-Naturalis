@@ -51,6 +51,9 @@ public class Game {
     public Deck getResourceCardDeck() {
         return resourceCardDeck;
     }
+    public Player getCurrPlayer() {
+        return currPlayer;
+    }
 
     /**
      * This method
