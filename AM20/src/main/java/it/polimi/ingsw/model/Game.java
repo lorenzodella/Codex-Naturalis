@@ -16,7 +16,7 @@ public class Game {
      * Before starting the game, the first player choses the number of players they want to play with.
      * The number of players needs to be between 2 and 4.
      */
-    private ArrayList<Player>  players;
+    private List<Player>  players;
     /**
      *  deck of resource cards
      */
@@ -36,13 +36,13 @@ public class Game {
     private Player currPlayer;
     private int turn;
 
-    public Game(ArrayList<Player> players){
+    public Game(List<Player> players){
         this.players = players;
         currPlayer = players.get(0);
         turn = 0;
     }
 
-    public ArrayList<Player> getPlayers() {
+    public List<Player> getPlayers() {
         return players;
     }
     public Deck getGoldCardDeck() {

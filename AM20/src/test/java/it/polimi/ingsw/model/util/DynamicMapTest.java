@@ -49,7 +49,7 @@ class DynamicMapTest {
         assertEquals(2, m.height());
         assertEquals(2, m.width());
 
-        assertEquals('b', m.get('a',DynamicMap.UL));
+        assertEquals('b', m.getElementAt('a',DynamicMap.UL));
     }
 
     @Test
@@ -59,7 +59,7 @@ class DynamicMapTest {
         assertEquals(2, m.height());
         assertEquals(2, m.width());
 
-        assertEquals('b', m.get('a',DynamicMap.UR));
+        assertEquals('b', m.getElementAt('a',DynamicMap.UR));
     }
 
     @Test
@@ -69,7 +69,7 @@ class DynamicMapTest {
         assertEquals(2, m.height());
         assertEquals(2, m.width());
 
-        assertEquals('b', m.get('a',DynamicMap.DL));
+        assertEquals('b', m.getElementAt('a',DynamicMap.DL));
     }
 
     @Test
@@ -79,7 +79,7 @@ class DynamicMapTest {
         assertEquals(2, m.height());
         assertEquals(2, m.width());
 
-        assertEquals('b', m.get('a',DynamicMap.DR));
+        assertEquals('b', m.getElementAt('a',DynamicMap.DR));
     }
 
     @Test
@@ -90,21 +90,21 @@ class DynamicMapTest {
         assertEquals(3, m.height());
         assertEquals(2, m.width());
 
-        assertEquals('c', m.get('a',DynamicMap.DR));
+        assertEquals('c', m.getElementAt('a',DynamicMap.DR));
     }
 
     @Test
     void getU() throws TargetNotPresentException, InvalidPositionException {
         insertUR();
         m.insert('c','c', 'b',DynamicMap.UL);
-        assertEquals('c', m.get('a',DynamicMap.U));
+        assertEquals('c', m.getElementAt('a',DynamicMap.U));
     }
 
     @Test
     void getD() throws TargetNotPresentException, InvalidPositionException {
         insertDR();
         m.insert('c','c', 'b',DynamicMap.DL);
-        assertEquals('c', m.get('a',DynamicMap.D));
+        assertEquals('c', m.getElementAt('a',DynamicMap.D));
     }
 
     @Test
@@ -119,9 +119,9 @@ class DynamicMapTest {
 
     @Test
     void getElementNotPresent() throws TargetNotPresentException, InvalidPositionException {
-        assertNull(m.get('a', DynamicMap.UL));
-        assertNull(m.get('a', DynamicMap.UR));
-        assertNull(m.get('a', DynamicMap.DL));
-        assertNull(m.get('a', DynamicMap.DR));
+        assertNull(m.getElementAt('a', DynamicMap.UL));
+        assertNull(m.getElementAt('a', DynamicMap.UR));
+        assertNull(m.getElementAt('a', DynamicMap.DL));
+        assertNull(m.getElementAt('a', DynamicMap.DR));
     }
 }

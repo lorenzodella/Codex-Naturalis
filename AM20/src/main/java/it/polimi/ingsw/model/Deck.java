@@ -73,6 +73,7 @@ public class Deck {
      * @throws FinishedCardStackException if the deck is empty
      */
     public PlayableCard drawVisibleCard(int index) throws FinishedCardStackException {
+        //TODO endgame
         PlayableCard res = visibleCards[index];
         this.visibleCards[index] = this.draw();
         return res;

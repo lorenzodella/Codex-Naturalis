@@ -64,7 +64,7 @@ public class PlayerTable {
         String id = lastInsertedCard.getID() + ";";
         //for each angle...
         for (int c = Corner.UL; c <= Corner.DR; c++) {
-            PlayableCard tmp = map.get(lastInsertedCard.getID(), c);
+            PlayableCard tmp = map.getElementAt(lastInsertedCard.getID(), c);
             //if nearby card is not valid...
             if (tmp == null || !tmp.isValid()) {
                 //add a dummy card and check if his position is valid
@@ -73,10 +73,10 @@ public class PlayerTable {
                 map.insert(dummy.getID(), dummy, lastInsertedCard.getID(), c);
 
                 PlayableCard[] cardsCovered = new PlayableCard[4];
-                cardsCovered[Corner.UL] = map.get(dummy.getID(), Corner.UL);
-                cardsCovered[Corner.UR] = map.get(dummy.getID(), Corner.UR);
-                cardsCovered[Corner.DL] = map.get(dummy.getID(), Corner.DL);
-                cardsCovered[Corner.DR] = map.get(dummy.getID(), Corner.DR);
+                cardsCovered[Corner.UL] = map.getElementAt(dummy.getID(), Corner.UL);
+                cardsCovered[Corner.UR] = map.getElementAt(dummy.getID(), Corner.UR);
+                cardsCovered[Corner.DL] = map.getElementAt(dummy.getID(), Corner.DL);
+                cardsCovered[Corner.DR] = map.getElementAt(dummy.getID(), Corner.DR);
 
                 try {
 
@@ -111,10 +111,10 @@ public class PlayerTable {
 
         //array delle 4 carte coperte dalla carta che viene posizionata
         PlayableCard[] cardsCovered = new PlayableCard[4];
-        cardsCovered[Corner.UL] = this.map.get(card.getID(), Corner.UL);
-        cardsCovered[Corner.UR] = this.map.get(card.getID(), Corner.UR);
-        cardsCovered[Corner.DL] = this.map.get(card.getID(), Corner.DL);
-        cardsCovered[Corner.DR] = this.map.get(card.getID(), Corner.DR);
+        cardsCovered[Corner.UL] = this.map.getElementAt(card.getID(), Corner.UL);
+        cardsCovered[Corner.UR] = this.map.getElementAt(card.getID(), Corner.UR);
+        cardsCovered[Corner.DL] = this.map.getElementAt(card.getID(), Corner.DL);
+        cardsCovered[Corner.DR] = this.map.getElementAt(card.getID(), Corner.DR);
 
         try {
 
@@ -217,7 +217,7 @@ public class PlayerTable {
         PlayableCard tmp;
         try {
             for (int c = Corner.UL; c <= Corner.DR; c++) {
-                tmp = map.get(card.getID(), c);
+                tmp = map.getElementAt(card.getID(), c);
                 if (tmp != null && tmp.isValid())
                     num++;
             }
@@ -240,18 +240,6 @@ public class PlayerTable {
         HashSet<PlayableCard> tmp;
         int numOfConfigurations = 0;
 
-//        for(int i=0; i<matrix.height(); i++){
-//            for(int j=0; j<matrix.width(); j++){
-//                card = matrix.getElementAt(i,j);
-//                if(card!=null) {
-//                    tmp = checkDiagonally(card, finder.getKingdom(), finder.getCoveredCorner(), alreadyUsedCards);
-//                    if (tmp != null) {
-//                        numOfConfigurations++;
-//                        alreadyUsedCards.addAll(tmp);
-//                    }
-//                }
-//            }
-//        }
         for(PlayableCard card : map.values()){
             if(card!=null) {
                 tmp = checkDiagonally(card, finder.getKingdom(), finder.getCoveredCorner(), alreadyUsedCards);
@@ -271,7 +259,7 @@ public class PlayerTable {
             for (int n = 0; n < 3; n++) {
                 if (card.getCardKingdom()!=null && card.getCardKingdom().equals(kingdom) && !alreadyUsedCards.contains(card)) {
                     tmp.add(card);
-                    card = map.get(card.getID(), corner);
+                    card = map.getElementAt(card.getID(), corner);
                 } else
                     return null;
             }
@@ -293,18 +281,6 @@ public class PlayerTable {
         HashSet<PlayableCard> tmp;
         int numOfConfigurations = 0;
 
-//        for(int i=0; i<matrix.height(); i++){
-//            for(int j=0; j<matrix.width(); j++){
-//                card = matrix.getElementAt(i,j);
-//                if(card!=null) {
-//                    tmp = checkVertically(card, finder.getKingdom1(), finder.getKingdom2(), finder.getCoveredCorner(), alreadyUsedCards);
-//                    if (tmp != null) {
-//                        numOfConfigurations++;
-//                        alreadyUsedCards.addAll(tmp);
-//                    }
-//                }
-//            }
-//        }
         for(PlayableCard card : map.values()){
             if(card!=null) {
                 tmp = checkVertically(card, finder.getKingdom1(), finder.getKingdom2(), finder.getCoveredCorner(), alreadyUsedCards);
@@ -323,13 +299,13 @@ public class PlayerTable {
         try {
             if(card.getCardKingdom()!=null && card.getCardKingdom().equals(kingdom1) && !alreadyUsedCards.contains(card)){
                 tmp.add(card);
-                card = map.get(card.getID(), corner);
+                card = map.getElementAt(card.getID(), corner);
                 if(card!=null && card.getCardKingdom()!=null &&
                         card.getCardKingdom().equals(kingdom2) && !alreadyUsedCards.contains(card)){
                     tmp.add(card);
                     // if coveredCorner is one of the upper corners, then I should check if card above is correct,
                     // otherwise I check if card below is correct
-                    card = map.get(card.getID(), corner < Corner.DL ? DynamicMap.U : DynamicMap.D);
+                    card = map.getElementAt(card.getID(), corner < Corner.DL ? DynamicMap.U : DynamicMap.D);
                     if(card!=null && card.getCardKingdom()!=null &&
                             card.getCardKingdom().equals(kingdom2) && !alreadyUsedCards.contains(card)){
                         tmp.add(card);

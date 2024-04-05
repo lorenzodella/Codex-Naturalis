@@ -23,17 +23,15 @@ public class DynamicMap<K,T> {
     public static final int U = 4;
     public static final int D = 5;
 
-    private static class MapElement<K,T> {
+    private static class MapElement<T> {
         Point pos;
-        K key;
         T value;
-        private MapElement(Point pos, K key, T value){
+        private MapElement(Point pos, T value){
             this.pos = pos;
-            this.key = key;
             this.value = value;
         }
     }
-    private final HashMap<K, MapElement<K, T>> map;
+    private final HashMap<K, MapElement<T>> map;
 
     /**
      *
@@ -42,7 +40,7 @@ public class DynamicMap<K,T> {
      */
     public DynamicMap(K key, T centerEl) {
         map = new HashMap<>();
-        map.put(key, new MapElement<>(new Point(0,0), key, centerEl));
+        map.put(key, new MapElement<>(new Point(0,0), centerEl));
     }
 
     /**
@@ -96,22 +94,23 @@ public class DynamicMap<K,T> {
      * @throws InvalidPositionException if pos is not a valid value
      */
     public void insert(K key, T el, K targetKey, int pos) throws TargetNotPresentException, InvalidPositionException {
-        MapElement<K, T> tmp = getElement(targetKey, pos);
+        //if there already is an element in that position remove it
+        Map.Entry<K, MapElement<T>> tmp = getEntryAt(targetKey, pos);
         if(tmp!=null)
-            remove(tmp.key);
+            remove(tmp.getKey());
         Point p = findPos(targetKey);
         switch (pos) {
             case UL:
-                map.put(key, new MapElement<>(new Point(p.x-1, p.y+1), key, el));
+                map.put(key, new MapElement<>(new Point(p.x-1, p.y+1), el));
                 break;
             case UR:
-                map.put(key, new MapElement<>(new Point(p.x+1, p.y+1), key, el));
+                map.put(key, new MapElement<>(new Point(p.x+1, p.y+1), el));
                 break;
             case DL:
-                map.put(key, new MapElement<>(new Point(p.x-1, p.y-1), key, el));
+                map.put(key, new MapElement<>(new Point(p.x-1, p.y-1), el));
                 break;
             case DR:
-                map.put(key, new MapElement<>(new Point(p.x+1, p.y-1), key, el));
+                map.put(key, new MapElement<>(new Point(p.x+1, p.y-1), el));
                 break;
             default:
                 throw new InvalidPositionException(pos);
@@ -124,7 +123,7 @@ public class DynamicMap<K,T> {
      * @param y y-position of the element
      * @return the element
      */
-    public T getElementAt(int x, int y){
+    public T getElement(int x, int y){
         return map.values().stream()
                 .filter(e -> e.pos.x == x && e.pos.y == y)
                 .map(e -> e.value)
@@ -142,8 +141,8 @@ public class DynamicMap<K,T> {
      * @throws TargetNotPresentException if target object is not present
      * @throws InvalidPositionException if pos is not a valid value
      */
-    public T get(K targetKey, int pos) throws TargetNotPresentException, InvalidPositionException {
-        MapElement<K, T> tmp = getElement(targetKey, pos);
+    public T getElementAt(K targetKey, int pos) throws TargetNotPresentException, InvalidPositionException {
+        MapElement<T> tmp = getEntryAt(targetKey, pos).getValue();
         return tmp!=null ? tmp.value : null;
     }
 
@@ -157,32 +156,32 @@ public class DynamicMap<K,T> {
      * @throws TargetNotPresentException if target object is not present
      * @throws InvalidPositionException if pos is not a valid value
      */
-    private MapElement<K, T> getElement(K targetKey, int pos) throws TargetNotPresentException, InvalidPositionException {
+    private Map.Entry<K, MapElement<T>> getEntryAt(K targetKey, int pos) throws TargetNotPresentException, InvalidPositionException {
         Point p = findPos(targetKey);
         switch (pos) {
             case UL:
-                return map.values().stream()
-                        .filter(e -> e.pos.x == p.x-1 && e.pos.y == p.y+1)
+                return map.entrySet().stream()
+                        .filter(e -> e.getValue().pos.x == p.x-1 && e.getValue().pos.y == p.y+1)
                         .findFirst().orElse(null);
             case UR:
-                return map.values().stream()
-                        .filter(e -> e.pos.x == p.x+1 && e.pos.y == p.y+1)
+                return map.entrySet().stream()
+                        .filter(e -> e.getValue().pos.x == p.x+1 && e.getValue().pos.y == p.y+1)
                         .findFirst().orElse(null);
             case DL:
-                return map.values().stream()
-                        .filter(e -> e.pos.x == p.x-1 && e.pos.y == p.y-1)
+                return map.entrySet().stream()
+                        .filter(e -> e.getValue().pos.x == p.x-1 && e.getValue().pos.y == p.y-1)
                         .findFirst().orElse(null);
             case DR:
-                return map.values().stream()
-                        .filter(e -> e.pos.x == p.x+1 && e.pos.y == p.y-1)
+                return map.entrySet().stream()
+                        .filter(e -> e.getValue().pos.x == p.x+1 && e.getValue().pos.y == p.y-1)
                         .findFirst().orElse(null);
             case U:
-                return map.values().stream()
-                        .filter(e -> e.pos.x == p.x && e.pos.y == p.y+2)
+                return map.entrySet().stream()
+                        .filter(e -> e.getValue().pos.x == p.x && e.getValue().pos.y == p.y+2)
                         .findFirst().orElse(null);
             case D:
-                return map.values().stream()
-                        .filter(e -> e.pos.x == p.x && e.pos.y == p.y-2)
+                return map.entrySet().stream()
+                        .filter(e -> e.getValue().pos.x == p.x && e.getValue().pos.y == p.y-2)
                         .findFirst().orElse(null);
             default:
                 throw new InvalidPositionException(pos);
@@ -196,7 +195,7 @@ public class DynamicMap<K,T> {
      * @throws TargetNotPresentException if no element with that key is not present
      */
     public Point findPos(K targetKey) throws TargetNotPresentException {
-        MapElement<K, T> el = map.get(targetKey);
+        MapElement<T> el = map.get(targetKey);
         if(el!=null)
             return el.pos;
         else
@@ -223,7 +222,7 @@ public class DynamicMap<K,T> {
      * @throws TargetNotPresentException if no element with that key is not present
      */
     public void remove(K targetKey) throws TargetNotPresentException {
-        MapElement<K, T> el = map.remove(targetKey);
+        MapElement<T> el = map.remove(targetKey);
         if(el==null)
             throw new TargetNotPresentException();
     }
