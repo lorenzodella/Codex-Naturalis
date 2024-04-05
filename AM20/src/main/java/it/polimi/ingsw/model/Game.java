@@ -103,7 +103,7 @@ public class Game {
                 carte.add(goldCardDeck.draw());
 
                 p.drawInitialPlayableCard(carte);
-            } catch (finishedCardStack e) {
+            } catch (FinishedCardStackException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -113,13 +113,15 @@ public class Game {
      * This method allows the player p to choose the side (front/back) of the initial card
      * that it's been given to them
      * @param side it stands for the side of the card: front or back
-     * @param p it stands for the player that's taking the action
+     * @param nickname it stands for the player that's taking the action
      */
     //TODO da testare
-    public void chooseStarterCardSide(int side, Player p) throws InvalidArgumentException{
+    public void chooseStarterCardSide(int side, String nickname) throws InvalidArgumentException{
         if(side != PlayableCard.FRONT && side != PlayableCard.BACK)
             throw new InvalidArgumentException("side", side);
-        p.positionStarterCard(side);
+        players.stream().filter(x -> x.getNickname().equals(nickname)).findFirst()
+                .orElseThrow(()-> new InvalidArgumentException("nickname", nickname))
+                .positionStarterCard(side);
     }
 
     /**
@@ -149,12 +151,14 @@ public class Game {
      * This method allows the player p to select the secret objetive they've chosen
      * @param index the player p selects the objective by choosing the index (0 or 1) of the array that contains the two possible
      *              secret objectives
-     * @param p the player p is the player that's taking the action
+     * @param nickname the nickname is the nickname of the player that's taking the action
      */
-    public void chooseObjective(int index, Player p) throws InvalidArgumentException{
+    public void chooseObjective(int index, String nickname) throws InvalidArgumentException{
         if(index<0 || index>1)
             throw new InvalidArgumentException("index", index);
-        p.chooseObjectiveCard(index);
+        players.stream().filter(x -> x.getNickname().equals(nickname)).findFirst()
+                .orElseThrow(()-> new InvalidArgumentException("nickname", nickname))
+                .chooseObjectiveCard(index);
     }
 
     /**
@@ -182,11 +186,10 @@ public class Game {
      * @param side : this attribute specifies if the player want to play the card by the front or the back
      * @return the current player that's just played the card
      * @throws TargetNotPresentException if the target is not present
-     * @throws InsertionException
      * @throws InvalidAngleCoveredException if positioning the angle in that spot is incorrect
      * @throws InvalidPositionException if positioning the card in that spot is incorrect
      */
-    public Player playCard(int indexCard, int angle, String targetID, int side) throws InvalidArgumentException, TargetNotPresentException, InsertionException, InvalidAngleCoveredException, InvalidPositionException {
+    public Player playCard(int indexCard, int angle, String targetID, int side) throws InvalidArgumentException, TargetNotPresentException, InvalidAngleCoveredException, InvalidPositionException {
         if(side != PlayableCard.FRONT && side != PlayableCard.BACK)
             throw new InvalidArgumentException("side", side);
         currPlayer.playCard(indexCard, angle, targetID, side);
@@ -203,9 +206,9 @@ public class Game {
      *                from a visible card(...)
      * @param index : this attribute stands for the index of the card that's in the visible cards array
      * @return the current player that's just picked the card
-     * @throws finishedCardStack if the deck's done
+     * @throws FinishedCardStackException if the deck's done
      */
-    public Player pickCard(int deck, boolean visible, int index ) throws finishedCardStack, InvalidArgumentException {
+    public Player pickCard(int deck, boolean visible, int index ) throws FinishedCardStackException, InvalidArgumentException {
     // choiceDeck = 1 resourceCard  choiceDeck = 0 goldCard
     // visibile = true carta visibile all'indice index
         Deck deckChoosen;
@@ -217,7 +220,7 @@ public class Game {
         else
             throw new InvalidArgumentException("deck", deck);
 
-        if(visible == false)
+        if(!visible)
             card = deckChoosen.draw();
         else
             card = deckChoosen.drawVisibleCard(index);
@@ -244,14 +247,13 @@ public class Game {
      * (in that case the first phase of the game ends and the second phase starts) and it also checks if one of the deck
      * is empty (if the cards of that specific deck have been all played).
      * @return 1 if the player has reached 20 points (or more) or if the deck is empty, 0 otherwise
-     * @throws finishedCardStack if the deck's done
      */
     //metodo chaimato dal controllore appea dopo che chiama playCard e pickCard
-    public boolean checkTheEnd() throws finishedCardStack {
-        return currPlayer.getScore() >= 20 || finishedDeck();
+    public boolean checkTheEnd() {
+        return currPlayer.getScore() >= 20 || isDeckFinished();
     }
 
-    private boolean finishedDeck() throws finishedCardStack {
+    private boolean isDeckFinished() {
         return  resourceCardDeck.getVisibleCard(0) != null || resourceCardDeck.getVisibleCard(1) != null || goldCardDeck.getVisibleCard(0) != null || goldCardDeck.getVisibleCard(1) != null;
     }
 

@@ -103,10 +103,9 @@ public class PlayerTable {
      * @throws TargetNotPresentException if the target is not present
      * @throws InvalidAngleCoveredException if positioning the angle in that spot is incorrect
      * @throws InvalidPositionException if positioning the card in that spot is incorrect
-     * @throws InsertionException
      */
     //TODO controllare eccezioni
-    public void insertCard(PlayableCard card, int angle, String targetID, int side) throws InsertionException, InvalidAngleCoveredException, TargetNotPresentException, InvalidPositionException {
+    public void insertCard(PlayableCard card, int angle, String targetID, int side) throws InvalidAngleCoveredException, TargetNotPresentException, InvalidPositionException {
 
         this.map.insert(card.getID(), card, targetID, angle);
 
@@ -126,7 +125,7 @@ public class PlayerTable {
 
         } catch (InvalidAngleCoveredException e){
             this.map.remove(card.getID());
-            throw new InsertionException();
+            throw e;
         }
 
         card.setSide(side);
@@ -166,7 +165,6 @@ public class PlayerTable {
      * NON SERVE ANCHE CARD ID??
      * @param c : card that needs to be covered
      * @param angle : angle of "c" that's going to be covered
-     * @throws TargetNotPresentException if the target is not present
      * @throws InvalidAngleCoveredException if positioning the angle in that spot is incorrect
      */
     /* TODO PER TIA:
@@ -183,9 +181,9 @@ public class PlayerTable {
                 obj = c.getBackCorners();
 
             if(obj[angle] == null)
-                throw new InvalidAngleCoveredException();
+                throw new InvalidAngleCoveredException(angle);
             if(obj[angle].isHidden())
-                throw new InvalidAngleCoveredException();
+                throw new InvalidAngleCoveredException(angle);
         }
     }
 

@@ -2,7 +2,7 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.cards.Kingdom;
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
-import it.polimi.ingsw.model.exceptions.finishedCardStack;
+import it.polimi.ingsw.model.exceptions.FinishedCardStackException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,9 +38,9 @@ public class Deck {
      * This method allows to pick a card from the deck.
      * @return the card on the top of the deck
      */
-    public PlayableCard draw() throws finishedCardStack {
+    public PlayableCard draw() throws FinishedCardStackException {
         if(cards.isEmpty())
-            throw new finishedCardStack();
+            throw new FinishedCardStackException();
         else
             return cards.pop();
     }
@@ -70,9 +70,9 @@ public class Deck {
      * putting the A in the index position --> in order to always have two visible cards on the table
      * @param index: this is the position of the card that player picks up
      * @return it returns the card that the player wanted to pick up
-     * @throws finishedCardStack if the deck is empty
+     * @throws FinishedCardStackException if the deck is empty
      */
-    public PlayableCard drawVisibleCard(int index) throws finishedCardStack {
+    public PlayableCard drawVisibleCard(int index) throws FinishedCardStackException {
         PlayableCard res = visibleCards[index];
         this.visibleCards[index] = this.draw();
         return res;

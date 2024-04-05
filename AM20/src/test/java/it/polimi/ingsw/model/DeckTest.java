@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
-import it.polimi.ingsw.model.exceptions.finishedCardStack;
+import it.polimi.ingsw.model.exceptions.FinishedCardStackException;
 import it.polimi.ingsw.model.util.XMLparser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,18 +20,18 @@ class DeckTest {
     }
 
     @Test
-    void getVisibleCard() throws finishedCardStack {
+    void getVisibleCard() throws FinishedCardStackException {
         PlayableCard oldtop = d.getCards().peek();
         d.drawVisibleCard(0);
         assertEquals(oldtop, d.getVisibleCard(0));
     }
 
     @Test
-    void empty() throws finishedCardStack {
+    void empty() throws FinishedCardStackException {
         int dim = d.getCards().size();
         for (int i = 0; i < dim; i++) {
             d.draw();
         }
-        assertThrows(finishedCardStack.class, ()->d.draw());
+        assertThrows(FinishedCardStackException.class, ()->d.draw());
     }
 }

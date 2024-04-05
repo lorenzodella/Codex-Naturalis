@@ -74,6 +74,10 @@ public class Player {
         this.secretObjective = secretObjective;
     }
 
+    public String getNickname() {
+        return nickname;
+    }
+
     /**
      * This method actually puts down a card by the side that's specied by the parameter "side"
      * @param side: This attribute stands for the side of the card (front of back)
@@ -96,9 +100,8 @@ public class Player {
      * @throws TargetNotPresentException if the target is not present
      * @throws InvalidAngleCoveredException if positioning the angle in that spot is incorrect
      * @throws InvalidPositionException if positioning the card in that spot is incorrect
-     * @throws InsertionException
      */
-    public void playCard(int indexCard, int angle, String cardID, int side) throws TargetNotPresentException, InvalidAngleCoveredException, InvalidPositionException, InsertionException {
+    public void playCard(int indexCard, int angle, String cardID, int side) throws TargetNotPresentException, InvalidAngleCoveredException, InvalidPositionException {
         this.table.insertCard(this.cards.get(indexCard), angle, cardID, side);
         this.addPoints((PointsProvider) this.cards.get(indexCard));
         this.cards.remove(this.cards.get(indexCard));
@@ -149,4 +152,6 @@ public class Player {
     public void computeCommonObjective(ObjectiveCard objectiveCard){
         objectiveCard.computePoints(this.table);
     }
+
+
 }
