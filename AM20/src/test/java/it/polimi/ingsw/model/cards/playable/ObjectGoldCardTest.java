@@ -4,10 +4,7 @@ import it.polimi.ingsw.model.PlayerTable;
 import it.polimi.ingsw.model.cards.Corner;
 import it.polimi.ingsw.model.cards.Kingdom;
 import it.polimi.ingsw.model.cards.SpecialObject;
-import it.polimi.ingsw.model.exceptions.InsertionException;
-import it.polimi.ingsw.model.exceptions.InvalidAngleCoveredException;
-import it.polimi.ingsw.model.exceptions.InvalidPositionException;
-import it.polimi.ingsw.model.exceptions.TargetNotPresentException;
+import it.polimi.ingsw.model.exceptions.*;
 import it.polimi.ingsw.model.util.XMLparser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -75,7 +72,7 @@ class ObjectGoldCardTest {
     }
 
     @Test
-    void testComputePoints() throws TargetNotPresentException, InsertionException, InvalidAngleCoveredException, InvalidPositionException {
+    void testComputePoints() throws TargetNotPresentException, InsertionException, InvalidAngleCoveredException, InvalidPositionException, RequirementsNotRespectedException {
         PlayerTable playerTable = new PlayerTable();
         playerTable.updateStats(s);
         assertEquals(1,s.computePoints(playerTable));

@@ -5,10 +5,7 @@ import it.polimi.ingsw.model.cards.Corner;
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.model.cards.playable.ResourceCard;
 import it.polimi.ingsw.model.cards.playable.StarterCard;
-import it.polimi.ingsw.model.exceptions.InsertionException;
-import it.polimi.ingsw.model.exceptions.InvalidAngleCoveredException;
-import it.polimi.ingsw.model.exceptions.InvalidPositionException;
-import it.polimi.ingsw.model.exceptions.TargetNotPresentException;
+import it.polimi.ingsw.model.exceptions.*;
 import it.polimi.ingsw.model.util.XMLparser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -39,7 +36,7 @@ class VerticalConfigurationObjectiveCardTest {
     void setUp(){ s = getExampleVerticalConfigurationObjectiveCard();}
 
     @Test
-    void testComputePoints() throws TargetNotPresentException, InsertionException, InvalidAngleCoveredException, InvalidPositionException {
+    void testComputePoints() throws TargetNotPresentException, InsertionException, InvalidAngleCoveredException, InvalidPositionException, RequirementsNotRespectedException {
         StarterCard starterCard = getExampleStarterCard();
         ResourceCard resourceCard = getExampleResourceCard("R31");
         ResourceCard resourceCard2 = getExampleResourceCard("R33");

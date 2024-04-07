@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.cards.Corner;
 import it.polimi.ingsw.model.cards.Kingdom;
 import it.polimi.ingsw.model.cards.objective.DiagonalConfigurationObjectiveCard;
 import it.polimi.ingsw.model.cards.objective.VerticalConfigurationObjectiveCard;
+import it.polimi.ingsw.model.cards.playable.GoldCard;
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.model.exceptions.DynamicMapException;
 import it.polimi.ingsw.model.exceptions.*;
@@ -106,9 +107,18 @@ public class PlayerTable {
      * @throws InvalidPositionException if positioning the card in that spot is incorrect
      */
     //TODO controllare eccezioni
-    public void insertCard(PlayableCard card, int angle, String targetID, int side) throws InvalidAngleCoveredException, TargetNotPresentException, InvalidPositionException {
+    public void insertCard(PlayableCard card, int angle, String targetID, int side) throws InvalidAngleCoveredException, TargetNotPresentException, InvalidPositionException, RequirementsNotRespectedException {
 
         this.map.insert(card.getID(), card, targetID, angle);
+
+        //if card is gold checkRequirements
+        if(card instanceof GoldCard){
+            if(!this.stats.checkRequirements(card.getRequirements())){
+                throw new RequirementsNotRespectedException();
+                //return;
+            }
+
+        }
 
         //array delle 4 carte coperte dalla carta che viene posizionata
         PlayableCard[] cardsCovered = new PlayableCard[4];

@@ -4,10 +4,7 @@ import it.polimi.ingsw.model.cards.PointsProvider;
 import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.model.cards.playable.StarterCard;
-import it.polimi.ingsw.model.exceptions.InsertionException;
-import it.polimi.ingsw.model.exceptions.InvalidAngleCoveredException;
-import it.polimi.ingsw.model.exceptions.InvalidPositionException;
-import it.polimi.ingsw.model.exceptions.TargetNotPresentException;
+import it.polimi.ingsw.model.exceptions.*;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -102,7 +99,7 @@ public class Player {
      * @throws InvalidAngleCoveredException if positioning the angle in that spot is incorrect
      * @throws InvalidPositionException if positioning the card in that spot is incorrect
      */
-    public void playCard(int indexCard, int angle, String cardID, int side) throws TargetNotPresentException, InvalidAngleCoveredException, InvalidPositionException {
+    public void playCard(int indexCard, int angle, String cardID, int side) throws TargetNotPresentException, InvalidAngleCoveredException, InvalidPositionException, RequirementsNotRespectedException {
         this.table.insertCard(this.cards.get(indexCard), angle, cardID, side);
         this.addPoints((PointsProvider) this.cards.get(indexCard));
         this.cards.remove(this.cards.get(indexCard));

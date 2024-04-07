@@ -9,10 +9,7 @@ import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.model.cards.playable.CornerGoldCard;
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.model.cards.playable.StarterCard;
-import it.polimi.ingsw.model.exceptions.InsertionException;
-import it.polimi.ingsw.model.exceptions.InvalidAngleCoveredException;
-import it.polimi.ingsw.model.exceptions.InvalidPositionException;
-import it.polimi.ingsw.model.exceptions.TargetNotPresentException;
+import it.polimi.ingsw.model.exceptions.*;
 import it.polimi.ingsw.model.util.XMLparser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -56,7 +53,7 @@ class DiagonalConfigurationObjectiveCardTest {
 
 
     @Test
-    void testComputePoints() throws TargetNotPresentException, InsertionException, InvalidAngleCoveredException, InvalidPositionException {
+    void testComputePoints() throws TargetNotPresentException, InsertionException, InvalidAngleCoveredException, InvalidPositionException, RequirementsNotRespectedException {
         StarterCard starterCard = getExampleStarterCard();
         List<PlayableCard> list = getKingdomGoldCard(s.getKingdom());
         PlayerTable playerTable = new PlayerTable();
