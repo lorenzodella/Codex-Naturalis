@@ -54,7 +54,7 @@ class XMLparserTest {
 
     @Test
     void parseGoldCards() {
-        /*TODO PER IRE
+        /*TODO PER ELE
         fai come ho fatto sopra, crea una carta per ogni tipo di carta gold (object, corner, points)
         e verifica che sia uguale a quella letta dall'xml
          */
@@ -62,7 +62,7 @@ class XMLparserTest {
 
     @Test
     void parseObjectiveCards() {
-        /*TODO PER IRE
+        /*TODO PER ELE
         fai come ho fatto sopra, crea una carta per ogni tipo di carta obiettivo (...)
         e verifica che sia uguale a quella letta dall'xml
          */

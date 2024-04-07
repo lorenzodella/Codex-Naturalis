@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -64,16 +65,26 @@ class CornerGoldCardTest {
         assertEquals(map,s.getRequirements());
     }
 
+    void addRequirementsOfGoldCard(PlayerTable playerTable, GoldCard gc){
+        for(Map.Entry<Kingdom, Integer> e : gc.getRequirements().entrySet()) {
+            for (int i = 0; i < e.getValue(); i++) {
+                playerTable.getStats().addKingdom(e.getKey());
+            }
+        }
+    }
+
     @Test
-    void testComputePoints() throws TargetNotPresentException, InsertionException, InvalidAngleCoveredException, InvalidPositionException, RequirementsNotRespectedException {
+    void testComputePoints() throws TargetNotPresentException, InvalidAngleCoveredException, InvalidPositionException, RequirementsNotRespectedException {
         StarterCard starterCard = getExampleStarterCard();
         PlayerTable playerTable = new PlayerTable();
+        addRequirementsOfGoldCard(playerTable, s);
         playerTable.insertStarterCard(PlayableCard.FRONT, starterCard);
         playerTable.insertCard(s, Corner.UR, starterCard.getID(), PlayableCard.FRONT);
         assertEquals(2,s.computePoints(playerTable));
 
         starterCard = getExampleStarterCard();
         playerTable = new PlayerTable();
+        addRequirementsOfGoldCard(playerTable, s);
         playerTable.insertStarterCard(PlayableCard.FRONT, starterCard);
         playerTable.insertCard(s, Corner.UR, starterCard.getID(), PlayableCard.BACK);
         assertEquals(0,s.computePoints(playerTable));
@@ -82,6 +93,9 @@ class CornerGoldCardTest {
         CornerGoldCard s1= getExampleCornerGoldCard("G65");
         CornerGoldCard s2 = getExampleCornerGoldCard("G66");
         playerTable = new PlayerTable();
+        addRequirementsOfGoldCard(playerTable, s);
+        addRequirementsOfGoldCard(playerTable, s1);
+        addRequirementsOfGoldCard(playerTable, s2);
         playerTable.insertStarterCard(PlayableCard.BACK, starterCard);
         playerTable.insertCard(s1, Corner.UL, starterCard.getID(), PlayableCard.BACK);
         playerTable.insertCard(s2, Corner.UR, starterCard.getID(), PlayableCard.BACK);

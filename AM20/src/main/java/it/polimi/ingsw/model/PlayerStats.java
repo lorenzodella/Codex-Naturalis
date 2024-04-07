@@ -1,9 +1,7 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.cards.Corner;
 import it.polimi.ingsw.model.cards.Kingdom;
 import it.polimi.ingsw.model.cards.SpecialObject;
-import it.polimi.ingsw.model.cards.playable.PlayableCard;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -64,7 +62,7 @@ public class PlayerStats {
         }
     }
 
-    public void addKIngdom(Kingdom kingdom){
+    public void addKingdom(Kingdom kingdom){
         this.resources.put(kingdom, this.getNumberOfResources(kingdom)+1);
     }
 

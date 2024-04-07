@@ -1,4 +1,4 @@
-package it.polimi.ingsw.model.util;
+package it.polimi.ingsw.model.exceptions;
 
 public class InvalidArgumentException extends Exception{
     private final String argumentName;

@@ -36,7 +36,7 @@ class VerticalConfigurationObjectiveCardTest {
     void setUp(){ s = getExampleVerticalConfigurationObjectiveCard();}
 
     @Test
-    void testComputePoints() throws TargetNotPresentException, InsertionException, InvalidAngleCoveredException, InvalidPositionException, RequirementsNotRespectedException {
+    void testComputePoints() throws TargetNotPresentException, InvalidAngleCoveredException, InvalidPositionException, RequirementsNotRespectedException {
         StarterCard starterCard = getExampleStarterCard();
         ResourceCard resourceCard = getExampleResourceCard("R31");
         ResourceCard resourceCard2 = getExampleResourceCard("R33");

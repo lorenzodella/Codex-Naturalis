@@ -17,6 +17,7 @@ class DeckTest {
         d = new Deck(XMLparser.parseResourceCards("resourceCards.xml"));
         d.shuffle();
         d.initVisibleCards();
+        assertEquals(38, d.getCards().size());
     }
 
     @Test

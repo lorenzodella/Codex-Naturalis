@@ -36,7 +36,7 @@ class TrioOfResourcesObjectiveCardTest {
     void setUp(){ s = getExampleTrioOfResourcesObjectiveCard();}
 
     @Test
-    void testComputePoints() throws TargetNotPresentException, InsertionException, InvalidAngleCoveredException, InvalidPositionException, RequirementsNotRespectedException {
+    void testComputePoints() throws TargetNotPresentException, InvalidAngleCoveredException, InvalidPositionException, RequirementsNotRespectedException {
         StarterCard starterCard = getExampleStarterCard();
         ResourceCard resourceCard = getExampleResourceCard("R21");
         ResourceCard resourceCard2 = getExampleResourceCard("R25");

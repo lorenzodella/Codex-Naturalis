@@ -106,7 +106,6 @@ public class PlayerTable {
      * @throws InvalidAngleCoveredException if positioning the angle in that spot is incorrect
      * @throws InvalidPositionException if positioning the card in that spot is incorrect
      */
-    //TODO controllare eccezioni
     public void insertCard(PlayableCard card, int angle, String targetID, int side) throws InvalidAngleCoveredException, TargetNotPresentException, InvalidPositionException, RequirementsNotRespectedException {
 
 
@@ -178,10 +177,6 @@ public class PlayerTable {
      * @param c : card that needs to be covered
      * @param angle : angle of "c" that's going to be covered
      * @throws InvalidAngleCoveredException if positioning the angle in that spot is incorrect
-     */
-    /* TODO PER TIA:
-     qua secondo me non serve il parametro side (anche perché non lhai usato)
-     ATTENZIONE: controlla che la carta non sia null
      */
     private void isPositionValid(PlayableCard c, int angle) throws InvalidAngleCoveredException {
 

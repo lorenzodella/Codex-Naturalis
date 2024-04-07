@@ -2,6 +2,7 @@ package it.polimi.ingsw.model.cards.objective;
 
 import it.polimi.ingsw.model.PlayerTable;
 import it.polimi.ingsw.model.cards.Corner;
+import it.polimi.ingsw.model.cards.Kingdom;
 import it.polimi.ingsw.model.cards.playable.*;
 import it.polimi.ingsw.model.exceptions.*;
 import it.polimi.ingsw.model.util.XMLparser;
@@ -9,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -40,19 +42,29 @@ class PairOfObjectsObjectiveCardTest {
         s = getExamplePairOfObjectsObjectiveCard();
     }
 
+    void addRequirementsOfGoldCard(PlayerTable playerTable, GoldCard gc){
+        for(Map.Entry<Kingdom, Integer> e : gc.getRequirements().entrySet()) {
+            for (int i = 0; i < e.getValue(); i++) {
+                playerTable.getStats().addKingdom(e.getKey());
+            }
+        }
+    }
+
     @Test
-    void testComputePoints() throws TargetNotPresentException, InsertionException, InvalidAngleCoveredException, InvalidPositionException, RequirementsNotRespectedException {
+    void testComputePoints() throws TargetNotPresentException, InvalidAngleCoveredException, InvalidPositionException, RequirementsNotRespectedException {
         StarterCard starterCard = getExampleStarterCard();
         ResourceCard resourceCard = getExampleResourceCard("R26");
         ResourceCard resourceCard2 = getExampleResourceCard("R17");
         PointsGoldCard pointsGoldCard = getExamplePointsGoldCard("G49");
         PlayerTable playerTable = new PlayerTable();
+        addRequirementsOfGoldCard(playerTable, pointsGoldCard);
         playerTable.insertStarterCard(PlayableCard.FRONT, starterCard);
         playerTable.insertCard(resourceCard, Corner.DR, starterCard.getID(), PlayableCard.FRONT);
         playerTable.insertCard(pointsGoldCard, Corner.UR, starterCard.getID(), PlayableCard.FRONT);
         assertEquals(2,s.computePoints(playerTable));
 
         playerTable = new PlayerTable();
+        addRequirementsOfGoldCard(playerTable, pointsGoldCard);
         starterCard = getExampleStarterCard();
         playerTable.insertStarterCard(PlayableCard.FRONT, starterCard);
         playerTable.insertCard(resourceCard, Corner.DR, starterCard.getID(), PlayableCard.FRONT);
@@ -62,6 +74,7 @@ class PairOfObjectsObjectiveCardTest {
 
 
         playerTable = new PlayerTable();
+        addRequirementsOfGoldCard(playerTable, pointsGoldCard);
         ResourceCard resourceCard3 = getExampleResourceCard("R7");
         starterCard = getExampleStarterCard();
         playerTable.insertStarterCard(PlayableCard.FRONT, starterCard);

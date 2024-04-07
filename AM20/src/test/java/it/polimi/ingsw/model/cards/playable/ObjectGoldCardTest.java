@@ -72,7 +72,7 @@ class ObjectGoldCardTest {
     }
 
     @Test
-    void testComputePoints() throws TargetNotPresentException, InsertionException, InvalidAngleCoveredException, InvalidPositionException, RequirementsNotRespectedException {
+    void testComputePoints() throws TargetNotPresentException, InvalidAngleCoveredException, InvalidPositionException, RequirementsNotRespectedException {
         PlayerTable playerTable = new PlayerTable();
         playerTable.updateStats(s);
         assertEquals(1,s.computePoints(playerTable));

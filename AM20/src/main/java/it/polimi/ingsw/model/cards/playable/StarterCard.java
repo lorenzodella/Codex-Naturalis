@@ -6,8 +6,6 @@ import it.polimi.ingsw.model.cards.Kingdom;
 import java.util.*;
 
 public class StarterCard extends PlayableCard{
-    //TODO: sei sicuro che sia corretto ArrayList di Kingdom?? io ho scritto il codice con arrayList<Kingdom>
-
     /**
      * List of all the kingdoms that are shown in the center of the FRONT SIDE of the card.
      * PS: the rulebook says that these resources are shown on the BACK SIDE of the card but we decided
@@ -45,9 +43,6 @@ public class StarterCard extends PlayableCard{
     /*public String getID(){
         return
     }*/
-
-
-    // TODO: da controllare e da fare JAVADoc e da fare testing (forse si può snellire il codice)
 
     /**
      * This method calls the upper class method to get kingdoms that are drawn in the corner

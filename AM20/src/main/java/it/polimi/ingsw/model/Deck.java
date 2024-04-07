@@ -37,6 +37,7 @@ public class Deck {
     /**
      * This method allows to pick a card from the deck.
      * @return the card on the top of the deck
+     * @throws FinishedCardStackException if the deck is empty
      */
     public PlayableCard draw() throws FinishedCardStackException {
         if(cards.isEmpty())
@@ -49,7 +50,7 @@ public class Deck {
      * This method allows to see the kingdom of the card on the top of the deck.
      * @return the kingdom of the card
      */
-    public Kingdom geFirstCardKingdom(){
+    public Kingdom getFirstCardKingdom(){
         return cards.peek().getCardKingdom();
     }
 
@@ -70,12 +71,18 @@ public class Deck {
      * putting the A in the index position --> in order to always have two visible cards on the table
      * @param index: this is the position of the card that player picks up
      * @return it returns the card that the player wanted to pick up
-     * @throws FinishedCardStackException if the deck is empty
+     * @throws FinishedCardStackException if the chosen card is not present (because deck is empty)
      */
     public PlayableCard drawVisibleCard(int index) throws FinishedCardStackException {
-        //TODO endgame
         PlayableCard res = visibleCards[index];
-        this.visibleCards[index] = this.draw();
+        if(res==null)
+            throw new FinishedCardStackException();
+        try {
+            this.visibleCards[index] = this.draw();
+            //if draw() throws an exception is because there is no card to replace the visible card with
+        } catch(FinishedCardStackException e){
+            this.visibleCards[index] = null;
+        }
         return res;
     }
 

@@ -2,16 +2,15 @@ package it.polimi.ingsw.model.cards.objective;
 
 import it.polimi.ingsw.model.PlayerTable;
 import it.polimi.ingsw.model.cards.Corner;
-import it.polimi.ingsw.model.cards.playable.PlayableCard;
-import it.polimi.ingsw.model.cards.playable.PointsGoldCard;
-import it.polimi.ingsw.model.cards.playable.ResourceCard;
-import it.polimi.ingsw.model.cards.playable.StarterCard;
+import it.polimi.ingsw.model.cards.Kingdom;
+import it.polimi.ingsw.model.cards.playable.*;
 import it.polimi.ingsw.model.exceptions.*;
 import it.polimi.ingsw.model.util.XMLparser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -41,13 +40,22 @@ class TrioOfObjectsObjectiveCardTest {
     @BeforeEach
     void setUp(){ s = getExampleTrioOfObjectsObjectiveCard();}
 
+    void addRequirementsOfGoldCard(PlayerTable playerTable, GoldCard gc){
+        for(Map.Entry<Kingdom, Integer> e : gc.getRequirements().entrySet()) {
+            for (int i = 0; i < e.getValue(); i++) {
+                playerTable.getStats().addKingdom(e.getKey());
+            }
+        }
+    }
+
     @Test
-    void testComputePoints() throws TargetNotPresentException, InsertionException, InvalidAngleCoveredException, InvalidPositionException, RequirementsNotRespectedException {
+    void testComputePoints() throws TargetNotPresentException, InvalidAngleCoveredException, InvalidPositionException, RequirementsNotRespectedException {
         StarterCard starterCard = getExampleStarterCard();
         ResourceCard resourceCard = getExampleResourceCard("R26");
         ResourceCard resourceCard2 = getExampleResourceCard("R16");
         PointsGoldCard pointsGoldCard = getExamplePointsGoldCard("G48");
         PlayerTable playerTable = new PlayerTable();
+        addRequirementsOfGoldCard(playerTable, pointsGoldCard);
         playerTable.insertStarterCard(PlayableCard.FRONT, starterCard);
         playerTable.insertCard(resourceCard, Corner.DR, starterCard.getID(), PlayableCard.FRONT);
         playerTable.insertCard(pointsGoldCard, Corner.UR, starterCard.getID(), PlayableCard.FRONT);
@@ -55,6 +63,7 @@ class TrioOfObjectsObjectiveCardTest {
         assertEquals(3,s.computePoints(playerTable));
 
         playerTable = new PlayerTable();
+        addRequirementsOfGoldCard(playerTable, pointsGoldCard);
         starterCard = getExampleStarterCard();
         ResourceCard resourceCard3 = getExampleResourceCard("R15");
         playerTable.insertStarterCard(PlayableCard.FRONT, starterCard);
@@ -64,10 +73,13 @@ class TrioOfObjectsObjectiveCardTest {
         assertEquals(0,s.computePoints(playerTable));
 
         playerTable = new PlayerTable();
+        addRequirementsOfGoldCard(playerTable, pointsGoldCard);
         starterCard = getExampleStarterCard();
         ResourceCard resourceCard4 = getExampleResourceCard("R25");
         PointsGoldCard pointsGoldCard2 = getExamplePointsGoldCard("G49");
         PointsGoldCard pointsGoldCard3 = getExamplePointsGoldCard("G69");
+        addRequirementsOfGoldCard(playerTable, pointsGoldCard2);
+        addRequirementsOfGoldCard(playerTable, pointsGoldCard3);
         playerTable.insertStarterCard(PlayableCard.FRONT, starterCard);
         playerTable.insertCard(resourceCard, Corner.DR, starterCard.getID(), PlayableCard.FRONT);
         playerTable.insertCard(pointsGoldCard, Corner.UR, starterCard.getID(), PlayableCard.FRONT);

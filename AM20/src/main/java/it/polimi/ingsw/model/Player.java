@@ -59,6 +59,14 @@ public class Player {
         return starterCard;
     }
 
+    public List<PlayableCard> getCards() {
+        return cards;
+    }
+
+    public PlayerTable getTable() {
+        return table;
+    }
+
     //TODO da testare
     public int getScore() {
         return score;
