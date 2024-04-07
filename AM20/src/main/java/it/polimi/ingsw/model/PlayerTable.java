@@ -109,7 +109,6 @@ public class PlayerTable {
     //TODO controllare eccezioni
     public void insertCard(PlayableCard card, int angle, String targetID, int side) throws InvalidAngleCoveredException, TargetNotPresentException, InvalidPositionException, RequirementsNotRespectedException {
 
-        this.map.insert(card.getID(), card, targetID, angle);
 
         //if card is gold checkRequirements
         if(card instanceof GoldCard){
@@ -119,6 +118,8 @@ public class PlayerTable {
             }
 
         }
+
+        this.map.insert(card.getID(), card, targetID, angle);
 
         //array delle 4 carte coperte dalla carta che viene posizionata
         PlayableCard[] cardsCovered = new PlayableCard[4];
