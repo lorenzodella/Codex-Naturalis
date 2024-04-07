@@ -1,11 +1,10 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
-import it.polimi.ingsw.model.cards.playable.GoldCard;
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.model.cards.playable.StarterCard;
 import it.polimi.ingsw.model.exceptions.*;
-import it.polimi.ingsw.model.util.InvalidArgumentException;
+import it.polimi.ingsw.model.exceptions.InvalidArgumentException;
 import it.polimi.ingsw.model.util.XMLparser;
 
 import java.util.*;
@@ -55,12 +54,15 @@ public class Game {
         return currPlayer;
     }
 
+    public ObjectiveCard[] getCommonObjectives() {
+        return commonObjectives;
+    }
+
     /**
      * This method
      * 1. creates and suffles both gold and resource deck card
      * 2. displays two visible cards on the table (per each deck)
      */
-    //TODO da testare
     public void initDecks(){
         resourceCardDeck = new Deck(XMLparser.parseResourceCards("resourceCards.xml"));
         resourceCardDeck.shuffle();
@@ -76,7 +78,6 @@ public class Game {
      * 2. it shuffles the cards
      * 3. gives an initial card to every player
      */
-    //TODO da testare
     public void giveStarterCards(){
         ArrayList<PlayableCard> starterCards = XMLparser.parseStarterCards("starterCards.xml");
         Collections.shuffle(starterCards);
@@ -92,7 +93,6 @@ public class Game {
      * it creates a linkedList per each player that contains 3 elements
      * (a gold card and two resource cards)
      */
-    //TODO da testare
     public void giveInitialCards() {
         for(Player p: players){
             LinkedList<PlayableCard> carte = new LinkedList<>();
@@ -115,7 +115,6 @@ public class Game {
      * @param side it stands for the side of the card: front or back
      * @param nickname it stands for the player that's taking the action
      */
-    //TODO da testare
     public void chooseStarterCardSide(int side, String nickname) throws InvalidArgumentException{
         if(side != PlayableCard.FRONT && side != PlayableCard.BACK)
             throw new InvalidArgumentException("side", side);
@@ -166,8 +165,6 @@ public class Game {
      * happens to be in the 0 position
      * @return the current player
      */
-
-    //TODO da testare
     public Player chooseFirstPlayer(){
         Collections.shuffle(players);
         currPlayer = players.get(0);
@@ -189,18 +186,26 @@ public class Game {
      * @throws InvalidAngleCoveredException if positioning the angle in that spot is incorrect
      * @throws InvalidPositionException if positioning the card in that spot is incorrect
      */
-    public Player playCard(int indexCard, int angle, String targetID, int side) throws InvalidArgumentException, TargetNotPresentException, InvalidAngleCoveredException, InvalidPositionException {
+    public Player playCard(int indexCard, int angle, String targetID, int side) throws InvalidArgumentException, TargetNotPresentException, InvalidAngleCoveredException, InvalidPositionException, RequirementsNotRespectedException {
         if(side != PlayableCard.FRONT && side != PlayableCard.BACK)
             throw new InvalidArgumentException("side", side);
-        currPlayer.playCard(indexCard, angle, targetID, side);
+        try {
+            currPlayer.playCard(indexCard, angle, targetID, side);
+        } catch(IndexOutOfBoundsException e){
+            throw new InvalidArgumentException("indexCard", indexCard);
+        }
         return currPlayer;
     }
 
+    //TODO VOGLIAMO SPLITTARE IL METODO IN DUE? (uno per pescare dal mazzo, uno per perscare una visiblecard)
     /**
      * This method picks the card from the top of the spicified deck (deck) or it picks one of the two visible cards.
      * Specifically, it picks the visible card that's found at the index position of the arraylist of the visible cards.
+     * //TODO questa frase mi sembra scritta da tia talmente non si capisce niente...
      * This method also calls getVisible (that's found in "deck") and this method also
      * returns the chosen visible card and it adds it at the list cards (that's found in player).
+     * //TODO la mia prof di inglese diceva sempre "QUESTA E' LOGICA NON INGLESE!!!!"
+     * ---->>> Once this method retrieved the correct new card, it adds that to the current player's card list.
      * @param deck : this attribute stands for the specific deck that you want to pick a card from
      * @param visible : this attribute is a boolean that specifies if the player wants to pick a card from the deck or
      *                from a visible card(...)
@@ -211,19 +216,22 @@ public class Game {
     public Player pickCard(int deck, boolean visible, int index ) throws FinishedCardStackException, InvalidArgumentException {
     // choiceDeck = 1 resourceCard  choiceDeck = 0 goldCard
     // visibile = true carta visibile all'indice index
-        Deck deckChoosen;
+        if(index<0 || index>1)
+            throw new InvalidArgumentException("index", index);
+
+        Deck chosenDeck;
         PlayableCard card;
         if(deck == Deck.RESOURCE_CARDS )
-            deckChoosen = resourceCardDeck;
+            chosenDeck = resourceCardDeck;
         else if(deck == Deck.GOLD_CARDS)
-            deckChoosen = goldCardDeck;
+            chosenDeck = goldCardDeck;
         else
             throw new InvalidArgumentException("deck", deck);
 
         if(!visible)
-            card = deckChoosen.draw();
+            card = chosenDeck.draw();
         else
-            card = deckChoosen.drawVisibleCard(index);
+            card = chosenDeck.drawVisibleCard(index);
 
         this.currPlayer.drawCard(card);
 
@@ -231,6 +239,10 @@ public class Game {
 
     }
 
+    /**
+     * Sets current player as the next player, following playing order.
+     * @return true if next player is the first player, so a new turn started
+     */
     public boolean nextTurn(){
         int cur = players.indexOf(currPlayer);
         if(cur == players.size()-1) {
@@ -248,13 +260,19 @@ public class Game {
      * is empty (if the cards of that specific deck have been all played).
      * @return 1 if the player has reached 20 points (or more) or if the deck is empty, 0 otherwise
      */
-    //metodo chaimato dal controllore appea dopo che chiama playCard e pickCard
     public boolean checkTheEnd() {
-        return currPlayer.getScore() >= 20 || isDeckFinished();
+        return currPlayer.getScore() >= 20 || areDeckFinished();
     }
 
-    private boolean isDeckFinished() {
-        return  resourceCardDeck.getVisibleCard(0) != null || resourceCardDeck.getVisibleCard(1) != null || goldCardDeck.getVisibleCard(0) != null || goldCardDeck.getVisibleCard(1) != null;
+    /**
+     * Checks if both decks are empty, meaning that game must finish during the next turn
+     * @return true if both decks are empty
+     */
+    public boolean areDeckFinished() {
+        return  resourceCardDeck.getVisibleCard(0) == null &&
+                resourceCardDeck.getVisibleCard(1) == null &&
+                goldCardDeck.getVisibleCard(0) == null &&
+                goldCardDeck.getVisibleCard(1) == null;
     }
 
     /**
