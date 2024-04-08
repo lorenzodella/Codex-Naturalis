@@ -89,8 +89,8 @@ public class DynamicMap<K,T> {
      * @param key key of the element
      * @param el element to be inserted
      * @param targetKey key of the object near which the element must be inserted
-     * @param pos 0 = left above, 1 = right above,
-     *            2 = left below, 3 = right below
+     * @param pos 0 = one point to the top left, 1 = one point to the top right,
+     *            2 = one point to the bottom left, 3 = one point to the bottom right
      * @throws TargetNotPresentException if target object is not present
      * @throws InvalidPositionException if pos is not a valid value
      */
@@ -135,9 +135,9 @@ public class DynamicMap<K,T> {
     /**
      * Get the element value at a certain position relative to a particular object
      * @param targetKey key of the object near which the element is
-     * @param pos 0 = left above, 1 = right above,
-     *            2 = left below, 3 = right below
-     *            4 = above, 5 = below
+     * @param pos 0 = one point to the top left, 1 = one point to the top right,
+     *            2 = one point to the bottom left, 3 = one point to the bottom right
+     *            4 = two points on the top, 5 = two points on the bottom
      * @return element at that position
      * @throws TargetNotPresentException if target object is not present
      * @throws InvalidPositionException if pos is not a valid value
@@ -150,9 +150,9 @@ public class DynamicMap<K,T> {
     /**
      * Get the element at a certain position relative to a particular object
      * @param targetKey key of the object near which the element is
-     * @param pos 0 = left above, 1 = right above,
-     *            2 = left below, 3 = right below
-     *            4 = above, 5 = below
+     * @param pos 0 = one point to the top left, 1 = one point to the top right,
+     *            2 = one point to the bottom left, 3 = one point to the bottom right
+     *            4 = two points on the top, 5 = two points on the bottom
      * @return element at that position
      * @throws TargetNotPresentException if target object is not present
      * @throws InvalidPositionException if pos is not a valid value

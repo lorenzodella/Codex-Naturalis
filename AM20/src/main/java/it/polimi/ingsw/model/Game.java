@@ -9,7 +9,7 @@ import it.polimi.ingsw.model.util.XMLparser;
 
 import java.util.*;
 
-public class Game {
+public class Game implements GameObservable{
     /**
      * Dinamic arrayList of players:
      * Before starting the game, the first player choses the number of players they want to play with.
@@ -41,19 +41,23 @@ public class Game {
         turn = 0;
     }
 
+    @Override
     public List<Player> getPlayers() {
         return players;
     }
+    @Override
     public Deck getGoldCardDeck() {
         return goldCardDeck;
     }
+    @Override
     public Deck getResourceCardDeck() {
         return resourceCardDeck;
     }
+    @Override
     public Player getCurrPlayer() {
         return currPlayer;
     }
-
+    @Override
     public ObjectiveCard[] getCommonObjectives() {
         return commonObjectives;
     }
@@ -63,6 +67,7 @@ public class Game {
      * 1. creates and suffles both gold and resource deck card
      * 2. displays two visible cards on the table (per each deck)
      */
+    @Override
     public void initDecks(){
         resourceCardDeck = new Deck(XMLparser.parseResourceCards("resourceCards.xml"));
         resourceCardDeck.shuffle();
@@ -78,6 +83,7 @@ public class Game {
      * 2. it shuffles the cards
      * 3. gives an initial card to every player
      */
+    @Override
     public void giveStarterCards(){
         ArrayList<PlayableCard> starterCards = XMLparser.parseStarterCards("starterCards.xml");
         Collections.shuffle(starterCards);
@@ -93,6 +99,7 @@ public class Game {
      * it creates a linkedList per each player that contains 3 elements
      * (a gold card and two resource cards)
      */
+    @Override
     public void giveInitialCards() {
         for(Player p: players){
             LinkedList<PlayableCard> carte = new LinkedList<>();
@@ -115,6 +122,7 @@ public class Game {
      * @param side it stands for the side of the card: front or back
      * @param nickname it stands for the player that's taking the action
      */
+    @Override
     public void chooseStarterCardSide(int side, String nickname) throws InvalidArgumentException{
         if(side != PlayableCard.FRONT && side != PlayableCard.BACK)
             throw new InvalidArgumentException("side", side);
@@ -131,6 +139,7 @@ public class Game {
      * 4.  creates an array of two elements that contains two possible secret objectives and it allows the player to choose
      *     their own secret objective between this two elements (by calling the chooseSecretObjective method)
      */
+    @Override
     public void initObjectiveCards(){
         ArrayList<ObjectiveCard> tmp = new ArrayList<>(XMLparser.parseObjectiveCards("objectiveCards.xml"));
         Collections.shuffle(tmp);
@@ -152,6 +161,7 @@ public class Game {
      *              secret objectives
      * @param nickname the nickname is the nickname of the player that's taking the action
      */
+    @Override
     public void chooseObjective(int index, String nickname) throws InvalidArgumentException{
         if(index<0 || index>1)
             throw new InvalidArgumentException("index", index);
@@ -165,6 +175,7 @@ public class Game {
      * happens to be in the 0 position
      * @return the current player
      */
+    @Override
     public Player chooseFirstPlayer(){
         Collections.shuffle(players);
         currPlayer = players.get(0);
@@ -186,6 +197,7 @@ public class Game {
      * @throws InvalidAngleCoveredException if positioning the angle in that spot is incorrect
      * @throws InvalidPositionException if positioning the card in that spot is incorrect
      */
+    @Override
     public Player playCard(int indexCard, int angle, String targetID, int side) throws InvalidArgumentException, TargetNotPresentException, InvalidAngleCoveredException, InvalidPositionException, RequirementsNotRespectedException {
         if(side != PlayableCard.FRONT && side != PlayableCard.BACK)
             throw new InvalidArgumentException("side", side);
@@ -197,15 +209,11 @@ public class Game {
         return currPlayer;
     }
 
-    //TODO VOGLIAMO SPLITTARE IL METODO IN DUE? (uno per pescare dal mazzo, uno per perscare una visiblecard)
+    //TODO ELE MODIFICA JAVADOC
     /**
      * This method picks the card from the top of the spicified deck (deck) or it picks one of the two visible cards.
      * Specifically, it picks the visible card that's found at the index position of the arraylist of the visible cards.
-     * //TODO questa frase mi sembra scritta da tia talmente non si capisce niente...
-     * This method also calls getVisible (that's found in "deck") and this method also
-     * returns the chosen visible card and it adds it at the list cards (that's found in player).
-     * //TODO la mia prof di inglese diceva sempre "QUESTA E' LOGICA NON INGLESE!!!!"
-     * ---->>> Once this method retrieved the correct new card, it adds that to the current player's card list.
+     * Once this method retrieved the correct new card, it adds that to the current player's card list.
      * @param deck : this attribute stands for the specific deck that you want to pick a card from
      * @param visible : this attribute is a boolean that specifies if the player wants to pick a card from the deck or
      *                from a visible card(...)
@@ -213,11 +221,32 @@ public class Game {
      * @return the current player that's just picked the card
      * @throws FinishedCardStackException if the deck's done
      */
-    public Player pickCard(int deck, boolean visible, int index ) throws FinishedCardStackException, InvalidArgumentException {
-    // choiceDeck = 1 resourceCard  choiceDeck = 0 goldCard
-    // visibile = true carta visibile all'indice index
-        if(index<0 || index>1)
-            throw new InvalidArgumentException("index", index);
+    @Override
+    public Player pickCard(int deck) throws FinishedCardStackException, InvalidArgumentException {
+        Deck chosenDeck;
+        PlayableCard card;
+        if(deck == Deck.RESOURCE_CARDS )
+            chosenDeck = resourceCardDeck;
+        else if(deck == Deck.GOLD_CARDS)
+            chosenDeck = goldCardDeck;
+        else
+            throw new InvalidArgumentException("deck", deck);
+
+        card = chosenDeck.draw();
+
+        this.currPlayer.drawCard(card);
+
+        return currPlayer;
+
+    }
+
+    //TODO ELE MODIFICA JAVADOC
+    @Override
+    public Player pickCard(int deck, int visibleCardIndex ) throws FinishedCardStackException, InvalidArgumentException {
+        // choiceDeck = 1 resourceCard  choiceDeck = 0 goldCard
+        // visibile = true carta visibile all'indice index
+        if(visibleCardIndex<0 || visibleCardIndex>1)
+            throw new InvalidArgumentException("index", visibleCardIndex);
 
         Deck chosenDeck;
         PlayableCard card;
@@ -228,10 +257,7 @@ public class Game {
         else
             throw new InvalidArgumentException("deck", deck);
 
-        if(!visible)
-            card = chosenDeck.draw();
-        else
-            card = chosenDeck.drawVisibleCard(index);
+        card = chosenDeck.drawVisibleCard(visibleCardIndex);
 
         this.currPlayer.drawCard(card);
 
@@ -243,6 +269,7 @@ public class Game {
      * Sets current player as the next player, following playing order.
      * @return true if next player is the first player, so a new turn started
      */
+    @Override
     public boolean nextTurn(){
         int cur = players.indexOf(currPlayer);
         if(cur == players.size()-1) {
@@ -260,6 +287,7 @@ public class Game {
      * is empty (if the cards of that specific deck have been all played).
      * @return 1 if the player has reached 20 points (or more) or if the deck is empty, 0 otherwise
      */
+    @Override
     public boolean checkTheEnd() {
         return currPlayer.getScore() >= 20 || areDeckFinished();
     }
@@ -268,6 +296,7 @@ public class Game {
      * Checks if both decks are empty, meaning that game must finish during the next turn
      * @return true if both decks are empty
      */
+    @Override
     public boolean areDeckFinished() {
         return  resourceCardDeck.getVisibleCard(0) == null &&
                 resourceCardDeck.getVisibleCard(1) == null &&
@@ -278,6 +307,7 @@ public class Game {
     /**
      * This method, at the end of the game, computes the points of the secret objective of every player
      */
+    @Override
     public void computePlayerSecretObjectives(){
         for(Player p: players){
             p.computeSecretObjective();
@@ -287,6 +317,7 @@ public class Game {
     /**
      * This method adds, per each player, the points of the common objective
      */
+    @Override
     public void computeCommonObjectives(){
         for(Player p: players){
             for(ObjectiveCard obj : commonObjectives){
@@ -300,6 +331,7 @@ public class Game {
      * @return the player that won
      */
     //da decidere come gestire il caso di parità
+    @Override
     public Player checkWinner(){
         Player winner = players.get(0);
         for(Player p :players){

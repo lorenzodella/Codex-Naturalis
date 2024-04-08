@@ -103,8 +103,8 @@ class GameTest {
         assertThrows(TargetNotPresentException.class, ()->game.playCard(1, Corner.UL, s_notok.getID(), PlayableCard.FRONT));
         assertThrows(InvalidPositionException.class, ()->game.playCard(1, 4, s_ok.getID(), PlayableCard.FRONT));
 
-        assertThrows(InvalidArgumentException.class, ()->game.pickCard(5, false, 0));
-        assertThrows(InvalidArgumentException.class, ()->game.pickCard(Deck.RESOURCE_CARDS, true, 4));
+        assertThrows(InvalidArgumentException.class, ()->game.pickCard(5));
+        assertThrows(InvalidArgumentException.class, ()->game.pickCard(Deck.RESOURCE_CARDS, 4));
     }
 
     @Test
@@ -121,23 +121,23 @@ class GameTest {
     @Test
     void endDecks() throws InvalidArgumentException, FinishedCardStackException {
         for (int i = 0; i < 34; i++) {
-            game.pickCard(Deck.GOLD_CARDS, false, 0);
+            game.pickCard(Deck.GOLD_CARDS);
             assertFalse(game.checkTheEnd());
         }
         for (int i = 0; i < 30; i++) {
-            game.pickCard(Deck.RESOURCE_CARDS, false, 0);
+            game.pickCard(Deck.RESOURCE_CARDS);
             assertFalse(game.checkTheEnd());
         }
-        assertThrows(FinishedCardStackException.class, ()->game.pickCard(Deck.GOLD_CARDS, false, 0));
-        assertThrows(FinishedCardStackException.class, ()->game.pickCard(Deck.RESOURCE_CARDS, false, 0));
+        assertThrows(FinishedCardStackException.class, ()->game.pickCard(Deck.GOLD_CARDS));
+        assertThrows(FinishedCardStackException.class, ()->game.pickCard(Deck.RESOURCE_CARDS));
 
-        game.pickCard(Deck.GOLD_CARDS, true, 0);
-        game.pickCard(Deck.GOLD_CARDS, true, 1);
-        game.pickCard(Deck.RESOURCE_CARDS, true, 0);
-        game.pickCard(Deck.RESOURCE_CARDS, true, 1);
+        game.pickCard(Deck.GOLD_CARDS, 0);
+        game.pickCard(Deck.GOLD_CARDS, 1);
+        game.pickCard(Deck.RESOURCE_CARDS, 0);
+        game.pickCard(Deck.RESOURCE_CARDS, 1);
 
-        assertThrows(FinishedCardStackException.class, ()->game.pickCard(Deck.GOLD_CARDS, true, 0));
-        assertThrows(FinishedCardStackException.class, ()->game.pickCard(Deck.RESOURCE_CARDS, true, 0));
+        assertThrows(FinishedCardStackException.class, ()->game.pickCard(Deck.GOLD_CARDS, 0));
+        assertThrows(FinishedCardStackException.class, ()->game.pickCard(Deck.RESOURCE_CARDS, 0));
 
         assertTrue(game.checkTheEnd());
     }
@@ -152,7 +152,7 @@ class GameTest {
         game.playCard(2, Corner.UR, oldc.getID(), PlayableCard.FRONT);
         while(!game.checkTheEnd()) {
             assertFalse(p.getScore()>=20);
-            game.pickCard(Deck.GOLD_CARDS, false, 0);
+            game.pickCard(Deck.GOLD_CARDS);
             oldc = newc;
             newc = p.getCards().get(2);
             addRequirementsOfGoldCard(p.getTable(), (GoldCard) newc);

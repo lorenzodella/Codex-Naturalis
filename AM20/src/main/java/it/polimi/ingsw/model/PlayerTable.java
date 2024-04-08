@@ -215,11 +215,10 @@ public class PlayerTable {
     }
 
     /**
-     * This method returns the number of the covered angles of that card
+     * This method returns the number of the angles of nearby cards which have been covered by the given card
      * @param card: this stands for the card that's being analyzed
-     * @return the number of covered corner of that card
+     * @return the number of covered corner by that card
      */
-    //TODO da testare
     public int numOfCoveredCorner(PlayableCard card){
         int num=0;
         PlayableCard tmp;
@@ -242,7 +241,6 @@ public class PlayerTable {
      * @param finder : the objective card
      * @return the number of that type of configuration that has been found in the matrix
      */
-    //TODO da testare
     public int findDiagonalConfiguration(DiagonalConfigurationObjectiveCard finder){
         HashSet<PlayableCard> alreadyUsedCards = new HashSet<>();
         HashSet<PlayableCard> tmp;
@@ -283,7 +281,6 @@ public class PlayerTable {
      * @param finder : the objective card
      * @return the number of that type of configuration that has been found in the matrix
      */
-    //TODO da testare
     public int findVerticalConfiguration(VerticalConfigurationObjectiveCard finder){
         HashSet<PlayableCard> alreadyUsedCards = new HashSet<>();
         HashSet<PlayableCard> tmp;
