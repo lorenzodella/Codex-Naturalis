@@ -2,6 +2,7 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.cards.Corner;
 import it.polimi.ingsw.model.cards.Kingdom;
+import it.polimi.ingsw.model.cards.SpecialObject;
 import it.polimi.ingsw.model.cards.objective.DiagonalConfigurationObjectiveCard;
 import it.polimi.ingsw.model.cards.objective.VerticalConfigurationObjectiveCard;
 import it.polimi.ingsw.model.cards.playable.GoldCard;
@@ -10,6 +11,7 @@ import it.polimi.ingsw.model.exceptions.DynamicMapException;
 import it.polimi.ingsw.model.exceptions.*;
 import it.polimi.ingsw.model.util.DynamicMap;
 
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class PlayerTable {
@@ -51,7 +53,7 @@ public class PlayerTable {
         } catch (TargetNotPresentException | InvalidPositionException e) {
             throw new RuntimeException(e);
         }
-        updateStats(card);
+        this.updateStats(card);
     }
 
     /**
@@ -112,7 +114,7 @@ public class PlayerTable {
         //if card is gold checkRequirements
         if(card instanceof GoldCard){
             if(!this.stats.checkRequirements(card.getRequirements())){
-                throw new RequirementsNotRespectedException();
+                throw new RequirementsNotRespectedException(card.getRequirements());
                 //return;
             }
 
@@ -199,18 +201,17 @@ public class PlayerTable {
      * @param card: the card that's just been played
      */
     public void updateStats(PlayableCard card){//usi il metodo setResourve(Kingdom, int) che verrà implementato nella Playersatts)
-        Corner[] corners ;
-        if(card.getSide() == PlayableCard.FRONT){
-            corners = card.getFrontCorners();
-        }else
-            corners = card.getBackCorners();
 
-        for(int i=0;i<corners.length;i++){
-            if(corners[i] != null){
-                this.stats.addKingdomOrObject(corners[i].getContentKingdom(),corners[i].getContentObject());
-            }
-        }
+        HashMap<Kingdom, Integer> mapRes = card.getKingdoms();
+        HashMap<SpecialObject, Integer> mapObj = card.getSpecialObjects();
 
+        this.stats.addKingdom(Kingdom.Plant, mapRes.get(Kingdom.Plant));
+        this.stats.addKingdom(Kingdom.Insect, mapRes.get(Kingdom.Insect));
+        this.stats.addKingdom(Kingdom.Fungi, mapRes.get(Kingdom.Fungi));
+        this.stats.addKingdom(Kingdom.Animal, mapRes.get(Kingdom.Animal));
+        this.stats.addObject(SpecialObject.Quill, mapObj.get(SpecialObject.Quill));
+        this.stats.addObject(SpecialObject.Inkwell, mapObj.get(SpecialObject.Inkwell));
+        this.stats.addObject(SpecialObject.Manuscript, mapObj.get(SpecialObject.Manuscript));
     }
 
     /**
@@ -225,7 +226,7 @@ public class PlayerTable {
         try {
             for (int c = Corner.UL; c <= Corner.DR; c++) {
                 tmp = map.getElementAt(card.getID(), c);
-                if (tmp != null && tmp.isValid())
+                if (tmp != null && tmp.isValid() && tmp.getOrder()<card.getOrder())
                     num++;
             }
             return num;

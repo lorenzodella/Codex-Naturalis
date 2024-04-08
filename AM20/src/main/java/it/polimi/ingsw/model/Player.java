@@ -109,7 +109,8 @@ public class Player {
      */
     public void playCard(int indexCard, int angle, String cardID, int side) throws TargetNotPresentException, InvalidAngleCoveredException, InvalidPositionException, RequirementsNotRespectedException {
         this.table.insertCard(this.cards.get(indexCard), angle, cardID, side);
-        this.addPoints((PointsProvider) this.cards.get(indexCard));
+        if(this.cards.get(indexCard).getSide() == PlayableCard.FRONT)
+            this.addPoints((PointsProvider) this.cards.get(indexCard));
         this.cards.remove(this.cards.get(indexCard));
     }
 

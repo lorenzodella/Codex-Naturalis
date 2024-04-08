@@ -77,4 +77,12 @@ public class PlayerStats {
     public void removeSpeicalObjects(SpecialObject obj){
         this.specialObjects.put(obj, this.getNumberOfObjects(obj)+1);
     }
+
+    public void addKingdom(Kingdom kingdom, int num){
+        this.resources.put(kingdom, this.resources.get(kingdom)+num);
+
+    }
+    public void addObject(SpecialObject specialObject, int num){
+        this.specialObjects.put(specialObject, this.specialObjects.get(specialObject)+ num);
+    }
 }
