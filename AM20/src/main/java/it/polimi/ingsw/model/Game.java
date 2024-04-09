@@ -211,13 +211,10 @@ public class Game implements GameObservable{
 
     //TODO ELE MODIFICA JAVADOC
     /**
-     * This method picks the card from the top of the spicified deck (deck) or it picks one of the two visible cards.
+     * This method picks the card from the top of the specified deck (deck) or it picks one of the two visible cards.
      * Specifically, it picks the visible card that's found at the index position of the arraylist of the visible cards.
      * Once this method retrieved the correct new card, it adds that to the current player's card list.
      * @param deck : this attribute stands for the specific deck that you want to pick a card from
-     * @param visible : this attribute is a boolean that specifies if the player wants to pick a card from the deck or
-     *                from a visible card(...)
-     * @param index : this attribute stands for the index of the card that's in the visible cards array
      * @return the current player that's just picked the card
      * @throws FinishedCardStackException if the deck's done
      */

@@ -7,9 +7,9 @@ import java.util.Objects;
 
 public class TrioOfResourcesObjectiveCard extends ObjectiveCard{
     /**
-     * The player needs to have at least 3 occurences of this specific resource in order to let
-     * the player gain the promised points (points in the upperclass) that this card could give.
-     * PS: This card gives you #points every 3 occureces of the same special resource.
+     * The player needs to have at least 3 occurrences of this specific resource in order to let
+     * the player gain the promised points (points in the upper class) that this card could give.
+     * PS: This card gives you #points every 3 occurrences of the same special resource.
      */
     private Kingdom resourcesKingdom;
 

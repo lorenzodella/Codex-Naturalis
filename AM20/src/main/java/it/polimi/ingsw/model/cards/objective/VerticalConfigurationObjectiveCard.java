@@ -7,11 +7,11 @@ import java.util.Objects;
 
 public class VerticalConfigurationObjectiveCard extends ObjectiveCard {
     /**
-     * this attribute says the kingdom of the card that has a single occurence in this specific vertical configuration
+     * this attribute says the kingdom of the card that has a single occurrence in this specific vertical configuration
      */
     private Kingdom kingdom1;
     /**
-     * this attribute says the kingdom of the card that has a single occurence in this specific vertical configuration
+     * this attribute says the kingdom of the card that has a single occurrence in this specific vertical configuration
      */
     private Kingdom kingdom2;
     /**

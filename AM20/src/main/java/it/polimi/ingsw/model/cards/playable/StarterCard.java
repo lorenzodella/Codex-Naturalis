@@ -8,7 +8,7 @@ import java.util.*;
 public class StarterCard extends PlayableCard{
     /**
      * List of all the kingdoms that are shown in the center of the FRONT SIDE of the card.
-     * PS: the rulebook says that these resources are shown on the BACK SIDE of the card but we decided
+     * PS: the rulebook says that these resources are shown on the BACK SIDE of the card but, we decided
      * to do the exact same thing that is shown in the pdf (pdf of every image and side of every card).
      */
     private ArrayList<Kingdom> resources;
@@ -47,8 +47,8 @@ public class StarterCard extends PlayableCard{
     /**
      * This method calls the upper class method to get kingdoms that are drawn in the corner
      * of this specific card.
-     * If this card is played on the front side, this method also adds the kingdoms that are in resoruces[]
-     * @return a map with the occurences per each kingdom
+     * If this card is played on the front side, this method also adds the kingdoms that are in resources[]
+     * @return a map with the occurrences per each kingdom
      */
     @Override
     public HashMap<Kingdom, Integer> getKingdoms(){

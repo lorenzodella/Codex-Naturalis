@@ -52,7 +52,7 @@ public class ResourceCard extends PlayableCard implements PointsProvider {
 
     /**
      * If the card's been played by the front side, this method calls the upper class method.
-     * Otherwise the method returns a map with just a single element (the kingdom of the card).
+     * Otherwise, the method returns a map with just a single element (the kingdom of the card).
      * @return a map or a map with only one element
      */
     @Override
@@ -68,7 +68,7 @@ public class ResourceCard extends PlayableCard implements PointsProvider {
 
     /**
      * If the card's been played by the front side, this method calls the upper class method.
-     * Otherwise the method returns an empty map.
+     * Otherwise, the method returns an empty map.
      * @return a map or an empty map
      */
     @Override

@@ -46,7 +46,7 @@ public class PointsGoldCard extends GoldCard{
     /**
      * After the user plays the card, and thanks to their PlayerTable (given by the param), this method returns
      * the points of that action.
-     * PS: playertable allows us to know the number of the occurences of the specialObject that's on the user's table.
+     * PS: playertable allows us to know the number of the occurrences of the specialObject that's on the user's table.
      * @param table: the table of the player that plays the card
      * @return the number of the points of this action
      */

@@ -84,7 +84,7 @@ public class Player {
     }
 
     /**
-     * This method actually puts down a card by the side that's specied by the parameter "side"
+     * This method actually puts down a card by the side that's specified by the parameter "side"
      * @param side: This attribute stands for the side of the card (front of back)
      */
     public void positionStarterCard(int side){

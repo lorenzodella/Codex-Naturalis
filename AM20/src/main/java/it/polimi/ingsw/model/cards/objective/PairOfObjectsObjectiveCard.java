@@ -7,9 +7,9 @@ import java.util.Objects;
 
 public class PairOfObjectsObjectiveCard extends ObjectiveCard{
     /**
-     * The player needs to have at least 2 occurences of this specific special object in order to let
-     * the player gain the promised points (points in the upperclass) that this card could give.
-     * PS: This card gives you #points every 2 occureces of the same special object.
+     * The player needs to have at least 2 occurrences of this specific special object in order to let
+     * the player gain the promised points (points in the upper class) that this card could give.
+     * PS: This card gives you #points every 2 occurrences of the same special object.
      */
     private SpecialObject specialObject;
 

@@ -22,23 +22,23 @@ public class PlayerStats {
     }
 
     /**
-     * This method returns the occurences of the kingdom "res"
+     * This method returns the occurrences of the kingdom "res"
      * @param res: the kingdom that's being analyzed
-     * @return the number of occurences of that kingdom
+     * @return the number of occurrences of that kingdom
      */
     public int getNumberOfResources(Kingdom res){ return  resources.get(res);}
     /**
      * This method returns the occurrences of the object "obj"
      * @param obj: the object that's being analyzed
-     * @return the number of occurences of that object
+     * @return the number of occurrences of that object
      */
     public int getNumberOfObjects(SpecialObject obj){return  specialObjects.get(obj);}
 
     /**
-     * This method is called every time that a gold card is played and it checks if the
+     * This method is called every time that a gold card is played and, it checks if the
      * requirements (number of resources) are satisfied
-     * @param req : hashmap that says the number of occurences per each kingdom
-     * @return 1 if the requirments are satified, 0 otherwise
+     * @param req : hashmap that says the number of occurrences per each kingdom
+     * @return 1 if the requirements are satisfied, 0 otherwise
      */
     public boolean checkRequirements(HashMap<Kingdom, Integer> req){
         return req.entrySet().stream()

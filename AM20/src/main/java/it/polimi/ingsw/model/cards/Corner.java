@@ -17,7 +17,9 @@ public class Corner {
      */
     private Kingdom contentKingdom;
     /**
-     * this attribute is a boolean that says if the corner is visible or hidden (...)
+     * this attribute is a boolean that says if the corner is visible or hidden
+     * 1 --> hidden corner
+     * 0 --> visible corner
      */
     private boolean hidden;
 
