@@ -159,7 +159,15 @@ class GameTest {
             try {
                 game.playCard(2, Corner.UR, oldc.getID(), PlayableCard.FRONT);
             } catch (InvalidAngleCoveredException e) {
-                game.playCard(2, Corner.UL, oldc.getID(), PlayableCard.FRONT);
+                try {
+                    game.playCard(2, Corner.UL, oldc.getID(), PlayableCard.FRONT);
+                } catch (InvalidAngleCoveredException e1) {
+                    try {
+                        game.playCard(2, Corner.DL, oldc.getID(), PlayableCard.FRONT);
+                    } catch (InvalidAngleCoveredException e2) {
+                        game.playCard(2, Corner.DR, oldc.getID(), PlayableCard.FRONT);
+                    }
+                }
             }
         }
         assertTrue(p.getScore()>=20);
