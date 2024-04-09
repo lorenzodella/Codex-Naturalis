@@ -209,10 +209,8 @@ public class Game implements GameObservable{
         return currPlayer;
     }
 
-    //TODO ELE MODIFICA JAVADOC
     /**
-     * This method picks the card from the top of the specified deck (deck) or it picks one of the two visible cards.
-     * Specifically, it picks the visible card that's found at the index position of the arraylist of the visible cards.
+     * This method picks the card from the top of the specified deck (deck).
      * Once this method retrieved the correct new card, it adds that to the current player's card list.
      * @param deck : this attribute stands for the specific deck that you want to pick a card from
      * @return the current player that's just picked the card
@@ -234,10 +232,20 @@ public class Game implements GameObservable{
         this.currPlayer.drawCard(card);
 
         return currPlayer;
-
     }
 
-    //TODO ELE MODIFICA JAVADOC
+    /**
+     * This method picks up one of the two visible cards (shown on the table).
+     * Specifically:
+     * 1. it picks the visible card of the specific deck (deck) -->  which could be the gold or resource deck
+     * 2. it picks the visible card (of that specific deck) that's found at the index position of the arraylist
+     * of the visible cards --> array of only two elements so the index could only be 0 or 1 
+     * @param deck : the deck where the player wants to pick up the card from (which could be gold or resource)
+     * @param visibleCardIndex : the index position of the card that's been chosen by the player
+     * @return : the player that's just picked the card
+     * @throws FinishedCardStackException
+     * @throws InvalidArgumentException
+     */
     @Override
     public Player pickCard(int deck, int visibleCardIndex ) throws FinishedCardStackException, InvalidArgumentException {
         // choiceDeck = 1 resourceCard  choiceDeck = 0 goldCard
