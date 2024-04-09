@@ -67,7 +67,6 @@ public class Player {
         return table;
     }
 
-    //TODO da testare
     public int getScore() {
         return score;
     }
@@ -118,7 +117,6 @@ public class Player {
      * This method adds the point that the player has gained by playing their card in their turn.
      * @param card: this attribute stands for the card that's just been played
      */
-    //TODO da testare
     private void addPoints(PointsProvider card){
         score += card.computePoints(this.table);
     }
@@ -138,26 +136,26 @@ public class Player {
      * have been given.
      * @param index: this attribute stands for the index of the card that the player want to choose
      */
-    //dopo la chaimata al metodo il secretObjetive sarà sempre in posizione zero e quello in posizione 1 saraà null
+    //dopo la chaimata al metodo il  sarà sempre in posizione zero e quello in posizione 1 saraà null
     public void chooseObjectiveCard(int index){
         this.secretObjective[0] = this.secretObjective[index];
         this.secretObjective[1] = null;
     }
 
     /**
-     * This method computes the points of the secret obejctive of that specific player
+     * This method computes the points of the secret objective of that specific player
      */
     public void computeSecretObjective(){
-        this.secretObjective[0].computePoints(this.table);
+        addPoints(secretObjective[0]);
     }
 
     /**
-     * This method computes the points of all the common objetives (once at a time) by passing every time a different
+     * This method computes the points of all the common objectives (once at a time) by passing every time a different
      * objective card.
      * @param objectiveCard : the objective card that needs to be analyzed
      */
     public void computeCommonObjective(ObjectiveCard objectiveCard){
-        objectiveCard.computePoints(this.table);
+        addPoints(objectiveCard);
     }
 
 

@@ -28,7 +28,7 @@ public class PlayerStats {
      */
     public int getNumberOfResources(Kingdom res){ return  resources.get(res);}
     /**
-     * This method returns the occurences of the object "obj"
+     * This method returns the occurrences of the object "obj"
      * @param obj: the object that's being analyzed
      * @return the number of occurences of that object
      */
@@ -40,7 +40,6 @@ public class PlayerStats {
      * @param req : hashmap that says the number of occurences per each kingdom
      * @return 1 if the requirments are satified, 0 otherwise
      */
-    //TODO da testare
     public boolean checkRequirements(HashMap<Kingdom, Integer> req){
         return req.entrySet().stream()
                 .allMatch(e -> resources.get(e.getKey()) >= e.getValue());
@@ -74,7 +73,7 @@ public class PlayerStats {
         this.resources.put(kingdom, this.getNumberOfResources(kingdom)-1);
     }
 
-    public void removeSpeicalObjects(SpecialObject obj){
+    public void removeSpecialObjects(SpecialObject obj){
         this.specialObjects.put(obj, this.getNumberOfObjects(obj)+1);
     }
 
