@@ -239,7 +239,7 @@ public class Game implements GameObservable{
      * Specifically:
      * 1. it picks the visible card of the specific deck (deck) -->  which could be the gold or resource deck
      * 2. it picks the visible card (of that specific deck) that's found at the index position of the arraylist
-     * of the visible cards --> array of only two elements so the index could only be 0 or 1 
+     * of the visible cards --> array of only two elements so the index could only be 0 or 1
      * @param deck : the deck where the player wants to pick up the card from (which could be gold or resource)
      * @param visibleCardIndex : the index position of the card that's been chosen by the player
      * @return : the player that's just picked the card
