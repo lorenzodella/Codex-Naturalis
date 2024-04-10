@@ -36,6 +36,8 @@ public class Controller implements GameManager {
             throw new CannotJoinGameException("no active game");
         if(players.size()==numPlayers)
             throw new CannotJoinGameException("game is full");
+        if(players.contains(playerNickname))
+            throw new CannotJoinGameException("nickname's already been used");
         players.add(playerNickname);
         if(players.size()==numPlayers)
             startGame();
