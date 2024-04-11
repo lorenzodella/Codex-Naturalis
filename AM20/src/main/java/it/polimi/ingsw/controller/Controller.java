@@ -8,18 +8,16 @@ import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.exceptions.*;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class Controller implements GameManager {
     private GameObservable gameModel;
-    private GameObserver gameObserver;
-    private ArrayList<String> players;
+    private GameObserver virtualView;
+    private List<String> players;
     private int numPlayers;
     private int missingTurns = -1;
 
-    public Controller(GameObserver gameObserver){
-        this.gameObserver = gameObserver;
-    }
 
     @Override
     public void newGame(String playerNickname, int numPlayers) throws InvalidArgumentException {
@@ -44,13 +42,14 @@ public class Controller implements GameManager {
     }
 
     private void startGame(){
+        this.virtualView = new VirtualView(players);
         gameModel = new Game(players.stream().map(Player::new).collect(Collectors.toList()));
         gameModel.initDecks();
-        gameObserver.notifyDecks(gameModel.getResourceCardDeck(), gameModel.getGoldCardDeck());
+        virtualView.notifyDecks(gameModel.getResourceCardDeck(), gameModel.getGoldCardDeck());
         gameModel.giveStarterCards();
-        gameObserver.notifyStarterCards(gameModel.getPlayers());
+        virtualView.notifyStarterCards(gameModel.getPlayers());
         gameModel.giveInitialCards();
-        gameObserver.notifyInitialCards(gameModel.getPlayers());
+        virtualView.notifyInitialCards(gameModel.getPlayers());
     }
 
     @Override
@@ -63,7 +62,7 @@ public class Controller implements GameManager {
             }
         }
         gameModel.initObjectiveCards();
-        gameObserver.notifyObjectiveCards(gameModel.getCommonObjectives(), gameModel.getPlayers());
+        virtualView.notifyObjectiveCards(gameModel.getCommonObjectives(), gameModel.getPlayers());
     }
 
     @Override
@@ -76,7 +75,7 @@ public class Controller implements GameManager {
             }
         }
         Player first = gameModel.chooseFirstPlayer();
-        gameObserver.notifyGameStarted(first);
+        virtualView.notifyGameStarted(first);
     }
 
     @Override
@@ -84,7 +83,7 @@ public class Controller implements GameManager {
             throws InvalidArgumentException, TargetNotPresentException,
             InvalidAngleCoveredException, InvalidPositionException, RequirementsNotRespectedException {
         Player p = gameModel.playCard(indexCard, angle, targetID, side);
-        gameObserver.notifyPlayerPlay(p);
+        virtualView.notifyPlayerPlay(p);
         if(gameModel.areDeckFinished())
             checkEndGame();
     }
@@ -92,16 +91,16 @@ public class Controller implements GameManager {
     @Override
     public void pickCard(int deck) throws InvalidArgumentException, FinishedCardStackException {
         Player p = gameModel.pickCard(deck);
-        gameObserver.notifyPlayerPick(p);
-        gameObserver.notifyDecks(gameModel.getResourceCardDeck(), gameModel.getGoldCardDeck());
+        virtualView.notifyPlayerPick(p);
+        virtualView.notifyDecks(gameModel.getResourceCardDeck(), gameModel.getGoldCardDeck());
         checkEndGame();
     }
 
     @Override
     public void pickCard(int deck, int index) throws InvalidArgumentException, FinishedCardStackException {
         Player p = gameModel.pickCard(deck, index);
-        gameObserver.notifyPlayerPick(p);
-        gameObserver.notifyDecks(gameModel.getResourceCardDeck(), gameModel.getGoldCardDeck());
+        virtualView.notifyPlayerPick(p);
+        virtualView.notifyDecks(gameModel.getResourceCardDeck(), gameModel.getGoldCardDeck());
         checkEndGame();
     }
 
@@ -110,7 +109,7 @@ public class Controller implements GameManager {
         //if game ended but last turn not started yet, check if last turn is starting now
         if(gameModel.checkTheEnd() && missingTurns ==-1) {
             missingTurns = 2;
-            gameObserver.notifyLastTurn();
+            virtualView.notifyLastTurn();
         }
         if(missingTurns >0 && isNewTurn){
             missingTurns--;
@@ -118,15 +117,15 @@ public class Controller implements GameManager {
         if(missingTurns ==0 && isNewTurn){
             //if last turn is started and ended
             gameModel.computePlayerSecretObjectives();
-            gameObserver.notifyPlayerSecretObjectives(gameModel.getPlayers());
+            virtualView.notifyPlayerSecretObjectives(gameModel.getPlayers());
             gameModel.computeCommonObjectives();
-            gameObserver.notifyCommonObjectives(gameModel.getPlayers());
+            virtualView.notifyCommonObjectives(gameModel.getPlayers());
             Player winner = gameModel.checkWinner();
-            gameObserver.notifyWin(winner);
+            virtualView.notifyWin(winner);
         }
         else{
             //otherwise simply notify next player to play
-            gameObserver.notifyNextTurn(gameModel.getCurrPlayer());
+            virtualView.notifyNextTurn(gameModel.getCurrPlayer());
         }
     }
 }

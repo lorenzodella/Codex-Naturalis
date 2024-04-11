@@ -172,6 +172,7 @@ class GameTest {
         }
         assertTrue(p.getScore()>=20);
         assertEquals(p, game.checkWinner());
+        assertTrue(game.checkTheEnd());
     }
 
     void addRequirementsOfGoldCard(PlayerTable playerTable, GoldCard gc){

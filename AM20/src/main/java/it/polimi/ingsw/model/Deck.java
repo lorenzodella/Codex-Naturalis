@@ -47,11 +47,11 @@ public class Deck {
     }
 
     /**
-     * This method allows to see the kingdom of the card on the top of the deck.
-     * @return the kingdom of the card
+     * This method allows to see the card on the top of the deck.
+     * @return the first card
      */
-    public Kingdom getFirstCardKingdom(){
-        return cards.peek().getCardKingdom();
+    public PlayableCard getFirstCard(){
+        return cards.peek();
     }
 
     /**
@@ -61,6 +61,14 @@ public class Deck {
      */
     public PlayableCard getVisibleCard(int index) {
         return visibleCards[index];
+    }
+
+    /**
+     *
+     * @return the array of the visible card
+     */
+    public PlayableCard[] getVisibleCards() {
+        return visibleCards;
     }
 
     /**
