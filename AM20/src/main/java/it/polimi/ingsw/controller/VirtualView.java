@@ -106,7 +106,7 @@ public class VirtualView implements GameObserver {
 
     @Override
     public void notifyPlayerPlay(Player player) {
-        
+
     }
 
     @Override

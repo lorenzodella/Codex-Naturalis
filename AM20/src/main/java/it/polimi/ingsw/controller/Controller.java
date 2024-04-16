@@ -18,6 +18,25 @@ public class Controller implements GameManager {
     private int numPlayers;
     private int missingTurns = -1;
 
+    public GameObservable getGameModel() {
+        return gameModel;
+    }
+
+    public GameObserver getVirtualView() {
+        return virtualView;
+    }
+
+    public List<String> getPlayers() {
+        return players;
+    }
+
+    public int getNumPlayers() {
+        return numPlayers;
+    }
+
+    public int getMissingTurns() {
+        return missingTurns;
+    }
 
     @Override
     public void newGame(String playerNickname, int numPlayers) throws InvalidArgumentException {
