@@ -82,14 +82,6 @@ public class VirtualView implements GameObserver {
 
     @Override
     public void notifyGameStarted(Player first) {
-//        messageHashMap.put(first.getNickname(), new ChangesMessage());
-//        messageHashMap.get(first.getNickname()).setResult("It's your turn");
-//        if(changesMessageHashMap == null)
-//            changesMessageHashMap = new HashMap<>();
-//        if(changesMessageHashMap.get(first.getNickname()) == null)
-//            changesMessageHashMap.put(first.getNickname(), new ChangesMessage());
-//        changesMessageHashMap.get(first.getNickname()).setYourTurn(true);
-
         if(changesMessageHashMap == null)
             changesMessageHashMap = new HashMap<>();
 
@@ -106,22 +98,66 @@ public class VirtualView implements GameObserver {
 
     @Override
     public void notifyPlayerPlay(Player player) {
+        if(changesMessageHashMap == null)
+            changesMessageHashMap = new HashMap<>();
 
+        PlayerInfo playerUpdates = new PlayerInfo();
+        playerUpdates.setScore(player.getScore());
+        playerUpdates.setMap(player.getTable().getMap());
+        playerUpdates.setStats(player.getTable().getStats());
+
+        HashMap <String, PlayerInfo> otherPlayerUpdates = new HashMap<>();
+        otherPlayerUpdates.put(player.getNickname(), playerUpdates);
+
+        for(String nickname : playersNickname){
+            if(changesMessageHashMap.get(nickname) == null)
+                changesMessageHashMap.put(nickname, new ChangesMessage());
+            if(!nickname.equals(player.getNickname())) {
+                changesMessageHashMap.get(nickname).setOthersPlayerInfo(otherPlayerUpdates);
+            }
+        }
+        changesMessageHashMap.get(player.getNickname()).setCards(player.getCards());
+        changesMessageHashMap.get(player.getNickname()).setYourPlayerInfo(playerUpdates);
+        //messagge??
     }
 
     @Override
     public void notifyPlayerPick(Player player) {
-
+        if(changesMessageHashMap == null)
+            changesMessageHashMap = new HashMap<>();
+        if(changesMessageHashMap.get(player.getNickname()) == null)
+            changesMessageHashMap.put(player.getNickname(), new ChangesMessage());
+        changesMessageHashMap.get(player.getNickname()).setCards(player.getCards());
+        //messagge??
     }
 
     @Override
     public void notifyNextTurn(Player player) {
+        if(changesMessageHashMap == null)
+            changesMessageHashMap = new HashMap<>();
 
+        for(String nickname : playersNickname){
+            if(changesMessageHashMap.get(nickname) == null)
+                changesMessageHashMap.put(nickname, new ChangesMessage());
+            if(!nickname.equals(player.getNickname())) {
+                changesMessageHashMap.get(nickname).setYourTurn(false);
+            }
+        }
+
+        changesMessageHashMap.get(player.getNickname()).setYourTurn(true);
+        //message??
     }
 
     @Override
     public void notifyLastTurn() {
+        if(changesMessageHashMap == null)
+            changesMessageHashMap = new HashMap<>();
 
+        for(String nickname : playersNickname){
+            if(changesMessageHashMap.get(nickname) == null)
+                changesMessageHashMap.put(nickname, new ChangesMessage());
+            changesMessageHashMap.get(nickname).setResult("The game's almost done... The last turn starts now!");
+        }
     }
 
     @Override
@@ -136,6 +172,15 @@ public class VirtualView implements GameObserver {
 
     @Override
     public void notifyWin(Player winner) {
+        if(changesMessageHashMap == null)
+            changesMessageHashMap = new HashMap<>();
 
+        for(String nickname : playersNickname){
+            if(changesMessageHashMap.get(nickname) == null)
+                changesMessageHashMap.put(nickname, new ChangesMessage());
+            if(!winner.getNickname().equals(nickname))
+                changesMessageHashMap.get(nickname).setResult(winner.getNickname() + " wins the game!");
+        }
+        changesMessageHashMap.get(winner.getNickname()).setResult("You're the winner!");
     }
 }
