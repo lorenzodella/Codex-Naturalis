@@ -58,7 +58,7 @@ class ControllerTest {
         assertEquals("Giuseppe", c.getPlayers().get(0));
         assertEquals("Pippo", c.getPlayers().get(1));
         assertEquals("Pietro", c.getPlayers().get(2));
-        assertNotNull(c.getVirtualView());
+        assertNotNull(c.getMessageBuilder());
         assertNotNull(c.getGameModel());
         assertEquals( "Giuseppe" ,c.getGameModel().getPlayers().get(0).getNickname());
         assertNotNull(c.getGameModel().getPlayers().get(0).getTable());

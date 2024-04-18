@@ -11,6 +11,7 @@ public interface GameObserver {
     void notifyDecks(Deck resourceCardDeck, Deck goldCardDeck);
     void notifyStarterCards(List<Player> players);
     void notifyInitialCards(List<Player> players);
+    void notifyStarterCardSide(String playerNickname);
     void notifyObjectiveCards(ObjectiveCard[] commonObjectives, List<Player> players);
     void notifyGameStarted(Player first);
     void notifyPlayerPlay(Player player);
@@ -20,4 +21,5 @@ public interface GameObserver {
     void notifyPlayerSecretObjectives(List<Player> players);
     void notifyCommonObjectives(List<Player> players);
     void notifyWin(Player winner);
+
 }

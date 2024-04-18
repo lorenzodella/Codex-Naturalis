@@ -68,13 +68,19 @@ public class Game implements GameObservable{
      * 2. displays two visible cards on the table (per each deck)
      */
     @Override
-    public void initDecks(){
+    public Deck[] initDecks(){
         resourceCardDeck = new Deck(XMLparser.parseResourceCards("resourceCards.xml"));
         resourceCardDeck.shuffle();
         resourceCardDeck.initVisibleCards();
         goldCardDeck = new Deck(XMLparser.parseGoldCards("goldCards.xml"));
         goldCardDeck.shuffle();
         goldCardDeck.initVisibleCards();
+
+        Deck[] decks = new Deck[2];
+        decks[Deck.GOLD_CARDS] = goldCardDeck;
+        decks[Deck.RESOURCE_CARDS] = resourceCardDeck;
+        return decks;
+
     }
 
     /**
@@ -84,7 +90,7 @@ public class Game implements GameObservable{
      * 3. gives an initial card to every player
      */
     @Override
-    public void giveStarterCards(){
+    public List<Player> giveStarterCards(){
         ArrayList<PlayableCard> starterCards = XMLparser.parseStarterCards("starterCards.xml");
         Collections.shuffle(starterCards);
         //this.giveInitialCards(starterCards);
@@ -92,6 +98,7 @@ public class Game implements GameObservable{
         for(int i=0; i<players.size();i++){
             players.get(i).setStarterCard((StarterCard)starterCards.get(i));
         }
+        return players;
     }
 
     /**
@@ -100,7 +107,7 @@ public class Game implements GameObservable{
      * (a gold card and two resource cards)
      */
     @Override
-    public void giveInitialCards() {
+    public List<Player> giveInitialCards() {
         for(Player p: players){
             LinkedList<PlayableCard> carte = new LinkedList<>();
 
@@ -114,6 +121,8 @@ public class Game implements GameObservable{
                 throw new RuntimeException(e);
             }
         }
+
+        return  players;
     }
 
     /**
@@ -123,12 +132,14 @@ public class Game implements GameObservable{
      * @param nickname it stands for the player that's taking the action
      */
     @Override
-    public void chooseStarterCardSide(int side, String nickname) throws InvalidArgumentException{
+    public List<Player> chooseStarterCardSide(int side, String nickname) throws InvalidArgumentException{
         if(side != PlayableCard.FRONT && side != PlayableCard.BACK)
             throw new InvalidArgumentException("side", side);
         players.stream().filter(x -> x.getNickname().equals(nickname)).findFirst()
                 .orElseThrow(()-> new InvalidArgumentException("nickname", nickname))
                 .positionStarterCard(side);
+
+        return players;
     }
 
     /**
@@ -140,7 +151,7 @@ public class Game implements GameObservable{
      *     their own secret objective between this two elements (by calling the chooseSecretObjective method)
      */
     @Override
-    public void initObjectiveCards(){
+    public List<Player> initObjectiveCards(){
         ArrayList<ObjectiveCard> tmp = new ArrayList<>(XMLparser.parseObjectiveCards("objectiveCards.xml"));
         Collections.shuffle(tmp);
         commonObjectives = new ObjectiveCard[2];
@@ -153,6 +164,8 @@ public class Game implements GameObservable{
             obj[1] = tmp.get(i+3);
             players.get(i).setSecretObjective(obj);
         }
+
+        return players;
     }
 
     /**
@@ -313,22 +326,26 @@ public class Game implements GameObservable{
      * This method, at the end of the game, computes the points of the secret objective of every player
      */
     @Override
-    public void computePlayerSecretObjectives(){
+    public List<Player> computePlayerSecretObjectives(){
         for(Player p: players){
             p.computeSecretObjective();
         }
+
+        return  players;
     }
 
     /**
      * This method adds, per each player, the points of the common objective
      */
     @Override
-    public void computeCommonObjectives(){
+    public List<Player> computeCommonObjectives(){
         for(Player p: players){
             for(ObjectiveCard obj : commonObjectives){
                 p.computeCommonObjective(obj);
             }
         }
+
+        return players;
     }
 
     /**

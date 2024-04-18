@@ -1,8 +1,11 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
+import it.polimi.ingsw.model.cards.playable.PlayableCard;
+import it.polimi.ingsw.model.cards.playable.StarterCard;
 import it.polimi.ingsw.model.exceptions.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface GameObservable {
@@ -12,15 +15,15 @@ public interface GameObservable {
     Deck getResourceCardDeck();
     Deck getGoldCardDeck();
 
-    void initDecks();
+    Deck[] initDecks();
 
-    void giveStarterCards();
+    List<Player> giveStarterCards();
 
-    void giveInitialCards();
+    List<Player> giveInitialCards();
 
-    void chooseStarterCardSide(int side, String playerNickname) throws InvalidArgumentException;
+    List<Player> chooseStarterCardSide(int side, String playerNickname) throws InvalidArgumentException;
 
-    void initObjectiveCards();
+    List<Player> initObjectiveCards();
 
     void chooseObjective(int index, String playerNickname) throws InvalidArgumentException;
 
@@ -38,9 +41,9 @@ public interface GameObservable {
 
     boolean checkTheEnd();
 
-    void computePlayerSecretObjectives();
+    List<Player> computePlayerSecretObjectives();
 
-    void computeCommonObjectives();
+    List<Player> computeCommonObjectives();
 
     Player checkWinner();
 

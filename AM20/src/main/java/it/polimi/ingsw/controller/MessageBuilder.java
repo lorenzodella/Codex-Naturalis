@@ -1,22 +1,19 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.controller.exceptions.CannotJoinGameException;
 import it.polimi.ingsw.model.Deck;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
-import it.polimi.ingsw.model.cards.playable.PlayableCard;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class VirtualView implements GameObserver {
+public class MessageBuilder implements GameObserver {
 
     private HashMap<String, ChangesMessage> changesMessageHashMap; //messaggi di tutti ibgiocatri per esempio quando fai playCard
 
     private List<String> playersNickname;
 
-    public VirtualView(List<String> players){
+    public MessageBuilder(List<String> players){
         this.playersNickname = players;
     }
 
@@ -182,5 +179,10 @@ public class VirtualView implements GameObserver {
                 changesMessageHashMap.get(nickname).setResult(winner.getNickname() + " wins the game!");
         }
         changesMessageHashMap.get(winner.getNickname()).setResult("You're the winner!");
+    }
+
+    //TODO
+    public void notifyStarterCardSide(String playerNickname){
+
     }
 }

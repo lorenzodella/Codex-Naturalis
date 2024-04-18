@@ -1,5 +1,6 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.model.Deck;
 import it.polimi.ingsw.model.GameObservable;
 import it.polimi.ingsw.model.exceptions.InvalidArgumentException;
 import it.polimi.ingsw.controller.exceptions.CannotJoinGameException;
@@ -13,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class Controller implements GameManager {
     private GameObservable gameModel;
-    private GameObserver virtualView;
+    private GameObserver messageBuilder;
     private List<String> players;
     private int numPlayers;
     private int missingTurns = -1;
@@ -22,8 +23,8 @@ public class Controller implements GameManager {
         return gameModel;
     }
 
-    public GameObserver getVirtualView() {
-        return virtualView;
+    public GameObserver getMessageBuilder() {
+        return messageBuilder;
     }
 
     public List<String> getPlayers() {
@@ -61,27 +62,28 @@ public class Controller implements GameManager {
     }
 
     private void startGame(){
-        this.virtualView = new VirtualView(players);
+        this.messageBuilder = new MessageBuilder(players);
         gameModel = new Game(players.stream().map(Player::new).collect(Collectors.toList()));
-        gameModel.initDecks();
-        virtualView.notifyDecks(gameModel.getResourceCardDeck(), gameModel.getGoldCardDeck());
-        gameModel.giveStarterCards();
-        virtualView.notifyStarterCards(gameModel.getPlayers());
-        gameModel.giveInitialCards();
-        virtualView.notifyInitialCards(gameModel.getPlayers());
+        Deck[] tmp = gameModel.initDecks();
+        messageBuilder.notifyDecks(tmp[Deck.RESOURCE_CARDS], tmp[Deck.GOLD_CARDS]);
+        List<Player> playerList = gameModel.giveStarterCards();
+        messageBuilder.notifyStarterCards(playerList);
+        List<Player> playerList2 =  gameModel.giveInitialCards();
+        messageBuilder.notifyInitialCards(playerList2);
     }
 
     @Override
     public void chooseStarterCardSide(String playerNickname, int side) throws InvalidArgumentException {
         gameModel.chooseStarterCardSide(side, playerNickname);
+        messageBuilder.notifyStarterCardSide(playerNickname);
         //check if someone has not played his starterCard yet
         for(Player p : gameModel.getPlayers()){
             if(p.getStarterCard().getOrder() < 0){
                 return;
             }
         }
-        gameModel.initObjectiveCards();
-        virtualView.notifyObjectiveCards(gameModel.getCommonObjectives(), gameModel.getPlayers());
+        List<Player> playersList = gameModel.initObjectiveCards();
+        messageBuilder.notifyObjectiveCards(gameModel.getCommonObjectives(), playersList);
     }
 
     @Override
@@ -94,7 +96,7 @@ public class Controller implements GameManager {
             }
         }
         Player first = gameModel.chooseFirstPlayer();
-        virtualView.notifyGameStarted(first);
+        messageBuilder.notifyGameStarted(first);
     }
 
     @Override
@@ -102,7 +104,7 @@ public class Controller implements GameManager {
             throws InvalidArgumentException, TargetNotPresentException,
             InvalidAngleCoveredException, InvalidPositionException, RequirementsNotRespectedException {
         Player p = gameModel.playCard(indexCard, angle, targetID, side);
-        virtualView.notifyPlayerPlay(p);
+        messageBuilder.notifyPlayerPlay(p);
         if(gameModel.areDeckFinished())
             checkEndGame();
     }
@@ -110,16 +112,19 @@ public class Controller implements GameManager {
     @Override
     public void pickCard(int deck) throws InvalidArgumentException, FinishedCardStackException {
         Player p = gameModel.pickCard(deck);
-        virtualView.notifyPlayerPick(p);
-        virtualView.notifyDecks(gameModel.getResourceCardDeck(), gameModel.getGoldCardDeck());
+        messageBuilder.notifyPlayerPick(p);
+        messageBuilder.notifyDecks(gameModel.getResourceCardDeck(), gameModel.getGoldCardDeck());
         checkEndGame();
     }
 
     @Override
     public void pickCard(int deck, int index) throws InvalidArgumentException, FinishedCardStackException {
         Player p = gameModel.pickCard(deck, index);
-        virtualView.notifyPlayerPick(p);
-        virtualView.notifyDecks(gameModel.getResourceCardDeck(), gameModel.getGoldCardDeck());
+        messageBuilder.notifyPlayerPick(p);
+        //non mi sembra che si possa modificare dato che gameModel.pickCard ritorna già il player
+        //una possibile soluzione potrebbe essere quella di ritoranre il game e poi andare a prendere il singolo player
+        //e per il metodo messageBuilder.notifyDecks() prendere i deck
+        messageBuilder.notifyDecks(gameModel.getResourceCardDeck(), gameModel.getGoldCardDeck());
         checkEndGame();
     }
 
@@ -128,23 +133,23 @@ public class Controller implements GameManager {
         //if game ended but last turn not started yet, check if last turn is starting now
         if(gameModel.checkTheEnd() && missingTurns ==-1) {
             missingTurns = 2;
-            virtualView.notifyLastTurn();
+            messageBuilder.notifyLastTurn();
         }
         if(missingTurns >0 && isNewTurn){
             missingTurns--;
         }
         if(missingTurns ==0 && isNewTurn){
             //if last turn is started and ended
-            gameModel.computePlayerSecretObjectives();
-            virtualView.notifyPlayerSecretObjectives(gameModel.getPlayers());
-            gameModel.computeCommonObjectives();
-            virtualView.notifyCommonObjectives(gameModel.getPlayers());
+            List<Player> player = gameModel.computePlayerSecretObjectives();
+            messageBuilder.notifyPlayerSecretObjectives(player);
+            List<Player> playerList = gameModel.computeCommonObjectives();
+            messageBuilder.notifyCommonObjectives(playerList);
             Player winner = gameModel.checkWinner();
-            virtualView.notifyWin(winner);
+            messageBuilder.notifyWin(winner);
         }
         else{
             //otherwise simply notify next player to play
-            virtualView.notifyNextTurn(gameModel.getCurrPlayer());
+            messageBuilder.notifyNextTurn(gameModel.getCurrPlayer());
         }
     }
 }
