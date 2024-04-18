@@ -11,7 +11,7 @@ public interface GameObserver {
     void notifyDecks(Deck resourceCardDeck, Deck goldCardDeck);
     void notifyStarterCards(List<Player> players);
     void notifyInitialCards(List<Player> players);
-    void notifyStarterCardSide(String playerNickname);
+    void notifyStarterCardSide(Player player);
     void notifyObjectiveCards(ObjectiveCard[] commonObjectives, List<Player> players);
     void notifyGameStarted(Player first);
     void notifyPlayerPlay(Player player);

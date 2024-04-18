@@ -182,7 +182,7 @@ public class MessageBuilder implements GameObserver {
     }
 
     //TODO
-    public void notifyStarterCardSide(String playerNickname){
+    public void notifyStarterCardSide(Player player){
 
     }
 }

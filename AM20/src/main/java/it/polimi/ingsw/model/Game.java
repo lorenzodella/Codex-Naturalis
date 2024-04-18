@@ -132,14 +132,15 @@ public class Game implements GameObservable{
      * @param nickname it stands for the player that's taking the action
      */
     @Override
-    public List<Player> chooseStarterCardSide(int side, String nickname) throws InvalidArgumentException{
+    public Player chooseStarterCardSide(int side, String nickname) throws InvalidArgumentException{
         if(side != PlayableCard.FRONT && side != PlayableCard.BACK)
             throw new InvalidArgumentException("side", side);
         players.stream().filter(x -> x.getNickname().equals(nickname)).findFirst()
                 .orElseThrow(()-> new InvalidArgumentException("nickname", nickname))
                 .positionStarterCard(side);
 
-        return players;
+        return players.stream().filter(x -> x.getNickname().equals(nickname)).findFirst()
+                .orElseThrow(()-> new InvalidArgumentException("nickname", nickname));
     }
 
     /**

@@ -21,7 +21,7 @@ public interface GameObservable {
 
     List<Player> giveInitialCards();
 
-    List<Player> chooseStarterCardSide(int side, String playerNickname) throws InvalidArgumentException;
+    Player chooseStarterCardSide(int side, String playerNickname) throws InvalidArgumentException;
 
     List<Player> initObjectiveCards();
 

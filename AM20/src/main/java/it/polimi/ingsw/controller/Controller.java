@@ -74,8 +74,8 @@ public class Controller implements GameManager {
 
     @Override
     public void chooseStarterCardSide(String playerNickname, int side) throws InvalidArgumentException {
-        gameModel.chooseStarterCardSide(side, playerNickname);
-        messageBuilder.notifyStarterCardSide(playerNickname);
+        Player player = gameModel.chooseStarterCardSide(side, playerNickname);
+        messageBuilder.notifyStarterCardSide(player);
         //check if someone has not played his starterCard yet
         for(Player p : gameModel.getPlayers()){
             if(p.getStarterCard().getOrder() < 0){
