@@ -1,5 +1,6 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.controller.messages.Message;
 import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.model.cards.playable.StarterCard;
@@ -7,23 +8,19 @@ import it.polimi.ingsw.model.cards.playable.StarterCard;
 import java.util.HashMap;
 import java.util.List;
 
-public class ChangesMessage extends  Message{
+public class ChangesMessage extends Message {
     //roba del campo da gioco
-    private PlayableCard goldTop;
-    private PlayableCard resourceTop;
-    private PlayableCard[] goldVisible;
-    private PlayableCard[] resourceVisible;
+
     private ObjectiveCard[] commonObjective;
 
     //roba del player singolo
     private StarterCard starterCard;
     private ObjectiveCard[] secretObjective;
-    private List<PlayableCard> cards;
+
     private boolean isYourTurn;
 
 
-    private PlayerInfo yourPlayerInfo;
-    private HashMap<String, PlayerInfo> othersPlayerInfo;
+
 
 
     private String winnerNickname;
