@@ -133,6 +133,7 @@ public class MessageBuilder implements GameObserver {
         if(changesMessageHashMap == null)
             changesMessageHashMap = new HashMap<>();
 
+        //va cambiato perché non usiamo piu il boolean isyourturn ma settiamo il nickanme del possimo player
         for(String nickname : playersNickname){
             if(changesMessageHashMap.get(nickname) == null)
                 changesMessageHashMap.put(nickname, new ChangesMessage());
@@ -159,11 +160,19 @@ public class MessageBuilder implements GameObserver {
 
     @Override
     public void notifyPlayerSecretObjectives(List<Player> players) {
+        if(changesMessageHashMap == null)
+            changesMessageHashMap = new HashMap<>();
+
+        for(String nickname : playersNickname){
+            if(changesMessageHashMap.get(nickname) == null)
+                changesMessageHashMap.put(nickname, new ChangesMessage());
+            changesMessageHashMap.get(nickname).setYourPlayerInfo();
+        }
 
     }
 
     @Override
-    public void notifyCommonObjectives(List<Player> players) {
+    public void notifyPlayerCommonObjectives(List<Player> players) {
 
     }
 

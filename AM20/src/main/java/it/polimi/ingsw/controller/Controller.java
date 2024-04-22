@@ -88,28 +88,28 @@ public class Controller implements GameManager {
         //check if someone has not played his starterCard yet
         for(Player p : gameModel.getPlayers()){
             if(p.getStarterCard().getOrder() < 0){
-                return; //negativo
+                return; //negativo hashmap ha solo 1 messaggio
             }
         }
         List<Player> playersList = gameModel.initObjectiveCards();
         messageBuilder.notifyObjectiveCards(gameModel.getCommonObjectives(), playersList); //setta gli altri
-        //positivo
+        //positivo hashmap ha 4 messaggi
     }
 
     @Override
     public void chooseObjective(String playerNickname, int index) throws InvalidArgumentException {
         Player player = gameModel.chooseObjective(index, playerNickname);
-        messageBuilder.notifyChosenSecretObjective(player); //setti playerInfo
+        messageBuilder.notifyChosenSecretObjective(player); //setti secretobjectives[]
         //check if someone has not chosen his objectiveCard yet
         for(Player p : gameModel.getPlayers()){
             if(p.getSecretObjective()[1] != null){
-                return; //negativo
+                return; //negativo hashmap ha solo 1 messaggio
             }
         }
         Player first = gameModel.chooseFirstPlayer();
         messageBuilder.notifyGameStarted(first);
 
-        //positivo
+        //positivo hashmap ha 4 messaggi
     }
 
     @Override
@@ -120,11 +120,14 @@ public class Controller implements GameManager {
         if(!gameModel.getCurrPlayer().getNickname().equals(playerNickname))
             throw new InvalidPlayingException("It's not your turn");
         Player p = gameModel.playCard(indexCard, angle, targetID, side);
-        messageBuilder.notifyPlayerPlay(p);
+        messageBuilder.notifyPlayerPlay(p); // setta playerinfo
         if(gameModel.areDeckFinished())
             checkEndGame();
+            // negativo
         else
             currPlayerMustDraw = true;
+            // settare a true mustpick
+            // positivo (setto AcknowledgeMessage)
     }
 
     @Override
@@ -138,6 +141,7 @@ public class Controller implements GameManager {
         messageBuilder.notifyDecks(gameModel.getResourceCardDeck(), gameModel.getGoldCardDeck());
         currPlayerMustDraw = false;
         checkEndGame();
+        //
     }
 
     @Override
@@ -149,7 +153,10 @@ public class Controller implements GameManager {
         Player p = gameModel.pickCard(deck, index);
         messageBuilder.notifyPlayerPick(p);
         messageBuilder.notifyDecks(gameModel.getResourceCardDeck(), gameModel.getGoldCardDeck());
+        currPlayerMustDraw = false;
         checkEndGame();
+        //
+
     }
 
     private void checkEndGame(){
@@ -163,17 +170,19 @@ public class Controller implements GameManager {
             missingTurns--;
         }
         if(missingTurns ==0 && isNewTurn){
+            //
             //if last turn is started and ended
             List<Player> player = gameModel.computePlayerSecretObjectives();
             messageBuilder.notifyPlayerSecretObjectives(player);
             List<Player> playerList = gameModel.computeCommonObjectives();
-            messageBuilder.notifyCommonObjectives(playerList);
+            messageBuilder.notifyPlayerCommonObjectives(playerList);
             Player winner = gameModel.checkWinner();
             messageBuilder.notifyWin(winner);
         }
         else{
             //otherwise simply notify next player to play
             messageBuilder.notifyNextTurn(gameModel.getCurrPlayer());
+            //
         }
     }
 }

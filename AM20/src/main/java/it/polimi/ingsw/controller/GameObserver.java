@@ -20,6 +20,6 @@ public interface GameObserver {
     void notifyNextTurn(Player player);
     void notifyLastTurn();
     void notifyPlayerSecretObjectives(List<Player> players);
-    void notifyCommonObjectives(List<Player> players);
+    void notifyPlayerCommonObjectives(List<Player> players);
     void notifyWin(Player winner);
 }
