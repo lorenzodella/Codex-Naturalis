@@ -1,8 +1,8 @@
 package it.polimi.ingsw.controller;
 
 public class Message {
-    private String result;
-    private Exception exc;
+    private String result;  // positivo
+    private Exception exc; // negativo
 
     public String getResult() {
         return result;

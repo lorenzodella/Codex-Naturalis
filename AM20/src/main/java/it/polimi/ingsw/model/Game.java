@@ -176,12 +176,15 @@ public class Game implements GameObservable{
      * @param nickname the nickname is the nickname of the player that's taking the action
      */
     @Override
-    public void chooseObjective(int index, String nickname) throws InvalidArgumentException{
+    public Player chooseObjective(int index, String nickname) throws InvalidArgumentException{
         if(index<0 || index>1)
             throw new InvalidArgumentException("index", index);
         players.stream().filter(x -> x.getNickname().equals(nickname)).findFirst()
                 .orElseThrow(()-> new InvalidArgumentException("nickname", nickname))
                 .chooseObjectiveCard(index);
+
+        return players.stream().filter(x -> x.getNickname().equals(nickname)).findFirst()
+                .orElseThrow(()-> new InvalidArgumentException("nickname", nickname));
     }
 
     /**

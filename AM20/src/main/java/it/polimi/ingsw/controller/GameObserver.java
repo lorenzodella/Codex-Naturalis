@@ -13,6 +13,7 @@ public interface GameObserver {
     void notifyInitialCards(List<Player> players);
     void notifyStarterCardSide(Player player);
     void notifyObjectiveCards(ObjectiveCard[] commonObjectives, List<Player> players);
+    void notifyChosenSecretObjective(Player player);
     void notifyGameStarted(Player first);
     void notifyPlayerPlay(Player player);
     void notifyPlayerPick(Player player);
@@ -21,5 +22,4 @@ public interface GameObserver {
     void notifyPlayerSecretObjectives(List<Player> players);
     void notifyCommonObjectives(List<Player> players);
     void notifyWin(Player winner);
-
 }

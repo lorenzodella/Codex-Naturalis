@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ChangesMessage extends  Message{
-    private String result;
     //roba del campo da gioco
     private PlayableCard goldTop;
     private PlayableCard resourceTop;

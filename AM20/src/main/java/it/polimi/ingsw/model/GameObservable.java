@@ -14,6 +14,7 @@ public interface GameObservable {
     Player getCurrPlayer();
     Deck getResourceCardDeck();
     Deck getGoldCardDeck();
+    ObjectiveCard[] getCommonObjectives();
 
     Deck[] initDecks();
 
@@ -25,7 +26,7 @@ public interface GameObservable {
 
     List<Player> initObjectiveCards();
 
-    void chooseObjective(int index, String playerNickname) throws InvalidArgumentException;
+    Player chooseObjective(int index, String playerNickname) throws InvalidArgumentException;
 
     Player chooseFirstPlayer();
 
@@ -46,6 +47,4 @@ public interface GameObservable {
     List<Player> computeCommonObjectives();
 
     Player checkWinner();
-
-    ObjectiveCard[] getCommonObjectives();
 }

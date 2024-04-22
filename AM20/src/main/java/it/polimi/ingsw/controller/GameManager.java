@@ -1,6 +1,7 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.controller.exceptions.CannotJoinGameException;
+import it.polimi.ingsw.controller.exceptions.InvalidPlayingException;
 import it.polimi.ingsw.model.exceptions.*;
 import it.polimi.ingsw.model.exceptions.InvalidArgumentException;
 
@@ -13,9 +14,12 @@ public interface GameManager {
 
     public void chooseObjective(String playerNickname, int index) throws InvalidArgumentException;
 
-    public void playCard(int indexCard, int angle, String targetID, int side) throws InvalidArgumentException, TargetNotPresentException, InvalidAngleCoveredException, InvalidPositionException, RequirementsNotRespectedException;
+    void playCard(String playerNickname, int indexCard, int angle, String targetID, int side)
+            throws InvalidArgumentException, TargetNotPresentException,
+            InvalidAngleCoveredException, InvalidPositionException, RequirementsNotRespectedException,
+            InvalidPlayingException;
 
-    public void pickCard(int deck) throws InvalidArgumentException, FinishedCardStackException;
+    void pickCard(String playerNickname, int deck) throws InvalidArgumentException, FinishedCardStackException, InvalidPlayingException;
 
-    void pickCard(int deck, int index) throws InvalidArgumentException, FinishedCardStackException;
+    void pickCard(String playerNickname, int deck, int index) throws InvalidArgumentException, FinishedCardStackException, InvalidPlayingException;
 }

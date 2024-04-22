@@ -1,5 +1,6 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.controller.exceptions.InvalidPlayingException;
 import it.polimi.ingsw.model.Deck;
 import it.polimi.ingsw.model.GameObservable;
 import it.polimi.ingsw.model.exceptions.InvalidArgumentException;
@@ -18,6 +19,7 @@ public class Controller implements GameManager {
     private List<String> players;
     private int numPlayers;
     private int missingTurns = -1;
+    private boolean currPlayerMustDraw = false;
 
     public GameObservable getGameModel() {
         return gameModel;
@@ -46,6 +48,7 @@ public class Controller implements GameManager {
         players = new ArrayList<>();
         players.add(playerNickname);
         this.numPlayers = numPlayers;
+        // return Message
     }
 
     @Override
@@ -58,7 +61,10 @@ public class Controller implements GameManager {
             throw new CannotJoinGameException("nickname's already been used");
         players.add(playerNickname);
         if(players.size()==numPlayers)
-            startGame();
+            //Hashmap tmp = startGame(); (positivo)
+        //if(tmp==null)
+            //tmp = new HashMap .... crei IL messaggio per dire ok aspetto gli altri  (negativo)
+        // return HashMap<StartGameMessage> tmp
     }
 
     private void startGame(){
@@ -70,60 +76,78 @@ public class Controller implements GameManager {
         messageBuilder.notifyStarterCards(playerList);
         List<Player> playerList2 =  gameModel.giveInitialCards();
         messageBuilder.notifyInitialCards(playerList2);
+        //hanno joinato tutti ora si inizia a giocare (setto tutti gli attributi)
+        // mando 4 messaggi!!!
+        // return HashMap<StartGameMessage>
     }
 
     @Override
     public void chooseStarterCardSide(String playerNickname, int side) throws InvalidArgumentException {
         Player player = gameModel.chooseStarterCardSide(side, playerNickname);
-        messageBuilder.notifyStarterCardSide(player);
+        messageBuilder.notifyStarterCardSide(player); //setta playerinfo
         //check if someone has not played his starterCard yet
         for(Player p : gameModel.getPlayers()){
             if(p.getStarterCard().getOrder() < 0){
-                return;
+                return; //negativo
             }
         }
         List<Player> playersList = gameModel.initObjectiveCards();
-        messageBuilder.notifyObjectiveCards(gameModel.getCommonObjectives(), playersList);
+        messageBuilder.notifyObjectiveCards(gameModel.getCommonObjectives(), playersList); //setta gli altri
+        //positivo
     }
 
     @Override
     public void chooseObjective(String playerNickname, int index) throws InvalidArgumentException {
-        gameModel.chooseObjective(index, playerNickname);
+        Player player = gameModel.chooseObjective(index, playerNickname);
+        messageBuilder.notifyChosenSecretObjective(player); //setti playerInfo
         //check if someone has not chosen his objectiveCard yet
         for(Player p : gameModel.getPlayers()){
             if(p.getSecretObjective()[1] != null){
-                return;
+                return; //negativo
             }
         }
         Player first = gameModel.chooseFirstPlayer();
         messageBuilder.notifyGameStarted(first);
+
+        //positivo
     }
 
     @Override
-    public void playCard(int indexCard, int angle, String targetID, int side)
+    public void playCard(String playerNickname, int indexCard, int angle, String targetID, int side)
             throws InvalidArgumentException, TargetNotPresentException,
-            InvalidAngleCoveredException, InvalidPositionException, RequirementsNotRespectedException {
+            InvalidAngleCoveredException, InvalidPositionException, RequirementsNotRespectedException,
+            InvalidPlayingException {
+        if(!gameModel.getCurrPlayer().getNickname().equals(playerNickname))
+            throw new InvalidPlayingException("It's not your turn");
         Player p = gameModel.playCard(indexCard, angle, targetID, side);
         messageBuilder.notifyPlayerPlay(p);
         if(gameModel.areDeckFinished())
             checkEndGame();
+        else
+            currPlayerMustDraw = true;
     }
 
     @Override
-    public void pickCard(int deck) throws InvalidArgumentException, FinishedCardStackException {
+    public void pickCard(String playerNickname, int deck) throws InvalidArgumentException, FinishedCardStackException, InvalidPlayingException {
+        if(!gameModel.getCurrPlayer().getNickname().equals(playerNickname))
+            throw new InvalidPlayingException("It's not your turn");
+        if(!currPlayerMustDraw)
+            throw new InvalidPlayingException("You can't draw a card now");
         Player p = gameModel.pickCard(deck);
         messageBuilder.notifyPlayerPick(p);
         messageBuilder.notifyDecks(gameModel.getResourceCardDeck(), gameModel.getGoldCardDeck());
+        currPlayerMustDraw = false;
         checkEndGame();
     }
 
     @Override
-    public void pickCard(int deck, int index) throws InvalidArgumentException, FinishedCardStackException {
+    public void pickCard(String playerNickname, int deck, int index) throws InvalidArgumentException, FinishedCardStackException, InvalidPlayingException {
+        if(!gameModel.getCurrPlayer().getNickname().equals(playerNickname))
+            throw new InvalidPlayingException("It's not your turn");
+        if(!currPlayerMustDraw)
+            throw new InvalidPlayingException("You can't draw a card now");
         Player p = gameModel.pickCard(deck, index);
         messageBuilder.notifyPlayerPick(p);
-        //non mi sembra che si possa modificare dato che gameModel.pickCard ritorna già il player
-        //una possibile soluzione potrebbe essere quella di ritoranre il game e poi andare a prendere il singolo player
-        //e per il metodo messageBuilder.notifyDecks() prendere i deck
         messageBuilder.notifyDecks(gameModel.getResourceCardDeck(), gameModel.getGoldCardDeck());
         checkEndGame();
     }

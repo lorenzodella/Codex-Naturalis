@@ -181,6 +181,11 @@ public class MessageBuilder implements GameObserver {
         changesMessageHashMap.get(winner.getNickname()).setResult("You're the winner!");
     }
 
+    @Override
+    public void notifyChosenSecretObjective(Player player) {
+
+    }
+
     //TODO
     public void notifyStarterCardSide(Player player){
 
