@@ -19,4 +19,6 @@ public class Message {
     public void setExc(Exception exc) {
         this.exc = exc;
     }
+
+
 }

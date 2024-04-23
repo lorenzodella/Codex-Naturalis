@@ -1,6 +1,8 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.controller.exceptions.InvalidPlayingException;
+import it.polimi.ingsw.controller.messages.Message;
+import it.polimi.ingsw.controller.messages.StartGameMessage;
 import it.polimi.ingsw.model.Deck;
 import it.polimi.ingsw.model.GameObservable;
 import it.polimi.ingsw.model.exceptions.InvalidArgumentException;
@@ -10,6 +12,7 @@ import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.exceptions.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,17 +45,19 @@ public class Controller implements GameManager {
     }
 
     @Override
-    public void newGame(String playerNickname, int numPlayers) throws InvalidArgumentException {
+    public Message newGame(String playerNickname, int numPlayers) throws InvalidArgumentException {
         if(numPlayers<2 || numPlayers>4)
             throw new InvalidArgumentException("numPlayers", numPlayers);
         players = new ArrayList<>();
         players.add(playerNickname);
         this.numPlayers = numPlayers;
-        // return Message
+        Message tmp = new Message();
+        tmp.setResult("You created a new game");
+        return tmp;
     }
 
     @Override
-    public void joinGame(String playerNickname) throws CannotJoinGameException {
+    public HashMap<String, StartGameMessage> joinGame(String playerNickname) throws CannotJoinGameException {
         if(players==null)
             throw new CannotJoinGameException("no active game");
         if(players.size()==numPlayers)
@@ -60,27 +65,37 @@ public class Controller implements GameManager {
         if(players.contains(playerNickname))
             throw new CannotJoinGameException("nickname's already been used");
         players.add(playerNickname);
+        HashMap<String, StartGameMessage> tmp = null;
+        //positivo
         if(players.size()==numPlayers)
-            //Hashmap tmp = startGame(); (positivo)
-        //if(tmp==null)
-            //tmp = new HashMap .... crei IL messaggio per dire ok aspetto gli altri  (negativo)
-        // return HashMap<StartGameMessage> tmp
+            tmp = startGame();
+        //negativo
+        if(tmp==null) {
+            tmp = new HashMap<>();
+            for(String nickname: players){
+                tmp.put(nickname, new StartGameMessage());
+                tmp.get(nickname).setGameStarts(false);
+            }
+        }
+        return tmp;
     }
 
-    private void startGame(){
+    private HashMap<String, StartGameMessage> startGame(){
         this.messageBuilder = new MessageBuilder(players);
         gameModel = new Game(players.stream().map(Player::new).collect(Collectors.toList()));
         Deck[] tmp = gameModel.initDecks();
-        messageBuilder.notifyDecks(tmp[Deck.RESOURCE_CARDS], tmp[Deck.GOLD_CARDS]);
+        messageBuilder.notifyDecksCreated(tmp[Deck.RESOURCE_CARDS], tmp[Deck.GOLD_CARDS]);
         List<Player> playerList = gameModel.giveStarterCards();
         messageBuilder.notifyStarterCards(playerList);
         List<Player> playerList2 =  gameModel.giveInitialCards();
-        messageBuilder.notifyInitialCards(playerList2);
-        //hanno joinato tutti ora si inizia a giocare (setto tutti gli attributi)
-        // mando 4 messaggi!!!
-        // return HashMap<StartGameMessage>
+        HashMap<String, StartGameMessage> msg = messageBuilder.notifyInitialCards(playerList2);
+        for(StartGameMessage message: msg.values()){
+            message.setGameStarts(true);
+        }
+        return msg;
     }
 
+    //TODO
     @Override
     public void chooseStarterCardSide(String playerNickname, int side) throws InvalidArgumentException {
         Player player = gameModel.chooseStarterCardSide(side, playerNickname);
@@ -95,7 +110,7 @@ public class Controller implements GameManager {
         messageBuilder.notifyObjectiveCards(gameModel.getCommonObjectives(), playersList); //setta gli altri
         //positivo hashmap ha 4 messaggi
     }
-
+    //TODO
     @Override
     public void chooseObjective(String playerNickname, int index) throws InvalidArgumentException {
         Player player = gameModel.chooseObjective(index, playerNickname);
@@ -111,7 +126,7 @@ public class Controller implements GameManager {
 
         //positivo hashmap ha 4 messaggi
     }
-
+    //TODO
     @Override
     public void playCard(String playerNickname, int indexCard, int angle, String targetID, int side)
             throws InvalidArgumentException, TargetNotPresentException,
@@ -129,7 +144,7 @@ public class Controller implements GameManager {
             // settare a true mustpick
             // positivo (setto AcknowledgeMessage)
     }
-
+    //TODO
     @Override
     public void pickCard(String playerNickname, int deck) throws InvalidArgumentException, FinishedCardStackException, InvalidPlayingException {
         if(!gameModel.getCurrPlayer().getNickname().equals(playerNickname))
@@ -138,12 +153,12 @@ public class Controller implements GameManager {
             throw new InvalidPlayingException("You can't draw a card now");
         Player p = gameModel.pickCard(deck);
         messageBuilder.notifyPlayerPick(p);
-        messageBuilder.notifyDecks(gameModel.getResourceCardDeck(), gameModel.getGoldCardDeck());
+        messageBuilder.notifyDecksModified(gameModel.getResourceCardDeck(), gameModel.getGoldCardDeck());
         currPlayerMustDraw = false;
         checkEndGame();
         //
     }
-
+    //TODO
     @Override
     public void pickCard(String playerNickname, int deck, int index) throws InvalidArgumentException, FinishedCardStackException, InvalidPlayingException {
         if(!gameModel.getCurrPlayer().getNickname().equals(playerNickname))
@@ -152,13 +167,12 @@ public class Controller implements GameManager {
             throw new InvalidPlayingException("You can't draw a card now");
         Player p = gameModel.pickCard(deck, index);
         messageBuilder.notifyPlayerPick(p);
-        messageBuilder.notifyDecks(gameModel.getResourceCardDeck(), gameModel.getGoldCardDeck());
+        messageBuilder.notifyDecksModified(gameModel.getResourceCardDeck(), gameModel.getGoldCardDeck());
         currPlayerMustDraw = false;
         checkEndGame();
         //
-
     }
-
+    //TODO
     private void checkEndGame(){
         boolean isNewTurn = gameModel.nextTurn();
         //if game ended but last turn not started yet, check if last turn is starting now
@@ -172,10 +186,9 @@ public class Controller implements GameManager {
         if(missingTurns ==0 && isNewTurn){
             //
             //if last turn is started and ended
-            List<Player> player = gameModel.computePlayerSecretObjectives();
-            messageBuilder.notifyPlayerSecretObjectives(player);
+            gameModel.computePlayerSecretObjectives();
             List<Player> playerList = gameModel.computeCommonObjectives();
-            messageBuilder.notifyPlayerCommonObjectives(playerList);
+            messageBuilder.notifyPlayerObjectives(playerList);
             Player winner = gameModel.checkWinner();
             messageBuilder.notifyWin(winner);
         }
