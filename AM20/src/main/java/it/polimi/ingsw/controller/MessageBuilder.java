@@ -12,9 +12,9 @@ import java.util.stream.Collectors;
 
 public class MessageBuilder implements GameObserver {
 
-    private HashMap<String, StartGameMessage> playerStartGameMessages;
-    private HashMap<String, StartChoosingObjectiveMessage> playerStartChoosingObjectiveMessages;
-    private HashMap<String, StartPlayingMessage> playerStartPlayingMessages;
+    private HashMap<String, ConnectionAckMessage> playerStartGameMessages;
+    private HashMap<String, StarterCardAckMessage> playerStartChoosingObjectiveMessages;
+    private HashMap<String, ObjectiveAckMessage> playerStartPlayingMessages;
     private HashMap<String, AcknowledgeMessage> playerAcknowledgeMessages;
 
 
@@ -25,7 +25,7 @@ public class MessageBuilder implements GameObserver {
     }
 
     @Override
-    public HashMap<String, StartGameMessage> notifyDecksCreated(Deck resourceCardDeck, Deck goldCardDeck) {
+    public HashMap<String, ConnectionAckMessage> notifyDecksCreated(Deck resourceCardDeck, Deck goldCardDeck) {
         if (playerStartGameMessages == null)
             playerStartGameMessages = new HashMap<>();
 
@@ -42,7 +42,7 @@ public class MessageBuilder implements GameObserver {
     }
 
     @Override
-    public HashMap<String, StartGameMessage> notifyStarterCards(List<Player> players) {
+    public HashMap<String, ConnectionAckMessage> notifyStarterCards(List<Player> players) {
         if (playerStartGameMessages == null)
             playerStartGameMessages = new HashMap<>();
 
@@ -56,7 +56,7 @@ public class MessageBuilder implements GameObserver {
     }
 
     @Override
-    public HashMap<String, StartGameMessage> notifyInitialCards(List<Player> players) {
+    public HashMap<String, ConnectionAckMessage> notifyInitialCards(List<Player> players) {
         if (playerStartGameMessages == null)
             playerStartGameMessages = new HashMap<>();
 
@@ -69,7 +69,7 @@ public class MessageBuilder implements GameObserver {
         return playerStartGameMessages;
     }
 
-    public HashMap<String, StartChoosingObjectiveMessage> notifyStarterCardSide(Player player){
+    public HashMap<String, StarterCardAckMessage> notifyStarterCardSide(Player player){
         if(playerStartChoosingObjectiveMessages == null)
             playerStartChoosingObjectiveMessages = new HashMap<>();
 
@@ -82,7 +82,7 @@ public class MessageBuilder implements GameObserver {
 
         for(String nickname : playersNickname){
             if(playerStartChoosingObjectiveMessages.get(nickname) == null)
-                playerStartChoosingObjectiveMessages.put(nickname, new StartChoosingObjectiveMessage());
+                playerStartChoosingObjectiveMessages.put(nickname, new StarterCardAckMessage());
             if(!nickname.equals(player.getNickname())) {
                 playerStartChoosingObjectiveMessages.get(nickname).setOthersPlayerInfo(otherPlayerUpdates);
             }
@@ -92,7 +92,7 @@ public class MessageBuilder implements GameObserver {
     }
 
     @Override
-    public HashMap<String, StartChoosingObjectiveMessage> notifyObjectiveCards(ObjectiveCard[] commonObjectives, List<Player> players) {
+    public HashMap<String, StarterCardAckMessage> notifyObjectiveCards(ObjectiveCard[] commonObjectives, List<Player> players) {
         if(playerStartChoosingObjectiveMessages == null)
             playerStartChoosingObjectiveMessages = new HashMap<>();
 
@@ -107,16 +107,16 @@ public class MessageBuilder implements GameObserver {
     }
 
     @Override
-    public HashMap<String, StartPlayingMessage> notifyChosenSecretObjective(Player player) {
+    public HashMap<String, ObjectiveAckMessage> notifyChosenSecretObjective(Player player) {
         if(playerStartPlayingMessages == null)
             playerStartPlayingMessages = new HashMap<>();
         if(playerStartPlayingMessages.get(player.getNickname()) == null)
-            playerStartPlayingMessages.put(player.getNickname(), new StartPlayingMessage());
+            playerStartPlayingMessages.put(player.getNickname(), new ObjectiveAckMessage());
         playerStartPlayingMessages.get(player.getNickname()).setSecretObjectives(player.getSecretObjective());
         return playerStartPlayingMessages;
     }
     @Override
-    public HashMap<String, StartPlayingMessage> notifyGameStarted(Player first) {
+    public HashMap<String, ObjectiveAckMessage> notifyGameStarted(Player first) {
         if(playerStartPlayingMessages == null)
             playerStartPlayingMessages = new HashMap<>();
 
@@ -146,7 +146,7 @@ public class MessageBuilder implements GameObserver {
 
         for(String nickname : playersNickname){
             if(playerAcknowledgeMessages.get(nickname) == null)
-                playerAcknowledgeMessages.put(nickname, new AcknowledgeMessage());
+                playerAcknowledgeMessages.put(nickname, new PlayAckMessage());
             if(!nickname.equals(player.getNickname())) {
                 playerAcknowledgeMessages.get(nickname).setOthersPlayerInfo(otherPlayerUpdates);
             }
@@ -162,7 +162,7 @@ public class MessageBuilder implements GameObserver {
         if(playerAcknowledgeMessages == null)
             playerAcknowledgeMessages = new HashMap<>();
         if(playerAcknowledgeMessages.get(player.getNickname()) == null)
-            playerAcknowledgeMessages.put(player.getNickname(), new AcknowledgeMessage());
+            playerAcknowledgeMessages.put(player.getNickname(), new PickAckMessage());
         playerAcknowledgeMessages.get(player.getNickname()).setCards(player.getCards());
         //messagge??
         return playerAcknowledgeMessages;
@@ -175,7 +175,7 @@ public class MessageBuilder implements GameObserver {
 
         for (String nickname : playersNickname) {
             if (playerAcknowledgeMessages.get(nickname) == null)
-                playerAcknowledgeMessages.put(nickname, new AcknowledgeMessage());
+                playerAcknowledgeMessages.put(nickname, new PickAckMessage());
 
             playerAcknowledgeMessages.get(nickname).setGoldTop(goldCardDeck.getFirstCard());
             playerAcknowledgeMessages.get(nickname).setResourceTop(resourceCardDeck.getFirstCard());

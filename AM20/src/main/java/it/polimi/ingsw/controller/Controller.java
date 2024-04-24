@@ -1,6 +1,7 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.controller.exceptions.InvalidPlayingException;
+import it.polimi.ingsw.controller.messages.ConnectionAckMessage;
 import it.polimi.ingsw.controller.messages.Message;
 import it.polimi.ingsw.controller.messages.StartGameMessage;
 import it.polimi.ingsw.model.Deck;
@@ -57,7 +58,7 @@ public class Controller implements GameManager {
     }
 
     @Override
-    public HashMap<String, StartGameMessage> joinGame(String playerNickname) throws CannotJoinGameException {
+    public HashMap<String, ConnectionAckMessage> joinGame(String playerNickname) throws CannotJoinGameException {
         if(players==null)
             throw new CannotJoinGameException("no active game");
         if(players.size()==numPlayers)
@@ -65,7 +66,7 @@ public class Controller implements GameManager {
         if(players.contains(playerNickname))
             throw new CannotJoinGameException("nickname's already been used");
         players.add(playerNickname);
-        HashMap<String, StartGameMessage> tmp = null;
+        HashMap<String, ConnectionAckMessage> tmp = null;
         //positivo
         if(players.size()==numPlayers)
             tmp = startGame();
@@ -73,14 +74,14 @@ public class Controller implements GameManager {
         if(tmp==null) {
             tmp = new HashMap<>();
             for(String nickname: players){
-                tmp.put(nickname, new StartGameMessage());
+                tmp.put(nickname, new ConnectionAckMessage());
                 tmp.get(nickname).setGameStarts(false);
             }
         }
         return tmp;
     }
 
-    private HashMap<String, StartGameMessage> startGame(){
+    private HashMap<String, ConnectionAckMessage> startGame(){
         this.messageBuilder = new MessageBuilder(players);
         gameModel = new Game(players.stream().map(Player::new).collect(Collectors.toList()));
         Deck[] tmp = gameModel.initDecks();
@@ -88,8 +89,8 @@ public class Controller implements GameManager {
         List<Player> playerList = gameModel.giveStarterCards();
         messageBuilder.notifyStarterCards(playerList);
         List<Player> playerList2 =  gameModel.giveInitialCards();
-        HashMap<String, StartGameMessage> msg = messageBuilder.notifyInitialCards(playerList2);
-        for(StartGameMessage message: msg.values()){
+        HashMap<String, ConnectionAckMessage> msg = messageBuilder.notifyInitialCards(playerList2);
+        for(ConnectionAckMessage message: msg.values()){
             message.setGameStarts(true);
         }
         return msg;

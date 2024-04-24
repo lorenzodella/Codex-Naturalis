@@ -6,71 +6,70 @@ import it.polimi.ingsw.model.cards.playable.StarterCard;
 
 import java.util.List;
 
-public class StartGameMessage extends ConnectionAckMessage {
+public class ConnectionAckMessage extends Message{
+    private  boolean gameStarts;
 
-    private PlayableCard goldTop;
-    private PlayableCard resourceTop;
-    private PlayableCard[] goldVisible;
-    private PlayableCard[] resourceVisible;
-    private StarterCard starterCard;
-    private List<PlayableCard> initialCards;
+    public boolean isGameStarts() {
+        return gameStarts;
+    }
 
-    private PlayerInfo playerInfo;
-
+    public void setGameStarts(boolean gameStarts) {
+        this.gameStarts = gameStarts;
+    }
 
     public PlayableCard getGoldTop() {
-        return goldTop;
+        return null;
     }
 
     public void setGoldTop(PlayableCard goldTop) {
-        this.goldTop = goldTop;
+
     }
 
     public PlayableCard getResourceTop() {
-        return resourceTop;
+        return null;
     }
 
     public void setResourceTop(PlayableCard resourceTop) {
-        this.resourceTop = resourceTop;
+
     }
 
     public PlayableCard[] getGoldVisible() {
-        return goldVisible;
+        return new PlayableCard[0];
     }
 
     public void setGoldVisible(PlayableCard[] goldVisible) {
-        this.goldVisible = goldVisible;
+
     }
 
     public PlayableCard[] getResourceVisible() {
-        return resourceVisible;
+        return new PlayableCard[0];
     }
 
     public void setResourceVisible(PlayableCard[] resourceVisible) {
-        this.resourceVisible = resourceVisible;
+
     }
 
     public StarterCard getStarterCard() {
-        return starterCard;
+        return null;
     }
 
     public void setStarterCard(StarterCard starterCard) {
-        this.starterCard = starterCard;
+
     }
 
     public List<PlayableCard> getInitialCards() {
-        return initialCards;
+        return null;
     }
 
     public void setInitialCards(List<PlayableCard> initialCards) {
-        this.initialCards = initialCards;
+
     }
 
     public PlayerInfo getPlayerInfo() {
-        return playerInfo;
+        return null;
     }
 
     public void setPlayerInfo(PlayerInfo playerInfo) {
-        this.playerInfo = playerInfo;
+
     }
 }

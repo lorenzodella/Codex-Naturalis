@@ -2,6 +2,7 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.controller.exceptions.CannotJoinGameException;
 import it.polimi.ingsw.controller.exceptions.InvalidPlayingException;
+import it.polimi.ingsw.controller.messages.ConnectionAckMessage;
 import it.polimi.ingsw.controller.messages.Message;
 import it.polimi.ingsw.controller.messages.StartGameMessage;
 import it.polimi.ingsw.model.exceptions.*;
@@ -12,7 +13,7 @@ import java.util.HashMap;
 public interface GameManager {
 
     Message newGame(String playerNickname, int numPlayers) throws InvalidArgumentException;
-    HashMap<String, StartGameMessage> joinGame(String playerNickname) throws CannotJoinGameException;
+    HashMap<String, ConnectionAckMessage> joinGame(String playerNickname) throws CannotJoinGameException;
 
     void chooseStarterCardSide(String playerNickname, int side) throws InvalidArgumentException;
 

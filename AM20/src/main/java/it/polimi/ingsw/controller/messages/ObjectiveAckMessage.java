@@ -2,28 +2,32 @@ package it.polimi.ingsw.controller.messages;
 
 import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
 
-public class StartChoosingObjectiveMessage extends StarterCardAckMessage {
-
-    private ObjectiveCard[] commonObjectives;
+public class ObjectiveAckMessage extends Message {
+    private boolean startPlaying;
     private ObjectiveCard[] secretObjectives;
 
-    @Override
-    public ObjectiveCard[] getCommonObjectives() {
-        return commonObjectives;
+
+    public boolean isStartPlaying() {
+        return startPlaying;
     }
 
-    @Override
-    public void setCommonObjectives(ObjectiveCard[] commonObjectives) {
-        this.commonObjectives = commonObjectives;
+    public void setStartPlaying(boolean startPlaying) {
+        this.startPlaying = startPlaying;
     }
 
-    @Override
     public ObjectiveCard[] getSecretObjectives() {
         return secretObjectives;
     }
 
-    @Override
     public void setSecretObjectives(ObjectiveCard[] secretObjectives) {
         this.secretObjectives = secretObjectives;
+    }
+
+    public String getFirstPlayer() {
+        return null;
+    }
+
+    public void setFirstPlayer(String firstPlayer) {
+
     }
 }

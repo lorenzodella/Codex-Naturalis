@@ -7,64 +7,56 @@ import java.util.HashMap;
 import java.util.List;
 
 public class AcknowledgeMessage extends Message {
-    private PlayerInfo yourPlayerInfo;
-    private HashMap<String, PlayerInfo> othersPlayerInfo;
-
-    private PlayableCard goldTop;
-    private PlayableCard resourceTop;
-    private PlayableCard[] goldVisible;
-    private PlayableCard[] resourceVisible;
+    private String nextPlayer;
     private List<PlayableCard> cards;
 
-    private String nextPlayer;
-    private boolean mustPick;
 
     public PlayerInfo getYourPlayerInfo() {
-        return yourPlayerInfo;
+        return null;
     }
 
     public void setYourPlayerInfo(PlayerInfo yourPlayerInfo) {
-        this.yourPlayerInfo = yourPlayerInfo;
+
     }
 
     public HashMap<String, PlayerInfo> getOthersPlayerInfo() {
-        return othersPlayerInfo;
+        return null;
     }
 
     public void setOthersPlayerInfo(HashMap<String, PlayerInfo> othersPlayerInfo) {
-        this.othersPlayerInfo = othersPlayerInfo;
+
     }
 
     public PlayableCard getGoldTop() {
-        return goldTop;
+        return null;
     }
 
     public void setGoldTop(PlayableCard goldTop) {
-        this.goldTop = goldTop;
+
     }
 
     public PlayableCard getResourceTop() {
-        return resourceTop;
+        return null;
     }
 
     public void setResourceTop(PlayableCard resourceTop) {
-        this.resourceTop = resourceTop;
+
     }
 
     public PlayableCard[] getGoldVisible() {
-        return goldVisible;
+        return null;
     }
 
     public void setGoldVisible(PlayableCard[] goldVisible) {
-        this.goldVisible = goldVisible;
+
     }
 
     public PlayableCard[] getResourceVisible() {
-        return resourceVisible;
+        return null;
     }
 
     public void setResourceVisible(PlayableCard[] resourceVisible) {
-        this.resourceVisible = resourceVisible;
+
     }
 
     public List<PlayableCard> getCards() {
@@ -84,10 +76,10 @@ public class AcknowledgeMessage extends Message {
     }
 
     public boolean isMustPick() {
-        return mustPick;
+        return false;
     }
 
     public void setMustPick(boolean mustPick) {
-        this.mustPick = mustPick;
+
     }
 }
