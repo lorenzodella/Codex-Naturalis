@@ -39,4 +39,11 @@ public class PlayAckMessage extends AcknowledgeMessage{
     public void setMustPick(boolean mustPick) {
         this.mustPick = mustPick;
     }
+
+    @Override
+    public String toString() {
+        return "PlayAckMessage{" +
+                "result='" + getResult() + '\'' +
+                '}';
+    }
 }

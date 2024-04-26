@@ -73,4 +73,11 @@ public class StartGameMessage extends ConnectionAckMessage {
     public void setPlayerInfo(PlayerInfo playerInfo) {
         this.playerInfo = playerInfo;
     }
+
+    @Override
+    public String toString() {
+        return "StartGameMessage{" +
+                "result='" + getResult() + '\'' +
+                '}';
+    }
 }

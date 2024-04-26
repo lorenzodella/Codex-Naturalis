@@ -12,4 +12,11 @@ public class StartPlayingMessage extends ObjectiveAckMessage{
     public void setFirstPlayer(String firstPlayer) {
         this.firstPlayer = firstPlayer;
     }
+
+    @Override
+    public String toString() {
+        return "StartPlayingMessage{" +
+                "result='" + getResult() + '\'' +
+                '}';
+    }
 }

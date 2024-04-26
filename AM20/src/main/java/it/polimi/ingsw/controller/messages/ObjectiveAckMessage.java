@@ -30,4 +30,11 @@ public class ObjectiveAckMessage extends Message {
     public void setFirstPlayer(String firstPlayer) {
 
     }
+
+    @Override
+    public String toString() {
+        return "ObjectiveAckMessage{" +
+                "result='" + getResult() + '\'' +
+                '}';
+    }
 }

@@ -72,4 +72,11 @@ public class ConnectionAckMessage extends Message{
     public void setPlayerInfo(PlayerInfo playerInfo) {
 
     }
+
+    @Override
+    public String toString() {
+        return "ConnectionAckMessage{" +
+                "result='" + getResult() + '\'' +
+                '}';
+    }
 }

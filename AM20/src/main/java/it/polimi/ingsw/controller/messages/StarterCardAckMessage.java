@@ -50,4 +50,11 @@ public class StarterCardAckMessage extends Message {
     public void setOthersPlayerInfo(HashMap<String, PlayerInfo> othersPlayerInfo) {
         this.othersPlayerInfo = othersPlayerInfo;
     }
+
+    @Override
+    public String toString() {
+        return "StarterCardAckMessage{" +
+                "result='" + getResult() + '\'' +
+                '}';
+    }
 }

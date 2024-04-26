@@ -51,5 +51,12 @@ public class PickAckMessage extends AcknowledgeMessage{
         this.resourceVisible = resourceVisible;
     }
 
+    @Override
+    public String toString() {
+        return "PickAckMessage{" +
+                "result='" + getResult() + '\'' +
+                '}';
+    }
+
 
 }

@@ -26,4 +26,11 @@ public class StartChoosingObjectiveMessage extends StarterCardAckMessage {
     public void setSecretObjectives(ObjectiveCard[] secretObjectives) {
         this.secretObjectives = secretObjectives;
     }
+
+    @Override
+    public String toString() {
+        return "StartChoosingObjectiveMessage{" +
+                "result='" + getResult() + '\'' +
+                '}';
+    }
 }
