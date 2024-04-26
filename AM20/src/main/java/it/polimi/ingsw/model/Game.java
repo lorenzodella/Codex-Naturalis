@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.controller.exceptions.InvalidPlayingException;
 import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.model.cards.playable.StarterCard;
@@ -8,6 +9,7 @@ import it.polimi.ingsw.model.exceptions.InvalidArgumentException;
 import it.polimi.ingsw.model.util.XMLparser;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Game implements GameObservable{
     /**
@@ -33,17 +35,19 @@ public class Game implements GameObservable{
      * This attribute stands for the player that's currently playing
      */
     private Player currPlayer;
-    private int turn;
 
     public Game(List<Player> players){
         this.players = players;
         currPlayer = players.get(0);
-        turn = 0;
     }
 
     @Override
     public List<Player> getPlayers() {
         return players;
+    }
+    @Override
+    public Set<String> getConnectedPlayers() {
+        return players.stream().filter(Player::isOnline).map(Player::getNickname).collect(Collectors.toSet());
     }
     @Override
     public Deck getGoldCardDeck() {
@@ -60,6 +64,23 @@ public class Game implements GameObservable{
     @Override
     public ObjectiveCard[] getCommonObjectives() {
         return commonObjectives;
+    }
+
+    /**
+     * This method allows to connect or disconnect a player
+     * @param nickname name of the player who is connecting/disconnecting
+     * @param isOnline tells if the player is online or not
+     * @throws InvalidArgumentException if there's no player with that nickname
+     * @throws InvalidConnectionStateException if player's connection state was the same
+     */
+    @Override
+    public Player setPlayerConnection(String nickname, boolean isOnline) throws InvalidArgumentException, InvalidConnectionStateException {
+        Player p = players.stream().filter(x -> x.getNickname().equals(nickname)).findFirst()
+                .orElseThrow(()-> new InvalidArgumentException("nickname", nickname));
+        if (p.isOnline() == isOnline)
+            throw new InvalidConnectionStateException(isOnline);
+        p.setOnline(isOnline);
+        return p;
     }
 
     /**
@@ -132,7 +153,7 @@ public class Game implements GameObservable{
      * @param nickname it stands for the player that's taking the action
      */
     @Override
-    public Player chooseStarterCardSide(int side, String nickname) throws InvalidArgumentException{
+    public Player chooseStarterCardSide(int side, String nickname) throws InvalidArgumentException, InvalidPlayingException {
         if(side != PlayableCard.FRONT && side != PlayableCard.BACK)
             throw new InvalidArgumentException("side", side);
         players.stream().filter(x -> x.getNickname().equals(nickname)).findFirst()
@@ -176,7 +197,7 @@ public class Game implements GameObservable{
      * @param nickname the nickname is the nickname of the player that's taking the action
      */
     @Override
-    public Player chooseObjective(int index, String nickname) throws InvalidArgumentException{
+    public Player chooseObjective(int index, String nickname) throws InvalidArgumentException, InvalidPlayingException {
         if(index<0 || index>1)
             throw new InvalidArgumentException("index", index);
         players.stream().filter(x -> x.getNickname().equals(nickname)).findFirst()
@@ -292,15 +313,18 @@ public class Game implements GameObservable{
      * @return true if next player is the first player, so a new turn started
      */
     @Override
-    public boolean nextTurn(){
-        int cur = players.indexOf(currPlayer);
-        if(cur == players.size()-1) {
-            turn++;
-            currPlayer = players.get(0);
-            return true;
-        }
-        this.currPlayer = players.get(cur+1);
-        return false;
+    public boolean nextTurn() {
+        boolean isNewTurn = false;
+        do {
+            int cur = players.indexOf(currPlayer);
+            if (cur == players.size() - 1) {
+                isNewTurn = true;
+                currPlayer = players.get(0);
+            }
+            else
+                currPlayer = players.get(cur + 1);
+        } while (!currPlayer.isOnline());
+        return isNewTurn;
     }
 
     /**
