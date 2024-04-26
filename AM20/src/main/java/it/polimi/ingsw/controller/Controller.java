@@ -1,10 +1,8 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.controller.exceptions.InvalidPlayingException;
-import it.polimi.ingsw.controller.messages.ConnectionAckMessage;
+import it.polimi.ingsw.controller.messages.*;
 import it.polimi.ingsw.controller.exceptions.StopGameException;
-import it.polimi.ingsw.controller.messages.AcknowledgeMessage;
-import it.polimi.ingsw.controller.messages.Message;
 import it.polimi.ingsw.model.Deck;
 import it.polimi.ingsw.model.GameObservable;
 import it.polimi.ingsw.model.exceptions.InvalidArgumentException;
@@ -89,6 +87,7 @@ public class Controller implements GameManager {
         if(!players.contains(nickname))
             throw new InvalidArgumentException("nickname", nickname);
         //if actual game not yet started
+        //SE UN PLAYER SI DISCONNETTE DURING PRELIMINARY --> CHIUDO TUTTO
         if(phase<PLAY)
             throw new StopGameException("A player disconnected during preliminary phase of the game");
 
@@ -173,13 +172,14 @@ public class Controller implements GameManager {
     private HashMap<String, ConnectionAckMessage> startGame(){
         phase = STARTER;
         gameModel = new Game(players.stream().map(Player::new).collect(Collectors.toList()));
-
+        //CREO NUOVO MESSAGE BUILDER PASSANDOGLI LA NUOVA LISTA DEI CONNECTED PLAYERS
         this.messageBuilder = new MessageBuilder(gameModel.getConnectedPlayers());
         Deck[] tmp = gameModel.initDecks();
         messageBuilder.notifyDecksCreated(tmp[Deck.RESOURCE_CARDS], tmp[Deck.GOLD_CARDS]);
         List<Player> playerList = gameModel.giveStarterCards();
         messageBuilder.notifyStarterCards(playerList);
         List<Player> playerList2 =  gameModel.giveInitialCards();
+        //QUESTO RITORNA DEGLI STARTGAMEMESSAGE
         HashMap<String, ConnectionAckMessage> msg = messageBuilder.notifyInitialCards(playerList2);
         for(ConnectionAckMessage message: msg.values()){
             message.setResult("All players connected");
@@ -188,73 +188,105 @@ public class Controller implements GameManager {
         return msg;
     }
 
-    //TODO
     @Override
-    public void chooseStarterCardSide(String playerNickname, int side) throws InvalidArgumentException, InvalidPlayingException {
+    public HashMap<String, StarterCardAckMessage> chooseStarterCardSide(String playerNickname, int side) throws InvalidArgumentException, InvalidPlayingException {
         if(phase!=STARTER)
             throw new InvalidPlayingException("You can't position starter card now");
+
+        //RIINIZIALIZZO LISTA DEI CONNECTED PLAYERS E MANDO AL MESSAGEBUILDER
+        this.messageBuilder = new MessageBuilder(gameModel.getConnectedPlayers());
+
         Player player = gameModel.chooseStarterCardSide(side, playerNickname);
-        messageBuilder.notifyStarterCardSide(player); //setta playerinfo
-        //check if someone has not played his starterCard yet
+        HashMap<String, StarterCardAckMessage> msg = messageBuilder.notifyStarterCardSide(player); //setta playerinfo
+
         for(Player p : gameModel.getPlayers()){
+            //check if someone has not played his starterCard yet
             if(p.getStarterCard().getOrder() < 0){
-                return; //negativo hashmap ha solo 1 messaggio
+                //negativo
+                for(StarterCardAckMessage message: msg.values()){
+                    message.setChooseObjective(false);
+                    message.setResult("You chose the side of the starter card");
+                }
+                return msg;
             }
         }
+        //positivo
         List<Player> playersList = gameModel.initObjectiveCards();
-        messageBuilder.notifyObjectiveCards(gameModel.getCommonObjectives(), playersList); //setta gli altri
-        //positivo hashmap ha 4 messaggi
-
+        HashMap<String, StarterCardAckMessage> msg1 = messageBuilder.notifyObjectiveCards(gameModel.getCommonObjectives(), playersList); //setta gli altri
+        for(StarterCardAckMessage message: msg1.values()){
+            message.setChooseObjective(true);
+            message.setResult("Everyone's chosen the side of the starter card");
+        }
         phase = OBJECTIVES;
+        return msg1;
     }
 
-    //TODO
     @Override
-    public void chooseObjective(String playerNickname, int index) throws InvalidArgumentException, InvalidPlayingException {
+    public HashMap<String, ObjectiveAckMessage> chooseObjective(String playerNickname, int index) throws InvalidArgumentException, InvalidPlayingException {
         if(phase!=OBJECTIVES)
             throw new InvalidPlayingException("You can't choose objective now");
+
+        //RIINIZIALIZZO LISTA DEI CONNECTED PLAYERS E MANDO AL MESSAGEBUILDER
+        this.messageBuilder = new MessageBuilder(gameModel.getConnectedPlayers());
+
         Player player = gameModel.chooseObjective(index, playerNickname);
-        messageBuilder.notifyChosenSecretObjective(player); //setti secretobjectives[]
-        //check if someone has not chosen his objectiveCard yet
+        HashMap<String, ObjectiveAckMessage> msg = messageBuilder.notifyChosenSecretObjective(player); //setti secretobjectives[]
+
         for(Player p : gameModel.getPlayers()){
+            //check if someone has not chosen his objectiveCard yet
+            //negativo
             if(p.getSecretObjective()[1] != null){
-                return; //negativo hashmap ha solo 1 messaggio
+                for(ObjectiveAckMessage message: msg.values()){
+                    message.setStartPlaying(false);
+                    message.setResult("You chose your secret objective");
+                }
+                return msg;
             }
         }
         Player first = gameModel.chooseFirstPlayer();
-        messageBuilder.notifyGameStarted(first);
-        //positivo hashmap ha 4 messaggi
-
+        //positivo
+        HashMap<String, ObjectiveAckMessage> msg1 = messageBuilder.notifyGameStarted(first);
+        for(ObjectiveAckMessage message: msg1.values()){
+            message.setStartPlaying(true);
+        }
         phase = PLAY;
+        return msg1;
     }
 
-    //TODO
     @Override
-    public void playCard(String playerNickname, int indexCard, int angle, String targetID, int side)
+    public HashMap<String, AcknowledgeMessage> playCard(String playerNickname, int indexCard, int angle, String targetID, int side)
             throws InvalidArgumentException, TargetNotPresentException,
             InvalidAngleCoveredException, InvalidPositionException, RequirementsNotRespectedException,
             InvalidPlayingException {
         if(phase!=PLAY)
             throw new InvalidPlayingException("You can't play a card now");
+
         Set<String> connectedPlayers = gameModel.getConnectedPlayers();
         if(connectedPlayers.size()==1)
             throw new InvalidPlayingException("You are the only player, wait for the others to reconnect");
         if(!gameModel.getCurrPlayer().getNickname().equals(playerNickname))
             throw new InvalidPlayingException("It's not your turn");
         Player p = gameModel.playCard(indexCard, angle, targetID, side);
-        messageBuilder.notifyPlayerPlay(p); // setta playerinfo
-        if(gameModel.areDeckFinished())
-            checkEndGame();
-            // negativo
-        else
+
+        //RIINIZIALIZZO LISTA DEI CONNECTED PLAYERS E MANDO AL MESSAGEBUILDER
+        this.messageBuilder = new MessageBuilder(gameModel.getConnectedPlayers());
+
+        HashMap<String, AcknowledgeMessage> msg = messageBuilder.notifyPlayerPlay(p);
+        if(gameModel.areDeckFinished()) {
+            HashMap<String, AcknowledgeMessage> msg1 = checkEndGame();
+            //negativo
+            return msg1;
+        }
+        else {
             phase = PICK;
-            // settare a true mustpick
-            // positivo (setto AcknowledgeMessage)
+            //positivo
+            return msg;
+        }
+
     }
 
-    //TODO
     @Override
-    public void pickCard(String playerNickname, int deck) throws InvalidArgumentException, FinishedCardStackException,
+    public HashMap<String, AcknowledgeMessage> pickCard(String playerNickname, int deck) throws InvalidArgumentException, FinishedCardStackException,
             InvalidPlayingException {
         if(phase!=PICK)
             throw new InvalidPlayingException("You can't draw a card now");
@@ -262,17 +294,20 @@ public class Controller implements GameManager {
             throw new InvalidPlayingException("You are the only player, wait for the others to reconnect");
         if(!gameModel.getCurrPlayer().getNickname().equals(playerNickname))
             throw new InvalidPlayingException("It's not your turn");
+
+        //RIINIZIALIZZO LISTA DEI CONNECTED PLAYERS E MANDO AL MESSAGEBUILDER
+        this.messageBuilder = new MessageBuilder(gameModel.getConnectedPlayers());
+
         Player p = gameModel.pickCard(deck);
         messageBuilder.notifyPlayerPick(p);
         messageBuilder.notifyDecksModified(gameModel.getResourceCardDeck(), gameModel.getGoldCardDeck());
         phase = PLAY;
-        checkEndGame();
-        //
+        HashMap<String, AcknowledgeMessage> msg = checkEndGame();
+        return msg;
     }
-
-    //TODO
+    
     @Override
-    public void pickCard(String playerNickname, int deck, int index) throws InvalidArgumentException, FinishedCardStackException,
+    public HashMap<String, AcknowledgeMessage> pickCard(String playerNickname, int deck, int index) throws InvalidArgumentException, FinishedCardStackException,
             InvalidPlayingException {
         if(phase!=PICK)
             throw new InvalidPlayingException("You can't draw a card now");
@@ -280,39 +315,41 @@ public class Controller implements GameManager {
             throw new InvalidPlayingException("You are the only player, wait for the others to reconnect");
         if(!gameModel.getCurrPlayer().getNickname().equals(playerNickname))
             throw new InvalidPlayingException("It's not your turn");
+
+        //RIINIZIALIZZO LISTA DEI CONNECTED PLAYERS E MANDO AL MESSAGEBUILDER
+        this.messageBuilder = new MessageBuilder(gameModel.getConnectedPlayers());
+
         Player p = gameModel.pickCard(deck, index);
         messageBuilder.notifyPlayerPick(p);
         messageBuilder.notifyDecksModified(gameModel.getResourceCardDeck(), gameModel.getGoldCardDeck());
         phase = PLAY;
-        checkEndGame();
-        //
+        HashMap<String, AcknowledgeMessage> msg = checkEndGame();
+        return msg;
     }
 
-    //TODO
     private HashMap<String, AcknowledgeMessage> checkEndGame(){
         boolean isNewTurn = gameModel.nextTurn();
+        HashMap<String, AcknowledgeMessage> msg = null;
         //if game ended but last turn not started yet, check if last turn is starting now
         if(gameModel.checkTheEnd() && missingTurns ==-1) {
             missingTurns = 2;
-            messageBuilder.notifyLastTurn();
+            msg = messageBuilder.notifyLastTurn();
         }
         if(missingTurns >0 && isNewTurn){
             missingTurns--;
         }
         if(missingTurns ==0 && isNewTurn){
-            //
             //if last turn is started and ended
             gameModel.computePlayerSecretObjectives();
             List<Player> playerList = gameModel.computeCommonObjectives();
             messageBuilder.notifyPlayerObjectives(playerList);
             Player winner = gameModel.checkWinner();
-            messageBuilder.notifyWin(winner);
+            msg = messageBuilder.notifyWin(winner);
         }
         else{
             //otherwise simply notify next player to play
-            messageBuilder.notifyNextTurn(gameModel.getCurrPlayer());
-            //
+            msg = messageBuilder.notifyNextTurn(gameModel.getCurrPlayer());
         }
-        return null;
+        return msg;
     }
 }

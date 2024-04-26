@@ -19,6 +19,7 @@ public class MessageBuilder implements GameObserver {
     private HashMap<String, AcknowledgeMessage> acknowledgeMessages;
     private Set<String> connectedPlayerNicknames;
 
+    //LISTA SOLO DEI CONNECTED PLAYERS DATO CHE DEVE MANDARE MESSAGGI SOLO AI PLAYER CHE SONO DAVVERO CONNESSI
     public MessageBuilder(Set<String> players) {
         this.connectedPlayerNicknames = players;
     }
@@ -196,10 +197,15 @@ public class MessageBuilder implements GameObserver {
                 acknowledgeMessages.put(nickname, new PlayAckMessage());
             if(!nickname.equals(player.getNickname())) {
                 acknowledgeMessages.get(nickname).setOthersPlayerInfo(otherPlayerUpdates);
+                acknowledgeMessages.get(nickname).setResult(player.getNickname() + " played a card");
+                acknowledgeMessages.get(nickname).setMustPick(false);
             }
         }
         acknowledgeMessages.get(player.getNickname()).setCards(player.getCards());
         acknowledgeMessages.get(player.getNickname()).setYourPlayerInfo(playerUpdates);
+
+        acknowledgeMessages.get(player.getNickname()).setResult("You just played a card");
+        acknowledgeMessages.get(player.getNickname()).setMustPick(true);
         //messagge??
         return acknowledgeMessages;
     }
@@ -208,10 +214,16 @@ public class MessageBuilder implements GameObserver {
     public HashMap<String, AcknowledgeMessage> notifyPlayerPick(Player player) {
         if(acknowledgeMessages == null)
             acknowledgeMessages = new HashMap<>();
-        if(acknowledgeMessages.get(player.getNickname()) == null)
-            acknowledgeMessages.put(player.getNickname(), new PickAckMessage());
+        //messaggio per tutti
+        for(String nickname : connectedPlayerNicknames){
+            if(acknowledgeMessages.get(nickname) == null)
+                acknowledgeMessages.put(nickname, new PickAckMessage());
+
+            acknowledgeMessages.get(nickname).setResult(player.getNickname()+ " just picked a card");
+        }
         acknowledgeMessages.get(player.getNickname()).setCards(player.getCards());
-        //messagge??
+        //messaggio al singolo
+        acknowledgeMessages.get(player.getNickname()).setResult("You just picked a card");
         return acknowledgeMessages;
     }
 
@@ -241,6 +253,7 @@ public class MessageBuilder implements GameObserver {
             if(acknowledgeMessages.get(nickname) == null)
                 acknowledgeMessages.put(nickname, new AcknowledgeMessage());
             acknowledgeMessages.get(nickname).setNextPlayer(player.getNickname());
+            acknowledgeMessages.get(nickname).setMustPick(false);
         }
         return acknowledgeMessages;
     }
