@@ -200,7 +200,7 @@ public class DynamicMap<K,T> {
         if(el!=null)
             return el.pos;
         else
-            throw new TargetNotPresentException();
+            throw new TargetNotPresentException(targetKey);
     }
 
     /**
@@ -214,7 +214,7 @@ public class DynamicMap<K,T> {
         if(el!=null)
             return el;
         else
-            throw new TargetNotPresentException();
+            throw new TargetNotPresentException(targetKey);
     }
 
     /**
@@ -225,7 +225,7 @@ public class DynamicMap<K,T> {
     public void remove(K targetKey) throws TargetNotPresentException {
         MapElement<T> el = map.remove(targetKey);
         if(el==null)
-            throw new TargetNotPresentException();
+            throw new TargetNotPresentException(targetKey);
     }
 
     /**

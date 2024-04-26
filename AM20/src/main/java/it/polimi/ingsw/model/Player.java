@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.controller.exceptions.InvalidPlayingException;
 import it.polimi.ingsw.model.cards.PointsProvider;
 import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
@@ -35,21 +36,25 @@ public class Player {
      * This attribute stands for the "table spot" of this specific player
      */
     private PlayerTable table;
+    /**
+     * This attribute tells whether the player is online or disconnected
+     */
+    private boolean online;
 
     public Player(String nickname){
         this.nickname = nickname;
         this.score = 0;
+        this.online = true;
         this.table = new PlayerTable();
     }
 
-    /*public Player(int score, String nickname, PlayableCard[] cards, StarterCard starterCard, ObjectiveCard[] secretObjective, PlayerTable table) {
-        this.score = score;
-        this.nickname = nickname;
-        this.cards = cards;
-        this.starterCard = starterCard;
-        this.secretObjective = secretObjective;
-        this.table = table;
-    }*/
+    public void setOnline(boolean online) {
+        this.online = online;
+    }
+
+    public boolean isOnline() {
+        return online;
+    }
 
     public void setStarterCard(StarterCard starterCard) {
         this.starterCard = starterCard;
@@ -87,7 +92,9 @@ public class Player {
      * This method actually puts down a card by the side that's specified by the parameter "side"
      * @param side: This attribute stands for the side of the card (front of back)
      */
-    public void positionStarterCard(int side){
+    public void positionStarterCard(int side) throws InvalidPlayingException {
+        if(starterCard.getOrder()>=0)
+            throw new InvalidPlayingException("You already played your starter card");
         table.insertStarterCard(side, this.starterCard);
     }
 
@@ -137,7 +144,9 @@ public class Player {
      * @param index: this attribute stands for the index of the card that the player want to choose
      */
     //dopo la chaimata al metodo il  sarà sempre in posizione zero e quello in posizione 1 saraà null
-    public void chooseObjectiveCard(int index){
+    public void chooseObjectiveCard(int index) throws InvalidPlayingException {
+        if(secretObjective[1] == null)
+            throw new InvalidPlayingException("You already chosen your objective card");
         this.secretObjective[0] = this.secretObjective[index];
         this.secretObjective[1] = null;
     }

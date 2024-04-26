@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.controller.exceptions.InvalidPlayingException;
 import it.polimi.ingsw.model.cards.Kingdom;
 import it.polimi.ingsw.model.cards.objective.DiagonalConfigurationObjectiveCard;
 import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
@@ -46,7 +47,7 @@ class PlayerTest {
     }
 
     @BeforeEach
-    void setUp(){
+    void setUp() throws InvalidPlayingException {
         p = new Player("ireneer");
 
         StarterCard starterCard = getExampleStarterCard();
@@ -67,6 +68,9 @@ class PlayerTest {
         vet[1] = diagonalConfigurationObjectiveCard2;
         p.setSecretObjective(vet);
         p.chooseObjectiveCard(0);
+
+        assertThrows(InvalidPlayingException.class, ()->p.positionStarterCard(PlayableCard.FRONT));
+        assertThrows(InvalidPlayingException.class, ()->p.chooseObjectiveCard(1));
 
     }
 

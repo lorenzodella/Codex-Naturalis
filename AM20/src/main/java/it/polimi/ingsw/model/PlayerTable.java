@@ -190,9 +190,9 @@ public class PlayerTable {
                 obj = c.getBackCorners();
 
             if(obj[angle] == null)
-                throw new InvalidAngleCoveredException(angle);
+                throw new InvalidAngleCoveredException(c.getID(), angle);
             if(obj[angle].isHidden())
-                throw new InvalidAngleCoveredException(angle);
+                throw new InvalidAngleCoveredException(c.getID(), angle);
         }
     }
 
