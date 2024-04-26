@@ -8,70 +8,115 @@ import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class MessageBuilder implements GameObserver {
 
-    private HashMap<String, ConnectionAckMessage> playerStartGameMessages;
-    private HashMap<String, StarterCardAckMessage> playerStartChoosingObjectiveMessages;
-    private HashMap<String, ObjectiveAckMessage> playerStartPlayingMessages;
-    private HashMap<String, AcknowledgeMessage> playerAcknowledgeMessages;
+    private HashMap<String, ConnectionAckMessage> connectionAckMessages;
+    private HashMap<String, StarterCardAckMessage> starterCardAckMessages;
+    private HashMap<String, ObjectiveAckMessage> objectiveAckMessages;
+    private HashMap<String, AcknowledgeMessage> acknowledgeMessages;
+    private Set<String> connectedPlayerNicknames;
 
+    public MessageBuilder(Set<String> players) {
+        this.connectedPlayerNicknames = players;
+    }
 
-    private List<String> playersNickname;
+    @Override
+    public HashMap<String, AcknowledgeMessage> notifyPlayerDisconnected(String playerNickname) {
+        if(acknowledgeMessages == null)
+            acknowledgeMessages = new HashMap<>();
 
-    public MessageBuilder(List<String> players) {
-        this.playersNickname = players;
+        for (String nickname : connectedPlayerNicknames) {
+            if (acknowledgeMessages.get(nickname) == null)
+                acknowledgeMessages.put(nickname, new AcknowledgeMessage());
+
+            acknowledgeMessages.get(nickname).setResult(playerNickname+" disconnected from the game");
+            acknowledgeMessages.get(nickname).setNumOfConnectedPlayers(connectedPlayerNicknames.size());
+        }
+        return acknowledgeMessages;
+    }
+
+    @Override
+    public HashMap<String, ConnectionAckMessage> notifyPlayerReconnected(Player player, Deck resourceCardDeck, Deck goldCardDeck) {
+        if (connectionAckMessages == null)
+            connectionAckMessages = new HashMap<>();
+
+        for (String nickname : connectedPlayerNicknames) {
+            if (connectionAckMessages.get(nickname) == null)
+                connectionAckMessages.put(nickname, new StartGameMessage());
+
+            connectionAckMessages.get(nickname).setResult(player.getNickname()+" reconnected to the game");
+        }
+
+        connectionAckMessages.get(player.getNickname()).setResult("You reconnected to the game");
+        connectionAckMessages.get(player.getNickname()).setGoldTop(goldCardDeck.getFirstCard());
+        connectionAckMessages.get(player.getNickname()).setResourceTop(resourceCardDeck.getFirstCard());
+        connectionAckMessages.get(player.getNickname()).setGoldVisible(goldCardDeck.getVisibleCards());
+        connectionAckMessages.get(player.getNickname()).setResourceVisible(resourceCardDeck.getVisibleCards());
+        connectionAckMessages.get(player.getNickname()).setStarterCard(player.getStarterCard());
+        connectionAckMessages.get(player.getNickname()).setInitialCards(player.getCards());
+        PlayerInfo playerInfo = new PlayerInfo();
+        playerInfo.setMap(player.getTable().getMap());
+        playerInfo.setStats(player.getTable().getStats());
+        connectionAckMessages.get(player.getNickname()).setPlayerInfo(playerInfo);
+
+        return connectionAckMessages;
     }
 
     @Override
     public HashMap<String, ConnectionAckMessage> notifyDecksCreated(Deck resourceCardDeck, Deck goldCardDeck) {
-        if (playerStartGameMessages == null)
-            playerStartGameMessages = new HashMap<>();
+        if (connectionAckMessages == null)
+            connectionAckMessages = new HashMap<>();
 
-        for (String nickname : playersNickname) {
-            if (playerStartGameMessages.get(nickname) == null)
-                playerStartGameMessages.put(nickname, new StartGameMessage());
+        for (String nickname : connectedPlayerNicknames) {
+            if (connectionAckMessages.get(nickname) == null)
+                connectionAckMessages.put(nickname, new StartGameMessage());
 
-            playerStartGameMessages.get(nickname).setGoldTop(goldCardDeck.getFirstCard());
-            playerStartGameMessages.get(nickname).setResourceTop(resourceCardDeck.getFirstCard());
-            playerStartGameMessages.get(nickname).setGoldVisible(goldCardDeck.getVisibleCards());
-            playerStartGameMessages.get(nickname).setResourceVisible(resourceCardDeck.getVisibleCards());
+            connectionAckMessages.get(nickname).setGoldTop(goldCardDeck.getFirstCard());
+            connectionAckMessages.get(nickname).setResourceTop(resourceCardDeck.getFirstCard());
+            connectionAckMessages.get(nickname).setGoldVisible(goldCardDeck.getVisibleCards());
+            connectionAckMessages.get(nickname).setResourceVisible(resourceCardDeck.getVisibleCards());
         }
-        return playerStartGameMessages;
+        return connectionAckMessages;
     }
 
     @Override
     public HashMap<String, ConnectionAckMessage> notifyStarterCards(List<Player> players) {
-        if (playerStartGameMessages == null)
-            playerStartGameMessages = new HashMap<>();
+        if (connectionAckMessages == null)
+            connectionAckMessages = new HashMap<>();
 
         for (Player p : players) {
-            if (playerStartGameMessages.get(p.getNickname()) == null)
-                playerStartGameMessages.put(p.getNickname(), new StartGameMessage());
+            if(connectedPlayerNicknames.contains(p.getNickname())) {
+                if (connectionAckMessages.get(p.getNickname()) == null)
+                    connectionAckMessages.put(p.getNickname(), new StartGameMessage());
 
-            playerStartGameMessages.get(p.getNickname()).setStarterCard(p.getStarterCard());
+                connectionAckMessages.get(p.getNickname()).setStarterCard(p.getStarterCard());
+            }
         }
-        return playerStartGameMessages;
+        return connectionAckMessages;
     }
 
     @Override
     public HashMap<String, ConnectionAckMessage> notifyInitialCards(List<Player> players) {
-        if (playerStartGameMessages == null)
-            playerStartGameMessages = new HashMap<>();
+        if (connectionAckMessages == null)
+            connectionAckMessages = new HashMap<>();
 
         for (Player p : players) {
-            if (playerStartGameMessages.get(p.getNickname()) == null)
-                playerStartGameMessages.put(p.getNickname(), new StartGameMessage());
+            if(connectedPlayerNicknames.contains(p.getNickname())){
+                if (connectionAckMessages.get(p.getNickname()) == null)
+                    connectionAckMessages.put(p.getNickname(), new StartGameMessage());
 
-            playerStartGameMessages.get(p.getNickname()).setInitialCards(p.getCards());
+                connectionAckMessages.get(p.getNickname()).setInitialCards(p.getCards());
+            }
         }
-        return playerStartGameMessages;
+        return connectionAckMessages;
     }
 
     public HashMap<String, StarterCardAckMessage> notifyStarterCardSide(Player player){
-        if(playerStartChoosingObjectiveMessages == null)
-            playerStartChoosingObjectiveMessages = new HashMap<>();
+        if(starterCardAckMessages == null)
+            starterCardAckMessages = new HashMap<>();
 
         PlayerInfo playerUpdates = new PlayerInfo();
         playerUpdates.setMap(player.getTable().getMap());
@@ -80,61 +125,63 @@ public class MessageBuilder implements GameObserver {
         HashMap <String, PlayerInfo> otherPlayerUpdates = new HashMap<>();
         otherPlayerUpdates.put(player.getNickname(), playerUpdates);
 
-        for(String nickname : playersNickname){
-            if(playerStartChoosingObjectiveMessages.get(nickname) == null)
-                playerStartChoosingObjectiveMessages.put(nickname, new StarterCardAckMessage());
+        for(String nickname : connectedPlayerNicknames){
+            if(starterCardAckMessages.get(nickname) == null)
+                starterCardAckMessages.put(nickname, new StarterCardAckMessage());
             if(!nickname.equals(player.getNickname())) {
-                playerStartChoosingObjectiveMessages.get(nickname).setOthersPlayerInfo(otherPlayerUpdates);
+                starterCardAckMessages.get(nickname).setOthersPlayerInfo(otherPlayerUpdates);
             }
         }
-        playerStartChoosingObjectiveMessages.get(player.getNickname()).setPlayerInfo(playerUpdates);
-        return playerStartChoosingObjectiveMessages;
+        starterCardAckMessages.get(player.getNickname()).setPlayerInfo(playerUpdates);
+        return starterCardAckMessages;
     }
 
     @Override
     public HashMap<String, StarterCardAckMessage> notifyObjectiveCards(ObjectiveCard[] commonObjectives, List<Player> players) {
-        if(playerStartChoosingObjectiveMessages == null)
-            playerStartChoosingObjectiveMessages = new HashMap<>();
+        if(starterCardAckMessages == null)
+            starterCardAckMessages = new HashMap<>();
 
         for(Player p : players){
-            if(playerStartChoosingObjectiveMessages.get(p.getNickname()) == null)
-                playerStartChoosingObjectiveMessages.put(p.getNickname(), new StartChoosingObjectiveMessage());
+            if(connectedPlayerNicknames.contains(p.getNickname())){
+                if (starterCardAckMessages.get(p.getNickname()) == null)
+                    starterCardAckMessages.put(p.getNickname(), new StartChoosingObjectiveMessage());
 
-            playerStartChoosingObjectiveMessages.get(p.getNickname()).setCommonObjectives(commonObjectives);
-            playerStartChoosingObjectiveMessages.get(p.getNickname()).setSecretObjectives(p.getSecretObjective());
+                starterCardAckMessages.get(p.getNickname()).setCommonObjectives(commonObjectives);
+                starterCardAckMessages.get(p.getNickname()).setSecretObjectives(p.getSecretObjective());
+            }
         }
-        return playerStartChoosingObjectiveMessages;
+        return starterCardAckMessages;
     }
 
     @Override
     public HashMap<String, ObjectiveAckMessage> notifyChosenSecretObjective(Player player) {
-        if(playerStartPlayingMessages == null)
-            playerStartPlayingMessages = new HashMap<>();
-        if(playerStartPlayingMessages.get(player.getNickname()) == null)
-            playerStartPlayingMessages.put(player.getNickname(), new ObjectiveAckMessage());
-        playerStartPlayingMessages.get(player.getNickname()).setSecretObjectives(player.getSecretObjective());
-        return playerStartPlayingMessages;
+        if(objectiveAckMessages == null)
+            objectiveAckMessages = new HashMap<>();
+        if(objectiveAckMessages.get(player.getNickname()) == null)
+            objectiveAckMessages.put(player.getNickname(), new ObjectiveAckMessage());
+        objectiveAckMessages.get(player.getNickname()).setSecretObjectives(player.getSecretObjective());
+        return objectiveAckMessages;
     }
     @Override
     public HashMap<String, ObjectiveAckMessage> notifyGameStarted(Player first) {
-        if(playerStartPlayingMessages == null)
-            playerStartPlayingMessages = new HashMap<>();
+        if(objectiveAckMessages == null)
+            objectiveAckMessages = new HashMap<>();
 
-        for(String nickname : playersNickname){
-            if(playerStartPlayingMessages.get(nickname) == null)
-                playerStartPlayingMessages.put(nickname, new StartPlayingMessage());
+        for(String nickname : connectedPlayerNicknames){
+            if(objectiveAckMessages.get(nickname) == null)
+                objectiveAckMessages.put(nickname, new StartPlayingMessage());
 
-            playerStartPlayingMessages.get(nickname).setResult("The setup phase's finished and now the game can start");
-            playerStartPlayingMessages.get(nickname).setFirstPlayer(first.getNickname());
+            objectiveAckMessages.get(nickname).setResult("The setup phase's finished and now the game can start");
+            objectiveAckMessages.get(nickname).setFirstPlayer(first.getNickname());
         }
-        playerStartPlayingMessages.get(first.getNickname()).setResult("The setup phase's finished and it's your turn");
-        return playerStartPlayingMessages;
+        objectiveAckMessages.get(first.getNickname()).setResult("The setup phase's finished and it's your turn");
+        return objectiveAckMessages;
     }
 
     @Override
     public HashMap<String, AcknowledgeMessage> notifyPlayerPlay(Player player) {
-        if(playerAcknowledgeMessages == null)
-            playerAcknowledgeMessages = new HashMap<>();
+        if(acknowledgeMessages == null)
+            acknowledgeMessages = new HashMap<>();
 
         PlayerInfo playerUpdates = new PlayerInfo();
         playerUpdates.setScore(player.getScore());
@@ -144,80 +191,77 @@ public class MessageBuilder implements GameObserver {
         HashMap <String, PlayerInfo> otherPlayerUpdates = new HashMap<>();
         otherPlayerUpdates.put(player.getNickname(), playerUpdates);
 
-        for(String nickname : playersNickname){
-            if(playerAcknowledgeMessages.get(nickname) == null)
-                playerAcknowledgeMessages.put(nickname, new PlayAckMessage());
+        for(String nickname : connectedPlayerNicknames){
+            if(acknowledgeMessages.get(nickname) == null)
+                acknowledgeMessages.put(nickname, new PlayAckMessage());
             if(!nickname.equals(player.getNickname())) {
-                playerAcknowledgeMessages.get(nickname).setOthersPlayerInfo(otherPlayerUpdates);
+                acknowledgeMessages.get(nickname).setOthersPlayerInfo(otherPlayerUpdates);
             }
         }
-        playerAcknowledgeMessages.get(player.getNickname()).setCards(player.getCards());
-        playerAcknowledgeMessages.get(player.getNickname()).setYourPlayerInfo(playerUpdates);
+        acknowledgeMessages.get(player.getNickname()).setCards(player.getCards());
+        acknowledgeMessages.get(player.getNickname()).setYourPlayerInfo(playerUpdates);
         //messagge??
-        return playerAcknowledgeMessages;
+        return acknowledgeMessages;
     }
 
     @Override
     public HashMap<String, AcknowledgeMessage> notifyPlayerPick(Player player) {
-        if(playerAcknowledgeMessages == null)
-            playerAcknowledgeMessages = new HashMap<>();
-        if(playerAcknowledgeMessages.get(player.getNickname()) == null)
-            playerAcknowledgeMessages.put(player.getNickname(), new PickAckMessage());
-        playerAcknowledgeMessages.get(player.getNickname()).setCards(player.getCards());
+        if(acknowledgeMessages == null)
+            acknowledgeMessages = new HashMap<>();
+        if(acknowledgeMessages.get(player.getNickname()) == null)
+            acknowledgeMessages.put(player.getNickname(), new PickAckMessage());
+        acknowledgeMessages.get(player.getNickname()).setCards(player.getCards());
         //messagge??
-        return playerAcknowledgeMessages;
+        return acknowledgeMessages;
     }
 
     @Override
     public HashMap<String, AcknowledgeMessage> notifyDecksModified(Deck resourceCardDeck, Deck goldCardDeck) {
-        if (playerAcknowledgeMessages == null)
-            playerAcknowledgeMessages = new HashMap<>();
+        if (acknowledgeMessages == null)
+            acknowledgeMessages = new HashMap<>();
 
-        for (String nickname : playersNickname) {
-            if (playerAcknowledgeMessages.get(nickname) == null)
-                playerAcknowledgeMessages.put(nickname, new PickAckMessage());
+        for (String nickname : connectedPlayerNicknames) {
+            if (acknowledgeMessages.get(nickname) == null)
+                acknowledgeMessages.put(nickname, new PickAckMessage());
 
-            playerAcknowledgeMessages.get(nickname).setGoldTop(goldCardDeck.getFirstCard());
-            playerAcknowledgeMessages.get(nickname).setResourceTop(resourceCardDeck.getFirstCard());
-            playerAcknowledgeMessages.get(nickname).setGoldVisible(goldCardDeck.getVisibleCards());
-            playerAcknowledgeMessages.get(nickname).setResourceVisible(resourceCardDeck.getVisibleCards());
+            acknowledgeMessages.get(nickname).setGoldTop(goldCardDeck.getFirstCard());
+            acknowledgeMessages.get(nickname).setResourceTop(resourceCardDeck.getFirstCard());
+            acknowledgeMessages.get(nickname).setGoldVisible(goldCardDeck.getVisibleCards());
+            acknowledgeMessages.get(nickname).setResourceVisible(resourceCardDeck.getVisibleCards());
         }
-        return playerAcknowledgeMessages;
+        return acknowledgeMessages;
     }
 
     @Override
     public HashMap<String, AcknowledgeMessage> notifyNextTurn(Player player) {
-        if(playerAcknowledgeMessages == null)
-            playerAcknowledgeMessages = new HashMap<>();
+        if(acknowledgeMessages == null)
+            acknowledgeMessages = new HashMap<>();
 
-        //va cambiato perché non usiamo piu il boolean isyourturn ma settiamo il nickanme del possimo player
-        for(String nickname : playersNickname){
-            if(playerAcknowledgeMessages.get(nickname) == null)
-                playerAcknowledgeMessages.put(nickname, new AcknowledgeMessage());
-            if(!nickname.equals(player.getNickname())) {
-                playerAcknowledgeMessages.get(nickname).setNextPlayer(player.getNickname());
-            }
+        for(String nickname : connectedPlayerNicknames){
+            if(acknowledgeMessages.get(nickname) == null)
+                acknowledgeMessages.put(nickname, new AcknowledgeMessage());
+            acknowledgeMessages.get(nickname).setNextPlayer(player.getNickname());
         }
-        return playerAcknowledgeMessages;
+        return acknowledgeMessages;
     }
 
     @Override
     public HashMap<String, AcknowledgeMessage> notifyLastTurn() {
-        if(playerAcknowledgeMessages == null)
-            playerAcknowledgeMessages = new HashMap<>();
+        if(acknowledgeMessages == null)
+            acknowledgeMessages = new HashMap<>();
 
-        for(String nickname : playersNickname){
-            if(playerAcknowledgeMessages.get(nickname) == null)
-                playerAcknowledgeMessages.put(nickname, new AcknowledgeMessage());
-            playerAcknowledgeMessages.get(nickname).setResult("The game's almost done... The last turn starts now!");
+        for(String nickname : connectedPlayerNicknames){
+            if(acknowledgeMessages.get(nickname) == null)
+                acknowledgeMessages.put(nickname, new AcknowledgeMessage());
+            acknowledgeMessages.get(nickname).setResult("The game's almost done... The last turn starts now!");
         }
-        return playerAcknowledgeMessages;
+        return acknowledgeMessages;
     }
 
     @Override
     public HashMap<String, AcknowledgeMessage> notifyPlayerObjectives(List<Player> players) {
-        if(playerAcknowledgeMessages == null)
-            playerAcknowledgeMessages = new HashMap<>();
+        if(acknowledgeMessages == null)
+            acknowledgeMessages = new HashMap<>();
 
         HashMap <String, PlayerInfo> otherPlayerUpdates = new HashMap<>();
         for(Player player: players){
@@ -226,33 +270,33 @@ public class MessageBuilder implements GameObserver {
             otherPlayerUpdates.put(player.getNickname(), playerUpdates);
         }
 
-        for(String nickname : playersNickname){
-            if(playerAcknowledgeMessages.get(nickname) == null)
-                playerAcknowledgeMessages.put(nickname, new AcknowledgeMessage());
+        for(String nickname : connectedPlayerNicknames){
+            if(acknowledgeMessages.get(nickname) == null)
+                acknowledgeMessages.put(nickname, new AcknowledgeMessage());
 
-            playerAcknowledgeMessages.get(nickname).setYourPlayerInfo(otherPlayerUpdates.get(nickname));
-            playerAcknowledgeMessages.get(nickname).setOthersPlayerInfo(
+            acknowledgeMessages.get(nickname).setYourPlayerInfo(otherPlayerUpdates.get(nickname));
+            acknowledgeMessages.get(nickname).setOthersPlayerInfo(
                     otherPlayerUpdates.entrySet().stream()
                             .filter(e -> !e.getKey().equals(nickname))
                             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (x, y) -> y, HashMap::new))
             );
         }
-        return playerAcknowledgeMessages;
+        return acknowledgeMessages;
     }
 
     @Override
     public HashMap<String, AcknowledgeMessage> notifyWin(Player winner) {
-        if(playerAcknowledgeMessages == null)
-            playerAcknowledgeMessages = new HashMap<>();
+        if(acknowledgeMessages == null)
+            acknowledgeMessages = new HashMap<>();
 
-        for(String nickname : playersNickname){
-            if(playerAcknowledgeMessages.get(nickname) == null)
-                playerAcknowledgeMessages.put(nickname, new AcknowledgeMessage());
+        for(String nickname : connectedPlayerNicknames){
+            if(acknowledgeMessages.get(nickname) == null)
+                acknowledgeMessages.put(nickname, new AcknowledgeMessage());
             if(!winner.getNickname().equals(nickname))
-                playerAcknowledgeMessages.get(nickname).setResult(winner.getNickname() + " wins the game!");
+                acknowledgeMessages.get(nickname).setResult(winner.getNickname() + " wins the game!");
         }
-        playerAcknowledgeMessages.get(winner.getNickname()).setResult("You're the winner!");
-        return playerAcknowledgeMessages;
+        acknowledgeMessages.get(winner.getNickname()).setResult("You're the winner!");
+        return acknowledgeMessages;
     }
 
 

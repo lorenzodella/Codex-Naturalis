@@ -20,5 +20,10 @@ public class Message {
         this.exc = exc;
     }
 
-
+    @Override
+    public String toString() {
+        return "Message{" +
+                "result='" + getResult() + '\'' +
+                '}';
+    }
 }

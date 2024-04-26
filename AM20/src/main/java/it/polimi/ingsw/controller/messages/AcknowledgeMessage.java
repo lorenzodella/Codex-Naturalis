@@ -9,7 +9,15 @@ import java.util.List;
 public class AcknowledgeMessage extends Message {
     private String nextPlayer;
     private List<PlayableCard> cards;
+    private int numOfConnectedPlayers;
 
+    public int getNumOfConnectedPlayers() {
+        return numOfConnectedPlayers;
+    }
+
+    public void setNumOfConnectedPlayers(int numOfConnectedPlayers) {
+        this.numOfConnectedPlayers = numOfConnectedPlayers;
+    }
 
     public PlayerInfo getYourPlayerInfo() {
         return null;
@@ -81,5 +89,12 @@ public class AcknowledgeMessage extends Message {
 
     public void setMustPick(boolean mustPick) {
 
+    }
+
+    @Override
+    public String toString() {
+        return "AcknowledgeMessage{" +
+                "result='" + getResult() + '\'' +
+                '}';
     }
 }
