@@ -18,6 +18,19 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Controller implements GameManager {
+    /**
+     * these following attributes stay for the game's phase:
+     * NOGAME: stays for the first game's phase, where there's no active game and the controller is just waiting for
+     *         some player to activate a new game.
+     * PRELIMINARY: stays for the phase where the controller waits for all players to join the game (the number of
+     *              players that have to join is numplayer which is decided in the NOGAME phase) and the finally
+     *              create the new game session
+     * STARTER: stays for the game's phase where all players choose for their starter card's side
+     * OBJECTIVES: stays for the game's phase where all players choose for their secret objective
+     * PLAY: stays for the game's phase where a player plays a card down to the player table
+     * PICK: stays for the game's phase where, the same player that has just played a card, now draws a card from
+     *       the deck or draws one of the two visible cards (gold or resource)
+     */
     private static final int NOGAME = -1;
     private static final int PRELIMINARY = 0;
     private static final int STARTER = 1;
@@ -28,8 +41,20 @@ public class Controller implements GameManager {
 
     private GameObservable gameModel;
     private GameObserver messageBuilder;
+
+    /**
+     * This attribute stays for the list of all players that are playing the game at the moment
+     */
     private List<String> players;
+    /**
+     * This attribute stays for the number of player that are playing the game at the moment
+     */
     private int numPlayers;
+    /**
+     * This attribute says if the players are playing the final turn (where there's no cards left in the decks or
+     * if someone has reached 20 points) and especially it says how many rounds are left until the end of the game
+     * ..................................
+     */
     private int missingRounds = -1;
 
     public Controller(){
@@ -56,6 +81,15 @@ public class Controller implements GameManager {
         return missingRounds;
     }
 
+    /**
+     * This method is one of the NOGAME pahse methods and it allows to have a list that contains all the players'
+     * nicknames.
+     * @param playerNickname : the first player nickname
+     * @param numPlayers : the number of player that the first player wants to play with
+     * @return a message of success --> you created a new game
+     * @throws InvalidArgumentException if the numplayers is incorrect (given by the rules)
+     * @throws InvalidPlayingException if the phase is not the NOGAME phase
+     */
     @Override
     public Message newGame(String playerNickname, int numPlayers) throws InvalidArgumentException, InvalidPlayingException {
         if(phase!=NOGAME)
@@ -73,7 +107,7 @@ public class Controller implements GameManager {
 
     /**
      * This method allows to disconnect a player from the game (for example because of network failure).
-     * Return messages contain the number of remaining players: if there's only one, caller should start a timer in order to end game.
+     * Return messages containing the number of remaining players: if there's only one, caller should start a timer in order to end game.
      * @param nickname player who disconnected
      * @return messages to be sent to connected players
      * @throws InvalidConnectionStateException if player is already disconnected
@@ -170,24 +204,50 @@ public class Controller implements GameManager {
         return tmp;
     }
 
+    /**
+     * This method allows the players to actually start a game and it's a PRELIMINARY phase method.
+     * This method is called directly by the joinGame method and, given the list of the connected players, it allows to
+     * initialize the resource and gold decks, it gives the starter cards and the 3 intial cards to all players.
+     * @return a StartGameMessage that says that all players have just joined and it also gives all the cards and decks
+     * that every player now needs to be able to actually start playing
+     */
     private HashMap<String, ConnectionAckMessage> startGame(){
         phase = STARTER;
         gameModel = new Game(players.stream().map(Player::new).collect(Collectors.toList()));
+
         //CREO NUOVO MESSAGE BUILDER PASSANDOGLI LA NUOVA LISTA DEI CONNECTED PLAYERS
         this.messageBuilder = new MessageBuilder(gameModel.getConnectedPlayers());
+
         Deck[] tmp = gameModel.initDecks();
         messageBuilder.notifyDecksCreated(tmp[Deck.RESOURCE_CARDS], tmp[Deck.GOLD_CARDS]);
         List<Player> playerList = gameModel.giveStarterCards();
         messageBuilder.notifyStarterCards(playerList);
         List<Player> playerList2 =  gameModel.giveInitialCards();
+
         //QUESTO RITORNA DEGLI STARTGAMEMESSAGE
         HashMap<String, ConnectionAckMessage> msg = messageBuilder.notifyInitialCards(playerList2);
         for(ConnectionAckMessage message: msg.values()){
-            message.setResult("All players connected");
+            message.setResult("All players joined");
         }
         return msg;
     }
 
+    /**
+     * This method allows, to every connected player, to actually choose if they want to play the starter card
+     * by the front or the back and it's a STARTER phase method.
+     * It returns a StarterCardAckMessage or it specifically returns a startChoosingObjectiveMessage depending on
+     * if all players've already chosen the starter card side or if someone hasn't done it yet.
+     * @param playerNickname the player that is choosing the side of the card
+     * @param side the side that the player's just chosen (could be FRONT or BACK)
+     * @return
+     * if all players've chosen the side of their starter card, the method returns a StartChoosingObjectiveMessage which
+     * gives the player infos (based on how they put down their starter card) and it also gives the common and secret
+     * objectives so that the OBJECTIVES phase can start.
+     * Otherwise, the method returns a StarterCardAckMessage in order to signalize that the player's chosen the side
+     * correctly and it gives them the player infos of that playing.
+     * @throws InvalidArgumentException
+     * @throws InvalidPlayingException if someone tries to put the starter card in an unappropriated position
+     */
     @Override
     public HashMap<String, StarterCardAckMessage> chooseStarterCardSide(String playerNickname, int side) throws InvalidArgumentException, InvalidPlayingException {
         if(phase!=STARTER)
@@ -199,7 +259,7 @@ public class Controller implements GameManager {
         Player player = gameModel.chooseStarterCardSide(side, playerNickname);
 
         for(Player p : gameModel.getPlayers()){
-            //check if someone has not played his starterCard yet
+            //check if someone has not played their starterCard yet
             if(p.getStarterCard().getOrder() < 0){
                 //negativo
                 HashMap<String, StarterCardAckMessage> msg = messageBuilder.notifyStarterCardSide(player); //setta playerinfo
@@ -219,6 +279,22 @@ public class Controller implements GameManager {
         return msg1;
     }
 
+    /**
+     * This method is called in the OBJECTIVE phase and it allows, to the connected players, to choose between the two
+     * secret objectives.
+     * It returns anObjectiveAckMessage or it specifically returns a StartPlayingMessage depending on
+     * if all players've already chosen their objective or if someone hasn't done it yet.
+     * @param playerNickname the player that is choosing the secret objective
+     * @param index the index (could only be 0 or 1) of the secret objective that they've chosen (in the array of two items).
+     * @return
+     * if all players've chosen their objective the method returns a StarPlayingMessage which
+     * gives the just chosen secret objective, the nickname of the first player that needs to start playing and
+     * so that the PLAY phase can start.
+     * Otherwise, the method returns an ObjectiveAckMessage in order to signalize that the player's chosen the objective
+     * correctly and it gives them the just chosen secret objective.
+     * @throws InvalidArgumentException if the par are not valid
+     * @throws InvalidPlayingException if the phase is not the OBJECTIVE
+     */
     @Override
     public HashMap<String, ObjectiveAckMessage> chooseObjective(String playerNickname, int index) throws InvalidArgumentException, InvalidPlayingException {
         if(phase!=OBJECTIVES)
@@ -248,6 +324,31 @@ public class Controller implements GameManager {
         return msg1;
     }
 
+    /**
+     * This is PLAY phase method and it allows the player to actually play a card down to their table player.
+     * Basically the player says
+     * 1. which of their cards wants to play,
+     * 2. the side they want it to be played by,
+     * 3. the card that they want to cover by playing their card
+     * 4. the angle of the card that they want to cover
+     * @param playerNickname the nickname of the player that's playing
+     * @param indexCard the card that they want to play
+     * @param angle the angle of the card that they want to cover
+     * @param targetID the card that they want to cover
+     * @param side the side they want to play the card by
+     * @return
+     * it could return
+     * 1. PlayAckMessage("Pick a card", yourPlayerInfo, mustPick: "True") if there are still cards to be drawn
+     * 2. PlayAckMessage("Your turn is over", YourPlayerInfo, NextPlayer, mustPick: "False") if there aren't any more cards to be drawn
+     * @throws InvalidArgumentException if the par are invalid
+     * @throws TargetNotPresentException
+     * @throws InvalidAngleCoveredException
+     * @throws InvalidPositionException
+     * @throws RequirementsNotRespectedException 
+     * @throws InvalidPlayingException if the phase is not PLAY or if it's not the player's turn or if the player is now
+     * by himself and needs to wait for the others to reconnect
+     * @throws StopGameException
+     */
     @Override
     public HashMap<String, AcknowledgeMessage> playCard(String playerNickname, int indexCard, int angle, String targetID, int side)
             throws InvalidArgumentException, TargetNotPresentException,
@@ -280,6 +381,18 @@ public class Controller implements GameManager {
 
     }
 
+    /**
+     * This is a PICK phase method and it allows the player to pick a card from the specified deck.
+     * @param playerNickname the player that needs to pick a card from the deck now
+     * @param deck the deck that the player needs to pick a card from
+     * @return it returns a PickAckMessage that specified that their turn is over, it gives them their new player infos
+     * and says who the next player is.
+     * @throws InvalidArgumentException
+     * @throws FinishedCardStackException
+     * @throws InvalidPlayingException if the phase is not PLAY or if it's not the player's turn or if the player is now
+     * by himself and needs to wait for the others to reconnect
+     * @throws StopGameException
+     */
     @Override
     public HashMap<String, AcknowledgeMessage> pickCard(String playerNickname, int deck) throws InvalidArgumentException, FinishedCardStackException,
             InvalidPlayingException, StopGameException {
@@ -301,6 +414,19 @@ public class Controller implements GameManager {
         return msg;
     }
 
+    /**
+     *  This is a PICK phase method and it allows the player to pick one of the two visible cards (could be from the
+     *  resource or the gold visible cards).
+     * @param playerNickname the nickname of the player that needs to pick a card
+     * @param deck the deck of the visible cards (could be gold or resource)
+     * @param index teh index of the array that stands for the two visible cards (could only be 0 or 1)
+     * @return it returns a PickAckMessage that specified that their turn is over, it gives them their new player infos
+     *         and says who the next player is.
+     * @throws InvalidArgumentException
+     * @throws FinishedCardStackException
+     * @throws InvalidPlayingException
+     * @throws StopGameException
+     */
     @Override
     public HashMap<String, AcknowledgeMessage> pickCard(String playerNickname, int deck, int index) throws InvalidArgumentException, FinishedCardStackException,
             InvalidPlayingException, StopGameException {
@@ -322,6 +448,15 @@ public class Controller implements GameManager {
         return msg;
     }
 
+    /**
+     * This method could be called either in the PLAY or in the PICK phase depending on the situation.
+     * This method:
+     * 1. checks if the player has reached 20 points after every playing of a card
+     * 2. checks if there's no cards to be picked up
+     * 3. allows the final turn to begin
+     * @return .......
+     * @throws StopGameException if nobody is connected at the moment
+     */
     private HashMap<String, AcknowledgeMessage> checkEndGame() throws StopGameException{
         HashMap<String, AcknowledgeMessage> msg = null;
         //if game ended but last turn not started yet
