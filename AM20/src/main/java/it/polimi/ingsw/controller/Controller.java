@@ -165,7 +165,6 @@ public class Controller implements GameManager {
             for(String nickname: players){
                 tmp.put(nickname, new ConnectionAckMessage());
                 tmp.get(nickname).setResult("New player joined");
-                tmp.get(nickname).setGameStarts(false);
             }
         }
         return tmp;
@@ -185,7 +184,6 @@ public class Controller implements GameManager {
         HashMap<String, ConnectionAckMessage> msg = messageBuilder.notifyInitialCards(playerList2);
         for(ConnectionAckMessage message: msg.values()){
             message.setResult("All players connected");
-            message.setGameStarts(true);
         }
         return msg;
     }
@@ -205,9 +203,6 @@ public class Controller implements GameManager {
             if(p.getStarterCard().getOrder() < 0){
                 //negativo
                 HashMap<String, StarterCardAckMessage> msg = messageBuilder.notifyStarterCardSide(player); //setta playerinfo
-                for(StarterCardAckMessage message: msg.values()){
-                    message.setChooseObjective(false);
-                }
                 return msg;
             }
         }
@@ -218,7 +213,6 @@ public class Controller implements GameManager {
         //poi aggiungo le informazioni dell'ultimo che ha scelto
         HashMap<String, StarterCardAckMessage> msg1 = messageBuilder.notifyStarterCardSide(player); //setta playerinfo
         for(StarterCardAckMessage message: msg1.values()){
-            message.setChooseObjective(true);
             message.setResult("Everyone's chosen the side of the starter card");
         }
         phase = OBJECTIVES;
@@ -240,9 +234,6 @@ public class Controller implements GameManager {
             //negativo
             if(p.getSecretObjective()[1] != null){
                 HashMap<String, ObjectiveAckMessage> msg = messageBuilder.notifyChosenSecretObjective(player); //setti secretobjectives[]
-                for(ObjectiveAckMessage message: msg.values()){
-                    message.setStartPlaying(false);
-                }
                 return msg;
             }
         }
@@ -251,7 +242,6 @@ public class Controller implements GameManager {
         messageBuilder.notifyGameStarted(first);
         HashMap<String, ObjectiveAckMessage> msg1 = messageBuilder.notifyChosenSecretObjective(player); //setti secretobjectives[]
         for(ObjectiveAckMessage message: msg1.values()){
-            message.setStartPlaying(true);
             message.setResult("The setup phase's finished and now the game can start");
         }
         phase = PLAY;

@@ -110,14 +110,9 @@ public class PlayerTable {
      */
     public void insertCard(PlayableCard card, int angle, String targetID, int side) throws InvalidAngleCoveredException, TargetNotPresentException, InvalidPositionException, RequirementsNotRespectedException {
 
-
         //if card is gold checkRequirements
-        if(card instanceof GoldCard){
-            if(!this.stats.checkRequirements(card.getRequirements())){
-                throw new RequirementsNotRespectedException(card.getRequirements());
-                //return;
-            }
-
+        if(!this.stats.checkRequirements(card.getRequirements())){
+            throw new RequirementsNotRespectedException(card.getRequirements());
         }
 
         this.map.insert(card.getID(), card, targetID, angle);

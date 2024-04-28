@@ -18,6 +18,11 @@ public class StartGameMessage extends ConnectionAckMessage {
     private PlayerInfo playerInfo;
 
 
+    @Override
+    public boolean doesGameStarts() {
+        return true;
+    }
+
     public PlayableCard getGoldTop() {
         return goldTop;
     }

@@ -7,15 +7,11 @@ import it.polimi.ingsw.model.cards.playable.StarterCard;
 import java.util.List;
 
 public class ConnectionAckMessage extends Message{
-    private  boolean gameStarts;
 
     public boolean doesGameStarts() {
-        return gameStarts;
+        return false;
     }
 
-    public void setGameStarts(boolean gameStarts) {
-        this.gameStarts = gameStarts;
-    }
 
     public PlayableCard getGoldTop() {
         return null;

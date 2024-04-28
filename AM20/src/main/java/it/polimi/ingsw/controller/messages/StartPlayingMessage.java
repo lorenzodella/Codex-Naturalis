@@ -4,6 +4,11 @@ public class StartPlayingMessage extends ObjectiveAckMessage{
     private String firstPlayer;
 
     @Override
+    public boolean shouldStartPlaying() {
+        return true;
+    }
+
+    @Override
     public String getFirstPlayer() {
         return firstPlayer;
     }

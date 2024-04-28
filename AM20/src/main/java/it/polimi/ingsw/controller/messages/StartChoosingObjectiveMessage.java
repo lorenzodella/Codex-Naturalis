@@ -8,6 +8,11 @@ public class StartChoosingObjectiveMessage extends StarterCardAckMessage {
     private ObjectiveCard[] secretObjectives;
 
     @Override
+    public boolean shouldChooseObjective() {
+        return true;
+    }
+
+    @Override
     public ObjectiveCard[] getCommonObjectives() {
         return commonObjectives;
     }

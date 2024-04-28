@@ -3,17 +3,13 @@ package it.polimi.ingsw.controller.messages;
 import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
 
 public class ObjectiveAckMessage extends Message {
-    private boolean startPlaying;
     private ObjectiveCard[] secretObjectives;
 
 
     public boolean shouldStartPlaying() {
-        return startPlaying;
+        return false;
     }
 
-    public void setStartPlaying(boolean startPlaying) {
-        this.startPlaying = startPlaying;
-    }
 
     public ObjectiveCard[] getSecretObjectives() {
         return secretObjectives;

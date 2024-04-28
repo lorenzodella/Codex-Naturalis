@@ -7,18 +7,14 @@ import java.util.HashMap;
 
 public class StarterCardAckMessage extends Message {
 
-    private boolean chooseObjective;
     private PlayerInfo playerInfo;
     private HashMap<String, PlayerInfo> othersPlayerInfo;
 
 
     public boolean shouldChooseObjective() {
-        return chooseObjective;
+        return false;
     }
 
-    public void setChooseObjective(boolean chooseObjective) {
-        this.chooseObjective = chooseObjective;
-    }
 
     public PlayerInfo getPlayerInfo() {
         return playerInfo;

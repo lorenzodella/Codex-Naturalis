@@ -32,4 +32,13 @@ public class PlayerInfo {
     public void setStats(PlayerStats stats) {
         this.stats = stats;
     }
+
+    @Override
+    public String toString() {
+        return "PlayerInfo{" +
+                "score=" + score +
+                ", map=" + map +
+                ", stats=" + stats +
+                '}';
+    }
 }
