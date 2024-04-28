@@ -1,10 +1,9 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.controller.exceptions.InvalidPlayingException;
+import it.polimi.ingsw.model.exceptions.InvalidPlayingException;
 import it.polimi.ingsw.model.cards.Corner;
 import it.polimi.ingsw.model.cards.Kingdom;
 import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
-import it.polimi.ingsw.model.cards.playable.GoldCard;
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.model.cards.playable.ResourceCard;
 import it.polimi.ingsw.model.cards.playable.StarterCard;
@@ -92,7 +91,7 @@ class GameTest {
     }
 
     @Test
-    void invalidPlaying() throws InvalidArgumentException, InvalidPlayingException {
+    void invalidPlaying() throws InvalidArgumentException, InvalidPlayingException, RequirementsNotRespectedException, TargetNotPresentException, InvalidAngleCoveredException, InvalidPositionException {
         game.chooseStarterCardSide(PlayableCard.FRONT, game.getCurrPlayer().getNickname());
 
         StarterCard s_ok = game.getCurrPlayer().getStarterCard();
@@ -103,13 +102,21 @@ class GameTest {
         assertThrows(InvalidArgumentException.class, ()->game.playCard(1, Corner.UL, s_ok.getID(), 3));
         assertThrows(TargetNotPresentException.class, ()->game.playCard(1, Corner.UL, s_notok.getID(), PlayableCard.FRONT));
         assertThrows(InvalidPositionException.class, ()->game.playCard(1, 4, s_ok.getID(), PlayableCard.FRONT));
+        assertThrows(RequirementsNotRespectedException.class, ()->game.playCard(2, Corner.UL, s_ok.getID(), PlayableCard.FRONT));
+
+        //try to play a card on a coverable angle but this card would also cover a not-coverable angle of another card
+        PlayableCard particularCard = getExampleResourceCard("R13"); //this card's UR corner is not coverable
+        game.getCurrPlayer().getTable().insertCard(particularCard, Corner.UL, s_ok.getID(), PlayableCard.FRONT); //force particular card position
+        PlayableCard playedCard = game.getCurrPlayer().getCards().get(1);
+        game.playCard(1, Corner.UR, s_ok.getID(), PlayableCard.BACK);
+        assertThrows(InvalidAngleCoveredException.class, ()->game.playCard(0, Corner.UL, playedCard.getID(), PlayableCard.FRONT));
 
         assertThrows(InvalidArgumentException.class, ()->game.pickCard(5));
         assertThrows(InvalidArgumentException.class, ()->game.pickCard(Deck.RESOURCE_CARDS, 4));
     }
 
     @Test
-    void nextTurn(){
+    void nextTurn() throws InvalidPlayingException {
         List<Player> p = game.getPlayers();
         for (int i = 0; i < game.getPlayers().size()-1; i++) {
             game.nextTurn();
@@ -120,7 +127,7 @@ class GameTest {
     }
 
     @Test
-    void nextPlayerDisconnected(){
+    void nextPlayerDisconnected() throws InvalidPlayingException {
         List<Player> p = game.getPlayers();
         p.get(1).setOnline(false);
         game.nextTurn();
@@ -128,7 +135,7 @@ class GameTest {
     }
 
     @Test
-    void curPlayerDisconnected(){
+    void curPlayerDisconnected() throws InvalidPlayingException {
         List<Player> p = game.getPlayers();
         game.nextTurn();
         assertEquals(game.getCurrPlayer(), p.get(1));
@@ -138,6 +145,9 @@ class GameTest {
         p.get(3).setOnline(false);
         game.nextTurn();
         assertEquals(game.getCurrPlayer(), p.get(0));
+
+        p.get(0).setOnline(false);
+        assertThrows(InvalidPlayingException.class, ()->game.nextTurn());
     }
 
     @Test
@@ -165,39 +175,38 @@ class GameTest {
     }
 
     @Test
-    void endWinner() throws InvalidArgumentException, TargetNotPresentException, InvalidAngleCoveredException, InvalidPositionException, FinishedCardStackException, RequirementsNotRespectedException, InvalidPlayingException {
-        int cardToPlay = 2;
+    void endWinner() throws InvalidArgumentException, TargetNotPresentException, InvalidAngleCoveredException, InvalidPositionException, FinishedCardStackException, RequirementsNotRespectedException, InvalidPlayingException, DrawMatchException {
         Player p = game.getCurrPlayer();
         game.chooseStarterCardSide(PlayableCard.FRONT, p.getNickname());
 
         PlayableCard oldc = p.getStarterCard();
-        PlayableCard newc = p.getCards().get(cardToPlay);
-        if(newc.getID().equals("G79")) { //this card can't be covered UR and UL
-            cardToPlay = 1;
-            newc = p.getCards().get(cardToPlay);
-        }
-        addRequirementsOfGoldCard(p.getTable(), newc);
-        game.playCard(cardToPlay, Corner.UR, oldc.getID(), PlayableCard.FRONT);
-
-        while(!game.checkTheEnd()) {
+        PlayableCard newc;
+        do{
             assertFalse(p.getScore()>=20);
-            game.pickCard(Deck.GOLD_CARDS);
-            oldc = newc;
-            newc = p.getCards().get(cardToPlay);
-            if(newc.getID().equals("G79")) { //this card can't be covered UR and UL
-                cardToPlay = cardToPlay==1 ? 2 : 1;
-                newc = p.getCards().get(cardToPlay);
-            }
+            newc = p.getCards().get(2);
             addRequirementsOfGoldCard(p.getTable(), newc);
-            try {
-                game.playCard(cardToPlay, Corner.UR, oldc.getID(), PlayableCard.FRONT);
-            } catch (InvalidAngleCoveredException e) {
-                game.playCard(cardToPlay, Corner.UL, oldc.getID(), PlayableCard.FRONT);
+            if(newc.getID().equals("G79")){ //this card can't be covered UR and UL
+                game.playCard(2, Corner.DR, p.getStarterCard().getID(), PlayableCard.FRONT);
             }
-        }
+            else{
+                try {
+                    game.playCard(2, Corner.UR, oldc.getID(), PlayableCard.FRONT);
+                } catch (InvalidAngleCoveredException e) {
+                    game.playCard(2, Corner.UL, oldc.getID(), PlayableCard.FRONT);
+                }
+                oldc = newc;
+            }
+            game.pickCard(Deck.GOLD_CARDS);
+        }while(!game.checkTheEnd());
+
         assertTrue(p.getScore()>=20);
         assertEquals(p, game.checkWinner());
         assertTrue(game.checkTheEnd());
+    }
+
+    @Test
+    void draw() {
+        assertThrows(DrawMatchException.class, () -> game.checkWinner());
     }
 
     void addRequirementsOfGoldCard(PlayerTable playerTable, PlayableCard gc){

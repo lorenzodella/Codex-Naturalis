@@ -1,13 +1,12 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.controller.exceptions.InvalidPlayingException;
+import it.polimi.ingsw.model.exceptions.InvalidPlayingException;
 import it.polimi.ingsw.model.cards.PointsProvider;
 import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.model.cards.playable.StarterCard;
 import it.polimi.ingsw.model.exceptions.*;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.controller.exceptions.InvalidPlayingException;
+import it.polimi.ingsw.model.exceptions.InvalidPlayingException;
 import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.model.cards.playable.StarterCard;
@@ -309,11 +309,13 @@ public class Game implements GameObservable{
     }
 
     /**
-     * Sets current player as the next player, following playing order.
+     * Sets current player as the next player, following playing order and checking if he's online.
      * @return true if next player is the first player, so a new turn started
      */
     @Override
-    public boolean nextTurn() {
+    public boolean nextTurn() throws InvalidPlayingException{
+        if(getConnectedPlayers().isEmpty())
+            throw new InvalidPlayingException("No one is connected");
         boolean isNewTurn = false;
         do {
             int cur = players.indexOf(currPlayer);
@@ -382,13 +384,16 @@ public class Game implements GameObservable{
      */
     //da decidere come gestire il caso di parità
     @Override
-    public Player checkWinner(){
+    public Player checkWinner() throws DrawMatchException{
         Player winner = players.get(0);
         for(Player p :players){
             int point = p.getScore();
-            if(point >= winner.getScore())
+            if(point > winner.getScore())
                 winner = p;
         }
+        final Player tmpWinner = winner;
+        if(players.stream().filter(p -> p.getScore() == tmpWinner.getScore()).count() > 1)
+            throw new DrawMatchException();
         return winner;
     }
 

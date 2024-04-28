@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.controller.exceptions.InvalidPlayingException;
+import it.polimi.ingsw.model.exceptions.InvalidPlayingException;
 import it.polimi.ingsw.model.cards.Kingdom;
 import it.polimi.ingsw.model.cards.objective.DiagonalConfigurationObjectiveCard;
 import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
@@ -53,6 +53,9 @@ class PlayerTest {
         StarterCard starterCard = getExampleStarterCard();
         p.setStarterCard(starterCard);
         p.positionStarterCard(PlayableCard.FRONT);
+        for(Kingdom k : Kingdom.values()){
+            assertEquals(1, p.getTable().getStats().getNumberOfResources(k));
+        }
 
         LinkedList<PlayableCard> list = new LinkedList<>();
         list.add(getExamplePointsGoldCard("G48"));

@@ -263,7 +263,7 @@ public class PlayerTable {
         HashSet<PlayableCard> tmp = new HashSet<>();
         try {
             for (int n = 0; n < 3; n++) {
-                if (card.getCardKingdom()!=null && card.getCardKingdom().equals(kingdom) && !alreadyUsedCards.contains(card)) {
+                if (card!=null && card.getCardKingdom()!=null && card.getCardKingdom().equals(kingdom) && !alreadyUsedCards.contains(card)) {
                     tmp.add(card);
                     card = map.getElementAt(card.getID(), corner);
                 } else

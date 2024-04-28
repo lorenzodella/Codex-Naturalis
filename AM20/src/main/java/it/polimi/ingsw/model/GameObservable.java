@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.controller.exceptions.InvalidPlayingException;
+import it.polimi.ingsw.model.exceptions.InvalidPlayingException;
 import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.model.exceptions.*;
 
@@ -29,9 +29,9 @@ public interface GameObservable {
     boolean areDeckFinished();
     Player pickCard(int deck, int visibleCardIndex) throws FinishedCardStackException, InvalidArgumentException;
     Player pickCard(int deck) throws FinishedCardStackException, InvalidArgumentException;
-    boolean nextTurn();
+    boolean nextTurn() throws InvalidPlayingException;
     boolean checkTheEnd();
     List<Player> computePlayerSecretObjectives();
     List<Player> computeCommonObjectives();
-    Player checkWinner();
+    Player checkWinner() throws DrawMatchException;
 }

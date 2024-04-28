@@ -48,10 +48,13 @@ public class Deck {
 
     /**
      * This method allows to see the card on the top of the deck.
-     * @return the first card
+     * @return the first card, null if deck is empty
      */
     public PlayableCard getFirstCard(){
-        return cards.peek();
+        if(cards.isEmpty())
+            return null;
+        else
+            return cards.peek();
     }
 
     /**
