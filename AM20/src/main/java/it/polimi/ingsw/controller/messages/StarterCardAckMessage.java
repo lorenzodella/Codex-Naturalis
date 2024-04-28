@@ -12,7 +12,7 @@ public class StarterCardAckMessage extends Message {
     private HashMap<String, PlayerInfo> othersPlayerInfo;
 
 
-    public boolean isChooseObjective() {
+    public boolean shouldChooseObjective() {
         return chooseObjective;
     }
 

@@ -1,7 +1,7 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.controller.exceptions.CannotJoinGameException;
-import it.polimi.ingsw.controller.exceptions.InvalidPlayingException;
+import it.polimi.ingsw.model.exceptions.InvalidPlayingException;
 import it.polimi.ingsw.controller.messages.*;
 import it.polimi.ingsw.controller.exceptions.StopGameException;
 import it.polimi.ingsw.model.exceptions.*;
@@ -23,9 +23,9 @@ public interface GameManager {
     HashMap<String, AcknowledgeMessage> playCard(String playerNickname, int indexCard, int angle, String targetID, int side)
             throws InvalidArgumentException, TargetNotPresentException,
             InvalidAngleCoveredException, InvalidPositionException, RequirementsNotRespectedException,
-            InvalidPlayingException;
+            InvalidPlayingException, StopGameException;
 
-    HashMap<String, AcknowledgeMessage> pickCard(String playerNickname, int deck) throws InvalidArgumentException, FinishedCardStackException, InvalidPlayingException;
+    HashMap<String, AcknowledgeMessage> pickCard(String playerNickname, int deck) throws InvalidArgumentException, FinishedCardStackException, InvalidPlayingException, StopGameException;
 
-    HashMap<String, AcknowledgeMessage> pickCard(String playerNickname, int deck, int index) throws InvalidArgumentException, FinishedCardStackException, InvalidPlayingException;
+    HashMap<String, AcknowledgeMessage> pickCard(String playerNickname, int deck, int index) throws InvalidArgumentException, FinishedCardStackException, InvalidPlayingException, StopGameException;
 }

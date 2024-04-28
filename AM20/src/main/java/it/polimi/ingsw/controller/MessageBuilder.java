@@ -131,9 +131,11 @@ public class MessageBuilder implements GameObserver {
                 starterCardAckMessages.put(nickname, new StarterCardAckMessage());
             if(!nickname.equals(player.getNickname())) {
                 starterCardAckMessages.get(nickname).setOthersPlayerInfo(otherPlayerUpdates);
+                starterCardAckMessages.get(nickname).setResult(player.getNickname()+" has chosen the side of the starter card");
             }
         }
         starterCardAckMessages.get(player.getNickname()).setPlayerInfo(playerUpdates);
+        starterCardAckMessages.get(player.getNickname()).setResult("You chose the side of the starter card");
         return starterCardAckMessages;
     }
 
@@ -161,6 +163,7 @@ public class MessageBuilder implements GameObserver {
         if(objectiveAckMessages.get(player.getNickname()) == null)
             objectiveAckMessages.put(player.getNickname(), new ObjectiveAckMessage());
         objectiveAckMessages.get(player.getNickname()).setSecretObjectives(player.getSecretObjective());
+        objectiveAckMessages.get(player.getNickname()).setResult("You chose your secret objective");
         return objectiveAckMessages;
     }
     @Override
@@ -172,10 +175,8 @@ public class MessageBuilder implements GameObserver {
             if(objectiveAckMessages.get(nickname) == null)
                 objectiveAckMessages.put(nickname, new StartPlayingMessage());
 
-            objectiveAckMessages.get(nickname).setResult("The setup phase's finished and now the game can start");
             objectiveAckMessages.get(nickname).setFirstPlayer(first.getNickname());
         }
-        objectiveAckMessages.get(first.getNickname()).setResult("The setup phase's finished and it's your turn");
         return objectiveAckMessages;
     }
 
@@ -206,7 +207,6 @@ public class MessageBuilder implements GameObserver {
 
         acknowledgeMessages.get(player.getNickname()).setResult("You just played a card");
         acknowledgeMessages.get(player.getNickname()).setMustPick(true);
-        //messagge??
         return acknowledgeMessages;
     }
 

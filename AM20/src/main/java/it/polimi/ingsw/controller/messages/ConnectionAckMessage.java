@@ -9,7 +9,7 @@ import java.util.List;
 public class ConnectionAckMessage extends Message{
     private  boolean gameStarts;
 
-    public boolean isGameStarts() {
+    public boolean doesGameStarts() {
         return gameStarts;
     }
 

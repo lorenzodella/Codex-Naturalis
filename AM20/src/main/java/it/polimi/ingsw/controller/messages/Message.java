@@ -1,6 +1,8 @@
 package it.polimi.ingsw.controller.messages;
 
-public class Message {
+import java.io.Serializable;
+
+public class Message implements Serializable {
     private String result;  // positivo
     private Exception exc; // negativo
 

@@ -83,7 +83,7 @@ public class AcknowledgeMessage extends Message {
         this.nextPlayer = nextPlayer;
     }
 
-    public boolean isMustPick() {
+    public boolean mustPick() {
         return false;
     }
 

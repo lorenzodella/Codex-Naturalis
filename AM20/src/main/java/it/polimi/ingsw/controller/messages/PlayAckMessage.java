@@ -7,7 +7,6 @@ import java.util.HashMap;
 public class PlayAckMessage extends AcknowledgeMessage{
     private PlayerInfo yourPlayerInfo;
     private HashMap<String, PlayerInfo> othersPlayerInfo;
-
     private boolean mustPick;
 
     @Override
@@ -31,7 +30,7 @@ public class PlayAckMessage extends AcknowledgeMessage{
     }
 
     @Override
-    public boolean isMustPick() {
+    public boolean mustPick() {
         return mustPick;
     }
 

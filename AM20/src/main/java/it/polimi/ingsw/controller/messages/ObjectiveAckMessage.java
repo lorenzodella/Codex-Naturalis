@@ -7,7 +7,7 @@ public class ObjectiveAckMessage extends Message {
     private ObjectiveCard[] secretObjectives;
 
 
-    public boolean isStartPlaying() {
+    public boolean shouldStartPlaying() {
         return startPlaying;
     }
 
