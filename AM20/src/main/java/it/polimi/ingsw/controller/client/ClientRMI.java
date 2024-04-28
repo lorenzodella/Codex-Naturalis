@@ -7,10 +7,10 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
 import it.polimi.ingsw.controller.exceptions.CannotJoinGameException;
-import it.polimi.ingsw.controller.exceptions.InvalidPlayingException;
 import it.polimi.ingsw.controller.messages.*;
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.model.exceptions.InvalidArgumentException;
+import it.polimi.ingsw.model.exceptions.InvalidPlayingException;
 import it.polimi.ingsw.server.Callback;
 import it.polimi.ingsw.server.Loggable;
 
@@ -33,8 +33,8 @@ public class ClientRMI extends UnicastRemoteObject implements Callback {
 //            boolean logged = stub.login("Lollo", new ClientRMI());
 //            System.out.println(logged);
 
-            ConnectionAckMessage msg = stub.login("Lollo", new ClientRMI());
-            System.out.println("stub.login: \n"+ msg);
+//            ConnectionAckMessage msg = stub.login("Lollo", new ClientRMI());
+//            System.out.println("stub.login: \n"+ msg);
 
             Message msg2 = stub.starNewGame("Lollo", 4, new ClientRMI());
             System.out.println("stub.starNewGame: \n"+ msg2);
@@ -88,8 +88,8 @@ public class ClientRMI extends UnicastRemoteObject implements Callback {
 
     @Override
     public void callConnectionAckMessage(ConnectionAckMessage message) throws RemoteException {
-        System.out.println("Game starts : " + message.isGameStarts() + "\n");
-        if(message.isGameStarts()){
+        System.out.println("Game starts : " + message.doesGameStarts() + "\n");
+        if(message.doesGameStarts()){
             System.out.println("GoldTop: " + message.getGoldTop().getID() + "\n" +
                     "ResourceTop: " + message.getResourceTop().getID() + "\n" +
                     "GoldVisible[0]: " + message.getGoldVisible()[0].getID() + "\n" +
@@ -116,7 +116,7 @@ public class ClientRMI extends UnicastRemoteObject implements Callback {
         }
         if(message instanceof PlayAckMessage){
             System.out.println("YourPlayerInfo: " + message.getYourPlayerInfo()+"\n"+
-                    "MustPick: "+message.isMustPick());
+                    "MustPick: "+message.mustPick());
         }
         if(message instanceof PickAckMessage){
             System.out.println("GoldTop: "+ message.getGoldTop().getID()+"\n"+
@@ -131,8 +131,8 @@ public class ClientRMI extends UnicastRemoteObject implements Callback {
 
     @Override
     public void callStarterCardAckMessage(StarterCardAckMessage message) throws RemoteException {
-        System.out.println("ChooseObjective: " + message.isChooseObjective() + "\n");
-        if(message.isChooseObjective()){
+        System.out.println("ChooseObjective: " + message.shouldChooseObjective() + "\n");
+        if(message.shouldChooseObjective()){
             System.out.println( "CommonObjective[0]: " + message.getCommonObjectives()[0].getID() + "\n" +
                     "CommonObjective[1]: " + message.getCommonObjectives()[1].getID() + "\n" +
                     "SecretObjective[0]: " + message.getSecretObjectives()[0].getID() + "\n" +
@@ -145,8 +145,8 @@ public class ClientRMI extends UnicastRemoteObject implements Callback {
 
     @Override
     public void callObjectiveAckMessage(ObjectiveAckMessage message) throws RemoteException {
-        System.out.println("StartPlaying: " + message.isStartPlaying() + "\n");
-        if(message.isStartPlaying()){
+        System.out.println("StartPlaying: " + message.shouldStartPlaying() + "\n");
+        if(message.shouldStartPlaying()){
             System.out.println("FirstPlayer: " + message.getFirstPlayer());
         }else {
             System.out.println("SecretObjective[0]: " + message.getSecretObjectives()[0].getID() + "\n" +

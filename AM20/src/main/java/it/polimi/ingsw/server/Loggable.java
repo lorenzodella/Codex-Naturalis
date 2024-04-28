@@ -1,7 +1,6 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.controller.exceptions.CannotJoinGameException;
-import it.polimi.ingsw.controller.exceptions.InvalidPlayingException;
 import it.polimi.ingsw.controller.exceptions.StopGameException;
 import it.polimi.ingsw.controller.messages.*;
 import it.polimi.ingsw.model.exceptions.*;
@@ -23,7 +22,7 @@ public interface Loggable extends Remote {
     AcknowledgeMessage disconnectPlayer(String nickname) throws RemoteException, InvalidArgumentException, StopGameException, InvalidConnectionStateException;
     StarterCardAckMessage chooseStarterCardSide(String nickname, int side) throws RemoteException, InvalidArgumentException, InvalidPlayingException;
     ObjectiveAckMessage chooseObjective(String nickname, int index) throws RemoteException, InvalidArgumentException, InvalidPlayingException;
-    AcknowledgeMessage playCard(String playerNickname, int cardIndex, int angle, String targetID, int side) throws InvalidArgumentException, RequirementsNotRespectedException, InvalidPlayingException, TargetNotPresentException, InvalidAngleCoveredException, InvalidPositionException, RemoteException;
-    AcknowledgeMessage pickCard(String playerNickname, int deck) throws RemoteException, InvalidArgumentException, InvalidPlayingException, FinishedCardStackException;
-    AcknowledgeMessage pickCard(String playerNickname, int deck, int index) throws RemoteException, InvalidArgumentException, InvalidPlayingException, FinishedCardStackException;
+    AcknowledgeMessage playCard(String playerNickname, int cardIndex, int angle, String targetID, int side) throws InvalidArgumentException, RequirementsNotRespectedException, InvalidPlayingException, TargetNotPresentException, InvalidAngleCoveredException, InvalidPositionException, RemoteException, StopGameException;
+    AcknowledgeMessage pickCard(String playerNickname, int deck) throws RemoteException, InvalidArgumentException, InvalidPlayingException, FinishedCardStackException, StopGameException;
+    AcknowledgeMessage pickCard(String playerNickname, int deck, int index) throws RemoteException, InvalidArgumentException, InvalidPlayingException, FinishedCardStackException, StopGameException;
 }

@@ -2,7 +2,6 @@ package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.controller.exceptions.CannotJoinGameException;
-import it.polimi.ingsw.controller.exceptions.InvalidPlayingException;
 import it.polimi.ingsw.controller.exceptions.StopGameException;
 import it.polimi.ingsw.controller.messages.*;
 import it.polimi.ingsw.model.exceptions.*;
@@ -103,7 +102,7 @@ public class ServerRMI implements Loggable{
     }
 
     @Override
-    public AcknowledgeMessage playCard(String playerNickname, int cardIndex, int angle, String targetID, int side) throws RemoteException,InvalidArgumentException, RequirementsNotRespectedException, InvalidPlayingException, TargetNotPresentException, InvalidAngleCoveredException, InvalidPositionException {
+    public AcknowledgeMessage playCard(String playerNickname, int cardIndex, int angle, String targetID, int side) throws RemoteException, InvalidArgumentException, RequirementsNotRespectedException, InvalidPlayingException, TargetNotPresentException, InvalidAngleCoveredException, InvalidPositionException, StopGameException {
         HashMap<String, AcknowledgeMessage> res;
         res = this.controller.playCard(playerNickname, cardIndex, angle, targetID, side);
         for(String s : res.keySet()){
@@ -113,7 +112,7 @@ public class ServerRMI implements Loggable{
     }
 
     @Override
-    public AcknowledgeMessage pickCard(String playerNickname, int deck) throws RemoteException, InvalidArgumentException, InvalidPlayingException, FinishedCardStackException {
+    public AcknowledgeMessage pickCard(String playerNickname, int deck) throws RemoteException, InvalidArgumentException, InvalidPlayingException, FinishedCardStackException, StopGameException {
         HashMap<String, AcknowledgeMessage> res;
         res = this.controller.pickCard(playerNickname, deck);
         for(String s : res.keySet()){
@@ -123,7 +122,7 @@ public class ServerRMI implements Loggable{
     }
 
     @Override
-    public AcknowledgeMessage pickCard(String playerNickname, int deck, int index) throws RemoteException, InvalidArgumentException, InvalidPlayingException, FinishedCardStackException {
+    public AcknowledgeMessage pickCard(String playerNickname, int deck, int index) throws RemoteException, InvalidArgumentException, InvalidPlayingException, FinishedCardStackException, StopGameException {
         HashMap<String, AcknowledgeMessage> res;
         res = this.controller.pickCard(playerNickname, deck, index);
         for(String s : res.keySet()){
