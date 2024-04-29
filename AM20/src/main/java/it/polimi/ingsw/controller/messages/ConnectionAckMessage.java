@@ -4,6 +4,7 @@ import it.polimi.ingsw.controller.PlayerInfo;
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.model.cards.playable.StarterCard;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class ConnectionAckMessage extends Message{
@@ -67,6 +68,13 @@ public class ConnectionAckMessage extends Message{
 
     public void setPlayerInfo(PlayerInfo playerInfo) {
 
+    }
+
+    public HashMap<String, PlayerInfo> getOthersPlayerInfo() {
+        return null;
+    }
+
+    public void setOthersPlayerInfo(HashMap<String, PlayerInfo> othersPlayerInfo) {
     }
 
     @Override

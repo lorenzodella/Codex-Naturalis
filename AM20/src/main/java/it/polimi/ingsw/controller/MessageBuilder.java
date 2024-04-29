@@ -40,13 +40,15 @@ public class MessageBuilder implements GameObserver {
     }
 
     @Override
-    public HashMap<String, ConnectionAckMessage> notifyPlayerReconnected(Player player, Deck resourceCardDeck, Deck goldCardDeck) {
+    public HashMap<String, ConnectionAckMessage> notifyPlayerReconnected(List<Player> players, Deck resourceCardDeck, Deck goldCardDeck) {
         if (connectionAckMessages == null)
             connectionAckMessages = new HashMap<>();
 
+        Player player = players.get(0);
+
         for (String nickname : connectedPlayerNicknames) {
             if (connectionAckMessages.get(nickname) == null)
-                connectionAckMessages.put(nickname, new StartGameMessage());
+                connectionAckMessages.put(nickname, new RestartGameMessage());
 
             connectionAckMessages.get(nickname).setResult(player.getNickname()+" reconnected to the game");
         }
@@ -62,6 +64,13 @@ public class MessageBuilder implements GameObserver {
         playerInfo.setMap(player.getTable().getMap());
         playerInfo.setStats(player.getTable().getStats());
         connectionAckMessages.get(player.getNickname()).setPlayerInfo(playerInfo);
+        HashMap <String, PlayerInfo> otherPlayerUpdates = new HashMap<>();
+        for(Player p: players.stream().filter(x->!x.equals(player)).collect(Collectors.toList())){
+            PlayerInfo playerUpdates = new PlayerInfo();
+            playerUpdates.setScore(p.getScore());
+            otherPlayerUpdates.put(p.getNickname(), playerUpdates);
+        }
+        connectionAckMessages.get(player.getNickname()).setOthersPlayerInfo(otherPlayerUpdates);
 
         return connectionAckMessages;
     }

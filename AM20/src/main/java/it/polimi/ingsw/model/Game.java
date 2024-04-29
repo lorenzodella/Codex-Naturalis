@@ -70,17 +70,20 @@ public class Game implements GameObservable{
      * This method allows to connect or disconnect a player
      * @param nickname name of the player who is connecting/disconnecting
      * @param isOnline tells if the player is online or not
+     * @return a list of players, first one is the one who changed connection state
      * @throws InvalidArgumentException if there's no player with that nickname
      * @throws InvalidConnectionStateException if player's connection state was the same
      */
     @Override
-    public Player setPlayerConnection(String nickname, boolean isOnline) throws InvalidArgumentException, InvalidConnectionStateException {
+    public List<Player> setPlayerConnection(String nickname, boolean isOnline) throws InvalidArgumentException, InvalidConnectionStateException {
         Player p = players.stream().filter(x -> x.getNickname().equals(nickname)).findFirst()
                 .orElseThrow(()-> new InvalidArgumentException("nickname", nickname));
         if (p.isOnline() == isOnline)
             throw new InvalidConnectionStateException(isOnline);
         p.setOnline(isOnline);
-        return p;
+        List<Player> returnList = players.stream().filter(x -> !x.equals(p)).collect(Collectors.toList());
+        returnList.add(0, p);
+        return returnList;
     }
 
     /**

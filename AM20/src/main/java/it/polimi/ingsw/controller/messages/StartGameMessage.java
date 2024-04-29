@@ -4,6 +4,7 @@ import it.polimi.ingsw.controller.PlayerInfo;
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.model.cards.playable.StarterCard;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class StartGameMessage extends ConnectionAckMessage {
@@ -14,8 +15,6 @@ public class StartGameMessage extends ConnectionAckMessage {
     private PlayableCard[] resourceVisible;
     private StarterCard starterCard;
     private List<PlayableCard> initialCards;
-
-    private PlayerInfo playerInfo;
 
 
     @Override
@@ -72,11 +71,20 @@ public class StartGameMessage extends ConnectionAckMessage {
     }
 
     public PlayerInfo getPlayerInfo() {
-        return playerInfo;
+        return null;
     }
 
     public void setPlayerInfo(PlayerInfo playerInfo) {
-        this.playerInfo = playerInfo;
+
+    }
+
+    @Override
+    public HashMap<String, PlayerInfo> getOthersPlayerInfo() {
+        return null;
+    }
+
+    @Override
+    public void setOthersPlayerInfo(HashMap<String, PlayerInfo> othersPlayerInfo) {
     }
 
     @Override

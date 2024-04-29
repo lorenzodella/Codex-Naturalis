@@ -11,7 +11,7 @@ import java.util.List;
 public interface GameObserver {
 
     HashMap<String, AcknowledgeMessage> notifyPlayerDisconnected(String playerNickname);
-    HashMap<String, ConnectionAckMessage> notifyPlayerReconnected(Player player, Deck resourceCardDeck, Deck goldCardDeck);
+    HashMap<String, ConnectionAckMessage> notifyPlayerReconnected(List<Player> players, Deck resourceCardDeck, Deck goldCardDeck);
     HashMap<String, ConnectionAckMessage> notifyDecksCreated(Deck resourceCardDeck, Deck goldCardDeck);
     HashMap<String, ConnectionAckMessage> notifyStarterCards(List<Player> players);
     HashMap<String, ConnectionAckMessage> notifyInitialCards(List<Player> players);

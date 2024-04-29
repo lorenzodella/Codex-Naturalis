@@ -230,6 +230,9 @@ class ControllerTest {
         assertNotNull(connectionAckMessages.get(playerOrder.get(1)).getInitialCards());
         assertNotNull(connectionAckMessages.get(playerOrder.get(1)).getStarterCard());
         assertNotNull(connectionAckMessages.get(playerOrder.get(1)).getPlayerInfo());
+        assertEquals(2, connectionAckMessages.get(playerOrder.get(1)).getOthersPlayerInfo().size());
+        assert connectionAckMessages.get(playerOrder.get(1)).getOthersPlayerInfo().values().stream().allMatch(Objects::nonNull);
+        assert !connectionAckMessages.get(playerOrder.get(1)).getOthersPlayerInfo().containsKey(playerOrder.get(1));
         printMessages(connectionAckMessages);
 
         //two players disconnect

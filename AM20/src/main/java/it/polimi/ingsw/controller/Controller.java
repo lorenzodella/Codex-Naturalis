@@ -150,7 +150,7 @@ public class Controller implements GameManager {
      */
     private HashMap<String, ConnectionAckMessage> reconnectPlayer(String nickname) throws CannotJoinGameException {
         try {
-            Player p = gameModel.setPlayerConnection(nickname, true);
+            List<Player> p = gameModel.setPlayerConnection(nickname, true);
             messageBuilder = new MessageBuilder(gameModel.getConnectedPlayers());
             return messageBuilder.notifyPlayerReconnected(p, gameModel.getResourceCardDeck(), gameModel.getGoldCardDeck());
         } catch (InvalidConnectionStateException e) {

@@ -17,7 +17,7 @@ public interface GameObservable {
     ObjectiveCard[] getCommonObjectives();
 
     //modifiers
-    Player setPlayerConnection(String nickname, boolean isOnline) throws InvalidArgumentException, InvalidConnectionStateException;
+    List<Player> setPlayerConnection(String nickname, boolean isOnline) throws InvalidArgumentException, InvalidConnectionStateException;
     Deck[] initDecks();
     List<Player> giveStarterCards();
     List<Player> giveInitialCards();

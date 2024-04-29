@@ -127,9 +127,11 @@ class GameTest {
     }
 
     @Test
-    void nextPlayerDisconnected() throws InvalidPlayingException {
+    void nextPlayerDisconnected() throws InvalidPlayingException, InvalidArgumentException, InvalidConnectionStateException {
         List<Player> p = game.getPlayers();
-        p.get(1).setOnline(false);
+        List<Player> playerList = game.setPlayerConnection(p.get(1).getNickname(), false);
+        assertEquals(4, playerList.size());
+        assertEquals(p.get(1).getNickname(), playerList.get(0).getNickname());
         game.nextTurn();
         assertEquals(game.getCurrPlayer(), p.get(2));
     }
