@@ -2,26 +2,31 @@ package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.controller.exceptions.CannotJoinGameException;
-import it.polimi.ingsw.controller.exceptions.StopGameException;
+import it.polimi.ingsw.controller.exceptions.InvalidDisconnectionException;
+import it.polimi.ingsw.controller.exceptions.NoOneIsConnectedException;
 import it.polimi.ingsw.controller.messages.*;
 import it.polimi.ingsw.model.exceptions.*;
 
-import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Map;
 
 public class ServerRMI implements Loggable{
 
     private HashMap<String, Callback> callbacks;
-
+    private EndGameTimer timer;
     private Controller controller;
 
     public ServerRMI() {
+        timer = new EndGameTimer();
+        restart();
+    }
+
+    private void restart() {
+        timer.stop();
         this.controller = new Controller();
         this.callbacks = new HashMap<>();
     }
@@ -52,11 +57,18 @@ public class ServerRMI implements Loggable{
         this.callbacks.put(client, callback);
         res = this.controller.joinGame(client);
 
+        //stop countdown if someone joined
+        timer.stop();
         //send the message to other player if the message is significant
-        for(String s : res.keySet()){  //meglio fare così oppure this.controller.getPlayers() ?
-            if(res.get(s) != null)
-                this.callbacks.get(s).callConnectionAckMessage(res.get(s));
-
+        for(String s : res.keySet()){
+            if(res.get(s) != null) {
+                try {
+                    this.callbacks.get(s).callConnectionAckMessage(res.get(s));
+                } catch (RemoteException e) {
+                    detectDisconnection(s);
+                    return null;
+                }
+            }
         }
         return res.get(client);
     }
@@ -67,17 +79,39 @@ public class ServerRMI implements Loggable{
         return this.controller.newGame(client,numPlayers);
     }
 
-    @Override
-    public AcknowledgeMessage disconnectPlayer(String nickname) throws RemoteException, InvalidArgumentException, StopGameException, InvalidConnectionStateException {
+    private void detectDisconnection(String nickname) {
         HashMap<String, AcknowledgeMessage> res;
-        //io non fare this.callbacks.remove(nickname)
-        res = this.controller.disconnectPlayer(nickname);
+        this.callbacks.remove(nickname);
+        try {
+            res = this.controller.disconnectPlayer(nickname);
+            //if there's one player left start countdown
+            Map.Entry<String, AcknowledgeMessage> m = res.entrySet().iterator().next();
+            if(m.getValue().getNumOfConnectedPlayers()==1)
+                timer.startCountdown(callbacks.get(m.getKey()));
 
-        for(String s : res.keySet()){
-            this.callbacks.get(s).callAcknowledgeMessage(res.get(s));
+            for (String s : res.keySet()) {
+                try {
+                    this.callbacks.get(s).callAcknowledgeMessage(res.get(s));
+                } catch (RemoteException e) {
+                    detectDisconnection(s);
+                }
+            }
+        } catch (InvalidConnectionStateException | InvalidArgumentException e){
+            throw new RuntimeException(e);
+        } catch (NoOneIsConnectedException e){
+            restart();
+        } catch (InvalidDisconnectionException e) {
+            Message message = new Message();
+            message.setResult(e.toString());
+            for (Callback c : callbacks.values()) {
+                try {
+                    c.callStopGame(message);
+                } catch (RemoteException ignored) {
 
+                }
+            }
+            restart();
         }
-        return res.get(nickname);
     }
 
     @Override
@@ -85,7 +119,12 @@ public class ServerRMI implements Loggable{
         HashMap<String, StarterCardAckMessage> res;
         res = this.controller.chooseStarterCardSide(nickname, side);
         for(String s : res.keySet()){
-            this.callbacks.get(s).callStarterCardAckMessage(res.get(s));
+            try {
+                this.callbacks.get(s).callStarterCardAckMessage(res.get(s));
+            } catch (RemoteException e) {
+                detectDisconnection(s);
+                return null;
+            }
         }
         return res.get(nickname);
     }
@@ -95,38 +134,78 @@ public class ServerRMI implements Loggable{
         HashMap<String, ObjectiveAckMessage> res;
         res = this.controller.chooseObjective(nickname, index);
         for(String s : res.keySet()){
-            if(res.get(s) != null)
-                this.callbacks.get(s).callObjectiveAckMessage(res.get(s));
+            if(res.get(s) != null) {
+                try {
+                    this.callbacks.get(s).callObjectiveAckMessage(res.get(s));
+                } catch (RemoteException e) {
+                    detectDisconnection(s);
+                    return null;
+                }
+            }
         }
         return res.get(nickname);
     }
 
     @Override
-    public AcknowledgeMessage playCard(String playerNickname, int cardIndex, int angle, String targetID, int side) throws RemoteException, InvalidArgumentException, RequirementsNotRespectedException, InvalidPlayingException, TargetNotPresentException, InvalidAngleCoveredException, InvalidPositionException, StopGameException {
+    public AcknowledgeMessage playCard(String playerNickname, int cardIndex, int angle, String targetID, int side)
+            throws RemoteException, InvalidArgumentException, RequirementsNotRespectedException,
+            InvalidPlayingException, TargetNotPresentException, InvalidAngleCoveredException,
+            InvalidPositionException {
         HashMap<String, AcknowledgeMessage> res;
-        res = this.controller.playCard(playerNickname, cardIndex, angle, targetID, side);
-        for(String s : res.keySet()){
-             this.callbacks.get(s).callAcknowledgeMessage(res.get(s));
+        try{
+            res = this.controller.playCard(playerNickname, cardIndex, angle, targetID, side);
+            for (String s : res.keySet()) {
+                try {
+                    this.callbacks.get(s).callAcknowledgeMessage(res.get(s));
+                } catch (RemoteException e) {
+                    detectDisconnection(s);
+                }
+            }
+        }catch (NoOneIsConnectedException e){
+            restart();
+            return null;
         }
         return res.get(playerNickname);
     }
 
     @Override
-    public AcknowledgeMessage pickCard(String playerNickname, int deck) throws RemoteException, InvalidArgumentException, InvalidPlayingException, FinishedCardStackException, StopGameException {
+    public AcknowledgeMessage pickCard(String playerNickname, int deck)
+            throws RemoteException, InvalidArgumentException, InvalidPlayingException,
+            FinishedCardStackException {
         HashMap<String, AcknowledgeMessage> res;
-        res = this.controller.pickCard(playerNickname, deck);
-        for(String s : res.keySet()){
-             this.callbacks.get(s).callAcknowledgeMessage(res.get(s));
+        try{
+            res = this.controller.pickCard(playerNickname, deck);
+            for (String s : res.keySet()) {
+                try {
+                    this.callbacks.get(s).callAcknowledgeMessage(res.get(s));
+                } catch (RemoteException e) {
+                    detectDisconnection(s);
+                }
+            }
+        } catch (NoOneIsConnectedException e){
+            restart();
+            return null;
         }
         return res.get(playerNickname);
     }
 
     @Override
-    public AcknowledgeMessage pickCard(String playerNickname, int deck, int index) throws RemoteException, InvalidArgumentException, InvalidPlayingException, FinishedCardStackException, StopGameException {
+    public AcknowledgeMessage pickCard(String playerNickname, int deck, int index)
+            throws RemoteException, InvalidArgumentException, InvalidPlayingException,
+            FinishedCardStackException {
         HashMap<String, AcknowledgeMessage> res;
-        res = this.controller.pickCard(playerNickname, deck, index);
-        for(String s : res.keySet()){
-             this.callbacks.get(s).callAcknowledgeMessage(res.get(s));
+        try {
+            res = this.controller.pickCard(playerNickname, deck, index);
+            for (String s : res.keySet()) {
+                try {
+                    this.callbacks.get(s).callAcknowledgeMessage(res.get(s));
+                } catch (RemoteException e) {
+                    detectDisconnection(s);
+                }
+            }
+        } catch (NoOneIsConnectedException e){
+            restart();
+            return null;
         }
         return res.get(playerNickname);
     }
