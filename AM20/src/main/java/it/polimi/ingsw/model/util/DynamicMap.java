@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.exceptions.InvalidPositionException;
 import it.polimi.ingsw.model.exceptions.TargetNotPresentException;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
  * @param <K> type of the elements key of the map
  * @param <T> type of the elements of the map
  */
-public class DynamicMap<K,T> {
+public class DynamicMap<K,T> implements Serializable {
     // these are used to fetch elements near a certain element of the map
     public static final int UL = 0;
     public static final int UR = 1;
@@ -24,7 +25,7 @@ public class DynamicMap<K,T> {
     public static final int U = 4;
     public static final int D = 5;
 
-    private static class MapElement<T> {
+    private static class MapElement<T> implements Serializable {
         Point pos;
         T value;
         private MapElement(Point pos, T value){

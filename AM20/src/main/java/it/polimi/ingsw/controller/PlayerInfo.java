@@ -4,7 +4,9 @@ import it.polimi.ingsw.model.PlayerStats;
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.model.util.DynamicMap;
 
-public class PlayerInfo {
+import java.io.Serializable;
+
+public class PlayerInfo implements Serializable {
     private int score;
     private DynamicMap<String, PlayableCard> map;
     private PlayerStats stats;

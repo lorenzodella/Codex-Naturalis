@@ -1,9 +1,10 @@
 package it.polimi.ingsw.model.cards;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class Corner {
+public class Corner implements Serializable {
     public static final int UL = 0;
     public static final int UR = 1;
     public static final int DL = 2;

@@ -3,10 +3,11 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.cards.Kingdom;
 import it.polimi.ingsw.model.cards.SpecialObject;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PlayerStats {
+public class PlayerStats implements Serializable {
     /**
      * Hashmap that, per each kingdom, says the number of occurrences of that resource
      */
