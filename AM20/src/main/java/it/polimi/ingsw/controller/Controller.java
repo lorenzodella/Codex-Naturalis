@@ -1,8 +1,9 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.controller.exceptions.InvalidDisconnectionException;
 import it.polimi.ingsw.model.exceptions.InvalidPlayingException;
 import it.polimi.ingsw.controller.messages.*;
-import it.polimi.ingsw.controller.exceptions.StopGameException;
+import it.polimi.ingsw.controller.exceptions.NoOneIsConnectedException;
 import it.polimi.ingsw.model.Deck;
 import it.polimi.ingsw.model.GameObservable;
 import it.polimi.ingsw.model.exceptions.InvalidArgumentException;
@@ -37,6 +38,7 @@ public class Controller implements GameManager {
     private static final int OBJECTIVES = 2;
     private static final int PLAY = 3;
     private static final int PICK = 4;
+    private static final int END = 5;
     private int phase;
 
     private GameObservable gameModel;
@@ -112,23 +114,23 @@ public class Controller implements GameManager {
      * @return messages to be sent to connected players
      * @throws InvalidConnectionStateException if player is already disconnected
      * @throws InvalidArgumentException if player is not part of current game
-     * @throws StopGameException game should stop if player disconnected during first phase of the game or if all players disconnected
+     * @throws NoOneIsConnectedException game should stop if player disconnected during first phase of the game or if all players disconnected
      */
     @Override
     public HashMap<String, AcknowledgeMessage> disconnectPlayer(String nickname)
-            throws InvalidConnectionStateException, InvalidArgumentException, StopGameException {
+            throws InvalidConnectionStateException, InvalidArgumentException, NoOneIsConnectedException, InvalidDisconnectionException {
         //if you are not a player of current game
         if(!players.contains(nickname))
             throw new InvalidArgumentException("nickname", nickname);
         //if actual game not yet started
         //SE UN PLAYER SI DISCONNETTE DURING PRELIMINARY --> CHIUDO TUTTO
         if(phase<PLAY)
-            throw new StopGameException("A player disconnected during preliminary phase of the game");
+            throw new InvalidDisconnectionException();
 
         gameModel.setPlayerConnection(nickname, false);
         Set<String> connectedPlayers = gameModel.getConnectedPlayers();
         if(connectedPlayers.isEmpty())
-            throw new StopGameException("No one is connected");
+            throw new NoOneIsConnectedException();
 
         messageBuilder = new MessageBuilder(connectedPlayers);
         HashMap<String, AcknowledgeMessage> msg = messageBuilder.notifyPlayerDisconnected(nickname);
@@ -347,13 +349,13 @@ public class Controller implements GameManager {
      * @throws RequirementsNotRespectedException 
      * @throws InvalidPlayingException if the phase is not PLAY or if it's not the player's turn or if the player is now
      * by himself and needs to wait for the others to reconnect
-     * @throws StopGameException
+     * @throws NoOneIsConnectedException
      */
     @Override
     public HashMap<String, AcknowledgeMessage> playCard(String playerNickname, int indexCard, int angle, String targetID, int side)
             throws InvalidArgumentException, TargetNotPresentException,
             InvalidAngleCoveredException, InvalidPositionException, RequirementsNotRespectedException,
-            InvalidPlayingException, StopGameException {
+            InvalidPlayingException, NoOneIsConnectedException {
         if(phase!=PLAY)
             throw new InvalidPlayingException("You can't play a card now");
 
@@ -391,11 +393,11 @@ public class Controller implements GameManager {
      * @throws FinishedCardStackException
      * @throws InvalidPlayingException if the phase is not PLAY or if it's not the player's turn or if the player is now
      * by himself and needs to wait for the others to reconnect
-     * @throws StopGameException
+     * @throws NoOneIsConnectedException
      */
     @Override
     public HashMap<String, AcknowledgeMessage> pickCard(String playerNickname, int deck) throws InvalidArgumentException, FinishedCardStackException,
-            InvalidPlayingException, StopGameException {
+            InvalidPlayingException, NoOneIsConnectedException {
         if(phase!=PICK)
             throw new InvalidPlayingException("You can't draw a card now");
         if(!gameModel.getCurrPlayer().getNickname().equals(playerNickname))
@@ -425,11 +427,11 @@ public class Controller implements GameManager {
      * @throws InvalidArgumentException
      * @throws FinishedCardStackException
      * @throws InvalidPlayingException
-     * @throws StopGameException
+     * @throws NoOneIsConnectedException
      */
     @Override
     public HashMap<String, AcknowledgeMessage> pickCard(String playerNickname, int deck, int index) throws InvalidArgumentException, FinishedCardStackException,
-            InvalidPlayingException, StopGameException {
+            InvalidPlayingException, NoOneIsConnectedException {
         if(phase!=PICK)
             throw new InvalidPlayingException("You can't draw a card now");
         if(!gameModel.getCurrPlayer().getNickname().equals(playerNickname))
@@ -455,9 +457,9 @@ public class Controller implements GameManager {
      * 2. checks if there's no cards to be picked up
      * 3. allows the final turn to begin
      * @return .......
-     * @throws StopGameException if nobody is connected at the moment
+     * @throws NoOneIsConnectedException if nobody is connected at the moment
      */
-    private HashMap<String, AcknowledgeMessage> checkEndGame() throws StopGameException{
+    private HashMap<String, AcknowledgeMessage> checkEndGame() throws NoOneIsConnectedException {
         HashMap<String, AcknowledgeMessage> msg = null;
         //if game ended but last turn not started yet
         if(gameModel.checkTheEnd() && missingRounds ==-1) {
@@ -469,7 +471,7 @@ public class Controller implements GameManager {
         try {
             isNewTurn = gameModel.nextTurn();
         } catch (InvalidPlayingException e) {
-            throw new StopGameException("No one is connected");
+            throw new NoOneIsConnectedException();
         }
         //check if last turn is starting now
         if(missingRounds >0 && isNewTurn){
@@ -488,6 +490,7 @@ public class Controller implements GameManager {
                     m.setResult(e.toString());
                 }
             }
+            phase = END;
         }
         else{
             //otherwise simply notify next player to play

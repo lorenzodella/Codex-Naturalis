@@ -1,13 +1,14 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.controller.exceptions.CannotJoinGameException;
+import it.polimi.ingsw.controller.exceptions.InvalidDisconnectionException;
 import it.polimi.ingsw.model.Deck;
 import it.polimi.ingsw.model.PlayerTable;
 import it.polimi.ingsw.model.cards.Corner;
 import it.polimi.ingsw.model.cards.Kingdom;
 import it.polimi.ingsw.model.cards.playable.StarterCard;
 import it.polimi.ingsw.model.exceptions.*;
-import it.polimi.ingsw.controller.exceptions.StopGameException;
+import it.polimi.ingsw.controller.exceptions.NoOneIsConnectedException;
 import it.polimi.ingsw.controller.messages.*;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
@@ -70,7 +71,7 @@ class ControllerTest {
         System.out.println("order: "+playerOrder);
     }
 
-    void _simulatePlayCard(int pl, List<PlayableCard> oldc, List<PlayableCard> newc, int cardToPlay, Player cur) throws InvalidArgumentException, StopGameException, RequirementsNotRespectedException, InvalidPlayingException, TargetNotPresentException, InvalidAngleCoveredException, InvalidPositionException {
+    void _simulatePlayCard(int pl, List<PlayableCard> oldc, List<PlayableCard> newc, int cardToPlay, Player cur) throws InvalidArgumentException, NoOneIsConnectedException, RequirementsNotRespectedException, InvalidPlayingException, TargetNotPresentException, InvalidAngleCoveredException, InvalidPositionException {
         newc.set(pl, cur.getCards().get(cardToPlay));
         addRequirementsOfGoldCard(cur.getTable(), newc.get(pl));
         if(newc.get(pl).getID().equals("G79")){ //this card can't be covered UR and UL
@@ -188,7 +189,7 @@ class ControllerTest {
 
     @Test
     void disconnectPlayer()
-            throws InvalidArgumentException, CannotJoinGameException, StopGameException, InvalidConnectionStateException, InvalidPlayingException {
+            throws InvalidArgumentException, CannotJoinGameException, NoOneIsConnectedException, InvalidConnectionStateException, InvalidPlayingException, InvalidDisconnectionException {
         _simulateNewGame();
 
         InvalidArgumentException e = assertThrows(InvalidArgumentException.class, ()->{
@@ -199,7 +200,7 @@ class ControllerTest {
         _simulateStarterCards();
         
         //a player disconnects during preliminary phase
-        StopGameException e1 = assertThrows(StopGameException.class, ()->{
+        InvalidDisconnectionException e1 = assertThrows(InvalidDisconnectionException.class, ()->{
             c.disconnectPlayer("Giuseppe");
         });
         assert e1.toString().contains("preliminary");
@@ -252,7 +253,7 @@ class ControllerTest {
         c.disconnectPlayer(playerOrder.get(1));
         //curplayer is the third
         assertEquals(playerOrder.get(2), c.getGameModel().getCurrPlayer().getNickname());
-        assertThrows(StopGameException.class, ()->{
+        assertThrows(NoOneIsConnectedException.class, ()->{
             c.disconnectPlayer(playerOrder.get(2));
         });
     }
@@ -362,7 +363,7 @@ class ControllerTest {
     }
 
     @Test
-    void playCard() throws InvalidArgumentException, InvalidPlayingException, CannotJoinGameException, RequirementsNotRespectedException, TargetNotPresentException, InvalidAngleCoveredException, InvalidPositionException, StopGameException {
+    void playCard() throws InvalidArgumentException, InvalidPlayingException, CannotJoinGameException, RequirementsNotRespectedException, TargetNotPresentException, InvalidAngleCoveredException, InvalidPositionException, NoOneIsConnectedException {
         _simulateNewGame();
 
         //play during preliminary phase
@@ -442,7 +443,7 @@ class ControllerTest {
     }
 
     @Test
-    void pickCard() throws InvalidArgumentException, InvalidPlayingException, CannotJoinGameException, StopGameException, RequirementsNotRespectedException, TargetNotPresentException, InvalidAngleCoveredException, InvalidPositionException, FinishedCardStackException {
+    void pickCard() throws InvalidArgumentException, InvalidPlayingException, CannotJoinGameException, NoOneIsConnectedException, RequirementsNotRespectedException, TargetNotPresentException, InvalidAngleCoveredException, InvalidPositionException, FinishedCardStackException {
         _simulateNewGame();
 
         //pick during preliminary phase
@@ -516,7 +517,7 @@ class ControllerTest {
     }
 
     @Test
-    void disconnectPlayerDuringPlaying() throws InvalidArgumentException, InvalidPlayingException, CannotJoinGameException, StopGameException, InvalidConnectionStateException, RequirementsNotRespectedException, TargetNotPresentException, InvalidAngleCoveredException, InvalidPositionException, FinishedCardStackException {
+    void disconnectPlayerDuringPlaying() throws InvalidArgumentException, InvalidPlayingException, CannotJoinGameException, NoOneIsConnectedException, InvalidConnectionStateException, RequirementsNotRespectedException, TargetNotPresentException, InvalidAngleCoveredException, InvalidPositionException, FinishedCardStackException, InvalidDisconnectionException {
         _simulateNewGame();
         _simulateStarterCards();
         _simulateObjectives();
@@ -591,7 +592,7 @@ class ControllerTest {
 
     @ParameterizedTest
     @MethodSource("whoIsWinner")
-    void endGameDecks(int winner) throws InvalidArgumentException, InvalidPlayingException, CannotJoinGameException, StopGameException, RequirementsNotRespectedException, TargetNotPresentException, InvalidAngleCoveredException, InvalidPositionException, FinishedCardStackException {
+    void endGameDecks(int winner) throws InvalidArgumentException, InvalidPlayingException, CannotJoinGameException, NoOneIsConnectedException, RequirementsNotRespectedException, TargetNotPresentException, InvalidAngleCoveredException, InvalidPositionException, FinishedCardStackException {
         _simulateNewGame();
         _simulateStarterCards();
         _simulateObjectives();
@@ -650,7 +651,7 @@ class ControllerTest {
 
     @ParameterizedTest
     @MethodSource("whoIsWinner")
-    void endGameWinner(int winner) throws InvalidArgumentException, InvalidPlayingException, CannotJoinGameException, StopGameException, RequirementsNotRespectedException, TargetNotPresentException, InvalidAngleCoveredException, InvalidPositionException, FinishedCardStackException {
+    void endGameWinner(int winner) throws InvalidArgumentException, InvalidPlayingException, CannotJoinGameException, NoOneIsConnectedException, RequirementsNotRespectedException, TargetNotPresentException, InvalidAngleCoveredException, InvalidPositionException, FinishedCardStackException {
         _simulateNewGame();
         _simulateStarterCards();
         _simulateObjectives();
@@ -682,7 +683,7 @@ class ControllerTest {
         lastRound(oldc, newc, winner);
     }
 
-    void lastRound(List<PlayableCard> oldc, List<PlayableCard> newc, int winner) throws InvalidArgumentException, StopGameException, RequirementsNotRespectedException, InvalidPlayingException, TargetNotPresentException, InvalidPositionException, InvalidAngleCoveredException, FinishedCardStackException {
+    void lastRound(List<PlayableCard> oldc, List<PlayableCard> newc, int winner) throws InvalidArgumentException, NoOneIsConnectedException, RequirementsNotRespectedException, InvalidPlayingException, TargetNotPresentException, InvalidPositionException, InvalidAngleCoveredException, FinishedCardStackException {
         //player0
         _simulatePlayCard(0, oldc, newc, 0, c.getGameModel().getCurrPlayer());
         c.pickCard(playerOrder.get(0), Deck.RESOURCE_CARDS);
