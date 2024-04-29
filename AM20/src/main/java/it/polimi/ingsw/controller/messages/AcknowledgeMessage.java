@@ -11,6 +11,14 @@ public class AcknowledgeMessage extends Message {
     private List<PlayableCard> cards;
     private int numOfConnectedPlayers;
 
+    public static final String DISCONNECTION = "Disconnection";
+    public static final String PLAY = "Play";
+    public static final String PICK = "Pick";
+
+    public String getAction(){
+        return AcknowledgeMessage.DISCONNECTION;
+    }
+
     public int getNumOfConnectedPlayers() {
         return numOfConnectedPlayers;
     }

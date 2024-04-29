@@ -10,6 +10,10 @@ public class PickAckMessage extends AcknowledgeMessage{
     private PlayableCard[] goldVisible;
     private PlayableCard[] resourceVisible;
 
+    @Override
+    public String getAction() {
+        return AcknowledgeMessage.PICK;
+    }
 
     @Override
     public PlayableCard getGoldTop() {

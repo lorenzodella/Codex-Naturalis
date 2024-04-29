@@ -87,7 +87,13 @@ public class ClientRMI extends UnicastRemoteObject implements Callback {
     }
 
     @Override
+    public void callStopGame(Message message) throws RemoteException {
+        System.out.println("Game stopped because: "+message.getResult());
+    }
+
+    @Override
     public void callConnectionAckMessage(ConnectionAckMessage message) throws RemoteException {
+        System.out.println(message);
         System.out.println("Game starts : " + message.doesGameStarts() + "\n");
         if(message.doesGameStarts()){
             System.out.println("GoldTop: " + message.getGoldTop().getID() + "\n" +
@@ -99,7 +105,9 @@ public class ClientRMI extends UnicastRemoteObject implements Callback {
                     "StarterCard: " + message.getStarterCard().getID() + "\n" +
                     "InitialCards[0]: " + message.getInitialCards().get(0).getID() + "\n"+
                     "InitialCards[1]: " + message.getInitialCards().get(1).getID() + "\n"+
-                    "InitialCards[2]: " + message.getInitialCards().get(2).getID() + "\n");
+                    "InitialCards[2]: " + message.getInitialCards().get(2).getID() + "\n"+
+                    "PlayerInfo: " + message.getPlayerInfo() + "\n"+
+                    "OthersPLayerInfo: " + message.getOthersPlayerInfo() + "\n");
         }
 
     }
@@ -107,18 +115,21 @@ public class ClientRMI extends UnicastRemoteObject implements Callback {
     @Override
     public void callAcknowledgeMessage(AcknowledgeMessage message) throws RemoteException {
         System.out.println(message);
-        if(message instanceof AcknowledgeMessage){
-            System.out.println("nextPlayer: "+ message.getNextPlayer()+"\n"+
-                    "cards[0]: "+ message.getCards().get(0)+"\n"+
+        System.out.println("action: "+ message.getAction());
+        if(message.getCards()!=null){
+            System.out.println("cards[0]: "+ message.getCards().get(0)+"\n"+
                     "cards[1]: "+ message.getCards().get(1)+"\n"+
-                    "cards[2]: "+ message.getCards().get(2)+"\n"+
-                    "numOfConnectedPlayer: " + message.getNumOfConnectedPlayers());
+                    "cards[2]: "+ message.getCards().get(2));
         }
-        if(message instanceof PlayAckMessage){
+        if(message.getNextPlayer()!=null){
+            System.out.println("nextPlayer: "+ message.getNextPlayer());
+        }
+        if(message.getAction().equals(AcknowledgeMessage.PLAY)){
             System.out.println("YourPlayerInfo: " + message.getYourPlayerInfo()+"\n"+
+                    "OthersPlayerInfo: " + message.getOthersPlayerInfo()+"\n"+
                     "MustPick: "+message.mustPick());
         }
-        if(message instanceof PickAckMessage){
+        if(message.getAction().equals(AcknowledgeMessage.PICK)){
             System.out.println("GoldTop: "+ message.getGoldTop().getID()+"\n"+
                     "ResourceTop: "+ message.getResourceTop().getID()+ "\n"+
                     "GoldVisible[0]: " + message.getGoldVisible()[0].getID() + "\n" +
@@ -131,26 +142,31 @@ public class ClientRMI extends UnicastRemoteObject implements Callback {
 
     @Override
     public void callStarterCardAckMessage(StarterCardAckMessage message) throws RemoteException {
+        System.out.println(message);
         System.out.println("ChooseObjective: " + message.shouldChooseObjective() + "\n");
         if(message.shouldChooseObjective()){
             System.out.println( "CommonObjective[0]: " + message.getCommonObjectives()[0].getID() + "\n" +
                     "CommonObjective[1]: " + message.getCommonObjectives()[1].getID() + "\n" +
                     "SecretObjective[0]: " + message.getSecretObjectives()[0].getID() + "\n" +
                     "SecretObjective[1]: " + message.getSecretObjectives()[1].getID() + "\n");
-        }else {
-            System.out.println("PlayerInfo: "+ message.getPlayerInfo()+"\n");
         }
+        System.out.println("PlayerInfo: "+ message.getPlayerInfo()+"\n");
 
     }
 
     @Override
     public void callObjectiveAckMessage(ObjectiveAckMessage message) throws RemoteException {
+        System.out.println(message);
         System.out.println("StartPlaying: " + message.shouldStartPlaying() + "\n");
         if(message.shouldStartPlaying()){
             System.out.println("FirstPlayer: " + message.getFirstPlayer());
-        }else {
-            System.out.println("SecretObjective[0]: " + message.getSecretObjectives()[0].getID() + "\n" +
-                    "SecretObjective[1]: " + message.getSecretObjectives()[1].getID() + "\n");
+        }
+        //if I'm not the client who just chose his objectiveCard, these would be null
+        if(message.getSecretObjectives()!=null) {
+            if (message.getSecretObjectives()[0] != null)
+                System.out.println("SecretObjective[0]: " + message.getSecretObjectives()[0].getID());
+            if (message.getSecretObjectives()[1] != null)
+                System.out.println("SecretObjective[1]: " + message.getSecretObjectives()[1].getID() + "\n");
         }
 
     }

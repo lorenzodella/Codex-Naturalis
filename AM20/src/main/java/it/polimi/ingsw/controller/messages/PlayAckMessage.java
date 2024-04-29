@@ -10,6 +10,11 @@ public class PlayAckMessage extends AcknowledgeMessage{
     private boolean mustPick;
 
     @Override
+    public String getAction() {
+        return AcknowledgeMessage.PLAY;
+    }
+
+    @Override
     public PlayerInfo getYourPlayerInfo() {
         return yourPlayerInfo;
     }
