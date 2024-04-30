@@ -6,7 +6,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 public interface Callback extends Remote {
-    void callMessage(Message message) throws RemoteException;
+    void callChatMessage(ChatMessage message) throws RemoteException;
     void callStopGame(Message message) throws RemoteException;
     void callConnectionAckMessage(ConnectionAckMessage message) throws RemoteException;
     void callAcknowledgeMessage(AcknowledgeMessage message) throws RemoteException;

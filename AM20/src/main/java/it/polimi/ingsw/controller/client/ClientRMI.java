@@ -65,7 +65,8 @@ public class ClientRMI extends UnicastRemoteObject implements Callback {
 
 
 
-
+            Message m = stub.sendChatMessage("Lollo", "i", "ciao");
+            System.out.println(m.getResult());
 
 
 
@@ -82,8 +83,9 @@ public class ClientRMI extends UnicastRemoteObject implements Callback {
 
 
     @Override
-    public void callMessage(Message message) throws RemoteException {
-        System.out.println(message);
+    public void callChatMessage(ChatMessage message) throws RemoteException {
+        System.out.println("You received a message from: " +message.getSender());
+        System.out.println("The message is: " +message.getMessage());
     }
 
     @Override

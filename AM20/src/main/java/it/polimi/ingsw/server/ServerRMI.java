@@ -47,7 +47,7 @@ public class ServerRMI implements Loggable{
 
             System.err.println("Server ready");
         } catch (Exception e) {
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
     }
 
@@ -208,5 +208,38 @@ public class ServerRMI implements Loggable{
             return null;
         }
         return res.get(playerNickname);
+    }
+
+    @Override
+    public Message sendChatMessage(String sender, String recipient, String message) throws RemoteException {
+        ChatMessage msg = new ChatMessage(sender, recipient, message);
+        Message m = new Message();
+        m.setResult("Message sent");
+        try {
+            callbacks.get(recipient).callChatMessage(msg);
+        } catch (RemoteException | NullPointerException e) {
+            m.setResult("Recipient is not online");
+        }
+        return m;
+    }
+
+    @Override
+    public Message sendBroadcastChatMessage(String sender, String message) {
+        BroadcastChatMessage msg = new BroadcastChatMessage(sender, message);
+        Message m = new Message();
+        m.setResult("Message sent to all");
+        for (Map.Entry<String, Callback> entry: callbacks.entrySet()) {
+            try {
+                entry.getValue().callChatMessage(msg);
+            } catch (RemoteException e) {
+                if(m.getResult().contains("except")){
+                    m.setResult(m.getResult() + ", " + entry.getKey());
+                }
+                else{
+                    m.setResult(m.getResult() + " except "+ entry.getKey());
+                }
+            }
+        }
+        return m;
     }
 }

@@ -6,6 +6,12 @@ public class ChatMessage extends Message{
     private String recipient;
     private String message;
 
+    public ChatMessage(String sender, String recipient, String message) {
+        this.sender = sender;
+        this.recipient = recipient;
+        this.message = message;
+    }
+
     public String getSender() {
         return sender;
     }
