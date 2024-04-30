@@ -9,7 +9,7 @@ import java.util.List;
 public class AcknowledgeMessage extends Message {
     private String nextPlayer;
     private List<PlayableCard> cards;
-    private int numOfConnectedPlayers;
+
 
     public static final String DISCONNECTION = "Disconnection";
     public static final String PLAY = "Play";
@@ -19,13 +19,7 @@ public class AcknowledgeMessage extends Message {
         return AcknowledgeMessage.DISCONNECTION;
     }
 
-    public int getNumOfConnectedPlayers() {
-        return numOfConnectedPlayers;
-    }
-
-    public void setNumOfConnectedPlayers(int numOfConnectedPlayers) {
-        this.numOfConnectedPlayers = numOfConnectedPlayers;
-    }
+    
 
     public PlayerInfo getYourPlayerInfo() {
         return null;

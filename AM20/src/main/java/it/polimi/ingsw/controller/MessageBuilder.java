@@ -29,10 +29,13 @@ public class MessageBuilder implements GameObserver {
         if(acknowledgeMessages == null)
             acknowledgeMessages = new HashMap<>();
 
+
+
         for (String nickname : connectedPlayerNicknames) {
             if (acknowledgeMessages.get(nickname) == null)
                 acknowledgeMessages.put(nickname, new AcknowledgeMessage());
 
+            acknowledgeMessages.get(nickname).setNumOfConnectedPlayers(connectedPlayerNicknames.size());
             acknowledgeMessages.get(nickname).setResult(playerNickname+" disconnected from the game");
             acknowledgeMessages.get(nickname).setNumOfConnectedPlayers(connectedPlayerNicknames.size());
         }
@@ -50,6 +53,7 @@ public class MessageBuilder implements GameObserver {
             if (connectionAckMessages.get(nickname) == null)
                 connectionAckMessages.put(nickname, new RestartGameMessage());
 
+            connectionAckMessages.get(nickname).setNumOfConnectedPlayers(connectedPlayerNicknames.size());
             connectionAckMessages.get(nickname).setResult(player.getNickname()+" reconnected to the game");
         }
 
@@ -84,6 +88,7 @@ public class MessageBuilder implements GameObserver {
             if (connectionAckMessages.get(nickname) == null)
                 connectionAckMessages.put(nickname, new StartGameMessage());
 
+            connectionAckMessages.get(nickname).setNumOfConnectedPlayers(connectedPlayerNicknames.size());
             connectionAckMessages.get(nickname).setGoldTop(goldCardDeck.getFirstCard());
             connectionAckMessages.get(nickname).setResourceTop(resourceCardDeck.getFirstCard());
             connectionAckMessages.get(nickname).setGoldVisible(goldCardDeck.getVisibleCards());
@@ -102,6 +107,8 @@ public class MessageBuilder implements GameObserver {
                 if (connectionAckMessages.get(p.getNickname()) == null)
                     connectionAckMessages.put(p.getNickname(), new StartGameMessage());
 
+                //TODO sicuro che sia giusto??
+                connectionAckMessages.get(p.getNickname()).setNumOfConnectedPlayers(connectedPlayerNicknames.size());
                 connectionAckMessages.get(p.getNickname()).setStarterCard(p.getStarterCard());
             }
         }
@@ -118,6 +125,8 @@ public class MessageBuilder implements GameObserver {
                 if (connectionAckMessages.get(p.getNickname()) == null)
                     connectionAckMessages.put(p.getNickname(), new StartGameMessage());
 
+                //TODO
+                connectionAckMessages.get(p.getNickname()).setNumOfConnectedPlayers(connectedPlayerNicknames.size());
                 connectionAckMessages.get(p.getNickname()).setInitialCards(p.getCards());
             }
         }
@@ -142,6 +151,7 @@ public class MessageBuilder implements GameObserver {
                 starterCardAckMessages.get(nickname).setOthersPlayerInfo(otherPlayerUpdates);
                 starterCardAckMessages.get(nickname).setResult(player.getNickname()+" has chosen the side of the starter card");
             }
+            starterCardAckMessages.get(nickname).setNumOfConnectedPlayers(connectedPlayerNicknames.size());
         }
         starterCardAckMessages.get(player.getNickname()).setPlayerInfo(playerUpdates);
         starterCardAckMessages.get(player.getNickname()).setResult("You chose the side of the starter card");
@@ -158,6 +168,7 @@ public class MessageBuilder implements GameObserver {
                 if (starterCardAckMessages.get(p.getNickname()) == null)
                     starterCardAckMessages.put(p.getNickname(), new StartChoosingObjectiveMessage());
 
+                starterCardAckMessages.get(p.getNickname()).setNumOfConnectedPlayers(connectedPlayerNicknames.size());
                 starterCardAckMessages.get(p.getNickname()).setCommonObjectives(commonObjectives);
                 starterCardAckMessages.get(p.getNickname()).setSecretObjectives(p.getSecretObjective());
             }
@@ -171,6 +182,7 @@ public class MessageBuilder implements GameObserver {
             objectiveAckMessages = new HashMap<>();
         if(objectiveAckMessages.get(player.getNickname()) == null)
             objectiveAckMessages.put(player.getNickname(), new ObjectiveAckMessage());
+        objectiveAckMessages.get(player.getNickname()).setNumOfConnectedPlayers(connectedPlayerNicknames.size());
         objectiveAckMessages.get(player.getNickname()).setSecretObjectives(player.getSecretObjective());
         objectiveAckMessages.get(player.getNickname()).setResult("You chose your secret objective");
         return objectiveAckMessages;
@@ -184,6 +196,7 @@ public class MessageBuilder implements GameObserver {
             if(objectiveAckMessages.get(nickname) == null)
                 objectiveAckMessages.put(nickname, new StartPlayingMessage());
 
+            objectiveAckMessages.get(nickname).setNumOfConnectedPlayers(connectedPlayerNicknames.size());
             objectiveAckMessages.get(nickname).setFirstPlayer(first.getNickname());
         }
         return objectiveAckMessages;
@@ -210,6 +223,8 @@ public class MessageBuilder implements GameObserver {
                 acknowledgeMessages.get(nickname).setResult(player.getNickname() + " played a card");
                 acknowledgeMessages.get(nickname).setMustPick(false);
             }
+
+            acknowledgeMessages.get(nickname).setNumOfConnectedPlayers(connectedPlayerNicknames.size());
         }
         acknowledgeMessages.get(player.getNickname()).setCards(player.getCards());
         acknowledgeMessages.get(player.getNickname()).setYourPlayerInfo(playerUpdates);
@@ -228,6 +243,7 @@ public class MessageBuilder implements GameObserver {
             if(acknowledgeMessages.get(nickname) == null)
                 acknowledgeMessages.put(nickname, new PickAckMessage());
 
+            acknowledgeMessages.get(nickname).setNumOfConnectedPlayers(connectedPlayerNicknames.size());
             acknowledgeMessages.get(nickname).setResult(player.getNickname()+ " just picked a card");
         }
         acknowledgeMessages.get(player.getNickname()).setCards(player.getCards());
@@ -245,6 +261,7 @@ public class MessageBuilder implements GameObserver {
             if (acknowledgeMessages.get(nickname) == null)
                 acknowledgeMessages.put(nickname, new PickAckMessage());
 
+            acknowledgeMessages.get(nickname).setNumOfConnectedPlayers(connectedPlayerNicknames.size());
             acknowledgeMessages.get(nickname).setGoldTop(goldCardDeck.getFirstCard());
             acknowledgeMessages.get(nickname).setResourceTop(resourceCardDeck.getFirstCard());
             acknowledgeMessages.get(nickname).setGoldVisible(goldCardDeck.getVisibleCards());
@@ -261,6 +278,8 @@ public class MessageBuilder implements GameObserver {
         for(String nickname : connectedPlayerNicknames){
             if(acknowledgeMessages.get(nickname) == null)
                 acknowledgeMessages.put(nickname, new AcknowledgeMessage());
+
+            acknowledgeMessages.get(nickname).setNumOfConnectedPlayers(connectedPlayerNicknames.size());
             acknowledgeMessages.get(nickname).setNextPlayer(player.getNickname());
             acknowledgeMessages.get(nickname).setMustPick(false);
         }
@@ -275,6 +294,8 @@ public class MessageBuilder implements GameObserver {
         for(String nickname : connectedPlayerNicknames){
             if(acknowledgeMessages.get(nickname) == null)
                 acknowledgeMessages.put(nickname, new AcknowledgeMessage());
+
+            acknowledgeMessages.get(nickname).setNumOfConnectedPlayers(connectedPlayerNicknames.size());
             acknowledgeMessages.get(nickname).setResult("The game's almost done... The last turn starts now!");
         }
         return acknowledgeMessages;
@@ -296,6 +317,7 @@ public class MessageBuilder implements GameObserver {
             if(acknowledgeMessages.get(nickname) == null)
                 acknowledgeMessages.put(nickname, new AcknowledgeMessage());
 
+            acknowledgeMessages.get(nickname).setNumOfConnectedPlayers(connectedPlayerNicknames.size());
             acknowledgeMessages.get(nickname).setYourPlayerInfo(otherPlayerUpdates.get(nickname));
             acknowledgeMessages.get(nickname).setOthersPlayerInfo(
                     otherPlayerUpdates.entrySet().stream()
@@ -316,6 +338,8 @@ public class MessageBuilder implements GameObserver {
                 acknowledgeMessages.put(nickname, new AcknowledgeMessage());
             if(!winner.getNickname().equals(nickname))
                 acknowledgeMessages.get(nickname).setResult(winner.getNickname() + " wins the game!");
+
+            acknowledgeMessages.get(nickname).setNumOfConnectedPlayers(connectedPlayerNicknames.size());
         }
         acknowledgeMessages.get(winner.getNickname()).setResult("You're the winner!");
         return acknowledgeMessages;
