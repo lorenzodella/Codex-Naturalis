@@ -2,9 +2,10 @@ package it.polimi.ingsw.clientmessage;
 
 import it.polimi.ingsw.controller.messages.AcknowledgeMessage;
 
-public class PickCardDeckMessage extends ClientMessage{
+public class PickCardVisibleMessage extends ClientMessage{
     String playerNickname;
     int deck;
+    int index;
 
     public String getPlayerNickname() {
         return playerNickname;
@@ -22,7 +23,15 @@ public class PickCardDeckMessage extends ClientMessage{
         this.deck = deck;
     }
 
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
     public String getAction(){
-        return PickCardDeckMessage.PICK_CARD_DECK;
+        return PickCardVisibleMessage.PICK_CARD_VISIBLE;
     }
 }

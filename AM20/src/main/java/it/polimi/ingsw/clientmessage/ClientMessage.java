@@ -6,7 +6,7 @@ public class ClientMessage {
     public static final String CHOOSE_STARTERCARD_SIDE = "ChooseStarterCardSide";
     public static final String CHOOSE_OBJECTIVE = "ChooseObjective";
     public static final String PLAY_CARD = "PlayCard";
-    public static final String PICK_CARD_VISIBLE = "PlayCardVisible";
+    public static final String PICK_CARD_VISIBLE = "PickCardVisible";
     public static final String PICK_CARD_DECK = "PickCardDeck";
     public static final String SEND_CHAT = "SendChat";
     public static final String SEND_CHAT_BROADCAST = "SendChatBroadcast";
