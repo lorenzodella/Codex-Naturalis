@@ -11,10 +11,10 @@ import it.polimi.ingsw.controller.messages.*;
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.model.exceptions.InvalidArgumentException;
 import it.polimi.ingsw.model.exceptions.InvalidPlayingException;
-import it.polimi.ingsw.server.Callback;
+import it.polimi.ingsw.server.Connection;
 import it.polimi.ingsw.server.Loggable;
 
-public class ClientRMI extends UnicastRemoteObject implements Callback {
+public class ClientRMI extends UnicastRemoteObject implements Connection {
 
 
     protected ClientRMI() throws RemoteException {

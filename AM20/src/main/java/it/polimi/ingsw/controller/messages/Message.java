@@ -2,7 +2,7 @@ package it.polimi.ingsw.controller.messages;
 
 import java.io.Serializable;
 
-public class Message implements Serializable {
+public class    Message implements Serializable {
     private String result;  // positivo
     private Exception exc; // negativo
     private int numOfConnectedPlayers;

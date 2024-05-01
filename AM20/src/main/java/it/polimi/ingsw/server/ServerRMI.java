@@ -7,6 +7,7 @@ import it.polimi.ingsw.controller.exceptions.NoOneIsConnectedException;
 import it.polimi.ingsw.controller.messages.*;
 import it.polimi.ingsw.model.exceptions.*;
 
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -14,27 +15,27 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
 import java.util.Map;
 
+//classe che implementa la ricezione delle azioni dalla classe RMI
 public class ServerRMI implements Loggable{
 
-    private HashMap<String, Callback> callbacks;
+    //per ogni utente dice se è connesso con RMI o SOCKET
+    private ServerManager manager;
     private EndGameTimer timer;
-    private Controller controller;
 
-    public ServerRMI() {
+    public ServerRMI(ServerManager manager) {
+        this.manager = manager;
         timer = new EndGameTimer();
-        restart();
     }
 
     private void restart() {
         timer.stop();
-        this.controller = new Controller();
-        this.callbacks = new HashMap<>();
+        manager.reset();
     }
 
 
     public static void main(String[] args){
 
-        System.out.println("Hello from ServerRMI");
+        /*System.out.println("Hello from ServerRMI");
 
         ServerRMI obj = new ServerRMI();
 
@@ -48,23 +49,23 @@ public class ServerRMI implements Loggable{
             System.err.println("Server ready");
         } catch (Exception e) {
             throw new RuntimeException(e);
-        }
+        }*/
     }
 
     @Override
-    public  ConnectionAckMessage login(String client, Callback callback) throws RemoteException, CannotJoinGameException {
+    public  ConnectionAckMessage login(String client, Connection callback) throws RemoteException, CannotJoinGameException {
         HashMap<String, ConnectionAckMessage> res;
-        this.callbacks.put(client, callback);
-        res = this.controller.joinGame(client);
+        manager.addConnection(client, callback);
+        res = this.manager.getController().joinGame(client);
 
         //stop countdown if someone joined
         timer.stop();
         //send the message to other player if the message is significant
         for(String s : res.keySet()){
-            if(res.get(s) != null) {
+            if(res.get(s) != null && !s.equals(client)) {
                 try {
-                    this.callbacks.get(s).callConnectionAckMessage(res.get(s));
-                } catch (RemoteException e) {
+                    this.manager.getConnections().get(s).callConnectionAckMessage(res.get(s));
+                } catch (IOException e) {
                     detectDisconnection(s);
                     return null;
                 }
@@ -74,26 +75,28 @@ public class ServerRMI implements Loggable{
     }
 
     @Override
-    public Message starNewGame(String client, int numPlayers, Callback callback) throws RemoteException, InvalidArgumentException, InvalidPlayingException {
-        this.callbacks.put(client, callback);
-        return this.controller.newGame(client,numPlayers);
+    public Message starNewGame(String client, int numPlayers, Connection callback) throws RemoteException, InvalidArgumentException, InvalidPlayingException {
+        this.manager.getConnections().put(client, callback);
+        return this.manager.getController().newGame(client,numPlayers);
     }
 
     private void detectDisconnection(String nickname) {
         HashMap<String, AcknowledgeMessage> res;
-        this.callbacks.remove(nickname);
+        this.manager.getConnections().remove(nickname);
         try {
-            res = this.controller.disconnectPlayer(nickname);
+            res = this.manager.getController().disconnectPlayer(nickname);
             //if there's one player left start countdown
             Map.Entry<String, AcknowledgeMessage> m = res.entrySet().iterator().next();
             if(m.getValue().getNumOfConnectedPlayers()==1)
-                timer.startCountdown(callbacks.get(m.getKey()));
+                timer.startCountdown(manager.getConnections().get(m.getKey()));
 
             for (String s : res.keySet()) {
-                try {
-                    this.callbacks.get(s).callAcknowledgeMessage(res.get(s));
-                } catch (RemoteException e) {
-                    detectDisconnection(s);
+                if(res.get(s) != null && !s.equals(nickname)) {
+                    try {
+                        this.manager.getConnections().get(s).callAcknowledgeMessage(res.get(s));
+                    } catch (IOException e) {
+                        detectDisconnection(s);
+                    }
                 }
             }
         } catch (InvalidConnectionStateException | InvalidArgumentException e){
@@ -103,10 +106,10 @@ public class ServerRMI implements Loggable{
         } catch (InvalidDisconnectionException e) {
             Message message = new Message();
             message.setResult(e.toString());
-            for (Callback c : callbacks.values()) {
+            for (Connection c : manager.getConnections().values()) {
                 try {
                     c.callStopGame(message);
-                } catch (RemoteException ignored) {
+                } catch (IOException ignored) {
 
                 }
             }
@@ -117,13 +120,15 @@ public class ServerRMI implements Loggable{
     @Override
     public StarterCardAckMessage chooseStarterCardSide(String nickname, int side) throws RemoteException, InvalidArgumentException, InvalidPlayingException {
         HashMap<String, StarterCardAckMessage> res;
-        res = this.controller.chooseStarterCardSide(nickname, side);
+        res = this.manager.getController().chooseStarterCardSide(nickname, side);
         for(String s : res.keySet()){
-            try {
-                this.callbacks.get(s).callStarterCardAckMessage(res.get(s));
-            } catch (RemoteException e) {
-                detectDisconnection(s);
-                return null;
+            if(res.get(s) != null && !s.equals(nickname)) {
+                try {
+                    this.manager.getConnections().get(s).callStarterCardAckMessage(res.get(s));
+                } catch (IOException e) {
+                    detectDisconnection(s);
+                    return null;
+                }
             }
         }
         return res.get(nickname);
@@ -132,12 +137,12 @@ public class ServerRMI implements Loggable{
     @Override
     public ObjectiveAckMessage chooseObjective(String nickname, int index) throws RemoteException, InvalidArgumentException, InvalidPlayingException {
         HashMap<String, ObjectiveAckMessage> res;
-        res = this.controller.chooseObjective(nickname, index);
+        res = this.manager.getController().chooseObjective(nickname, index);
         for(String s : res.keySet()){
-            if(res.get(s) != null) {
+            if(res.get(s) != null && !s.equals(nickname)) {
                 try {
-                    this.callbacks.get(s).callObjectiveAckMessage(res.get(s));
-                } catch (RemoteException e) {
+                    this.manager.getConnections().get(s).callObjectiveAckMessage(res.get(s));
+                } catch (IOException e) {
                     detectDisconnection(s);
                     return null;
                 }
@@ -153,12 +158,17 @@ public class ServerRMI implements Loggable{
             InvalidPositionException {
         HashMap<String, AcknowledgeMessage> res;
         try{
-            res = this.controller.playCard(playerNickname, cardIndex, angle, targetID, side);
+            res = this.manager.getController().playCard(playerNickname, cardIndex, angle, targetID, side);
             for (String s : res.keySet()) {
-                try {
-                    this.callbacks.get(s).callAcknowledgeMessage(res.get(s));
-                } catch (RemoteException e) {
-                    detectDisconnection(s);
+                if (res.get(s) != null && !s.equals(playerNickname)) {
+                    try {
+                        //il server, per ogni utente, manda il messaggio (destinato ad s) tramite l'interfaccia connection
+                        //l'interfaccia connection è colei che capisce se l'utente s è collegato con socket o rmi e di conseguenza
+                        //chiama i metodi coerenti con il modo di connessione
+                        this.manager.getConnections().get(s).callAcknowledgeMessage(res.get(s));
+                    } catch (IOException e) {
+                        detectDisconnection(s);
+                    }
                 }
             }
         }catch (NoOneIsConnectedException e){
@@ -174,12 +184,14 @@ public class ServerRMI implements Loggable{
             FinishedCardStackException {
         HashMap<String, AcknowledgeMessage> res;
         try{
-            res = this.controller.pickCard(playerNickname, deck);
+            res = this.manager.getController().pickCard(playerNickname, deck);
             for (String s : res.keySet()) {
-                try {
-                    this.callbacks.get(s).callAcknowledgeMessage(res.get(s));
-                } catch (RemoteException e) {
-                    detectDisconnection(s);
+                if(res.get(s) != null && !s.equals(playerNickname)) {
+                    try {
+                        this.manager.getConnections().get(s).callAcknowledgeMessage(res.get(s));
+                    } catch (IOException e) {
+                        detectDisconnection(s);
+                    }
                 }
             }
         } catch (NoOneIsConnectedException e){
@@ -195,12 +207,14 @@ public class ServerRMI implements Loggable{
             FinishedCardStackException {
         HashMap<String, AcknowledgeMessage> res;
         try {
-            res = this.controller.pickCard(playerNickname, deck, index);
+            res = this.manager.getController().pickCard(playerNickname, deck, index);
             for (String s : res.keySet()) {
-                try {
-                    this.callbacks.get(s).callAcknowledgeMessage(res.get(s));
-                } catch (RemoteException e) {
-                    detectDisconnection(s);
+                if(res.get(s) != null && !s.equals(playerNickname)) {
+                    try {
+                        this.manager.getConnections().get(s).callAcknowledgeMessage(res.get(s));
+                    } catch (IOException e) {
+                        detectDisconnection(s);
+                    }
                 }
             }
         } catch (NoOneIsConnectedException e){
@@ -216,8 +230,8 @@ public class ServerRMI implements Loggable{
         Message m = new Message();
         m.setResult("Message sent");
         try {
-            callbacks.get(recipient).callChatMessage(msg);
-        } catch (RemoteException | NullPointerException e) {
+            manager.getConnections().get(recipient).callChatMessage(msg);
+        } catch (IOException | NullPointerException e) {
             m.setResult("Recipient is not online");
         }
         return m;
@@ -228,15 +242,16 @@ public class ServerRMI implements Loggable{
         BroadcastChatMessage msg = new BroadcastChatMessage(sender, message);
         Message m = new Message();
         m.setResult("Message sent to all");
-        for (Map.Entry<String, Callback> entry: callbacks.entrySet()) {
-            try {
-                entry.getValue().callChatMessage(msg);
-            } catch (RemoteException e) {
-                if(m.getResult().contains("except")){
-                    m.setResult(m.getResult() + ", " + entry.getKey());
-                }
-                else{
-                    m.setResult(m.getResult() + " except "+ entry.getKey());
+        for (Map.Entry<String, Connection> entry: manager.getConnections().entrySet()) {
+            if(!entry.getKey().equals(sender)) {
+                try {
+                    entry.getValue().callChatMessage(msg);
+                } catch (IOException e) {
+                    if (m.getResult().contains("except")) {
+                        m.setResult(m.getResult() + ", " + entry.getKey());
+                    } else {
+                        m.setResult(m.getResult() + " except " + entry.getKey());
+                    }
                 }
             }
         }

@@ -6,6 +6,9 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
 
 // to test against console:
 //  /usr/bin/nc 127.0.0.1 1234
@@ -14,101 +17,29 @@ import java.net.Socket;
 
 public class ServerMain
 {
-    private static int portNumber = 1234;
-    static final int maxRetries = 10;
 
+    public static void main(String[] args) {
+        ServerManager manager = new ServerManager();
 
-    static Boolean readLoop(BufferedReader in,  PrintWriter out ){
-        // waits for data and reads it in until connection dies
-        // readLine() blocks until the server receives a new line from client
-        String s = "";
-        try {
-            while ((s = in.readLine()) != null) {
-                System.out.println(s);
-                out.println(s.toUpperCase());
-                out.flush();
-            }
-
-            return true;
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return false;
-    }
-
-
-    public static void main( String[] args )
-    {
-        System.out.println("Server started!");
-
-        //startMyTimer();
-
-//        ServerSocket serverSocket = null;
-//        try {
-//            serverSocket = new ServerSocket(portNumber);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        Socket clientSocket = null;
-//        try {
-//            clientSocket = serverSocket.accept();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-
-//
-//        System.out.println("Server done!");
-
-        if(args.length==2){
-            String hostName = args[0];
-            portNumber = Integer.parseInt(args[1]);
-        }else
-            System.out.println("Param not corrected");
-
-
-
-        ServerSocket serverSocket = null;
-        try {
-            serverSocket = new ServerSocket(portNumber);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        Socket clientSocket = null;
-        try {
-            clientSocket = serverSocket.accept();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        ServerRMI obj = new ServerRMI(manager);
 
         try {
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(clientSocket.getInputStream()));
-            //readLoop(in, out);
-        } catch (IOException e) {
-            e.printStackTrace();
+            Loggable stub = (Loggable) UnicastRemoteObject.exportObject(obj, Integer.parseInt(args[0]));
+
+            Registry registry = LocateRegistry.createRegistry(Integer.parseInt(args[0]));
+
+            registry.bind("Loggable", stub);
+
+            System.err.println("Server RMI ready");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
 
-        PrintWriter out = null; // allocate to write answer to client.
-        try {
-            out = new PrintWriter(clientSocket.getOutputStream(), true);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        //---------------
 
-
-
-
-
-
-
-
-
-
+        ServerSKT serverSKT = new ServerSKT(Integer.parseInt(args[1]), manager);
+        System.err.println("Server SKT ready");
+        serverSKT.startServer();
     }
 
 

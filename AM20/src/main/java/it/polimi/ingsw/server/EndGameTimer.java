@@ -2,6 +2,7 @@ package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.controller.messages.Message;
 
+import java.io.IOException;
 import java.rmi.RemoteException;
 
 public class EndGameTimer {
@@ -9,7 +10,7 @@ public class EndGameTimer {
     private Thread t;
     private static final int SEC = 30;
 
-    public void startCountdown(Callback callback) {
+    public void startCountdown(Connection callback) {
         t = new Thread(()->{
             try {
                 for (int i = SEC; i > 0; i--) {
@@ -20,7 +21,7 @@ public class EndGameTimer {
                 m.setResult("You won because everyone left the game");
                 callback.callStopGame(m);
             } catch (InterruptedException ignored) {}
-            catch (RemoteException e) {
+            catch (IOException e) {
                 throw new RuntimeException(e);
             }
         });

@@ -63,24 +63,20 @@ public class Controller implements GameManager {
         phase = NOGAME;
     }
 
-    public GameObservable getGameModel() {
+    protected GameObservable getGameModel() {
         return gameModel;
     }
 
-    public GameObserver getMessageBuilder() {
+    protected GameObserver getMessageBuilder() {
         return messageBuilder;
     }
 
-    public List<String> getPlayers() {
+    protected List<String> getPlayers() {
         return players;
     }
 
-    public int getNumPlayers() {
+    protected int getNumPlayers() {
         return numPlayers;
-    }
-
-    public int getMissingRounds() {
-        return missingRounds;
     }
 
     /**
@@ -93,7 +89,7 @@ public class Controller implements GameManager {
      * @throws InvalidPlayingException if the phase is not the NOGAME phase
      */
     @Override
-    public Message newGame(String playerNickname, int numPlayers) throws InvalidArgumentException, InvalidPlayingException {
+    public synchronized Message newGame(String playerNickname, int numPlayers) throws InvalidArgumentException, InvalidPlayingException {
         if(phase!=NOGAME)
             throw new InvalidPlayingException("A game already started");
         if(numPlayers<2 || numPlayers>4)
@@ -117,7 +113,7 @@ public class Controller implements GameManager {
      * @throws NoOneIsConnectedException game should stop if player disconnected during first phase of the game or if all players disconnected
      */
     @Override
-    public HashMap<String, AcknowledgeMessage> disconnectPlayer(String nickname)
+    public synchronized HashMap<String, AcknowledgeMessage> disconnectPlayer(String nickname)
             throws InvalidConnectionStateException, InvalidArgumentException, NoOneIsConnectedException, InvalidDisconnectionException {
         //if you are not a player of current game
         if(!players.contains(nickname))
@@ -150,7 +146,7 @@ public class Controller implements GameManager {
      * @return messages to be sent to connected players
      * @throws CannotJoinGameException if player was already online, or it's not part of current game
      */
-    private HashMap<String, ConnectionAckMessage> reconnectPlayer(String nickname) throws CannotJoinGameException {
+    private synchronized HashMap<String, ConnectionAckMessage> reconnectPlayer(String nickname) throws CannotJoinGameException {
         try {
             List<Player> p = gameModel.setPlayerConnection(nickname, true);
             messageBuilder = new MessageBuilder(gameModel.getConnectedPlayers());
@@ -173,7 +169,7 @@ public class Controller implements GameManager {
      * @throws CannotJoinGameException if there is no active game, if nickname is already used, if game is full, if he was already connected
      */
     @Override
-    public HashMap<String, ConnectionAckMessage> joinGame(String playerNickname) throws CannotJoinGameException {
+    public synchronized HashMap<String, ConnectionAckMessage> joinGame(String playerNickname) throws CannotJoinGameException {
         if(phase==NOGAME)
             throw new CannotJoinGameException("No active game");
         //if you are connecting with an already used nickname
@@ -213,7 +209,7 @@ public class Controller implements GameManager {
      * @return a StartGameMessage that says that all players have just joined and it also gives all the cards and decks
      * that every player now needs to be able to actually start playing
      */
-    private HashMap<String, ConnectionAckMessage> startGame(){
+    private synchronized HashMap<String, ConnectionAckMessage> startGame(){
         phase = STARTER;
         gameModel = new Game(players.stream().map(Player::new).collect(Collectors.toList()));
 
@@ -251,7 +247,7 @@ public class Controller implements GameManager {
      * @throws InvalidPlayingException if someone tries to put the starter card in an unappropriated position
      */
     @Override
-    public HashMap<String, StarterCardAckMessage> chooseStarterCardSide(String playerNickname, int side) throws InvalidArgumentException, InvalidPlayingException {
+    public synchronized HashMap<String, StarterCardAckMessage> chooseStarterCardSide(String playerNickname, int side) throws InvalidArgumentException, InvalidPlayingException {
         if(phase!=STARTER)
             throw new InvalidPlayingException("You can't position starter card now");
 
@@ -298,7 +294,7 @@ public class Controller implements GameManager {
      * @throws InvalidPlayingException if the phase is not the OBJECTIVE
      */
     @Override
-    public HashMap<String, ObjectiveAckMessage> chooseObjective(String playerNickname, int index) throws InvalidArgumentException, InvalidPlayingException {
+    public synchronized HashMap<String, ObjectiveAckMessage> chooseObjective(String playerNickname, int index) throws InvalidArgumentException, InvalidPlayingException {
         if(phase!=OBJECTIVES)
             throw new InvalidPlayingException("You can't choose objective now");
 
@@ -352,7 +348,7 @@ public class Controller implements GameManager {
      * @throws NoOneIsConnectedException
      */
     @Override
-    public HashMap<String, AcknowledgeMessage> playCard(String playerNickname, int indexCard, int angle, String targetID, int side)
+    public synchronized HashMap<String, AcknowledgeMessage> playCard(String playerNickname, int indexCard, int angle, String targetID, int side)
             throws InvalidArgumentException, TargetNotPresentException,
             InvalidAngleCoveredException, InvalidPositionException, RequirementsNotRespectedException,
             InvalidPlayingException, NoOneIsConnectedException {
@@ -396,7 +392,7 @@ public class Controller implements GameManager {
      * @throws NoOneIsConnectedException
      */
     @Override
-    public HashMap<String, AcknowledgeMessage> pickCard(String playerNickname, int deck) throws InvalidArgumentException, FinishedCardStackException,
+    public synchronized HashMap<String, AcknowledgeMessage> pickCard(String playerNickname, int deck) throws InvalidArgumentException, FinishedCardStackException,
             InvalidPlayingException, NoOneIsConnectedException {
         if(phase!=PICK)
             throw new InvalidPlayingException("You can't draw a card now");
@@ -430,7 +426,7 @@ public class Controller implements GameManager {
      * @throws NoOneIsConnectedException
      */
     @Override
-    public HashMap<String, AcknowledgeMessage> pickCard(String playerNickname, int deck, int index) throws InvalidArgumentException, FinishedCardStackException,
+    public synchronized HashMap<String, AcknowledgeMessage> pickCard(String playerNickname, int deck, int index) throws InvalidArgumentException, FinishedCardStackException,
             InvalidPlayingException, NoOneIsConnectedException {
         if(phase!=PICK)
             throw new InvalidPlayingException("You can't draw a card now");
@@ -459,7 +455,7 @@ public class Controller implements GameManager {
      * @return .......
      * @throws NoOneIsConnectedException if nobody is connected at the moment
      */
-    private HashMap<String, AcknowledgeMessage> checkEndGame() throws NoOneIsConnectedException {
+    private synchronized HashMap<String, AcknowledgeMessage> checkEndGame() throws NoOneIsConnectedException {
         HashMap<String, AcknowledgeMessage> msg = null;
         //if game ended but last turn not started yet
         if(gameModel.checkTheEnd() && missingRounds ==-1) {
