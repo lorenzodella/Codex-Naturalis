@@ -19,7 +19,7 @@ public class AcknowledgeMessage extends Message {
         return AcknowledgeMessage.DISCONNECTION;
     }
 
-    
+
 
     public PlayerInfo getYourPlayerInfo() {
         return null;
