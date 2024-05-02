@@ -43,9 +43,10 @@ public class ClientHandler implements Runnable{
             try {
                 message = (ClientMessage) objectInputStream.readObject();
 
-                if(message.getAction() == ClientMessage.LOGIN){
+                if(message.getAction().equals(ClientMessage.LOGIN)){
 
                     LoginMessage msg = (LoginMessage) message;
+                    this.manager.addConnection(msg.getClient(),new SocketConnection(this.socket));
                     HashMap<String, ConnectionAckMessage> res;
                     this.usernameClient = msg.getClient();
 
@@ -64,7 +65,7 @@ public class ClientHandler implements Runnable{
                     }
 
 
-                }else if(message.getAction() == ClientMessage.NEWGAME){
+                }else if(message.getAction().equals(ClientMessage.NEWGAME)){
                     NewGameMessage msg = (NewGameMessage) message;
                     Message messageToSend;
                     try {
@@ -79,15 +80,12 @@ public class ClientHandler implements Runnable{
                                 throw new RuntimeException(e);
                             }
                         }
-                    } catch (InvalidArgumentException e) {
-                        this.manager.getConnections().get(this.usernameClient).callErrorMessage(new ErrorMessage(e));
-                    } catch (InvalidPlayingException e) {
+                    } catch (InvalidArgumentException | InvalidPlayingException e) {
                         this.manager.getConnections().get(this.usernameClient).callErrorMessage(new ErrorMessage(e));
                     }
 
 
-
-                }else if(message.getAction() == ClientMessage.CHOOSE_OBJECTIVE){
+                }else if(message.getAction().equals(ClientMessage.CHOOSE_OBJECTIVE)){
                     ChooseObjectiveMessage msg = (ChooseObjectiveMessage) message;
                     HashMap<String, ObjectiveAckMessage> res;
                     try {
@@ -100,16 +98,12 @@ public class ClientHandler implements Runnable{
                                 throw new RuntimeException(e);
                             }
                         }
-                    } catch (InvalidArgumentException e) {
-                        this.manager.getConnections().get(this.usernameClient).callErrorMessage(new ErrorMessage(e));
-                    } catch (InvalidPlayingException e) {
+                    } catch (InvalidArgumentException | InvalidPlayingException e) {
                         this.manager.getConnections().get(this.usernameClient).callErrorMessage(new ErrorMessage(e));
                     }
 
 
-
-
-                }else if(message.getAction() == ClientMessage.CHOOSE_STARTERCARD_SIDE){
+                }else if(message.getAction().equals(ClientMessage.CHOOSE_STARTERCARD_SIDE)){
                     ChooseStarterCardSideMessage msg = (ChooseStarterCardSideMessage) message;
                     HashMap<String, StarterCardAckMessage> res;
                     try {
@@ -122,16 +116,12 @@ public class ClientHandler implements Runnable{
                                 throw new RuntimeException(e);
                             }
                         }
-                    } catch (InvalidArgumentException e) {
-                        this.manager.getConnections().get(this.usernameClient).callErrorMessage(new ErrorMessage(e));
-                    } catch (InvalidPlayingException e) {
+                    } catch (InvalidArgumentException | InvalidPlayingException e) {
                         this.manager.getConnections().get(this.usernameClient).callErrorMessage(new ErrorMessage(e));
                     }
 
 
-
-
-                }else if(message.getAction() == ClientMessage.PICK_CARD_DECK){
+                }else if(message.getAction().equals(ClientMessage.PICK_CARD_DECK)){
                     PickCardDeckMessage msg = (PickCardDeckMessage) message;
                     HashMap<String, AcknowledgeMessage> res;
                     try {
@@ -144,19 +134,13 @@ public class ClientHandler implements Runnable{
                                 throw new RuntimeException(e);
                             }
                         }
-                    } catch (InvalidArgumentException e) {
-                        this.manager.getConnections().get(this.usernameClient).callErrorMessage(new ErrorMessage(e));
-                    } catch (FinishedCardStackException e) {
-                        this.manager.getConnections().get(this.usernameClient).callErrorMessage(new ErrorMessage(e));
-                    } catch (InvalidPlayingException e) {
-                        this.manager.getConnections().get(this.usernameClient).callErrorMessage(new ErrorMessage(e));
-                    } catch (NoOneIsConnectedException e) {
+                    } catch (InvalidArgumentException | FinishedCardStackException | InvalidPlayingException |
+                             NoOneIsConnectedException e) {
                         this.manager.getConnections().get(this.usernameClient).callErrorMessage(new ErrorMessage(e));
                     }
 
 
-
-                }else if(message.getAction() == ClientMessage.PICK_CARD_VISIBLE){
+                }else if(message.getAction().equals(ClientMessage.PICK_CARD_VISIBLE)){
                     PickCardVisibleMessage msg = (PickCardVisibleMessage) message;
                     HashMap<String, AcknowledgeMessage> res;
                     try {
@@ -170,19 +154,13 @@ public class ClientHandler implements Runnable{
                                 throw new RuntimeException(e);
                             }
                         }
-                    } catch (InvalidArgumentException e) {
-                        this.manager.getConnections().get(this.usernameClient).callErrorMessage(new ErrorMessage(e));
-                    } catch (FinishedCardStackException e) {
-                        this.manager.getConnections().get(this.usernameClient).callErrorMessage(new ErrorMessage(e));
-                    } catch (InvalidPlayingException e) {
-                        this.manager.getConnections().get(this.usernameClient).callErrorMessage(new ErrorMessage(e));
-                    } catch (NoOneIsConnectedException e) {
+                    } catch (InvalidArgumentException | FinishedCardStackException | InvalidPlayingException |
+                             NoOneIsConnectedException e) {
                         this.manager.getConnections().get(this.usernameClient).callErrorMessage(new ErrorMessage(e));
                     }
 
 
-
-                }else if(message.getAction() == ClientMessage.PLAY_CARD){
+                }else if(message.getAction().equals(ClientMessage.PLAY_CARD)){
                     PlayCardMessage msg = (PlayCardMessage) message;
                     HashMap<String, AcknowledgeMessage> res;
 
@@ -196,25 +174,14 @@ public class ClientHandler implements Runnable{
                                 throw new RuntimeException(e);
                             }
                         }
-                    } catch (InvalidArgumentException e) {
-                        this.manager.getConnections().get(this.usernameClient).callErrorMessage(new ErrorMessage(e));
-                    } catch (TargetNotPresentException e) {
-                        this.manager.getConnections().get(this.usernameClient).callErrorMessage(new ErrorMessage(e));
-                    } catch (InvalidAngleCoveredException e) {
-                        this.manager.getConnections().get(this.usernameClient).callErrorMessage(new ErrorMessage(e));
-                    } catch (InvalidPositionException e) {
-                        this.manager.getConnections().get(this.usernameClient).callErrorMessage(new ErrorMessage(e));
-                    } catch (RequirementsNotRespectedException e) {
-                        this.manager.getConnections().get(this.usernameClient).callErrorMessage(new ErrorMessage(e));
-                    } catch (InvalidPlayingException e) {
-                        this.manager.getConnections().get(this.usernameClient).callErrorMessage(new ErrorMessage(e));
-                    } catch (NoOneIsConnectedException e) {
+                    } catch (InvalidArgumentException | TargetNotPresentException | InvalidAngleCoveredException |
+                             InvalidPositionException | RequirementsNotRespectedException | InvalidPlayingException |
+                             NoOneIsConnectedException e) {
                         this.manager.getConnections().get(this.usernameClient).callErrorMessage(new ErrorMessage(e));
                     }
 
 
-
-                }else if(message.getAction() == ClientMessage.SEND_CHAT){
+                }else if(message.getAction().equals(ClientMessage.SEND_CHAT)){
                     SendChatMessage msg = (SendChatMessage) message;
 
                     //non devo chiamare il controller, ma devo semplicemente madnare i dati
@@ -223,7 +190,7 @@ public class ClientHandler implements Runnable{
                     connection.get(msg.getRecipient()).callChatMessage(msgToSend);
 
 
-                }else if(message.getAction() == ClientMessage.SEND_CHAT_BROADCAST){
+                }else if(message.getAction().equals(ClientMessage.SEND_CHAT_BROADCAST)){
 
                     SendChatBroadcastMessage msg = (SendChatBroadcastMessage) message;
                     BroadcastChatMessage broadcastChatMessage = new BroadcastChatMessage(msg.getSender(), msg.getMessage());
@@ -236,9 +203,7 @@ public class ClientHandler implements Runnable{
 
                 }
 
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            } catch (ClassNotFoundException e) {
+            } catch (IOException | ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
 
