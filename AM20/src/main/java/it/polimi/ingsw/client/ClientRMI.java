@@ -172,4 +172,14 @@ public class ClientRMI extends UnicastRemoteObject implements Connection {
         }
 
     }
+
+    //TODO: da sistemare
+    public void callMessage(Message message){
+        System.out.println("Message received: " +message);
+    }
+
+    //TODO: da sistemare
+    public void callErrorMessage(ErrorMessage message){
+        System.out.println("Message error: " + message);
+    }
 }

@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 public class    Message implements Serializable {
     private String result;  // positivo
-    private Exception exc; // negativo
     private int numOfConnectedPlayers;
 
     public String getResult() {
@@ -13,14 +12,6 @@ public class    Message implements Serializable {
 
     public void setResult(String result) {
         this.result = result;
-    }
-
-    public Exception getExc() {
-        return exc;
-    }
-
-    public void setExc(Exception exc) {
-        this.exc = exc;
     }
 
     public int getNumOfConnectedPlayers() {

@@ -11,4 +11,7 @@ public class ClientMessage {
     public static final String SEND_CHAT = "SendChat";
     public static final String SEND_CHAT_BROADCAST = "SendChatBroadcast";
 
+    public String getAction(){
+        return "";
+    }
 }

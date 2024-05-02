@@ -13,5 +13,7 @@ public interface Connection extends Remote {
     void callAcknowledgeMessage(AcknowledgeMessage message) throws IOException;
     void callStarterCardAckMessage(StarterCardAckMessage message) throws IOException;
     void callObjectiveAckMessage(ObjectiveAckMessage message) throws IOException;
+    void callMessage(Message message) throws IOException;
+    void callErrorMessage(ErrorMessage message) throws IOException;
 
 }

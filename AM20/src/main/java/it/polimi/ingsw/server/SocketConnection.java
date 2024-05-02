@@ -50,4 +50,14 @@ public class SocketConnection implements Connection  {
         outputStream.writeObject(message);
 
     }
+
+    public void callMessage(Message message) throws IOException{
+        outputStream.writeObject(message);
+    }
+
+    public void callErrorMessage(ErrorMessage message) throws IOException{
+        outputStream.writeObject(message);
+    }
+
+
 }
