@@ -8,7 +8,12 @@ import java.rmi.RemoteException;
 public class EndGameTimer {
 
     private Thread t;
+    private ServerManager manager;
     private static final int SEC = 30;
+
+    public EndGameTimer(ServerManager manager){
+        this.manager = manager;
+    }
 
     public void startCountdown(Connection callback) {
         t = new Thread(()->{
@@ -20,6 +25,7 @@ public class EndGameTimer {
                 Message m = new Message();
                 m.setResult("You won because everyone left the game");
                 callback.callStopGame(m);
+                manager.reset();
             } catch (InterruptedException ignored) {}
             catch (IOException e) {
                 throw new RuntimeException(e);

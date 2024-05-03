@@ -94,6 +94,7 @@ public class Controller implements GameManager {
             throw new InvalidPlayingException("A game already started");
         if(numPlayers<2 || numPlayers>4)
             throw new InvalidArgumentException("numPlayers", numPlayers);
+        gameModel = null;
         players = new ArrayList<>();
         players.add(playerNickname);
         this.numPlayers = numPlayers;
@@ -120,13 +121,17 @@ public class Controller implements GameManager {
             throw new InvalidArgumentException("nickname", nickname);
         //if actual game not yet started
         //SE UN PLAYER SI DISCONNETTE DURING PRELIMINARY --> CHIUDO TUTTO
-        if(phase<PLAY)
+        if(phase<PLAY) {
+            phase = NOGAME;
             throw new InvalidDisconnectionException();
+        }
 
         gameModel.setPlayerConnection(nickname, false);
         Set<String> connectedPlayers = gameModel.getConnectedPlayers();
-        if(connectedPlayers.isEmpty())
+        if(connectedPlayers.isEmpty()) {
+            phase = NOGAME;
             throw new NoOneIsConnectedException();
+        }
 
         messageBuilder = new MessageBuilder(connectedPlayers);
         HashMap<String, AcknowledgeMessage> msg = messageBuilder.notifyPlayerDisconnected(nickname);
@@ -467,6 +472,7 @@ public class Controller implements GameManager {
         try {
             isNewTurn = gameModel.nextTurn();
         } catch (InvalidPlayingException e) {
+            phase = NOGAME;
             throw new NoOneIsConnectedException();
         }
         //check if last turn is starting now

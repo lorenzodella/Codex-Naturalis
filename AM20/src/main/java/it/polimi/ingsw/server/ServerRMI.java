@@ -24,7 +24,7 @@ public class ServerRMI implements Loggable{
 
     public ServerRMI(ServerManager manager) {
         this.manager = manager;
-        timer = new EndGameTimer();
+        timer = new EndGameTimer(manager);
     }
 
     private void restart() {
@@ -81,6 +81,7 @@ public class ServerRMI implements Loggable{
     }
 
     private void detectDisconnection(String nickname) {
+        System.out.println(nickname + " disconnected!");
         HashMap<String, AcknowledgeMessage> res;
         this.manager.getConnections().remove(nickname);
         try {
@@ -102,8 +103,10 @@ public class ServerRMI implements Loggable{
         } catch (InvalidConnectionStateException | InvalidArgumentException e){
             throw new RuntimeException(e);
         } catch (NoOneIsConnectedException e){
+            //if everyone disconnected, reset server w/o telling something to clients
             restart();
         } catch (InvalidDisconnectionException e) {
+            //if someone disconnected during preliminary phase of the game, reset server after telling that to remaining clients
             Message message = new Message();
             message.setResult(e.toString());
             for (Connection c : manager.getConnections().values()) {

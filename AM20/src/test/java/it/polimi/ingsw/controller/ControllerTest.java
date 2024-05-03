@@ -134,6 +134,7 @@ class ControllerTest {
         printMessages(connectionAckMessages);
 
         //everything is set
+        assert connectionAckMessages.values().stream().allMatch(x->3==x.getNumOfConnectedPlayers());
         assert connectionAckMessages.values().stream().allMatch(ConnectionAckMessage::doesGameStarts);
         assert connectionAckMessages.values().stream().map(ConnectionAckMessage::getGoldTop).allMatch(Objects::nonNull);
         assert connectionAckMessages.values().stream().map(ConnectionAckMessage::getResourceTop).allMatch(Objects::nonNull);
@@ -205,11 +206,14 @@ class ControllerTest {
         });
         assert e1.toString().contains("preliminary");
 
+        _simulateNewGame();
+        _simulateStarterCards();
         _simulateObjectives();
 
         //one player disconnects
         acknowledgeMessages = c.disconnectPlayer(playerOrder.get(1));
         assertEquals(2, c.getGameModel().getConnectedPlayers().size());
+        assertEquals(2, acknowledgeMessages.values().iterator().next().getNumOfConnectedPlayers());
         printMessages(acknowledgeMessages);
         //re-disconnects
         assertThrows(InvalidConnectionStateException.class, ()->{
@@ -224,6 +228,7 @@ class ControllerTest {
         connectionAckMessages = c.joinGame(playerOrder.get(1));
         //everything is set
         assertEquals(3, c.getGameModel().getConnectedPlayers().size());
+        assertEquals(3, connectionAckMessages.values().iterator().next().getNumOfConnectedPlayers());
         assertNotNull(connectionAckMessages.get(playerOrder.get(1)).getGoldTop());
         assertNotNull(connectionAckMessages.get(playerOrder.get(1)).getResourceTop());
         assertNotNull(connectionAckMessages.get(playerOrder.get(1)).getGoldVisible());
@@ -295,7 +300,7 @@ class ControllerTest {
 
         //last choose
         starterCardAckMessages = c.chooseStarterCardSide("Pietro", PlayableCard.BACK);
-        assertEquals(3, starterCardAckMessages.size());
+        assertEquals(starterCardAckMessages.size(), starterCardAckMessages.values().iterator().next().getNumOfConnectedPlayers());
         //check objectives
         assert starterCardAckMessages.values().stream().allMatch(StarterCardAckMessage::shouldChooseObjective);
         assert starterCardAckMessages.values().stream().map(StarterCardAckMessage::getCommonObjectives).allMatch(Objects::nonNull);
@@ -345,6 +350,7 @@ class ControllerTest {
         //second choose
         objectiveAckMessages = c.chooseObjective("Giuseppe", 0);
         assertEquals(1, objectiveAckMessages.size());
+        assertEquals(3, objectiveAckMessages.values().iterator().next().getNumOfConnectedPlayers());
         //check info of objectives
         assert objectiveAckMessages.entrySet().stream().allMatch(e ->
                 e.getKey().equals("Giuseppe") == (e.getValue().getSecretObjectives() != null));
@@ -423,6 +429,7 @@ class ControllerTest {
         sc = c.getGameModel().getCurrPlayer().getStarterCard();
         acknowledgeMessages = c.playCard(playerOrder.get(1), 0, Corner.UL, sc.getID(), PlayableCard.FRONT);
         //next turn
+        assertEquals(3, acknowledgeMessages.values().iterator().next().getNumOfConnectedPlayers());
         assert acknowledgeMessages.values().stream().allMatch(m -> m.getNextPlayer().equals(playerOrder.get(2)));
         assert acknowledgeMessages.entrySet().stream().allMatch(e ->
                 e.getKey().equals(playerOrder.get(1)) ?
@@ -502,6 +509,7 @@ class ControllerTest {
         sc = c.getGameModel().getCurrPlayer().getStarterCard();
         c.playCard(playerOrder.get(1), 0, Corner.UL, sc.getID(), PlayableCard.FRONT);
         acknowledgeMessages = c.pickCard(playerOrder.get(1), Deck.GOLD_CARDS, 1); //last card
+        assertEquals(3, acknowledgeMessages.values().iterator().next().getNumOfConnectedPlayers());
         assert acknowledgeMessages.values().stream().allMatch(m -> m.getNextPlayer().equals(playerOrder.get(2)));
         assert acknowledgeMessages.values().stream().map(AcknowledgeMessage::getGoldTop).allMatch(Objects::isNull);
         assert acknowledgeMessages.values().stream().map(AcknowledgeMessage::getResourceTop).allMatch(Objects::isNull);
@@ -526,6 +534,7 @@ class ControllerTest {
         StarterCard sc = c.getGameModel().getCurrPlayer().getStarterCard();
         c.playCard(playerOrder.get(0), 0, Corner.UR, sc.getID(), PlayableCard.FRONT);
         acknowledgeMessages = c.disconnectPlayer(playerOrder.get(0));
+        assertEquals(2, acknowledgeMessages.values().iterator().next().getNumOfConnectedPlayers());
         assertNotNull(acknowledgeMessages.get(playerOrder.get(2)).getNextPlayer());
         printMessages(acknowledgeMessages);
 
@@ -550,6 +559,7 @@ class ControllerTest {
         //pick card
         acknowledgeMessages = c.pickCard(playerOrder.get(1), Deck.RESOURCE_CARDS);
         assertEquals(2, acknowledgeMessages.size());
+        assertEquals(2, acknowledgeMessages.values().iterator().next().getNumOfConnectedPlayers());
         assert acknowledgeMessages.values().stream().allMatch(m -> m.getNextPlayer().equals(playerOrder.get(2)));
         assert acknowledgeMessages.entrySet().stream().allMatch(e ->
                 e.getKey().equals(playerOrder.get(1)) ?
@@ -629,6 +639,7 @@ class ControllerTest {
         assertEquals(winner, pl); //curplayer is the winner
         _simulatePlayCard(pl, oldc, newc, 0, c.getGameModel().getCurrPlayer());
         acknowledgeMessages = c.pickCard(playerOrder.get(pl), Deck.GOLD_CARDS, 1); // last card
+        assertEquals(3, acknowledgeMessages.values().iterator().next().getNumOfConnectedPlayers());
         printMessages(acknowledgeMessages);
         //player after winner play
         pl = (pl+1)%playerOrder.size();
@@ -667,6 +678,7 @@ class ControllerTest {
             cardToPlay = pl==winner ? 2 : 0;
             _simulatePlayCard(pl, oldc, newc, cardToPlay, c.getGameModel().getCurrPlayer());
             acknowledgeMessages = c.pickCard(playerOrder.get(pl), pl == winner ? Deck.GOLD_CARDS : Deck.RESOURCE_CARDS);
+            assertEquals(3, acknowledgeMessages.values().iterator().next().getNumOfConnectedPlayers());
             pl = (pl+1)%playerOrder.size();
         }while(!acknowledgeMessages.get(playerOrder.get(0)).getResult().contains("done..."));
 
@@ -705,6 +717,36 @@ class ControllerTest {
                 playerTable.getStats().addKingdom(e.getKey());
             }
         }
+    }
+
+    @Test
+    void afterEndGame() throws InvalidArgumentException, RequirementsNotRespectedException, InvalidPlayingException, NoOneIsConnectedException, FinishedCardStackException, TargetNotPresentException, CannotJoinGameException, InvalidAngleCoveredException, InvalidPositionException {
+        endGameWinner(1);
+
+        assertThrows(CannotJoinGameException.class, ()->c.joinGame("Ugo"));
+        //i must wait that all players disconnected
+        assertThrows(InvalidPlayingException.class, ()->c.newGame("Ugo", 2));
+    }
+
+    @Test
+    void afterStopGame() throws InvalidArgumentException, InvalidPlayingException, CannotJoinGameException, InvalidConnectionStateException, NoOneIsConnectedException, InvalidDisconnectionException {
+        _simulateNewGame();
+
+        //if some disconnects during preliminary phase
+        assertThrows(InvalidDisconnectionException.class, ()->c.disconnectPlayer("Giuseppe"));
+
+        assertThrows(CannotJoinGameException.class, ()->c.joinGame("Ugo"));
+        c.newGame("Ugo", 2);
+        c.joinGame("Uga");
+        c.chooseStarterCardSide("Ugo", PlayableCard.FRONT);
+        c.chooseStarterCardSide("Uga", PlayableCard.FRONT);
+        c.chooseObjective("Ugo", 1);
+        c.chooseObjective("Uga", 1);
+        c.disconnectPlayer("Ugo");
+        assertThrows(NoOneIsConnectedException.class, ()->c.disconnectPlayer("Uga"));
+        //if everyone disconnect
+        assertThrows(CannotJoinGameException.class, ()->c.joinGame("Ugo"));
+        c.newGame("Ugo", 2);
     }
 
 }

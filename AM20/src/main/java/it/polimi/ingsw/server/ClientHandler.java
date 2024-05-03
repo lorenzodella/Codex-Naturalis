@@ -5,9 +5,9 @@ import java.io.ObjectInputStream;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
-import com.sun.security.ntlm.Server;
 import it.polimi.ingsw.clientmessage.*;
 import it.polimi.ingsw.controller.*;
 import it.polimi.ingsw.controller.exceptions.CannotJoinGameException;
@@ -187,7 +187,13 @@ public class ClientHandler implements Runnable{
                     //non devo chiamare il controller, ma devo semplicemente madnare i dati
                     HashMap<String, Connection> connection = this.manager.getConnections();
                     ChatMessage msgToSend = new ChatMessage(msg.getSender(), msg.getRecipient(), msg.getMessage());
-                    connection.get(msg.getRecipient()).callChatMessage(msgToSend);
+                    try {
+                        connection.get(msg.getRecipient()).callChatMessage(msgToSend);
+                    } catch (IOException | NullPointerException e) {
+                        Message m = new Message();
+                        m.setResult("Recipient is not online");
+                        connection.get(msg.getSender()).callMessage(m);
+                    }
 
 
                 }else if(message.getAction().equals(ClientMessage.SEND_CHAT_BROADCAST)){
@@ -195,11 +201,24 @@ public class ClientHandler implements Runnable{
                     SendChatBroadcastMessage msg = (SendChatBroadcastMessage) message;
                     BroadcastChatMessage broadcastChatMessage = new BroadcastChatMessage(msg.getSender(), msg.getMessage());
 
-                    HashMap<String, Connection> connectedPlayer = this.manager.getConnections();
-                    for(String s : connectedPlayer.keySet()){
-
-                        connectedPlayer.get(s).callChatMessage(broadcastChatMessage);
+                    HashMap<String, Connection> connections = this.manager.getConnections();
+                    Message m = new Message();
+                    m.setResult("Message sent to all");
+                    for (Map.Entry<String, Connection> entry: connections.entrySet()) {
+                        if(!entry.getKey().equals(msg.getSender())) {
+                            try {
+                                entry.getValue().callChatMessage(broadcastChatMessage);
+                            } catch (IOException e) {
+                                if (m.getResult().contains("except")) {
+                                    m.setResult(m.getResult() + ", " + entry.getKey());
+                                } else {
+                                    m.setResult(m.getResult() + " except " + entry.getKey());
+                                }
+                            }
+                        }
                     }
+                    connections.get(msg.getSender()).callMessage(m);
+
 
                 }
 
