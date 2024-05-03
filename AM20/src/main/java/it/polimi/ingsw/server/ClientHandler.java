@@ -4,13 +4,12 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
 import it.polimi.ingsw.clientmessage.*;
-import it.polimi.ingsw.controller.*;
 import it.polimi.ingsw.controller.exceptions.CannotJoinGameException;
+import it.polimi.ingsw.controller.exceptions.InvalidDisconnectionException;
 import it.polimi.ingsw.controller.exceptions.NoOneIsConnectedException;
 import it.polimi.ingsw.controller.messages.*;
 import it.polimi.ingsw.model.exceptions.*;
@@ -50,14 +49,16 @@ public class ClientHandler implements Runnable{
                     HashMap<String, ConnectionAckMessage> res;
                     this.usernameClient = msg.getClient();
 
+
                     try {
                         res = this.manager.getController().joinGame(msg.getClient());
+                        this.manager.resetTimer();
                         HashMap<String, Connection> connectedPlayer = this.manager.getConnections();
                         for(String s : connectedPlayer.keySet()){
                             try {
                                 connectedPlayer.get(s).callConnectionAckMessage(res.get(s));
                             } catch (IOException e) {
-                                throw new RuntimeException(e);
+                                this.detectDisconnection(s);
                             }
                         }
                     } catch (CannotJoinGameException e) {
@@ -73,13 +74,7 @@ public class ClientHandler implements Runnable{
                         //TODO
                         //for se una volta finita la partita vogliamo mandare il messaggio a tutti i player (diepdne come gestiamo la fine della partita)
                         HashMap<String, Connection> connectedPlayer = this.manager.getConnections();
-                        for(String s : connectedPlayer.keySet()){
-                            try {
-                                connectedPlayer.get(s).callMessage(messageToSend);
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-                        }
+                        connectedPlayer.get(this.usernameClient).callMessage(messageToSend);
                     } catch (InvalidArgumentException | InvalidPlayingException e) {
                         this.manager.getConnections().get(this.usernameClient).callErrorMessage(new ErrorMessage(e));
                     }
@@ -95,7 +90,7 @@ public class ClientHandler implements Runnable{
                             try {
                                 connectedPlayer.get(s).callObjectiveAckMessage(res.get(s));
                             } catch (IOException e) {
-                                throw new RuntimeException(e);
+                                this.detectDisconnection(s);
                             }
                         }
                     } catch (InvalidArgumentException | InvalidPlayingException e) {
@@ -113,7 +108,7 @@ public class ClientHandler implements Runnable{
                             try {
                                 connectedPlayer.get(s).callStarterCardAckMessage(res.get(s));
                             } catch (IOException e) {
-                                throw new RuntimeException(e);
+                                this.detectDisconnection(s);
                             }
                         }
                     } catch (InvalidArgumentException | InvalidPlayingException e) {
@@ -131,7 +126,7 @@ public class ClientHandler implements Runnable{
                             try {
                                 connectedPlayer.get(s).callAcknowledgeMessage(res.get(s));
                             } catch (IOException e) {
-                                throw new RuntimeException(e);
+                                this.detectDisconnection(s);
                             }
                         }
                     } catch (InvalidArgumentException | FinishedCardStackException | InvalidPlayingException |
@@ -151,7 +146,7 @@ public class ClientHandler implements Runnable{
                             try {
                                 connectedPlayer.get(s).callAcknowledgeMessage(res.get(s));
                             } catch (IOException e) {
-                                throw new RuntimeException(e);
+                                this.detectDisconnection(s);
                             }
                         }
                     } catch (InvalidArgumentException | FinishedCardStackException | InvalidPlayingException |
@@ -171,7 +166,8 @@ public class ClientHandler implements Runnable{
                             try {
                                 connectedPlayer.get(s).callAcknowledgeMessage(res.get(s));
                             } catch (IOException e) {
-                                throw new RuntimeException(e);
+                                this.detectDisconnection(s);
+
                             }
                         }
                     } catch (InvalidArgumentException | TargetNotPresentException | InvalidAngleCoveredException |
@@ -223,10 +219,57 @@ public class ClientHandler implements Runnable{
                 }
 
             } catch (IOException | ClassNotFoundException e) {
-                throw new RuntimeException(e);
+                //thrown when the player disconnect
+                this.detectDisconnection(this.usernameClient);
             }
 
         }
 
+    }
+
+    //
+    private void detectDisconnection(String nickname) {
+        System.out.println(nickname + " disconnected!");
+        HashMap<String, AcknowledgeMessage> res;
+        this.manager.getConnections().remove(nickname);
+        try {
+            res = this.manager.getController().disconnectPlayer(nickname);
+            //if there's one player left start countdown
+            Map.Entry<String, AcknowledgeMessage> m = res.entrySet().iterator().next();
+            if(m.getValue().getNumOfConnectedPlayers()==1)
+                this.manager.startTimer(manager.getConnections().get(m.getKey()));
+
+            for (String s : res.keySet()) {
+                if(res.get(s) != null && !s.equals(nickname)) {
+                    try {
+                        this.manager.getConnections().get(s).callAcknowledgeMessage(res.get(s));
+                    } catch (IOException e) {
+                        detectDisconnection(s);
+                    }
+                }
+            }
+        } catch (InvalidConnectionStateException | InvalidArgumentException e){
+            throw new RuntimeException(e);
+        } catch (NoOneIsConnectedException e){
+            //if everyone disconnected, reset server w/o telling something to clients
+            restart();
+        } catch (InvalidDisconnectionException e) {
+            //if someone disconnected during preliminary phase of the game, reset server after telling that to remaining clients
+            Message message = new Message();
+            message.setResult(e.toString());
+            for (Connection c : manager.getConnections().values()) {
+                try {
+                    c.callStopGame(message);
+                } catch (IOException ignored) {
+
+                }
+            }
+            restart();
+        }
+    }
+
+    private void restart() {
+        this.manager.resetTimer();
+        manager.reset();
     }
 }

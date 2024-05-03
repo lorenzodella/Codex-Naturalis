@@ -20,15 +20,13 @@ public class ServerRMI implements Loggable{
 
     //per ogni utente dice se è connesso con RMI o SOCKET
     private ServerManager manager;
-    private EndGameTimer timer;
 
     public ServerRMI(ServerManager manager) {
         this.manager = manager;
-        timer = new EndGameTimer(manager);
     }
 
     private void restart() {
-        timer.stop();
+        this.manager.resetTimer();
         manager.reset();
     }
 
@@ -59,7 +57,7 @@ public class ServerRMI implements Loggable{
         res = this.manager.getController().joinGame(client);
 
         //stop countdown if someone joined
-        timer.stop();
+        this.manager.resetTimer();
         //send the message to other player if the message is significant
         for(String s : res.keySet()){
             if(res.get(s) != null && !s.equals(client)) {
@@ -89,7 +87,7 @@ public class ServerRMI implements Loggable{
             //if there's one player left start countdown
             Map.Entry<String, AcknowledgeMessage> m = res.entrySet().iterator().next();
             if(m.getValue().getNumOfConnectedPlayers()==1)
-                timer.startCountdown(manager.getConnections().get(m.getKey()));
+                this.manager.startTimer(manager.getConnections().get(m.getKey()));
 
             for (String s : res.keySet()) {
                 if(res.get(s) != null && !s.equals(nickname)) {
