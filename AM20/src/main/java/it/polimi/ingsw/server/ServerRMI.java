@@ -25,30 +25,6 @@ public class ServerRMI implements Loggable{
         this.manager = manager;
     }
 
-    private void restart() {
-        manager.reset();
-    }
-
-
-    public static void main(String[] args){
-
-        /*System.out.println("Hello from ServerRMI");
-
-        ServerRMI obj = new ServerRMI();
-
-        try {
-            Loggable stub = (Loggable) UnicastRemoteObject.exportObject(obj, Integer.parseInt(args[0]));
-
-            Registry registry = LocateRegistry.createRegistry(Integer.parseInt(args[0]));
-
-            registry.bind("Loggable", stub);
-
-            System.err.println("Server ready");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }*/
-    }
-
     @Override
     public  ConnectionAckMessage login(String client, Connection callback) throws RemoteException, CannotJoinGameException {
         HashMap<String, ConnectionAckMessage> res;
@@ -132,7 +108,7 @@ public class ServerRMI implements Loggable{
                 }
             }
         }catch (NoOneIsConnectedException e){
-            restart();
+            manager.reset();
             return null;
         }
         return res.get(playerNickname);
@@ -155,7 +131,7 @@ public class ServerRMI implements Loggable{
                 }
             }
         } catch (NoOneIsConnectedException e){
-            restart();
+            manager.reset();
             return null;
         }
         return res.get(playerNickname);
@@ -178,7 +154,7 @@ public class ServerRMI implements Loggable{
                 }
             }
         } catch (NoOneIsConnectedException e){
-            restart();
+            manager.reset();
             return null;
         }
         return res.get(playerNickname);

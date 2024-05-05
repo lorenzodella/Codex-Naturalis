@@ -71,8 +71,6 @@ public class ClientHandler implements Runnable{
                     Message messageToSend;
                     try {
                         messageToSend = this.manager.getController().newGame(msg.getClient(), msg.getNumPlayers());
-                        //TODO
-                        //for se una volta finita la partita vogliamo mandare il messaggio a tutti i player (diepdne come gestiamo la fine della partita)
                         HashMap<String, Connection> connectedPlayer = this.manager.getConnections();
                         connectedPlayer.get(this.usernameClient).callMessage(messageToSend);
                     } catch (InvalidArgumentException | InvalidPlayingException e) {
@@ -129,9 +127,10 @@ public class ClientHandler implements Runnable{
                                 this.manager.detectDisconnection(s);
                             }
                         }
-                    } catch (InvalidArgumentException | FinishedCardStackException | InvalidPlayingException |
-                             NoOneIsConnectedException e) {
+                    } catch (InvalidArgumentException | FinishedCardStackException | InvalidPlayingException e) {
                         this.manager.getConnections().get(this.usernameClient).callErrorMessage(new ErrorMessage(e));
+                    }  catch (NoOneIsConnectedException e1){
+                        manager.reset();
                     }
 
 
@@ -149,9 +148,10 @@ public class ClientHandler implements Runnable{
                                 this.manager.detectDisconnection(s);
                             }
                         }
-                    } catch (InvalidArgumentException | FinishedCardStackException | InvalidPlayingException |
-                             NoOneIsConnectedException e) {
+                    } catch (InvalidArgumentException | FinishedCardStackException | InvalidPlayingException e) {
                         this.manager.getConnections().get(this.usernameClient).callErrorMessage(new ErrorMessage(e));
+                    }  catch (NoOneIsConnectedException e1){
+                        manager.reset();
                     }
 
 
@@ -171,9 +171,10 @@ public class ClientHandler implements Runnable{
                             }
                         }
                     } catch (InvalidArgumentException | TargetNotPresentException | InvalidAngleCoveredException |
-                             InvalidPositionException | RequirementsNotRespectedException | InvalidPlayingException |
-                             NoOneIsConnectedException e) {
+                             InvalidPositionException | RequirementsNotRespectedException | InvalidPlayingException e) {
                         this.manager.getConnections().get(this.usernameClient).callErrorMessage(new ErrorMessage(e));
+                    } catch (NoOneIsConnectedException e1){
+                        manager.reset();
                     }
 
 
@@ -226,10 +227,5 @@ public class ClientHandler implements Runnable{
 
         }
 
-    }
-
-    //TODO lore questo deve essere chiamato (vedi ServerRMI)
-    private void restart() {
-        manager.reset();
     }
 }

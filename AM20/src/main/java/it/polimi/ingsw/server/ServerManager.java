@@ -26,7 +26,7 @@ public class ServerManager {
         reset();
     }
 
-    public void reset(){
+    public synchronized void reset(){
         this.resetTimer();
         connections = new HashMap<>();
         controller = new Controller();
@@ -34,23 +34,23 @@ public class ServerManager {
         t.start();
     }
 
-    public void addConnection(String nickname, Connection connection){
+    public synchronized void addConnection(String nickname, Connection connection){
         connections.put(nickname, connection);
     }
 
-    public HashMap<String, Connection> getConnections() {
+    public synchronized HashMap<String, Connection> getConnections() {
         return connections;
     }
 
-    public Controller getController() {
+    public synchronized Controller getController() {
         return controller;
     }
 
-    public void resetTimer(){
+    public synchronized void resetTimer(){
         this.timer.stop();
     }
 
-    public void startTimer(Connection connection){
+    public synchronized void startTimer(Connection connection){
         this.timer.startCountdown(connection);
     }
 

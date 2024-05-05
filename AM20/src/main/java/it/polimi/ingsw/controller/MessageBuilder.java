@@ -24,6 +24,11 @@ public class MessageBuilder implements GameObserver {
         this.connectedPlayerNicknames = players;
     }
 
+    /**
+     * Notifies all the connected players that a player has disconnected from the game
+     * @param playerNickname the nickname of the player that disconnected
+     * @return a map containing the messages to be sent to the connected players
+     */
     @Override
     public HashMap<String, AcknowledgeMessage> notifyPlayerDisconnected(String playerNickname) {
         if(acknowledgeMessages == null)
@@ -42,6 +47,13 @@ public class MessageBuilder implements GameObserver {
         return acknowledgeMessages;
     }
 
+    /**
+     * Notifies all the connected players that a player has reconnected to the game
+     * @param players the list of players
+     * @param resourceCardDeck the resource card deck
+     * @param goldCardDeck the gold card deck
+     * @return a map containing the messages to be sent to the connected players
+     */
     @Override
     public HashMap<String, ConnectionAckMessage> notifyPlayerReconnected(List<Player> players, Deck resourceCardDeck, Deck goldCardDeck) {
         if (connectionAckMessages == null)
@@ -107,7 +119,6 @@ public class MessageBuilder implements GameObserver {
                 if (connectionAckMessages.get(p.getNickname()) == null)
                     connectionAckMessages.put(p.getNickname(), new StartGameMessage());
 
-                //TODO sicuro che sia giusto??
                 connectionAckMessages.get(p.getNickname()).setNumOfConnectedPlayers(connectedPlayerNicknames.size());
                 connectionAckMessages.get(p.getNickname()).setStarterCard(p.getStarterCard());
             }
@@ -125,7 +136,6 @@ public class MessageBuilder implements GameObserver {
                 if (connectionAckMessages.get(p.getNickname()) == null)
                     connectionAckMessages.put(p.getNickname(), new StartGameMessage());
 
-                //TODO
                 connectionAckMessages.get(p.getNickname()).setNumOfConnectedPlayers(connectedPlayerNicknames.size());
                 connectionAckMessages.get(p.getNickname()).setInitialCards(p.getCards());
             }
