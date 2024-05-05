@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client;
 
+import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -181,5 +182,11 @@ public class ClientRMI extends UnicastRemoteObject implements Connection {
     //TODO: da sistemare
     public void callErrorMessage(ErrorMessage message){
         System.out.println("Message error: " + message);
+    }
+
+    /* se il messaggio viene inviato ritorna vero altrimenti manda exc */
+    @Override
+    public boolean callPingMessage(Message message) throws IOException {
+        return true;
     }
 }

@@ -15,5 +15,6 @@ public interface Connection extends Remote {
     void callObjectiveAckMessage(ObjectiveAckMessage message) throws IOException;
     void callMessage(Message message) throws IOException;
     void callErrorMessage(ErrorMessage message) throws IOException;
+    boolean callPingMessage(Message message) throws IOException;
 
 }

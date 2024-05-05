@@ -26,7 +26,6 @@ public class ServerRMI implements Loggable{
     }
 
     private void restart() {
-        this.manager.resetTimer();
         manager.reset();
     }
 
@@ -64,7 +63,7 @@ public class ServerRMI implements Loggable{
                 try {
                     this.manager.getConnections().get(s).callConnectionAckMessage(res.get(s));
                 } catch (IOException e) {
-                    detectDisconnection(s);
+                    this.manager.detectDisconnection(s);
                     return null;
                 }
             }
@@ -78,46 +77,6 @@ public class ServerRMI implements Loggable{
         return this.manager.getController().newGame(client,numPlayers);
     }
 
-    private void detectDisconnection(String nickname) {
-        System.out.println(nickname + " disconnected!");
-        HashMap<String, AcknowledgeMessage> res;
-        this.manager.getConnections().remove(nickname);
-        try {
-            res = this.manager.getController().disconnectPlayer(nickname);
-            //if there's one player left start countdown
-            Map.Entry<String, AcknowledgeMessage> m = res.entrySet().iterator().next();
-            if(m.getValue().getNumOfConnectedPlayers()==1)
-                this.manager.startTimer(manager.getConnections().get(m.getKey()));
-
-            for (String s : res.keySet()) {
-                if(res.get(s) != null && !s.equals(nickname)) {
-                    try {
-                        this.manager.getConnections().get(s).callAcknowledgeMessage(res.get(s));
-                    } catch (IOException e) {
-                        detectDisconnection(s);
-                    }
-                }
-            }
-        } catch (InvalidConnectionStateException | InvalidArgumentException e){
-            throw new RuntimeException(e);
-        } catch (NoOneIsConnectedException e){
-            //if everyone disconnected, reset server w/o telling something to clients
-            restart();
-        } catch (InvalidDisconnectionException e) {
-            //if someone disconnected during preliminary phase of the game, reset server after telling that to remaining clients
-            Message message = new Message();
-            message.setResult(e.toString());
-            for (Connection c : manager.getConnections().values()) {
-                try {
-                    c.callStopGame(message);
-                } catch (IOException ignored) {
-
-                }
-            }
-            restart();
-        }
-    }
-
     @Override
     public StarterCardAckMessage chooseStarterCardSide(String nickname, int side) throws RemoteException, InvalidArgumentException, InvalidPlayingException {
         HashMap<String, StarterCardAckMessage> res;
@@ -127,7 +86,7 @@ public class ServerRMI implements Loggable{
                 try {
                     this.manager.getConnections().get(s).callStarterCardAckMessage(res.get(s));
                 } catch (IOException e) {
-                    detectDisconnection(s);
+                    this.manager.detectDisconnection(s);
                     return null;
                 }
             }
@@ -144,7 +103,7 @@ public class ServerRMI implements Loggable{
                 try {
                     this.manager.getConnections().get(s).callObjectiveAckMessage(res.get(s));
                 } catch (IOException e) {
-                    detectDisconnection(s);
+                    this.manager.detectDisconnection(s);
                     return null;
                 }
             }
@@ -168,7 +127,7 @@ public class ServerRMI implements Loggable{
                         //chiama i metodi coerenti con il modo di connessione
                         this.manager.getConnections().get(s).callAcknowledgeMessage(res.get(s));
                     } catch (IOException e) {
-                        detectDisconnection(s);
+                        this.manager.detectDisconnection(s);
                     }
                 }
             }
@@ -191,7 +150,7 @@ public class ServerRMI implements Loggable{
                     try {
                         this.manager.getConnections().get(s).callAcknowledgeMessage(res.get(s));
                     } catch (IOException e) {
-                        detectDisconnection(s);
+                        this.manager.detectDisconnection(s);
                     }
                 }
             }
@@ -214,7 +173,7 @@ public class ServerRMI implements Loggable{
                     try {
                         this.manager.getConnections().get(s).callAcknowledgeMessage(res.get(s));
                     } catch (IOException e) {
-                        detectDisconnection(s);
+                        this.manager.detectDisconnection(s);
                     }
                 }
             }

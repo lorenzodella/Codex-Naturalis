@@ -19,8 +19,8 @@ public class ServerMain
 {
 
     public static void main(String[] args) {
-        ServerManager manager = new ServerManager();
 
+        ServerManager manager = new ServerManager();
         ServerRMI obj = new ServerRMI(manager);
 
         try {

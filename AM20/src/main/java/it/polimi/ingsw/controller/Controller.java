@@ -79,6 +79,10 @@ public class Controller implements GameManager {
         return numPlayers;
     }
 
+    public Set<String> getConnectedPlayers(){
+        return gameModel.getConnectedPlayers();
+    }
+
     /**
      * This method is one of the NOGAME pahse methods and it allows to have a list that contains all the players'
      * nicknames.

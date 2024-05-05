@@ -59,5 +59,12 @@ public class SocketConnection implements Connection  {
         outputStream.writeObject(message);
     }
 
+    /* se il messaggio viene inviato ritorna vero altrimenti manda exc */
+    @Override
+    public boolean callPingMessage(Message message) throws IOException {
+        outputStream.writeObject(message);
+        return true;
+    }
+
 
 }
