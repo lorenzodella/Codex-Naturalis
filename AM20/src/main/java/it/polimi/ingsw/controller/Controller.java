@@ -12,10 +12,7 @@ import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.exceptions.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Controller implements GameManager {
@@ -60,6 +57,7 @@ public class Controller implements GameManager {
     private int missingRounds = -1;
 
     public Controller(){
+        players = new ArrayList<>();
         phase = NOGAME;
     }
 
@@ -80,7 +78,10 @@ public class Controller implements GameManager {
     }
 
     public Set<String> getConnectedPlayers(){
-        return gameModel.getConnectedPlayers();
+        if(gameModel!=null)
+            return gameModel.getConnectedPlayers();
+        else
+            return new HashSet<>(players);
     }
 
     /**

@@ -1,6 +1,5 @@
 package it.polimi.ingsw.client;
 
-import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -9,79 +8,15 @@ import java.rmi.server.UnicastRemoteObject;
 
 import it.polimi.ingsw.controller.exceptions.CannotJoinGameException;
 import it.polimi.ingsw.controller.messages.*;
-import it.polimi.ingsw.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.model.exceptions.InvalidArgumentException;
 import it.polimi.ingsw.model.exceptions.InvalidPlayingException;
 import it.polimi.ingsw.server.Connection;
 import it.polimi.ingsw.server.Loggable;
 
-public class ClientRMI extends UnicastRemoteObject implements Connection {
+public class RMIClientReceiver extends UnicastRemoteObject implements Connection {
 
-
-    protected ClientRMI() throws RemoteException {
+    public RMIClientReceiver() throws RemoteException {
     }
-
-    public static void main(String[] args) {
-        System.out.println("Hello from RMIClient");
-        try {
-            Registry registry = LocateRegistry.getRegistry(args[0], Integer.parseInt(args[1]));
-            Loggable stub = (Loggable) registry.lookup("Loggable");
-
-//            int port = ((new Random().nextInt(16383)) + 49152);
-//            Registry exportedRegistry = LocateRegistry.createRegistry(port);
-//            exportedRegistry.rebind("Lollo", UnicastRemoteObject.exportObject(new RMIClient(), port));
-
-//            boolean logged = stub.login("Lollo", new ClientRMI());
-//            System.out.println(logged);
-
-//            ConnectionAckMessage msg = stub.login("Lollo", new ClientRMI());
-//            System.out.println("stub.login: \n"+ msg);
-
-            Message msg2 = stub.starNewGame("Lollo", 4, new ClientRMI());
-            System.out.println("stub.starNewGame: \n"+ msg2);
-            ConnectionAckMessage msg3 = stub.login("Pietro", new ClientRMI());
-            System.out.println("stub.login: \n"+ msg3);
-            ConnectionAckMessage msg4 = stub.login("Genoveffa", new ClientRMI());
-            System.out.println("stub.login: \n"+ msg4);
-            ConnectionAckMessage msg5 = stub.login("Alessia", new ClientRMI());
-            System.out.println("stub.login: \n"+ msg5);
-
-            StarterCardAckMessage msgStarterSide = stub.chooseStarterCardSide("Lollo", PlayableCard.FRONT);
-            System.out.println("stub.chooseStarterCardSide: \n"+ msgStarterSide);
-            StarterCardAckMessage msgStarterSide2 = stub.chooseStarterCardSide("Pietro", PlayableCard.BACK);
-            System.out.println("stub.chooseStarterCardSide: \n"+ msgStarterSide2);
-            StarterCardAckMessage msgStarterSide3 = stub.chooseStarterCardSide("Alessia", PlayableCard.BACK);
-            System.out.println("stub.chooseStarterCardSide: \n"+ msgStarterSide3);
-            StarterCardAckMessage msgStarterSide4 = stub.chooseStarterCardSide("Genoveffa", PlayableCard.BACK);
-            System.out.println("stub.chooseStarterCardSide: \n"+ msgStarterSide4);
-
-            ObjectiveAckMessage msgObjective = stub.chooseObjective("Lollo", PlayableCard.BACK);
-            System.out.println("stub.chooseObjective: \n"+ msgObjective);
-            ObjectiveAckMessage msgObjective2 = stub.chooseObjective("Pietro", PlayableCard.FRONT);
-            System.out.println("stub.chooseObjective: \n"+ msgObjective2);
-            ObjectiveAckMessage msgObjective3 = stub.chooseObjective("Genoveffa", PlayableCard.BACK);
-            System.out.println("stub.chooseObjective: \n"+ msgObjective3);
-            ObjectiveAckMessage msgObjective4 = stub.chooseObjective("Alessia", PlayableCard.BACK);
-            System.out.println("stub.chooseObjective: \n"+ msgObjective4);
-
-
-
-            Message m = stub.sendChatMessage("Lollo", "i", "ciao");
-            System.out.println(m.getResult());
-
-
-
-        } catch (RemoteException | NotBoundException e) {
-            throw new RuntimeException(e);
-        } catch (CannotJoinGameException e) {
-            e.printStackTrace();
-        } catch (InvalidArgumentException e) {
-            e.printStackTrace();
-        } catch (InvalidPlayingException e) {
-            e.printStackTrace();
-        }
-    }
-
 
     @Override
     public void callChatMessage(ChatMessage message) throws RemoteException {
@@ -186,7 +121,81 @@ public class ClientRMI extends UnicastRemoteObject implements Connection {
 
     /* se il messaggio viene inviato ritorna vero altrimenti manda exc */
     @Override
-    public boolean callPingMessage(Message message) throws IOException {
+    public boolean callPingMessage(Message message) throws RemoteException {
         return true;
     }
+
+    /*public static void main(String[] args) {
+        System.out.println("Hello from RMIClient");
+        try {
+            Registry registry = LocateRegistry.getRegistry(args[0], Integer.parseInt(args[1]));
+            Loggable stub = (Loggable) registry.lookup("Loggable");
+
+//            int port = ((new Random().nextInt(16383)) + 49152);
+//            Registry exportedRegistry = LocateRegistry.createRegistry(port);
+//            exportedRegistry.rebind("Lollo", UnicastRemoteObject.exportObject(new RMIClient(), port));
+
+//            boolean logged = stub.login("Lollo", new ClientRMI());
+//            System.out.println(logged);
+
+//            ConnectionAckMessage msg = stub.login("Lollo", new ClientRMI());
+//            System.out.println("stub.login: \n"+ msg);
+
+//            ClientRMI c = new ClientRMI();
+//            Connection connection = (Connection) UnicastRemoteObject.exportObject(c, 0);
+//
+//            Message msg2 = stub.starNewGame("Lollo", 4, connection);
+//            System.out.println("stub.starNewGame: \n"+ msg2);
+//            System.out.println("\n\n");
+            RMIClientReceiver c = new RMIClientReceiver();
+            c.newGame(args[0], Integer.parseInt(args[1]));
+
+            RMIClientReceiver c1 = new RMIClientReceiver();
+            Connection connection1 = (Connection) UnicastRemoteObject.exportObject(c1, 0);
+            ConnectionAckMessage msg3 = stub.login("Pietro", connection1);
+            System.out.println("stub.login: \n"+ msg3);
+            System.out.println("\n\n");
+
+            RMIClientReceiver c2 = new RMIClientReceiver();
+            Connection connection2 = (Connection) UnicastRemoteObject.exportObject(c2, 0);
+            ConnectionAckMessage msg4 = stub.login("Genoveffa", connection2);
+            System.out.println("stub.login: \n"+ msg4);
+            ConnectionAckMessage msg5 = stub.login("Alessia", new ClientRMI());
+            System.out.println("stub.login: \n"+ msg5);
+
+            StarterCardAckMessage msgStarterSide = stub.chooseStarterCardSide("Lollo", PlayableCard.FRONT);
+            System.out.println("stub.chooseStarterCardSide: \n"+ msgStarterSide);
+            StarterCardAckMessage msgStarterSide2 = stub.chooseStarterCardSide("Pietro", PlayableCard.BACK);
+            System.out.println("stub.chooseStarterCardSide: \n"+ msgStarterSide2);
+            StarterCardAckMessage msgStarterSide3 = stub.chooseStarterCardSide("Alessia", PlayableCard.BACK);
+            System.out.println("stub.chooseStarterCardSide: \n"+ msgStarterSide3);
+            StarterCardAckMessage msgStarterSide4 = stub.chooseStarterCardSide("Genoveffa", PlayableCard.BACK);
+            System.out.println("stub.chooseStarterCardSide: \n"+ msgStarterSide4);
+
+            ObjectiveAckMessage msgObjective = stub.chooseObjective("Lollo", PlayableCard.BACK);
+            System.out.println("stub.chooseObjective: \n"+ msgObjective);
+            ObjectiveAckMessage msgObjective2 = stub.chooseObjective("Pietro", PlayableCard.FRONT);
+            System.out.println("stub.chooseObjective: \n"+ msgObjective2);
+            ObjectiveAckMessage msgObjective3 = stub.chooseObjective("Genoveffa", PlayableCard.BACK);
+            System.out.println("stub.chooseObjective: \n"+ msgObjective3);
+            ObjectiveAckMessage msgObjective4 = stub.chooseObjective("Alessia", PlayableCard.BACK);
+            System.out.println("stub.chooseObjective: \n"+ msgObjective4);
+
+
+
+            Message m = stub.sendChatMessage("Lollo", "i", "ciao");
+            System.out.println(m.getResult());
+
+
+
+        } catch (RemoteException | NotBoundException e) {
+            throw new RuntimeException(e);
+        } catch (CannotJoinGameException e) {
+            e.printStackTrace();
+        } catch (InvalidArgumentException e) {
+            e.printStackTrace();
+        } catch (InvalidPlayingException e) {
+            e.printStackTrace();
+        }
+    }*/
 }

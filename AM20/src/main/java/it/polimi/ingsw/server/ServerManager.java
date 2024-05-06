@@ -30,12 +30,12 @@ public class ServerManager {
         this.resetTimer();
         connections = new HashMap<>();
         controller = new Controller();
-        Thread t = new Thread(new PingThread(this));
-        t.start();
     }
 
     public synchronized void addConnection(String nickname, Connection connection){
         connections.put(nickname, connection);
+        Thread t = new Thread(new PingThread(this));
+        t.start();
     }
 
     public synchronized HashMap<String, Connection> getConnections() {

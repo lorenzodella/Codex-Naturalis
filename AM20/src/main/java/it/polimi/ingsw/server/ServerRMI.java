@@ -48,7 +48,7 @@ public class ServerRMI implements Loggable{
     }
 
     @Override
-    public Message starNewGame(String client, int numPlayers, Connection callback) throws RemoteException, InvalidArgumentException, InvalidPlayingException {
+    public Message startNewGame(String client, int numPlayers, Connection callback) throws RemoteException, InvalidArgumentException, InvalidPlayingException {
         this.manager.getConnections().put(client, callback);
         return this.manager.getController().newGame(client,numPlayers);
     }

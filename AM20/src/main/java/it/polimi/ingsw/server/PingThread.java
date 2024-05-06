@@ -25,6 +25,7 @@ public class PingThread implements Runnable{
       per capire se l'utente, al quale si sta rivolgendo, è ancora connesso o meno */
     @Override
     public void run() {
+        System.err.println("PingThread started!");
         Set<String> connectedPlayers;
         do {
             connectedPlayers = serverManager.getController().getConnectedPlayers();
@@ -33,7 +34,8 @@ public class PingThread implements Runnable{
                 Connection connection = serverManager.getConnections().get(nickname);
                 try {
                     //chiamo metodo per capire se il player (nickname) è ancora connesso
-                    connection.callPingMessage(new Message());
+                    if(connection!=null)
+                        connection.callPingMessage(new Message());
                 } catch (IOException e) {
                     //se il player non è più connesso
                     serverManager.detectDisconnection(nickname);
@@ -44,5 +46,6 @@ public class PingThread implements Runnable{
             } catch (InterruptedException ignored) {
             }
         } while (!connectedPlayers.isEmpty());
+        System.err.println("PingThread stopped!");
     }
 }
