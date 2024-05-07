@@ -13,10 +13,25 @@ import java.util.stream.Collectors;
 
 public class MessageBuilder implements GameObserver {
 
+    /**
+     * this attribute stands for a map that, per each nickname (string), associates thier specific ConnectionAckMessage
+     */
     private HashMap<String, ConnectionAckMessage> connectionAckMessages;
+    /**
+     * this attribute stands for a map that, per each nickname (string), associates thier specific starterCardAckMessage
+     */
     private HashMap<String, StarterCardAckMessage> starterCardAckMessages;
+    /**
+     * this attribute stands for a map that, per each nickname (string), associates thier specific objectiveAckMessage
+     */
     private HashMap<String, ObjectiveAckMessage> objectiveAckMessages;
+    /**
+     * this attribute stands for a map that, per each nickname (string), associates thier specific AcknowledgeMessage
+     */
     private HashMap<String, AcknowledgeMessage> acknowledgeMessages;
+    /**
+     * this attribute is a set of all the connected players
+     */
     private Set<String> connectedPlayerNicknames;
 
     //LISTA SOLO DEI CONNECTED PLAYERS DATO CHE DEVE MANDARE MESSAGGI SOLO AI PLAYER CHE SONO DAVVERO CONNESSI
@@ -33,8 +48,6 @@ public class MessageBuilder implements GameObserver {
     public HashMap<String, AcknowledgeMessage> notifyPlayerDisconnected(String playerNickname) {
         if(acknowledgeMessages == null)
             acknowledgeMessages = new HashMap<>();
-
-
 
         for (String nickname : connectedPlayerNicknames) {
             if (acknowledgeMessages.get(nickname) == null)
@@ -91,6 +104,12 @@ public class MessageBuilder implements GameObserver {
         return connectionAckMessages;
     }
 
+    /**
+     * Notifies all the connected players that both decks have been created
+     * @param resourceCardDeck deck of all resource cards
+     * @param goldCardDeck deck of all gold cards
+     * @return a map containing the messages that needs to be sent to all connected players
+     */
     @Override
     public HashMap<String, ConnectionAckMessage> notifyDecksCreated(Deck resourceCardDeck, Deck goldCardDeck) {
         if (connectionAckMessages == null)
@@ -109,6 +128,11 @@ public class MessageBuilder implements GameObserver {
         return connectionAckMessages;
     }
 
+    /**
+     * Notifies all the connected players that the starter cards have been created
+     * @param players list of player
+     * @return a map containing the messages that needs to be sent to all connected players
+     */
     @Override
     public HashMap<String, ConnectionAckMessage> notifyStarterCards(List<Player> players) {
         if (connectionAckMessages == null)
@@ -126,6 +150,11 @@ public class MessageBuilder implements GameObserver {
         return connectionAckMessages;
     }
 
+    /**
+     * Notifies all the connected players that the initial cards have been created
+     * @param players list of player
+     * @return a map containing the messages that needs to be sent to all connected players
+     */
     @Override
     public HashMap<String, ConnectionAckMessage> notifyInitialCards(List<Player> players) {
         if (connectionAckMessages == null)
@@ -142,7 +171,11 @@ public class MessageBuilder implements GameObserver {
         }
         return connectionAckMessages;
     }
-
+    /**
+     * Notifies to all the connected players that this specific player "player" has just chosen the side of their card
+     * @param player the specific player that's just chosen the side of the starter card
+     * @return a map containing the messages that needs to be sent to all connected players
+     */
     public HashMap<String, StarterCardAckMessage> notifyStarterCardSide(Player player){
         if(starterCardAckMessages == null)
             starterCardAckMessages = new HashMap<>();
@@ -168,6 +201,12 @@ public class MessageBuilder implements GameObserver {
         return starterCardAckMessages;
     }
 
+    /**
+     * Notifies to all the connected players that the 2 common objectives have been created
+     * @param commonObjectives array of 2 item that contains the 2 common objectives
+     * @param players list of players
+     * @return a map containing the messages that needs to be sent to all connected players
+     */
     @Override
     public HashMap<String, StarterCardAckMessage> notifyObjectiveCards(ObjectiveCard[] commonObjectives, List<Player> players) {
         if(starterCardAckMessages == null)
@@ -186,6 +225,11 @@ public class MessageBuilder implements GameObserver {
         return starterCardAckMessages;
     }
 
+    /**
+     * Notifies to all the connected players that this specific player "player" has just chosen their secret objective card
+     * @param player the specific player that's just chosen the objective card
+     * @return a map containing the messages that needs to be sent to all connected players
+     */
     @Override
     public HashMap<String, ObjectiveAckMessage> notifyChosenSecretObjective(Player player) {
         if(objectiveAckMessages == null)
@@ -212,6 +256,11 @@ public class MessageBuilder implements GameObserver {
         return objectiveAckMessages;
     }
 
+    /**
+     * Notifies to all the connected players that this specific player has just played a card
+     * @param player the specific player that's just played a card
+     * @return a map containing the messages that needs to be sent to all connected players
+     */
     @Override
     public HashMap<String, AcknowledgeMessage> notifyPlayerPlay(Player player) {
         if(acknowledgeMessages == null)
@@ -243,7 +292,11 @@ public class MessageBuilder implements GameObserver {
         acknowledgeMessages.get(player.getNickname()).setMustPick(true);
         return acknowledgeMessages;
     }
-
+    /**
+     * Notifies to all the connected players that this specific player has just picked a card
+     * @param player the specific player that's just picked a card
+     * @return a map containing the messages that needs to be sent to all connected players
+     */
     @Override
     public HashMap<String, AcknowledgeMessage> notifyPlayerPick(Player player) {
         if(acknowledgeMessages == null)
@@ -262,6 +315,12 @@ public class MessageBuilder implements GameObserver {
         return acknowledgeMessages;
     }
 
+    /**
+     * Notifies to all connected players that the decks have changed because someone's just picked a card
+     * @param resourceCardDeck the resource deck
+     * @param goldCardDeck the gold deck
+     * @return a map containing the messages that needs to be sent to all connected players
+     */
     @Override
     public HashMap<String, AcknowledgeMessage> notifyDecksModified(Deck resourceCardDeck, Deck goldCardDeck) {
         if (acknowledgeMessages == null)
@@ -280,6 +339,11 @@ public class MessageBuilder implements GameObserver {
         return acknowledgeMessages;
     }
 
+    /**
+     * Notifies to all connected players that the next player is going to be "player"
+     * @param player this specific player
+     * @return a map containing the messages that needs to be sent to all connected players
+     */
     @Override
     public HashMap<String, AcknowledgeMessage> notifyNextTurn(Player player) {
         if(acknowledgeMessages == null)
@@ -296,6 +360,10 @@ public class MessageBuilder implements GameObserver {
         return acknowledgeMessages;
     }
 
+    /**
+     * Notifies to all connected players that the final turn's just started
+     * @return a map containing the messages that needs to be sent to all connected players
+     */
     @Override
     public HashMap<String, AcknowledgeMessage> notifyLastTurn() {
         if(acknowledgeMessages == null)
@@ -310,7 +378,7 @@ public class MessageBuilder implements GameObserver {
         }
         return acknowledgeMessages;
     }
-
+//TODO 
     @Override
     public HashMap<String, AcknowledgeMessage> notifyPlayerObjectives(List<Player> players) {
         if(acknowledgeMessages == null)
@@ -338,6 +406,11 @@ public class MessageBuilder implements GameObserver {
         return acknowledgeMessages;
     }
 
+    /**
+     * Notifies to all connected players that the winner of this game is the player "winner"
+     * @param winner this specific player that's just won
+     * @return a map containing the messages that needs to be sent to all connected players
+     */
     @Override
     public HashMap<String, AcknowledgeMessage> notifyWin(Player winner) {
         if(acknowledgeMessages == null)
@@ -354,7 +427,4 @@ public class MessageBuilder implements GameObserver {
         acknowledgeMessages.get(winner.getNickname()).setResult("You're the winner!");
         return acknowledgeMessages;
     }
-
-
-
 }
