@@ -7,6 +7,12 @@ public class SendChatMessage extends ClientMessage{
     String recipient;
     String message;
 
+    public SendChatMessage(String sender, String recipient, String message) {
+        this.sender = sender;
+        this.recipient = recipient;
+        this.message = message;
+    }
+
     public String getSender() {
         return sender;
     }

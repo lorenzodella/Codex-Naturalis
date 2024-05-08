@@ -6,6 +6,11 @@ public class PickCardDeckMessage extends ClientMessage{
     String playerNickname;
     int deck;
 
+    public PickCardDeckMessage(String playerNickname, int deck) {
+        this.playerNickname = playerNickname;
+        this.deck = deck;
+    }
+
     public String getPlayerNickname() {
         return playerNickname;
     }

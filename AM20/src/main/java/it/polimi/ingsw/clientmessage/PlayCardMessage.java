@@ -9,6 +9,14 @@ public class PlayCardMessage extends ClientMessage{
     String targetID;
     int side;
 
+    public PlayCardMessage(String playerNickname, int cardIndex, int angle, String targetID, int side) {
+        this.playerNickname = playerNickname;
+        this.cardIndex = cardIndex;
+        this.angle = angle;
+        this.targetID = targetID;
+        this.side = side;
+    }
+
     public String getPlayerNickname() {
         return playerNickname;
     }

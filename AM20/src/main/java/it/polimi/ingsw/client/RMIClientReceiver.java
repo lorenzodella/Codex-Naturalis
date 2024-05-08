@@ -15,108 +15,73 @@ import it.polimi.ingsw.server.Loggable;
 
 public class RMIClientReceiver extends UnicastRemoteObject implements Connection {
 
+    private UIUpdater uiUpdater;
+
     public RMIClientReceiver() throws RemoteException {
+        this.uiUpdater = new UIUpdater();
     }
 
     @Override
     public void callChatMessage(ChatMessage message) throws RemoteException {
-        System.out.println("You received a message from: " +message.getSender());
-        System.out.println("The message is: " +message.getMessage());
+         this.uiUpdater.chatMessage(message);
     }
 
     @Override
     public void callStopGame(Message message) throws RemoteException {
-        System.out.println("Game stopped because: "+message.getResult());
+        this.uiUpdater.message(message);
     }
 
     @Override
     public void callConnectionAckMessage(ConnectionAckMessage message) throws RemoteException {
-        System.out.println(message);
-        System.out.println("Game starts : " + message.doesGameStarts() + "\n");
-        if(message.doesGameStarts()){
-            System.out.println("GoldTop: " + message.getGoldTop().getID() + "\n" +
-                    "ResourceTop: " + message.getResourceTop().getID() + "\n" +
-                    "GoldVisible[0]: " + message.getGoldVisible()[0].getID() + "\n" +
-                    "GoldVisible[1]: " + message.getGoldVisible()[1].getID() + "\n" +
-                    "ResourceVisible[0]: " + message.getResourceVisible()[0].getID() + "\n" +
-                    "ResourceVisible[1]: " + message.getResourceVisible()[1].getID() + "\n" +
-                    "StarterCard: " + message.getStarterCard().getID() + "\n" +
-                    "InitialCards[0]: " + message.getInitialCards().get(0).getID() + "\n"+
-                    "InitialCards[1]: " + message.getInitialCards().get(1).getID() + "\n"+
-                    "InitialCards[2]: " + message.getInitialCards().get(2).getID() + "\n"+
-                    "PlayerInfo: " + message.getPlayerInfo() + "\n"+
-                    "OthersPLayerInfo: " + message.getOthersPlayerInfo() + "\n");
-        }
 
+        if(!message.doesGameStarts()){ //false è ConnectionAckMessage
+            this.uiUpdater.connectionAck(message);
+        }else if(message.doesGameStarts()){ //true è StartGameMessage
+            this.uiUpdater.startGame((StartGameMessage) message);
+        }else {
+            this.uiUpdater.restartGame((RestartGameMessage) message);
+        }
     }
 
     @Override
     public void callAcknowledgeMessage(AcknowledgeMessage message) throws RemoteException {
-        System.out.println(message);
-        System.out.println("action: "+ message.getAction());
-        if(message.getCards()!=null){
-            System.out.println("cards[0]: "+ message.getCards().get(0)+"\n"+
-                    "cards[1]: "+ message.getCards().get(1)+"\n"+
-                    "cards[2]: "+ message.getCards().get(2));
-        }
-        if(message.getNextPlayer()!=null){
-            System.out.println("nextPlayer: "+ message.getNextPlayer());
-        }
-        if(message.getAction().equals(AcknowledgeMessage.PLAY)){
-            System.out.println("YourPlayerInfo: " + message.getYourPlayerInfo()+"\n"+
-                    "OthersPlayerInfo: " + message.getOthersPlayerInfo()+"\n"+
-                    "MustPick: "+message.mustPick());
-        }
-        if(message.getAction().equals(AcknowledgeMessage.PICK)){
-            System.out.println("GoldTop: "+ message.getGoldTop().getID()+"\n"+
-                    "ResourceTop: "+ message.getResourceTop().getID()+ "\n"+
-                    "GoldVisible[0]: " + message.getGoldVisible()[0].getID() + "\n" +
-                    "GoldVisible[1]: " + message.getGoldVisible()[1].getID() + "\n" +
-                    "ResourceVisible[0]: " + message.getResourceVisible()[0].getID() + "\n" +
-                    "ResourceVisible[1]: " + message.getResourceVisible()[1].getID() + "\n");
-        }
+
+        if(message.getAction().equals("Disconnection"))
+            this.uiUpdater.acknowledge(message);
+        if(message.getAction().equals("Play"))
+            this.uiUpdater.playAck((PlayAckMessage) message);
+        if(message.getAction().equals("Pick"))
+            this.uiUpdater.pickAck((PickAckMessage) message);
 
     }
 
     @Override
     public void callStarterCardAckMessage(StarterCardAckMessage message) throws RemoteException {
-        System.out.println(message);
-        System.out.println("ChooseObjective: " + message.shouldChooseObjective() + "\n");
-        if(message.shouldChooseObjective()){
-            System.out.println( "CommonObjective[0]: " + message.getCommonObjectives()[0].getID() + "\n" +
-                    "CommonObjective[1]: " + message.getCommonObjectives()[1].getID() + "\n" +
-                    "SecretObjective[0]: " + message.getSecretObjectives()[0].getID() + "\n" +
-                    "SecretObjective[1]: " + message.getSecretObjectives()[1].getID() + "\n");
-        }
-        System.out.println("PlayerInfo: "+ message.getPlayerInfo()+"\n");
+
+        if(message.shouldChooseObjective()) //true quindi è startChoosignObjectiveMessage
+            this.uiUpdater.startChoosingObjective((StartChoosingObjectiveMessage) message);
+        else
+            this.uiUpdater.starterCard(message);
 
     }
 
     @Override
     public void callObjectiveAckMessage(ObjectiveAckMessage message) throws RemoteException {
-        System.out.println(message);
-        System.out.println("StartPlaying: " + message.shouldStartPlaying() + "\n");
-        if(message.shouldStartPlaying()){
-            System.out.println("FirstPlayer: " + message.getFirstPlayer());
-        }
-        //if I'm not the client who just chose his objectiveCard, these would be null
-        if(message.getSecretObjectives()!=null) {
-            if (message.getSecretObjectives()[0] != null)
-                System.out.println("SecretObjective[0]: " + message.getSecretObjectives()[0].getID());
-            if (message.getSecretObjectives()[1] != null)
-                System.out.println("SecretObjective[1]: " + message.getSecretObjectives()[1].getID() + "\n");
-        }
 
+        if(message.shouldStartPlaying())//true quindi è una StartPlayingMessage
+            this.uiUpdater.startPlaying((StartPlayingMessage) message);
+        else
+            this.uiUpdater.objectivemessage(message);
     }
 
     //TODO: da sistemare
     public void callMessage(Message message){
-        System.out.println("Message received: " +message);
+        this.uiUpdater.message(message);
     }
 
     //TODO: da sistemare
     public void callErrorMessage(ErrorMessage message){
-        System.out.println("Message error: " + message);
+        this.uiUpdater.errorMessage(message);
     }
 
     /* se il messaggio viene inviato ritorna vero altrimenti manda exc */
@@ -125,77 +90,5 @@ public class RMIClientReceiver extends UnicastRemoteObject implements Connection
         return true;
     }
 
-    /*public static void main(String[] args) {
-        System.out.println("Hello from RMIClient");
-        try {
-            Registry registry = LocateRegistry.getRegistry(args[0], Integer.parseInt(args[1]));
-            Loggable stub = (Loggable) registry.lookup("Loggable");
 
-//            int port = ((new Random().nextInt(16383)) + 49152);
-//            Registry exportedRegistry = LocateRegistry.createRegistry(port);
-//            exportedRegistry.rebind("Lollo", UnicastRemoteObject.exportObject(new RMIClient(), port));
-
-//            boolean logged = stub.login("Lollo", new ClientRMI());
-//            System.out.println(logged);
-
-//            ConnectionAckMessage msg = stub.login("Lollo", new ClientRMI());
-//            System.out.println("stub.login: \n"+ msg);
-
-//            ClientRMI c = new ClientRMI();
-//            Connection connection = (Connection) UnicastRemoteObject.exportObject(c, 0);
-//
-//            Message msg2 = stub.starNewGame("Lollo", 4, connection);
-//            System.out.println("stub.starNewGame: \n"+ msg2);
-//            System.out.println("\n\n");
-            RMIClientReceiver c = new RMIClientReceiver();
-            c.newGame(args[0], Integer.parseInt(args[1]));
-
-            RMIClientReceiver c1 = new RMIClientReceiver();
-            Connection connection1 = (Connection) UnicastRemoteObject.exportObject(c1, 0);
-            ConnectionAckMessage msg3 = stub.login("Pietro", connection1);
-            System.out.println("stub.login: \n"+ msg3);
-            System.out.println("\n\n");
-
-            RMIClientReceiver c2 = new RMIClientReceiver();
-            Connection connection2 = (Connection) UnicastRemoteObject.exportObject(c2, 0);
-            ConnectionAckMessage msg4 = stub.login("Genoveffa", connection2);
-            System.out.println("stub.login: \n"+ msg4);
-            ConnectionAckMessage msg5 = stub.login("Alessia", new ClientRMI());
-            System.out.println("stub.login: \n"+ msg5);
-
-            StarterCardAckMessage msgStarterSide = stub.chooseStarterCardSide("Lollo", PlayableCard.FRONT);
-            System.out.println("stub.chooseStarterCardSide: \n"+ msgStarterSide);
-            StarterCardAckMessage msgStarterSide2 = stub.chooseStarterCardSide("Pietro", PlayableCard.BACK);
-            System.out.println("stub.chooseStarterCardSide: \n"+ msgStarterSide2);
-            StarterCardAckMessage msgStarterSide3 = stub.chooseStarterCardSide("Alessia", PlayableCard.BACK);
-            System.out.println("stub.chooseStarterCardSide: \n"+ msgStarterSide3);
-            StarterCardAckMessage msgStarterSide4 = stub.chooseStarterCardSide("Genoveffa", PlayableCard.BACK);
-            System.out.println("stub.chooseStarterCardSide: \n"+ msgStarterSide4);
-
-            ObjectiveAckMessage msgObjective = stub.chooseObjective("Lollo", PlayableCard.BACK);
-            System.out.println("stub.chooseObjective: \n"+ msgObjective);
-            ObjectiveAckMessage msgObjective2 = stub.chooseObjective("Pietro", PlayableCard.FRONT);
-            System.out.println("stub.chooseObjective: \n"+ msgObjective2);
-            ObjectiveAckMessage msgObjective3 = stub.chooseObjective("Genoveffa", PlayableCard.BACK);
-            System.out.println("stub.chooseObjective: \n"+ msgObjective3);
-            ObjectiveAckMessage msgObjective4 = stub.chooseObjective("Alessia", PlayableCard.BACK);
-            System.out.println("stub.chooseObjective: \n"+ msgObjective4);
-
-
-
-            Message m = stub.sendChatMessage("Lollo", "i", "ciao");
-            System.out.println(m.getResult());
-
-
-
-        } catch (RemoteException | NotBoundException e) {
-            throw new RuntimeException(e);
-        } catch (CannotJoinGameException e) {
-            e.printStackTrace();
-        } catch (InvalidArgumentException e) {
-            e.printStackTrace();
-        } catch (InvalidPlayingException e) {
-            e.printStackTrace();
-        }
-    }*/
 }

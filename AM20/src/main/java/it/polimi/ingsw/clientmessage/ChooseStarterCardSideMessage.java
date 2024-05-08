@@ -6,6 +6,11 @@ public class ChooseStarterCardSideMessage extends ClientMessage{
     String nickname;
     int side;
 
+    public ChooseStarterCardSideMessage(String nickname, int side) {
+        this.nickname = nickname;
+        this.side = side;
+    }
+
     public String getNickname() {
         return nickname;
     }

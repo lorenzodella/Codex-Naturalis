@@ -6,6 +6,11 @@ public class LoginMessage extends ClientMessage{
     String client;
     Connection callback;
 
+    public LoginMessage(String client, Connection callback){
+        this.client = client;
+        this.callback = callback;
+    }
+
     public String getClient() {
         return client;
     }

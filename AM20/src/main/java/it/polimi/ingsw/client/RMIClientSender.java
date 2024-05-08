@@ -1,10 +1,8 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.controller.exceptions.CannotJoinGameException;
-import it.polimi.ingsw.controller.messages.ErrorMessage;
-import it.polimi.ingsw.controller.messages.Message;
-import it.polimi.ingsw.model.exceptions.InvalidArgumentException;
-import it.polimi.ingsw.model.exceptions.InvalidPlayingException;
+import it.polimi.ingsw.controller.messages.*;
+import it.polimi.ingsw.model.exceptions.*;
 import it.polimi.ingsw.server.Loggable;
 
 import java.rmi.NotBoundException;
@@ -54,7 +52,9 @@ public class RMIClientSender extends ClientSender{
     @Override
     void chooseStarterCardSide(String nickname, int side) {
         try {
-            stub.chooseStarterCardSide(nickname, side);
+            StarterCardAckMessage msg = stub.chooseStarterCardSide(nickname, side);
+            receiver.callStarterCardAckMessage(msg);
+            System.out.println("stub.chooseStarterCardSide: \n"+msg);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         } catch (InvalidArgumentException e) {
@@ -66,31 +66,104 @@ public class RMIClientSender extends ClientSender{
 
     @Override
     void chooseObjective(String nickname, int index) {
+        try {
+            ObjectiveAckMessage msg = stub.chooseObjective(nickname, index);
+            receiver.callObjectiveAckMessage(msg);
+            System.out.println("stub.chooseObjective: \n"+msg);
+
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        } catch (InvalidArgumentException e) {
+            throw new RuntimeException(e);
+        } catch (InvalidPlayingException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
     @Override
     void playCard(String playerNickname, int cardIndex, int angle, String targetID, int side) {
+        try {
+            AcknowledgeMessage msg = this.stub.playCard(playerNickname, cardIndex, angle, targetID, side);
+            receiver.callAcknowledgeMessage(msg);
+            System.out.println("stub.playCard: \n"+msg);
+        } catch (InvalidArgumentException e) {
+            throw new RuntimeException(e);
+        } catch (RequirementsNotRespectedException e) {
+            throw new RuntimeException(e);
+        } catch (InvalidPlayingException e) {
+            throw new RuntimeException(e);
+        } catch (TargetNotPresentException e) {
+            throw new RuntimeException(e);
+        } catch (InvalidAngleCoveredException e) {
+            throw new RuntimeException(e);
+        } catch (InvalidPositionException e) {
+            throw new RuntimeException(e);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+
 
     }
 
     @Override
     void pickCard(String playerNickname, int deck) {
+        try {
+            AcknowledgeMessage msg = this.stub.pickCard(playerNickname, deck);
+            receiver.callAcknowledgeMessage(msg);
+            System.out.println("stub.pickCardDeck: \n"+msg);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        } catch (InvalidArgumentException e) {
+            throw new RuntimeException(e);
+        } catch (InvalidPlayingException e) {
+            throw new RuntimeException(e);
+        } catch (FinishedCardStackException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
     @Override
     void pickCard(String playerNickname, int deck, int index) {
+        try {
+            AcknowledgeMessage msg = this.stub.pickCard(playerNickname, deck, index);
+            receiver.callAcknowledgeMessage(msg);
+            System.out.println("stub.playCard: \n"+msg);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        } catch (InvalidArgumentException e) {
+            throw new RuntimeException(e);
+        } catch (InvalidPlayingException e) {
+            throw new RuntimeException(e);
+        } catch (FinishedCardStackException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
     @Override
     void sendChatMessage(String sender, String recipient, String message) {
+        try {
+
+            Message msg = this.stub.sendChatMessage(sender, recipient, message);
+            receiver.callMessage(msg);
+            System.out.println("stub.sendChatMessage: \n"+msg);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
     @Override
     void sendBroadcastChatMessage(String sender, String message) {
+        try {
+            Message msg = this.stub.sendBroadcastChatMessage(sender, message);
+            receiver.callMessage(msg);
+            System.out.println("stub.sendBroadcastChatMessage: \n"+msg);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 }

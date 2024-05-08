@@ -6,6 +6,11 @@ public class SendChatBroadcastMessage extends ClientMessage {
     String sender;
     String message;
 
+    public SendChatBroadcastMessage(String sender, String message) {
+        this.sender = sender;
+        this.message = message;
+    }
+
     public String getSender() {
         return sender;
     }

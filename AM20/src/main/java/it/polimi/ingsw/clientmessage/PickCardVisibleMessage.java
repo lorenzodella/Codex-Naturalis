@@ -7,6 +7,12 @@ public class PickCardVisibleMessage extends ClientMessage{
     int deck;
     int index;
 
+    public PickCardVisibleMessage(String playerNickname, int deck, int index) {
+        this.playerNickname = playerNickname;
+        this.deck = deck;
+        this.index = index;
+    }
+
     public String getPlayerNickname() {
         return playerNickname;
     }

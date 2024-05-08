@@ -6,6 +6,11 @@ public class ChooseObjectiveMessage extends ClientMessage{
     String nickname;
     int index;
 
+    public ChooseObjectiveMessage(String nickname, int index) {
+        this.nickname = nickname;
+        this.index = index;
+    }
+
     public String getNickname() {
         return nickname;
     }

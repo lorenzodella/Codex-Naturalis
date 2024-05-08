@@ -7,6 +7,12 @@ public class NewGameMessage extends ClientMessage {
     int numPlayers;
     Connection callback;
 
+    public NewGameMessage(String client, int numPlayers, Connection callback) {
+        this.client = client;
+        this.numPlayers = numPlayers;
+        this.callback = callback;
+    }
+
     public String getClient() {
         return client;
     }
