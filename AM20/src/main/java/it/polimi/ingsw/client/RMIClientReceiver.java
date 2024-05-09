@@ -38,8 +38,6 @@ public class RMIClientReceiver extends UnicastRemoteObject implements Connection
             this.uiUpdater.connectionAck(message);
         }else if(message.doesGameStarts()){ //true è StartGameMessage
             this.uiUpdater.startGame((StartGameMessage) message);
-        }else {
-            this.uiUpdater.restartGame((RestartGameMessage) message);
         }
     }
 

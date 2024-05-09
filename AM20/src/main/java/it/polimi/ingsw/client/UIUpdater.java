@@ -12,10 +12,6 @@ public class UIUpdater  {
 
     }
 
-    public void restartGame(RestartGameMessage msg){
-
-    }
-
     public void acknowledge(AcknowledgeMessage msg){
 
     }

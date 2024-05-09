@@ -378,7 +378,7 @@ public class MessageBuilder implements GameObserver {
         }
         return acknowledgeMessages;
     }
-//TODO 
+//TODO
     @Override
     public HashMap<String, AcknowledgeMessage> notifyPlayerObjectives(List<Player> players) {
         if(acknowledgeMessages == null)

@@ -219,7 +219,7 @@ public class ClientHandler implements Runnable{
 
                 }
 
-            } catch (IOException | ClassNotFoundException e) {
+            }catch (IOException | ClassNotFoundException e) {
                 //thrown when the player disconnect
                 this.manager.detectDisconnection(this.usernameClient);
                 break;
