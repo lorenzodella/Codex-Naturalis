@@ -13,4 +13,9 @@ public class ErrorMessage extends Message{
     public ErrorMessage(String error){
         this.error = error;
     }
+
+    @Override
+    public String getType() {
+        return Message.ERROR;
+    }
 }

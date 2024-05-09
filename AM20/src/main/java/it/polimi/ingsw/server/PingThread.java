@@ -4,6 +4,7 @@ import it.polimi.ingsw.controller.exceptions.InvalidDisconnectionException;
 import it.polimi.ingsw.controller.exceptions.NoOneIsConnectedException;
 import it.polimi.ingsw.controller.messages.AcknowledgeMessage;
 import it.polimi.ingsw.controller.messages.Message;
+import it.polimi.ingsw.controller.messages.PingMessage;
 import it.polimi.ingsw.model.exceptions.InvalidArgumentException;
 import it.polimi.ingsw.model.exceptions.InvalidConnectionStateException;
 
@@ -35,7 +36,7 @@ public class PingThread implements Runnable{
                 try {
                     //chiamo metodo per capire se il player (nickname) è ancora connesso
                     if(connection!=null)
-                        connection.callPingMessage(new Message());
+                        connection.callPingMessage(new PingMessage());
                 } catch (IOException e) {
                     //se il player non è più connesso
                     serverManager.detectDisconnection(nickname);

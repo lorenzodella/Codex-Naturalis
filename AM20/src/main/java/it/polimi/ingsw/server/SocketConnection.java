@@ -22,7 +22,7 @@ public class SocketConnection implements Connection  {
     }
 
     @Override
-    public void callStopGame(Message message) throws IOException {
+    public void callStopGame(StopGameMessage message) throws IOException {
         outputStream.writeObject(message);
 
     }
@@ -61,7 +61,7 @@ public class SocketConnection implements Connection  {
 
     /* se il messaggio viene inviato ritorna vero altrimenti manda exc */
     @Override
-    public boolean callPingMessage(Message message) throws IOException {
+    public boolean callPingMessage(PingMessage message) throws IOException {
         outputStream.writeObject(message);
         return true;
     }

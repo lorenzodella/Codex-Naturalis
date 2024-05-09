@@ -5,6 +5,7 @@ import it.polimi.ingsw.controller.exceptions.InvalidDisconnectionException;
 import it.polimi.ingsw.controller.exceptions.NoOneIsConnectedException;
 import it.polimi.ingsw.controller.messages.AcknowledgeMessage;
 import it.polimi.ingsw.controller.messages.Message;
+import it.polimi.ingsw.controller.messages.StopGameMessage;
 import it.polimi.ingsw.model.exceptions.InvalidArgumentException;
 import it.polimi.ingsw.model.exceptions.InvalidConnectionStateException;
 
@@ -82,7 +83,7 @@ public class ServerManager {
             reset();
         } catch (InvalidDisconnectionException e) {
             //if someone disconnected during preliminary phase of the game, reset server after telling that to remaining clients
-            Message message = new Message();
+            StopGameMessage message = new StopGameMessage();
             message.setResult(e.toString());
             for (Connection c : getConnections().values()) {
                 try {

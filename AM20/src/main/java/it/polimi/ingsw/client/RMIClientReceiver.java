@@ -27,7 +27,7 @@ public class RMIClientReceiver extends UnicastRemoteObject implements Connection
     }
 
     @Override
-    public void callStopGame(Message message) throws RemoteException {
+    public void callStopGame(StopGameMessage message) throws RemoteException {
         this.uiUpdater.message(message);
     }
 
@@ -86,7 +86,7 @@ public class RMIClientReceiver extends UnicastRemoteObject implements Connection
 
     /* se il messaggio viene inviato ritorna vero altrimenti manda exc */
     @Override
-    public boolean callPingMessage(Message message) throws RemoteException {
+    public boolean callPingMessage(PingMessage message) throws RemoteException {
         return true;
     }
 

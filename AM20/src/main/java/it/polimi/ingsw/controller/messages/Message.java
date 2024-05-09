@@ -12,6 +12,10 @@ public class Message implements Serializable {
     public static final String ACKNOWLEDGE = "acknowledge";
     public static final String CHAT = "chat";
     public static final String OBJECTIVEACK = "objectiveAck";
+    public static final String PING = "ping";
+    public static final String STOPGAME = "stopGame";
+    public static final String ERROR = "error";
+
 
 
     public String getType(){
