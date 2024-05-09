@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.clientmessage.*;
+import it.polimi.ingsw.controller.messages.ErrorMessage;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -10,6 +11,7 @@ public class SKTClientSender extends ClientSender {
 
     private ObjectOutputStream outputStream;
     private Socket socket;
+    private UIUpdater uiUpdater;
 
     //TODO
     //gestire quando va istanziato il SKTClientSender
@@ -23,64 +25,97 @@ public class SKTClientSender extends ClientSender {
     @Override
     void login(String client) {
 
-        LoginMessage msg = new LoginMessage(client, new SKTClientSender(socket));
-        outputStream.writeObject(msg);
-
+        try {
+            LoginMessage msg = new LoginMessage(client);
+            outputStream.writeObject(msg);
+        } catch (IOException e) {
+            uiUpdater.errorMessage(new ErrorMessage("Server not reachable"));
+        }
     }
 
     @Override
     void startNewGame(String client, int numPlayers) {
-        NewGameMessage msg = new NewGameMessage(client, numPlayers, new SKTClientSender(socket));
-        outputStream.writeObject(msg);
-
+        try{
+            NewGameMessage msg = new NewGameMessage(client, numPlayers);
+            outputStream.writeObject(msg);
+        } catch (IOException e) {
+            uiUpdater.errorMessage(new ErrorMessage("Server not reachable"));
+        }
     }
 
     @Override
     void chooseStarterCardSide(String nickname, int side) {
-        ChooseStarterCardSideMessage msg = new ChooseStarterCardSideMessage(nickname,side);
-        outputStream.writeObject(msg);
+        try {
+            ChooseStarterCardSideMessage msg = new ChooseStarterCardSideMessage(nickname, side);
+            outputStream.writeObject(msg);
+        } catch (IOException e) {
+            uiUpdater.errorMessage(new ErrorMessage("Server not reachable"));
+        }
 
     }
 
     @Override
     void chooseObjective(String nickname, int index) {
-        ChooseObjectiveMessage msg = new ChooseObjectiveMessage(nickname, index);
-        outputStream.writeObject(msg);
+        try {
+            ChooseObjectiveMessage msg = new ChooseObjectiveMessage(nickname, index);
+            outputStream.writeObject(msg);
+        } catch (IOException e) {
+            uiUpdater.errorMessage(new ErrorMessage("Server not reachable"));
+        }
 
     }
 
     @Override
     void playCard(String playerNickname, int cardIndex, int angle, String targetID, int side) {
-        PlayCardMessage msg = new PlayCardMessage(playerNickname, cardIndex, angle, targetID, side);
-        outputStream.writeObject(msg);
+        try {
+            PlayCardMessage msg = new PlayCardMessage(playerNickname, cardIndex, angle, targetID, side);
+            outputStream.writeObject(msg);
+        } catch (IOException e) {
+            uiUpdater.errorMessage(new ErrorMessage("Server not reachable"));
+        }
 
     }
 
     @Override
     void pickCard(String playerNickname, int deck) {
-        PickCardDeckMessage msg = new PickCardDeckMessage(playerNickname, deck);
-        outputStream.writeObject(msg);
+        try{
+            PickCardDeckMessage msg = new PickCardDeckMessage(playerNickname, deck);
+            outputStream.writeObject(msg);
+        } catch (IOException e) {
+            uiUpdater.errorMessage(new ErrorMessage("Server not reachable"));
+        }
 
     }
 
     @Override
     void pickCard(String playerNickname, int deck, int index) {
-        PickCardVisibleMessage msg = new PickCardVisibleMessage(playerNickname, deck, index);
-        outputStream.writeObject(msg);
-
+        try{
+            PickCardVisibleMessage msg = new PickCardVisibleMessage(playerNickname, deck, index);
+            outputStream.writeObject(msg);
+        } catch (IOException e) {
+            uiUpdater.errorMessage(new ErrorMessage("Server not reachable"));
+        }
     }
 
     @Override
     void sendChatMessage(String sender, String recipient, String message) {
-        SendChatMessage msg = new SendChatMessage(sender, recipient, message);
-        outputStream.writeObject(msg);
+        try{
+            SendChatMessage msg = new SendChatMessage(sender, recipient, message);
+            outputStream.writeObject(msg);
+        } catch (IOException e) {
+            uiUpdater.errorMessage(new ErrorMessage("Server not reachable"));
+        }
 
     }
 
     @Override
     void sendBroadcastChatMessage(String sender, String message) {
-        SendChatBroadcastMessage msg = new SendChatBroadcastMessage(sender, message);
-        outputStream.writeObject(msg);
+        try {
+            SendChatBroadcastMessage msg = new SendChatBroadcastMessage(sender, message);
+            outputStream.writeObject(msg);
+        } catch (IOException e) {
+            uiUpdater.errorMessage(new ErrorMessage("Server not reachable"));
+        }
 
     }
 }
