@@ -37,6 +37,11 @@ public class ChatMessage extends Message{
     }
 
     @Override
+    public String getType() {
+        return Message.CHAT;
+    }
+
+    @Override
     public String toString() {
         return "ChatMessage{" +
                 "result='" + getResult() + '\'' +

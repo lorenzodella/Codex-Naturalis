@@ -28,6 +28,11 @@ public class ObjectiveAckMessage extends Message {
     }
 
     @Override
+    public String getType() {
+        return Message.OBJECTIVEACK;
+    }
+
+    @Override
     public String toString() {
         return "ObjectiveAckMessage{" +
                 "result='" + getResult() + '\'' +

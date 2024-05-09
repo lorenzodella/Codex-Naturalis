@@ -78,6 +78,11 @@ public class ConnectionAckMessage extends Message{
     }
 
     @Override
+    public String getType() {
+        return Message.CONNECTIONACK;
+    }
+
+    @Override
     public String toString() {
         return "ConnectionAckMessage{" +
                 "result='" + getResult() + '\'' +

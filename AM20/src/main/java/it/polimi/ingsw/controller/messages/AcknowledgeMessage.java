@@ -93,6 +93,10 @@ public class AcknowledgeMessage extends Message {
 
     }
 
+    public String getType(){
+        return Message.ACKNOWLEDGE;
+    }
+
     @Override
     public String toString() {
         return "AcknowledgeMessage{" +

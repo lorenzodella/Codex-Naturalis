@@ -48,6 +48,11 @@ public class StarterCardAckMessage extends Message {
     }
 
     @Override
+    public String getType() {
+        return Message.STARTERCARDACK;
+    }
+
+    @Override
     public String toString() {
         return "StarterCardAckMessage{" +
                 "result='" + getResult() + '\'' +
