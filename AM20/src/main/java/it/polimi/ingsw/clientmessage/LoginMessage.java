@@ -4,11 +4,9 @@ import it.polimi.ingsw.server.Connection;
 
 public class LoginMessage extends ClientMessage{
     String client;
-    Connection callback;
 
-    public LoginMessage(String client, Connection callback){
+    public LoginMessage(String client){
         this.client = client;
-        this.callback = callback;
     }
 
     public String getClient() {
@@ -17,14 +15,6 @@ public class LoginMessage extends ClientMessage{
 
     public void setClient(String client) {
         this.client = client;
-    }
-
-    public Connection getCallback() {
-        return callback;
-    }
-
-    public void setCallback(Connection callback) {
-        this.callback = callback;
     }
 
     public String getAction(){

@@ -28,9 +28,9 @@ public class RMIClientSender extends ClientSender{
             Message msg = stub.login(client, receiver);
             System.out.println("stub.login: \n"+ msg);
         } catch (RemoteException e) {
-            throw new RuntimeException(e);
+            receiver.callErrorMessage(new ErrorMessage("Server not reachable"));
         } catch (CannotJoinGameException e) {
-            throw new RuntimeException(e);
+            receiver.callErrorMessage(new ErrorMessage(e));
         }
     }
 
@@ -41,11 +41,9 @@ public class RMIClientSender extends ClientSender{
             receiver.callMessage(msg);
             System.out.println("stub.startNewGame: \n"+ msg);
         } catch (RemoteException e) {
-                receiver.callErrorMessage(new ErrorMessage(e));
-        } catch (InvalidArgumentException e) {
-            throw new RuntimeException(e);
-        } catch (InvalidPlayingException e) {
-            throw new RuntimeException(e);
+            receiver.callErrorMessage(new ErrorMessage("Server not reachable"));
+        } catch (InvalidArgumentException | InvalidPlayingException e) {
+            receiver.callErrorMessage(new ErrorMessage(e));
         }
     }
 
@@ -56,11 +54,9 @@ public class RMIClientSender extends ClientSender{
             receiver.callStarterCardAckMessage(msg);
             System.out.println("stub.chooseStarterCardSide: \n"+msg);
         } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        } catch (InvalidArgumentException e) {
-            throw new RuntimeException(e);
-        } catch (InvalidPlayingException e) {
-            throw new RuntimeException(e);
+            receiver.callErrorMessage(new ErrorMessage("Server not reachable"));
+        } catch (InvalidArgumentException | InvalidPlayingException e) {
+            receiver.callErrorMessage(new ErrorMessage(e));
         }
     }
 
@@ -72,11 +68,9 @@ public class RMIClientSender extends ClientSender{
             System.out.println("stub.chooseObjective: \n"+msg);
 
         } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        } catch (InvalidArgumentException e) {
-            throw new RuntimeException(e);
-        } catch (InvalidPlayingException e) {
-            throw new RuntimeException(e);
+            receiver.callErrorMessage(new ErrorMessage("Server not reachable"));
+        } catch (InvalidArgumentException | InvalidPlayingException e) {
+            receiver.callErrorMessage(new ErrorMessage(e));
         }
 
     }
@@ -87,20 +81,11 @@ public class RMIClientSender extends ClientSender{
             AcknowledgeMessage msg = this.stub.playCard(playerNickname, cardIndex, angle, targetID, side);
             receiver.callAcknowledgeMessage(msg);
             System.out.println("stub.playCard: \n"+msg);
-        } catch (InvalidArgumentException e) {
-            throw new RuntimeException(e);
-        } catch (RequirementsNotRespectedException e) {
-            throw new RuntimeException(e);
-        } catch (InvalidPlayingException e) {
-            throw new RuntimeException(e);
-        } catch (TargetNotPresentException e) {
-            throw new RuntimeException(e);
-        } catch (InvalidAngleCoveredException e) {
-            throw new RuntimeException(e);
-        } catch (InvalidPositionException e) {
-            throw new RuntimeException(e);
         } catch (RemoteException e) {
-            throw new RuntimeException(e);
+            receiver.callErrorMessage(new ErrorMessage("Server not reachable"));
+        } catch (InvalidArgumentException | RequirementsNotRespectedException | InvalidPlayingException |
+                 TargetNotPresentException | InvalidAngleCoveredException | InvalidPositionException e) {
+            receiver.callErrorMessage(new ErrorMessage(e));
         }
 
 
@@ -113,12 +98,8 @@ public class RMIClientSender extends ClientSender{
             receiver.callAcknowledgeMessage(msg);
             System.out.println("stub.pickCardDeck: \n"+msg);
         } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        } catch (InvalidArgumentException e) {
-            throw new RuntimeException(e);
-        } catch (InvalidPlayingException e) {
-            throw new RuntimeException(e);
-        } catch (FinishedCardStackException e) {
+            receiver.callErrorMessage(new ErrorMessage("Server not reachable"));
+        } catch (InvalidArgumentException | InvalidPlayingException | FinishedCardStackException e) {
             throw new RuntimeException(e);
         }
 
@@ -131,12 +112,8 @@ public class RMIClientSender extends ClientSender{
             receiver.callAcknowledgeMessage(msg);
             System.out.println("stub.playCard: \n"+msg);
         } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        } catch (InvalidArgumentException e) {
-            throw new RuntimeException(e);
-        } catch (InvalidPlayingException e) {
-            throw new RuntimeException(e);
-        } catch (FinishedCardStackException e) {
+            receiver.callErrorMessage(new ErrorMessage("Server not reachable"));
+        } catch (InvalidArgumentException | InvalidPlayingException | FinishedCardStackException e) {
             throw new RuntimeException(e);
         }
 
@@ -150,7 +127,7 @@ public class RMIClientSender extends ClientSender{
             receiver.callMessage(msg);
             System.out.println("stub.sendChatMessage: \n"+msg);
         } catch (RemoteException e) {
-            throw new RuntimeException(e);
+            receiver.callErrorMessage(new ErrorMessage("Server not reachable"));
         }
 
     }
@@ -162,7 +139,7 @@ public class RMIClientSender extends ClientSender{
             receiver.callMessage(msg);
             System.out.println("stub.sendBroadcastChatMessage: \n"+msg);
         } catch (RemoteException e) {
-            throw new RuntimeException(e);
+            receiver.callErrorMessage(new ErrorMessage("Server not reachable"));
         }
 
     }

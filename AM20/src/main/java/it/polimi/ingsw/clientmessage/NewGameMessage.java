@@ -5,12 +5,10 @@ import it.polimi.ingsw.server.Connection;
 public class NewGameMessage extends ClientMessage {
     String client;
     int numPlayers;
-    Connection callback;
 
-    public NewGameMessage(String client, int numPlayers, Connection callback) {
+    public NewGameMessage(String client, int numPlayers) {
         this.client = client;
         this.numPlayers = numPlayers;
-        this.callback = callback;
     }
 
     public String getClient() {
@@ -27,14 +25,6 @@ public class NewGameMessage extends ClientMessage {
 
     public void setNumPlayers(int numPlayers) {
         this.numPlayers = numPlayers;
-    }
-
-    public Connection getCallback() {
-        return callback;
-    }
-
-    public void setCallback(Connection callback) {
-        this.callback = callback;
     }
 
     public String getAction(){

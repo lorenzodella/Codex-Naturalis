@@ -9,4 +9,8 @@ public class ErrorMessage extends Message{
         this.error = e.toString();
 
     }
+
+    public ErrorMessage(String error){
+        this.error = error;
+    }
 }
