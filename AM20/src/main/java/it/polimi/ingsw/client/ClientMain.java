@@ -11,42 +11,49 @@ public class ClientMain {
 
     public static void main(String[] args) {
 
-//        RMIClientReceiver clientRMI;
-//        ClientSKT clientSKT;
-//
-//        System.out.println("Scegli la configurazione per connetterti al client:");
-//        System.out.println("1) RMI");
-//        System.out.println("2) Socket");
-//
-//        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-//        try {
-//            String scelta = br.readLine();
-//            if(scelta.equals("1")){
-//                System.out.println("Ha scelto RMI");
-//                clientRMI = new RMIClientReceiver();
-//
-//            }else {
-//                System.out.println("Ha scelto Socket");
-//                clientSKT = new ClientSKT();
-//
-//            }
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//
-//        System.out.println("Scegli la configurazione per connetterti al client:");
-//        System.out.println("1) RMI");
-//        System.out.println("2) Socket");
+        RMIClientReceiver clientRMI;
+        ClientSKT clientSKT;
+
+        UIManager manager;
+        UIUpdater updater;
+
+
+        System.out.println("Choose user interface:");
+        System.out.println("1) TUI");
+        System.out.println("2) GUI");
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        try {
+            String scelta = br.readLine();
+            if(scelta.equals("1")){
+                manager = new TUI();
+            }else {
+                manager = new GUI();
+            }
+            updater = new UIUpdater(manager);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
+
+        System.out.println("Choose how to connect to server:");
+        System.out.println("1) RMI");
+        System.out.println("2) Socket");
 
         try {
-            RMIClientSender clientRMI = new RMIClientSender(args[0], Integer.parseInt(args[1]));
-            clientRMI.startNewGame("Lollo", 4);
+            String scelta = br.readLine();
+            if(scelta.equals("1")){
+                System.out.println("Ha scelto RMI");
+                //clientRMI = new RMIClientReceiver();
 
-            RMIClientSender clientRMI1 = new RMIClientSender(args[0], Integer.parseInt(args[1]));
-            clientRMI1.login("Pino");
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        } catch (NotBoundException e) {
+            }else {
+                System.out.println("Ha scelto Socket");
+                clientSKT = new ClientSKT(updater);
+                clientSKT.connect(args[0], Integer.parseInt(args[1]));
+
+            }
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
 

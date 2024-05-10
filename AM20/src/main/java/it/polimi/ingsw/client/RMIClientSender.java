@@ -18,7 +18,7 @@ public class RMIClientSender extends ClientSender{
     public RMIClientSender(String host, int port) throws RemoteException, NotBoundException {
         Registry registry = LocateRegistry.getRegistry(host, port);
         stub = (Loggable) registry.lookup("Loggable");
-        receiver = new RMIClientReceiver();
+        //receiver = new RMIClientReceiver();
     }
 
 

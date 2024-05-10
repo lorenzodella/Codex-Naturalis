@@ -17,8 +17,8 @@ public class RMIClientReceiver extends UnicastRemoteObject implements Connection
 
     private UIUpdater uiUpdater;
 
-    public RMIClientReceiver() throws RemoteException {
-        this.uiUpdater = new UIUpdater();
+    public RMIClientReceiver(UIUpdater updater) throws RemoteException {
+        this.uiUpdater = updater;
     }
 
     @Override

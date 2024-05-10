@@ -14,8 +14,9 @@ public class SKTClientReceiver implements Runnable {
     private UIUpdater uiUpdater;
 
     private Socket socket;
-    public SKTClientReceiver(Socket socket) throws IOException {
+    public SKTClientReceiver(Socket socket, UIUpdater uiUpdater) throws IOException {
         this.socket = socket;
+        this.uiUpdater = uiUpdater;
         this.objectInputStream = new ObjectInputStream(socket.getInputStream());
     }
 

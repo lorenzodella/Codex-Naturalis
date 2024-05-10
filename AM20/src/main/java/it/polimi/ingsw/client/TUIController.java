@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.nio.Buffer;
 
-public class TUIController implements Runnable{
+public class TUIController extends ClientController implements Runnable{
 
     private String username;
 

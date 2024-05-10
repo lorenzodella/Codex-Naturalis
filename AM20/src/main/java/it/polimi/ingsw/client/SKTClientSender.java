@@ -13,15 +13,12 @@ public class SKTClientSender extends ClientSender {
     private Socket socket;
     private UIUpdater uiUpdater;
 
-    //TODO
-    //gestire quando va istanziato il SKTClientSender
-    public SKTClientSender(Socket socket) throws IOException{
+    public SKTClientSender(Socket socket, UIUpdater updater) throws IOException{
         this.outputStream = new ObjectOutputStream(socket.getOutputStream());
         this.socket = socket;
+        this.uiUpdater = updater;
     }
 
-    //TODO
-    //come gestire exception del writeObject e il callback è corretto
     @Override
     void login(String client) {
 

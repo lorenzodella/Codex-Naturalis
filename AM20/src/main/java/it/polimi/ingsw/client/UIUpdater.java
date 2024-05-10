@@ -4,6 +4,12 @@ import it.polimi.ingsw.controller.messages.*;
 
 public class UIUpdater  {
 
+    private UIManager manager;
+
+    public UIUpdater(UIManager manager){
+        this.manager = manager;
+    }
+
     public void connectionAck(ConnectionAckMessage msg){
 
     }
