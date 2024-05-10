@@ -3,6 +3,9 @@ package it.polimi.ingsw.controller.messages;
 import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
 
 public class ObjectiveAckMessage extends Message {
+    /**
+     * This attribute a 2 items array that contains the 2 secret objectives
+     */
     private ObjectiveCard[] secretObjectives;
 
 

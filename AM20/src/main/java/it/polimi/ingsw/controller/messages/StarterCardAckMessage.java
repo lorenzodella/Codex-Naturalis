@@ -7,7 +7,13 @@ import java.util.HashMap;
 
 public class StarterCardAckMessage extends Message {
 
+    /**
+     * This attribute stands for the player info
+     */
     private PlayerInfo playerInfo;
+    /**
+     * This attribute is a map that, per each player, shows all other players' info
+     */
     private HashMap<String, PlayerInfo> othersPlayerInfo;
 
 

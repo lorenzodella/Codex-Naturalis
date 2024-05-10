@@ -1,6 +1,9 @@
 package it.polimi.ingsw.controller.messages;
 
 public class StartPlayingMessage extends ObjectiveAckMessage{
+    /**
+     * the player that needs to start playing
+     */
     private String firstPlayer;
 
     @Override

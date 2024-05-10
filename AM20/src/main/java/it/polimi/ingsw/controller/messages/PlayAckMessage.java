@@ -6,11 +6,11 @@ import java.util.HashMap;
 
 public class PlayAckMessage extends AcknowledgeMessage{
     /**
-     * This attribyte stands for the player's info after they played a card
+     * This attribute stands for the player's info after they played a card
      */
     private PlayerInfo yourPlayerInfo;
     /**
-     * This attribute is a map that, per each player, says the player info of all other players  
+     * This attribute is a map that, per each player, says the player info of all other players
      */
     private HashMap<String, PlayerInfo> othersPlayerInfo;
     /**

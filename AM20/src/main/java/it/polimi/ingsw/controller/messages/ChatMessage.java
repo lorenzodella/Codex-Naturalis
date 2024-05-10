@@ -2,8 +2,17 @@ package it.polimi.ingsw.controller.messages;
 
 public class ChatMessage extends Message{
 
+    /**
+     * The player that sends the message
+     */
     private String sender;
+    /**
+     * The player that receives a message
+     */
     private String recipient;
+    /**
+     * The actual message
+     */
     private String message;
 
     public ChatMessage(String sender, String recipient, String message) {

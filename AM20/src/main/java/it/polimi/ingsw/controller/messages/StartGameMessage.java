@@ -9,11 +9,29 @@ import java.util.List;
 
 public class StartGameMessage extends ConnectionAckMessage {
 
+    /**
+     * This attribute stands for the card that's on the top of the gold deck
+     */
     private PlayableCard goldTop;
+    /**
+     * This attribute stands for the card that's on the top of the resource deck
+     */
     private PlayableCard resourceTop;
+    /**
+     * This attribute stands for the two gold visible cards
+     */
     private PlayableCard[] goldVisible;
+    /**
+     * This attribute stands for the two resoruce visible cards
+     */
     private PlayableCard[] resourceVisible;
+    /**
+     * This attribute stands for the player's starter card
+     */
     private StarterCard starterCard;
+    /**
+     * This attribute stands for the player's initial cards
+     */
     private List<PlayableCard> initialCards;
 
 

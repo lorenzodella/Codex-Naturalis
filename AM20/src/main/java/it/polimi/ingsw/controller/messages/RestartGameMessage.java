@@ -5,7 +5,13 @@ import it.polimi.ingsw.controller.PlayerInfo;
 import java.util.HashMap;
 
 public class RestartGameMessage extends StartGameMessage{
+    /**
+     * The player's playerinfo
+     */
     private PlayerInfo playerInfo;
+    /**
+     * The map that, per each player, says the other players' info
+     */
     private HashMap<String, PlayerInfo> othersPlayerInfo;
 
 
