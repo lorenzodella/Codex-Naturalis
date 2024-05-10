@@ -20,6 +20,7 @@ public class TUI implements UIManager {
     private HashMap<String, PlayerInfo> othersPlayerInfo;
     private ObjectiveCard[] commonObjectives;
     private StarterCard starterCard;
+    private String nickname;
 
     public TUI(){
         this.mapMsg = new HashMap<>();
@@ -80,6 +81,50 @@ public class TUI implements UIManager {
     public void updateStarterCard(StarterCard starterCard) {
         this.starterCard = starterCard;
     }
+
+    @Override
+    public void showResult(String result) {
+        System.out.println(result);
+    }
+
+    @Override
+    public void showNextTurn(String nextPlayer){
+        if(nextPlayer.equals(nickname)){
+            System.out.println("Is your turn");
+        }
+        else{
+            System.out.println("Is " + nextPlayer + "'s turn");
+        }
+    }
+
+    @Override
+    public void showMustPick(){
+        System.out.println("You have to pick a card");
+    }
+
+    @Override
+    public void showError(String error){
+        System.err.println(error);
+    }
+
+    //TODO tia metodi per stampare le cose
+
+    public void viewPlayerInfo(){
+
+    }
+
+    public void viewOtherPlayerInfo(String username){
+
+    }
+
+    public void displayPlacement(){
+
+    }
+
+
+
+
+
 
 
     public void printTitle(){
@@ -143,15 +188,6 @@ public class TUI implements UIManager {
 
     }
 
-    public void  viewPlayerInfo(){
 
-    }
 
-    public void viewOtherPlayerInfo(String username){
-
-    }
-
-    public void displayPlacement(){
-
-    }
 }

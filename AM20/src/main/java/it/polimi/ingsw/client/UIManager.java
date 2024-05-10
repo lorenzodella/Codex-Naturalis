@@ -22,4 +22,8 @@ public interface UIManager {
     public void updateOtherPlayerInfo(HashMap<String, PlayerInfo> otherPlayerInfo);
     public void updateCommonObjectives(ObjectiveCard[] commonObjectives);
     public void updateStarterCard(StarterCard starterCard);
+    public void showResult(String result);
+    public void showNextTurn(String nextPlayer);
+    public void showMustPick();
+    public void showError(String error);
 }

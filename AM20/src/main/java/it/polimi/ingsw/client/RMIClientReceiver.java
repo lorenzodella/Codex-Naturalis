@@ -1,17 +1,10 @@
 package it.polimi.ingsw.client;
 
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
-import it.polimi.ingsw.controller.exceptions.CannotJoinGameException;
 import it.polimi.ingsw.controller.messages.*;
-import it.polimi.ingsw.model.exceptions.InvalidArgumentException;
-import it.polimi.ingsw.model.exceptions.InvalidPlayingException;
 import it.polimi.ingsw.server.Connection;
-import it.polimi.ingsw.server.Loggable;
 
 public class RMIClientReceiver extends UnicastRemoteObject implements Connection {
 
@@ -69,7 +62,7 @@ public class RMIClientReceiver extends UnicastRemoteObject implements Connection
         if(message.shouldStartPlaying())//true quindi è una StartPlayingMessage
             this.uiUpdater.startPlaying((StartPlayingMessage) message);
         else
-            this.uiUpdater.objectivemessage(message);
+            this.uiUpdater.objectiveMessage(message);
     }
 
     //TODO: da sistemare

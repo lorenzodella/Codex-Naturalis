@@ -64,4 +64,24 @@ public class GUI implements UIManager {
     public void updateStarterCard(StarterCard starterCard) {
 
     }
+
+    @Override
+    public void showResult(String result) {
+
+    }
+
+    @Override
+    public void showNextTurn(String nextPlayer) {
+
+    }
+
+    @Override
+    public void showMustPick() {
+
+    }
+
+    @Override
+    public void showError(String error) {
+
+    }
 }

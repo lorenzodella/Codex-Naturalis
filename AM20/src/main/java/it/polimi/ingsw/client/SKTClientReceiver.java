@@ -1,7 +1,5 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.clientmessage.ClientMessage;
-import it.polimi.ingsw.clientmessage.PlayCardMessage;
 import it.polimi.ingsw.controller.messages.*;
 
 import java.io.IOException;
@@ -60,7 +58,7 @@ public class SKTClientReceiver implements Runnable {
                     if(msg.shouldStartPlaying())//true quindi è una StartPlayingMessage
                         this.uiUpdater.startPlaying((StartPlayingMessage) message);
                     else
-                        this.uiUpdater.objectivemessage(msg);
+                        this.uiUpdater.objectiveMessage(msg);
 
                 }else if(message.getType().equals(Message.STOPGAME)){
                     StopGameMessage msg = (StopGameMessage) message;
