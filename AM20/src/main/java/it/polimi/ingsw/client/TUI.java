@@ -1,14 +1,19 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.controller.PlayerInfo;
+import it.polimi.ingsw.model.cards.Kingdom;
 import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.model.cards.playable.StarterCard;
+import it.polimi.ingsw.model.util.XMLparser;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class TUI implements UIManager {
+
+    private ConsoleColors consoleColors;
     private List<PlayableCard> cards;
     private HashMap<String, List<String>> mapMsg;
     private ObjectiveCard[] secretObjectives;
@@ -24,6 +29,7 @@ public class TUI implements UIManager {
 
     public TUI(){
         this.mapMsg = new HashMap<>();
+        this.consoleColors = new ConsoleColors();
     }
 
 
@@ -109,6 +115,174 @@ public class TUI implements UIManager {
 
     //TODO tia metodi per stampare le cose
 
+    public void viewStarterCard(){
+        this.starterCard = getExampleStarterCard();
+        this.printTitle();
+        this.viewCommand();
+        System.out.println("You have received the starter card:\n");
+        System.out.println("The front of this card has " + this.starterCard.getFrontCorners().length + " visible corners: \n");
+        for(int i=0;i<this.starterCard.getFrontCorners().length;i++){
+            if(this.starterCard.getFrontCorners()[i] != null && i==0 ){
+                System.out.print("- UL: ");
+                if(this.starterCard.getFrontCorners()[i].getContentKingdom().equals(Kingdom.Plant)){
+                    System.out.println(this.consoleColors.TEXT_GREEN+ "PLANT");
+                }else if(this.starterCard.getFrontCorners()[i].getContentKingdom().equals(Kingdom.Insect)){
+                    System.out.println(this.consoleColors.TEXT_PURPLE+ "INSECT");
+                    //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
+                }else if(this.starterCard.getFrontCorners()[i].getContentKingdom().equals(Kingdom.Fungi)){
+                    System.out.println(this.consoleColors.TEXT_RED+ "FUNGI");
+                }else if (this.starterCard.getFrontCorners()[i].getContentKingdom().equals(Kingdom.Animal)){
+                    System.out.println(this.consoleColors.TEXT_CYAN+ "ANIMAL");
+                }else
+                    System.out.println(this.consoleColors.TEXT_RESET + "The UL corner doesn't have any resource\n");
+            }
+
+            if(this.starterCard.getFrontCorners()[i] != null && i==1){
+                System.out.print(this.consoleColors.TEXT_RESET  + "- UR: ");
+                if(this.starterCard.getFrontCorners()[i].getContentKingdom().equals(Kingdom.Plant)){
+                    System.out.println(this.consoleColors.TEXT_GREEN+ "PLANT");
+                }else if(this.starterCard.getFrontCorners()[i].getContentKingdom().equals(Kingdom.Insect)){
+                    System.out.print(this.consoleColors.TEXT_PURPLE+ "INSECT");
+                    //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
+                }else if(this.starterCard.getFrontCorners()[i].getContentKingdom().equals(Kingdom.Fungi)){
+                    System.out.println(this.consoleColors.TEXT_RED+ "FUNGI");
+                }else if (this.starterCard.getFrontCorners()[i].getContentKingdom().equals(Kingdom.Animal)){
+                    System.out.println(this.consoleColors.TEXT_CYAN+ "ANIMAL");
+                }else
+                    System.out.println("The UR corner doesn't have any resource");
+            }
+
+            if(this.starterCard.getFrontCorners()[i] != null  && i==2){
+                System.out.print(this.consoleColors.TEXT_RESET  + "- DL: ");
+                if(this.starterCard.getFrontCorners()[i].getContentKingdom().equals(Kingdom.Plant)){
+                    System.out.println(this.consoleColors.TEXT_GREEN+ "PLANT");
+                }else if(this.starterCard.getFrontCorners()[i].getContentKingdom().equals(Kingdom.Insect)){
+                    System.out.print(this.consoleColors.TEXT_PURPLE+ "INSECT");
+                    //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
+                }else if(this.starterCard.getFrontCorners()[i].getContentKingdom().equals(Kingdom.Fungi)){
+                    System.out.println(this.consoleColors.TEXT_RED+ "FUNGI");
+                }else if (this.starterCard.getFrontCorners()[i].getContentKingdom().equals(Kingdom.Animal)){
+                    System.out.println(this.consoleColors.TEXT_CYAN+ "ANIMAL");
+                }else
+                    System.out.println("The DL corner doesn't have any resource");
+            }
+
+            if(this.starterCard.getFrontCorners()[i] != null  && i==3){
+                System.out.print(this.consoleColors.TEXT_RESET  + "- DR: ");
+                if(this.starterCard.getFrontCorners()[i].getContentKingdom().equals(Kingdom.Plant)){
+                    System.out.println(this.consoleColors.TEXT_GREEN+ "PLANT");
+                }else if(this.starterCard.getFrontCorners()[i].getContentKingdom().equals(Kingdom.Insect)){
+                    System.out.print(this.consoleColors.TEXT_PURPLE+ "INSECT");
+                    //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
+                }else if(this.starterCard.getFrontCorners()[i].getContentKingdom().equals(Kingdom.Fungi)){
+                    System.out.println(this.consoleColors.TEXT_RED+ "FUNGI");
+                }else if (this.starterCard.getFrontCorners()[i].getContentKingdom().equals(Kingdom.Animal)){
+                    System.out.println(this.consoleColors.TEXT_CYAN+ "ANIMAL");
+                }else
+                    System.out.println("The DL corner doesn't have any resource");
+            }
+        }
+
+        System.out.println("\n");
+        System.out.println(this.consoleColors.TEXT_RESET + "The front of this card has " + this.starterCard.getBackCorners().length + " visible corners: \n");
+        for(int i=0;i<this.starterCard.getBackCorners().length;i++){
+
+            if(this.starterCard.getBackCorners()[i]!=null){
+                if(this.starterCard.getBackCorners()[i].getContentKingdom() != null){
+                    if(this.starterCard.getBackCorners()[i] != null && i==0 ){
+                        System.out.print("- UL: ");
+                        if(this.starterCard.getBackCorners()[i].getContentKingdom().equals(Kingdom.Plant)){
+                            System.out.println(this.consoleColors.TEXT_GREEN+ "PLANT");
+                        }else if(this.starterCard.getBackCorners()[i].getContentKingdom().equals(Kingdom.Insect)){
+                            System.out.println(this.consoleColors.TEXT_PURPLE+ "INSECT");
+                            //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
+                        }else if(this.starterCard.getBackCorners()[i].getContentKingdom().equals(Kingdom.Fungi)){
+                            System.out.println(this.consoleColors.TEXT_RED+ "FUNGI");
+                        }else if (this.starterCard.getBackCorners()[i].getContentKingdom().equals(Kingdom.Animal)){
+                            System.out.println(this.consoleColors.TEXT_CYAN+ "ANIMAL");
+                        }else
+                            System.out.println(this.consoleColors.TEXT_RESET + "The UL corner doesn't have any resource\n");
+                    }
+
+                    if(this.starterCard.getBackCorners()[i] != null && i==1){
+                        System.out.print(this.consoleColors.TEXT_RESET  + "- UR: ");
+                        if(this.starterCard.getBackCorners()[i].getContentKingdom().equals(Kingdom.Plant)){
+                            System.out.println(this.consoleColors.TEXT_GREEN+ "PLANT");
+                        }else if(this.starterCard.getBackCorners()[i].getContentKingdom().equals(Kingdom.Insect)){
+                            System.out.print(this.consoleColors.TEXT_PURPLE+ "INSECT");
+                            //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
+                        }else if(this.starterCard.getBackCorners()[i].getContentKingdom().equals(Kingdom.Fungi)){
+                            System.out.println(this.consoleColors.TEXT_RED+ "FUNGI");
+                        }else if (this.starterCard.getBackCorners()[i].getContentKingdom().equals(Kingdom.Animal)){
+                            System.out.println(this.consoleColors.TEXT_CYAN+ "ANIMAL");
+                        }else
+                            System.out.println("The UR corner doesn't have any resource");
+                    }
+
+                    if(this.starterCard.getBackCorners()[i] != null  && i==2){
+                        System.out.print(this.consoleColors.TEXT_RESET  + "- DL: ");
+                        if(this.starterCard.getBackCorners()[i].getContentKingdom().equals(Kingdom.Plant)){
+                            System.out.println(this.consoleColors.TEXT_GREEN+ "PLANT");
+                        }else if(this.starterCard.getBackCorners()[i].getContentKingdom().equals(Kingdom.Insect)){
+                            System.out.print(this.consoleColors.TEXT_PURPLE+ "INSECT");
+                            //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
+                        }else if(this.starterCard.getBackCorners()[i].getContentKingdom().equals(Kingdom.Fungi)){
+                            System.out.println(this.consoleColors.TEXT_RED+ "FUNGI");
+                        }else if (this.starterCard.getBackCorners()[i].getContentKingdom().equals(Kingdom.Animal)){
+                            System.out.println(this.consoleColors.TEXT_CYAN+ "ANIMAL");
+                        }else
+                            System.out.println("The DL corner doesn't have any resource");
+                    }
+
+                    if(this.starterCard.getBackCorners()[i] != null  && i==3){
+                        System.out.print(this.consoleColors.TEXT_RESET  + "- DR: ");
+                        if(this.starterCard.getBackCorners()[i].getContentKingdom().equals(Kingdom.Plant)){
+                            System.out.println(this.consoleColors.TEXT_GREEN+ "PLANT");
+                        }else if(this.starterCard.getBackCorners()[i].getContentKingdom().equals(Kingdom.Insect)){
+                            System.out.print(this.consoleColors.TEXT_PURPLE+ "INSECT");
+                            //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
+                        }else if(this.starterCard.getBackCorners()[i].getContentKingdom().equals(Kingdom.Fungi)){
+                            System.out.println(this.consoleColors.TEXT_RED+ "FUNGI");
+                        }else if (this.starterCard.getBackCorners()[i].getContentKingdom().equals(Kingdom.Animal)){
+                            System.out.println(this.consoleColors.TEXT_CYAN+ "ANIMAL");
+                        }else
+                            System.out.println("The DL corner doesn't have any resource");
+                    }
+
+                }else {
+                    if(i==0)
+                        System.out.println(this.consoleColors.TEXT_RESET+ "The UL is not coverable");
+                    if(i==1)
+                        System.out.println(this.consoleColors.TEXT_RESET+ "The UR is not coverable");
+                    if(i==2)
+                        System.out.println(this.consoleColors.TEXT_RESET+ "The DL is not coverable");
+                    if(i==3)
+                        System.out.println(this.consoleColors.TEXT_RESET+ "The DR is not coverable");
+
+                }
+
+            }
+
+
+
+        }
+
+        System.out.print(this.consoleColors.TEXT_RESET+ "\nThe back of the card has" + this.starterCard.getResources().toArray().length + " resources in the middle: ");
+        for(int i=0; i< this.starterCard.getResources().toArray().length;i++){
+            if(this.starterCard.getResources().get(i).equals(Kingdom.Plant)){
+                System.out.print(this.consoleColors.TEXT_GREEN+ "PLANT ");
+            }else if(this.starterCard.getResources().get(i).equals(Kingdom.Insect)){
+                System.out.print(this.consoleColors.TEXT_PURPLE+ "INSECT ");
+                //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
+            }else if(this.starterCard.getResources().get(i).equals(Kingdom.Fungi)){
+                System.out.print(this.consoleColors.TEXT_RED+ "FUNGI ");
+            }else if (this.starterCard.getResources().get(i).equals(Kingdom.Animal)) {
+                System.out.print(this.consoleColors.TEXT_CYAN + "ANIMAL ");
+            }
+        }
+
+    }
+
     public void viewPlayerInfo(){
 
     }
@@ -117,7 +291,7 @@ public class TUI implements UIManager {
 
     }
 
-    public void displayPlacement(){
+    public void viewPlacement(){
 
     }
 
@@ -161,7 +335,7 @@ public class TUI implements UIManager {
         }
     }
 
-    public static void writeCommandParam( ){
+    public void viewCommand( ){
         System.out.println("The following lines explain which are the parameters for every action: \n");
         System.out.println("Reminder: ypu don't need to type the + but just a space between parameters");
         System.out.println("/join + username");
@@ -182,10 +356,16 @@ public class TUI implements UIManager {
         TUI myTui = new TUI();
         myTui.printTitle();
 
-        writeCommandParam();
-        myTui.waitSeconds(5);
-        myTui.clearTerminal(10);
+        myTui.viewCommand();
+        //myTui.waitSeconds(5);
+        //myTui.clearTerminal(10);
+        myTui.viewStarterCard();
 
+    }
+
+    StarterCard getExampleStarterCard(){
+        ArrayList<PlayableCard> starterCards = XMLparser.parseStarterCards("starterCards.xml");
+        return (StarterCard) starterCards.stream().filter(x->x.getID().equals("S85")).findAny().orElse(null);
     }
 
 

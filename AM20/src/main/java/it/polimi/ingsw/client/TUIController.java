@@ -32,7 +32,7 @@ public class TUIController extends ClientController implements Runnable{
                 String[] command = input.split(" ");
                 if(command[0].equals("/join")){
                     this.username = command[1];
-                    this.clientSender.login(input);
+                    this.clientSender.login(command[1]);
                 }else if(command[0].equals("/newGame")){
                     this.username = command[1];
                     this.clientSender.startNewGame(command[1], Integer.parseInt(command[2]));
@@ -66,7 +66,7 @@ public class TUIController extends ClientController implements Runnable{
                     this.myTUI.viewOtherPlayerInfo(command[1]);
 
                 }else if(command[0].equals("/placement")){
-                    this.myTUI.displayPlacement();
+                    this.myTUI.viewPlacement();
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
