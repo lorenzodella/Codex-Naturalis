@@ -37,9 +37,9 @@ public class ServerMain
 
         //---------------
 
-        /*ServerSKT serverSKT = new ServerSKT(Integer.parseInt(args[1]), manager);
+        ServerSKT serverSKT = new ServerSKT(Integer.parseInt(args[1]), manager);
         System.err.println("Server SKT ready");
-        serverSKT.startServer();*/
+        serverSKT.startServer();
     }
 
 

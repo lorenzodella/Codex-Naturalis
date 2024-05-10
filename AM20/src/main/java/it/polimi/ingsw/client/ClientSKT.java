@@ -1,16 +1,16 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.controller.messages.ErrorMessage;
+
 import java.io.IOException;
 import java.net.Socket;
 
-public class ClientSKT {
+public class ClientSKT extends Client {
 
     private SKTClientReceiver receiver;
-    private SKTClientSender sender;
-    private UIUpdater updater;
 
     public ClientSKT(UIUpdater updater) {
-        this.updater = updater;
+        super(updater);
     }
 
     public void connect(String host, int port) {
@@ -21,8 +21,12 @@ public class ClientSKT {
             new Thread(receiver).start();
             sender = new SKTClientSender(socket, updater);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            updater.errorMessage(new ErrorMessage("Server not reachable"));
         }
+    }
+
+    public ClientSender getSender() {
+        return sender;
     }
 
 }

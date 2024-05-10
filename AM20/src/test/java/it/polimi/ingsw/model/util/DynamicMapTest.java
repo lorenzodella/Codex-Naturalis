@@ -15,113 +15,113 @@ class DynamicMapTest {
 
     @BeforeEach
     void setUp(){
-        m = new DynamicMap<>('a', 'a');
+        m = new DynamicMap<>('A', 'a');
     }
 
     @Test
     void testToString() throws TargetNotPresentException, InvalidPositionException {
-        m.insert('b','b','a',0);
-        m.insert('c','c','a',1);
-        m.insert('d','d','a',2);
-        m.insert('e','e','a',3);
+        m.insert('B','b','A',0);
+        m.insert('C','c','A',1);
+        m.insert('D','d','A',2);
+        m.insert('E','e','A',3);
 
-        m.insert('g','g','c',0);
-        m.insert('f','f','c',1);
+        m.insert('G','g','C',0);
+        m.insert('F','f','C',1);
         System.out.println(m);
     }
 
     @Test
     void emptyMapHasNoDimension() throws TargetNotPresentException {
-        m.remove('a');
+        m.remove('A');
         assertEquals(0, m.width());
         assertEquals(0, m.height());
     }
 
     @Test
     void firstElementIsCenter() throws TargetNotPresentException {
-        assertEquals(new Point(0,0), m.findPos('a'));
+        assertEquals(new Point(0,0), m.findPos('A'));
     }
 
     @Test
     void insertUL() throws TargetNotPresentException, InvalidPositionException {
-        m.insert('b','b', 'a',DynamicMap.UL);
-        assertEquals(new Point(-1,1), m.findPos('b'));
+        m.insert('B','b', 'A',DynamicMap.UL);
+        assertEquals(new Point(-1,1), m.findPos('B'));
         assertEquals(2, m.height());
         assertEquals(2, m.width());
 
-        assertEquals('b', m.getElementAt('a',DynamicMap.UL));
+        assertEquals('b', m.getElementAt('A',DynamicMap.UL));
     }
 
     @Test
     void insertUR() throws TargetNotPresentException, InvalidPositionException {
-        m.insert('b','b', 'a',DynamicMap.UR);
-        assertEquals(new Point(1,1), m.findPos('b'));
+        m.insert('B','b', 'A',DynamicMap.UR);
+        assertEquals(new Point(1,1), m.findPos('B'));
         assertEquals(2, m.height());
         assertEquals(2, m.width());
 
-        assertEquals('b', m.getElementAt('a',DynamicMap.UR));
+        assertEquals('b', m.getElementAt('A',DynamicMap.UR));
     }
 
     @Test
     void insertDL() throws TargetNotPresentException, InvalidPositionException {
-        m.insert('b','b', 'a',DynamicMap.DL);
-        assertEquals(new Point(-1,-1), m.findPos('b'));
+        m.insert('B','b', 'A',DynamicMap.DL);
+        assertEquals(new Point(-1,-1), m.findPos('B'));
         assertEquals(2, m.height());
         assertEquals(2, m.width());
 
-        assertEquals('b', m.getElementAt('a',DynamicMap.DL));
+        assertEquals('b', m.getElementAt('A',DynamicMap.DL));
     }
 
     @Test
     void insertDR() throws TargetNotPresentException, InvalidPositionException {
-        m.insert('b','b', 'a',DynamicMap.DR);
-        assertEquals(new Point(1,-1), m.findPos('b'));
+        m.insert('B','b', 'A',DynamicMap.DR);
+        assertEquals(new Point(1,-1), m.findPos('B'));
         assertEquals(2, m.height());
         assertEquals(2, m.width());
 
-        assertEquals('b', m.getElementAt('a',DynamicMap.DR));
+        assertEquals('b', m.getElementAt('A',DynamicMap.DR));
     }
 
     @Test
     void insertURandDR() throws TargetNotPresentException, InvalidPositionException {
         insertUR();
-        m.insert('c','c', 'a',DynamicMap.DR);
-        assertEquals(new Point(1,-1), m.findPos('c'));
+        m.insert('C','c', 'A',DynamicMap.DR);
+        assertEquals(new Point(1,-1), m.findPos('C'));
         assertEquals(3, m.height());
         assertEquals(2, m.width());
 
-        assertEquals('c', m.getElementAt('a',DynamicMap.DR));
+        assertEquals('c', m.getElementAt('A',DynamicMap.DR));
     }
 
     @Test
     void getU() throws TargetNotPresentException, InvalidPositionException {
         insertUR();
-        m.insert('c','c', 'b',DynamicMap.UL);
-        assertEquals('c', m.getElementAt('a',DynamicMap.U));
+        m.insert('C','c', 'B',DynamicMap.UL);
+        assertEquals('c', m.getElementAt('A',DynamicMap.U));
     }
 
     @Test
     void getD() throws TargetNotPresentException, InvalidPositionException {
         insertDR();
-        m.insert('c','c', 'b',DynamicMap.DL);
-        assertEquals('c', m.getElementAt('a',DynamicMap.D));
+        m.insert('C','c', 'B',DynamicMap.DL);
+        assertEquals('c', m.getElementAt('A',DynamicMap.D));
     }
 
     @Test
     void insertPosInvalid() throws TargetNotPresentException {
-        assertThrows(InvalidPositionException.class, ()->m.insert('b', 'b','a',5));
+        assertThrows(InvalidPositionException.class, ()->m.insert('B', 'b','A',5));
     }
 
     @Test
     void insertTargetNonPresent() throws InvalidPositionException {
-        assertThrows(TargetNotPresentException.class, ()->m.insert('b', 'b','c',DynamicMap.UR));
+        assertThrows(TargetNotPresentException.class, ()->m.insert('B', 'b','C',DynamicMap.UR));
     }
 
     @Test
     void getElementNotPresent() throws TargetNotPresentException, InvalidPositionException {
-        assertNull(m.getElementAt('a', DynamicMap.UL));
-        assertNull(m.getElementAt('a', DynamicMap.UR));
-        assertNull(m.getElementAt('a', DynamicMap.DL));
-        assertNull(m.getElementAt('a', DynamicMap.DR));
+        assertNull(m.getElementAt('A', DynamicMap.UL));
+        assertNull(m.getElementAt('A', DynamicMap.UR));
+        assertNull(m.getElementAt('A', DynamicMap.DL));
+        assertNull(m.getElementAt('A', DynamicMap.DR));
     }
 }

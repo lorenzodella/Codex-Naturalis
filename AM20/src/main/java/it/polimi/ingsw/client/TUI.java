@@ -139,11 +139,11 @@ public class TUI implements UIManager {
 
         writeCommandParam();
         myTui.waitSeconds(5);
-        myTui.clearTerminal(5);
+        myTui.clearTerminal(10);
 
     }
 
-    public void viewPlayerInfo(){
+    public void  viewPlayerInfo(){
 
     }
 

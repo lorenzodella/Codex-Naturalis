@@ -15,12 +15,16 @@ public class RMIClientSender extends ClientSender{
     private RMIClientReceiver receiver;
     private Loggable stub;
 
-    public RMIClientSender(String host, int port) throws RemoteException, NotBoundException {
-        Registry registry = LocateRegistry.getRegistry(host, port);
-        stub = (Loggable) registry.lookup("Loggable");
-        //receiver = new RMIClientReceiver();
-    }
+//    public RMIClientSender(String host, int port) throws RemoteException, NotBoundException {
+//        Registry registry = LocateRegistry.getRegistry(host, port);
+//        stub = (Loggable) registry.lookup("Loggable");
+//        //receiver = new RMIClientReceiver();
+//    }
 
+    public RMIClientSender(Loggable stub, RMIClientReceiver receiver){
+        this.stub = stub;
+        this.receiver = receiver;
+    }
 
     @Override
     void login(String client) {

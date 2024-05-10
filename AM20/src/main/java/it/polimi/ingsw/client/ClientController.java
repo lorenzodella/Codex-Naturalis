@@ -1,9 +1,9 @@
 package it.polimi.ingsw.client;
 
 public abstract class ClientController {
-    private ClientSender sender;
+    protected ClientSender clientSender;
 
     public ClientController(ClientSender sender) {
-        this.sender = sender;
+        this.clientSender = sender;
     }
 }

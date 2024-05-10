@@ -1,26 +1,25 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.server.ServerManager;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
 import java.net.Socket;
+import java.nio.Buffer;
 
 public class TUIController extends ClientController implements Runnable{
 
     private String username;
 
-    private ClientSender clientSender;
-
-    private Socket socket;
-
     private BufferedReader br;
 
     private TUI myTUI;
 
-    public TUIController(Socket socket){
-        this.br = new BufferedReader( new InputStreamReader(System.in));
-        this.socket = socket;
+    public TUIController(ClientSender sender, TUI tui){
+        super(sender);
+        this.myTUI = tui;
+        this.br = new BufferedReader(new InputStreamReader(System.in));
     }
 
 

@@ -234,10 +234,10 @@ public class DynamicMap<K,T> implements Serializable {
      * Maps are sorted by y-position (descending), their elements are sorted by x-position (ascending).
      * @return a list of maps representing a matrix: key is the position, value is the element
      */
-    public List<Map<Point, T>> getMapElementsLocation(){
-        Collection<Map<Point, T>> list = map.values().stream()
-                .collect(Collectors.groupingBy(e -> e.pos.y, TreeMap::new,
-                        Collectors.toMap(e -> e.pos, e -> e.value)))
+    public List<Map<Point, K>> getMapElementsLocation(){
+        Collection<Map<Point, K>> list = map.entrySet().stream()
+                .collect(Collectors.groupingBy(e -> e.getValue().pos.y, TreeMap::new,
+                        Collectors.toMap(e -> e.getValue().pos, Map.Entry::getKey)))
                 .values();
         return list.stream()
                 .sorted((a,b) -> Integer.compare(
@@ -256,11 +256,11 @@ public class DynamicMap<K,T> implements Serializable {
     public String toString(){
         int min = map.values().stream().min(Comparator.comparingInt(a -> a.pos.x)).map(e->e.pos.x).orElse(0);
         int tmp;
-        List<Map<Point, T>> m = getMapElementsLocation();
+        List<Map<Point, K>> m = getMapElementsLocation();
         StringBuilder s = new StringBuilder();
-        for (Map<Point, T> orderedMap : m) {
+        for (Map<Point, K> orderedMap : m) {
             tmp = min;
-            for (Map.Entry<Point, T> t : orderedMap.entrySet()) {
+            for (Map.Entry<Point, K> t : orderedMap.entrySet()) {
                 for(int i=tmp; i<t.getKey().x; i++){
                     s.append("    ");
                 }
