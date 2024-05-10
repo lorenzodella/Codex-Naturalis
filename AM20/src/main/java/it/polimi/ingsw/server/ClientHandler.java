@@ -14,11 +14,15 @@ import it.polimi.ingsw.controller.exceptions.NoOneIsConnectedException;
 import it.polimi.ingsw.controller.messages.*;
 import it.polimi.ingsw.model.exceptions.*;
 
+//TODO: ELEONORA
+
 /* Threac che ascolta, su un certo socket, e ogni volta che riceve un messaggio lo interpreta e compie
    ciò che gli viene detto di fare  (invocando un metodo del controller)
 */
 public class ClientHandler implements Runnable{
-
+    /**
+     * This attribute stands for the serverManager reference
+     */
     private ServerManager manager;
     private Socket socket;
     private String usernameClient;

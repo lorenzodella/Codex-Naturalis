@@ -10,6 +10,8 @@ import it.polimi.ingsw.model.exceptions.InvalidArgumentException;
 
 import java.util.HashMap;
 
+//TODO: ELEONORA
+
 public interface GameManager {
 
     HashMap<String, AcknowledgeMessage> disconnectPlayer(String nickname) throws InvalidArgumentException, NoOneIsConnectedException, InvalidConnectionStateException, InvalidDisconnectionException;

@@ -7,7 +7,13 @@ import java.util.HashMap;
 import java.util.List;
 
 public class AcknowledgeMessage extends Message {
+    /**
+     * This attribute stands for the nickname of the player whose turn is about to begin
+     */
     private String nextPlayer;
+    /**
+     * Cards' list of the player that just picked or played a card
+     */
     private List<PlayableCard> cards;
 
 

@@ -6,9 +6,21 @@ import it.polimi.ingsw.model.util.DynamicMap;
 
 import java.io.Serializable;
 
+//TODO: ELEONORA
+
 public class PlayerInfo implements Serializable {
+    /**
+     * This attribute stands for the score .....
+     */
     private int score;
+    /**
+     * This attribute is a map that shows the whole player table
+     */
     private DynamicMap<String, PlayableCard> map;
+    /**
+     * This attribute shows the player's statistics:
+     * It says the occurrences of every kingdom and the occurrences of every objects
+     */
     private PlayerStats stats;
 
     public int getScore() {

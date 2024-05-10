@@ -14,6 +14,9 @@ import java.util.Map;
 import java.util.Set;
 
 public class PingThread implements Runnable{
+    /**
+     * This attribute stand as the reference of the serverManager
+     */
     /*mi serve avere la lista dei player connessi che ha il controller
       l'hashmap che specifica com'è connesso ogni player*/
     private ServerManager serverManager; //this
@@ -21,6 +24,12 @@ public class PingThread implements Runnable{
     public PingThread(ServerManager serverManager){
         this.serverManager = serverManager;
     }
+
+    /**
+     * This method allows the PingThread to understand if all players are still connected to the game, based on how they
+     * connected to the game in first place (if with socket or RMI).
+     * Every 5 seconds it does this specific check.
+     */
 
     /*scrivo funzione che dovrà eseguire il thread:
       per capire se l'utente, al quale si sta rivolgendo, è ancora connesso o meno */

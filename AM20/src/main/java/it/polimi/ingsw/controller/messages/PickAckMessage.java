@@ -5,9 +5,22 @@ import it.polimi.ingsw.model.cards.playable.PlayableCard;
 import java.util.List;
 
 public class PickAckMessage extends AcknowledgeMessage{
+
+    /**
+     * This attribute stands for the card that's now found on the top of the gold deck, after the player picked a card
+     */
     private PlayableCard goldTop;
+    /**
+     * This attribute stands for the card that's now found on the top of the resource deck, after the player picked a card
+     */
     private PlayableCard resourceTop;
+    /**
+     * This attribute stands for two gold visible cards that are now on the table, after the player picked a card
+     */
     private PlayableCard[] goldVisible;
+    /**
+     * This attribute stands for two resource visible cards that are now on the table, after the player picked a card
+     */
     private PlayableCard[] resourceVisible;
 
     @Override

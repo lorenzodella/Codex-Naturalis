@@ -8,6 +8,7 @@ import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
 import java.util.HashMap;
 import java.util.List;
 
+//TODO: ELEONORA
 public interface GameObserver {
 
     HashMap<String, AcknowledgeMessage> notifyPlayerDisconnected(String playerNickname);

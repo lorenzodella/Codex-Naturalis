@@ -17,7 +17,7 @@ import java.rmi.server.UnicastRemoteObject;
 
 public class ServerMain
 {
-
+    //TODO: ELEONORA
     public static void main(String[] args) {
 
         ServerManager manager = new ServerManager();

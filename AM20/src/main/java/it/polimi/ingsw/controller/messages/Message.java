@@ -3,7 +3,14 @@ package it.polimi.ingsw.controller.messages;
 import java.io.Serializable;
 
 public class Message implements Serializable {
+
+    /**
+     * This attribute is the string that every type of message needs to have in order to show a message to the user
+     */
     private String result;  // positivo
+    /**
+     * This attribute stands for the number of the actual connected players to the game (at the moment)
+     */
     private int numOfConnectedPlayers;
 
     public static final String GENERIC = "generic";

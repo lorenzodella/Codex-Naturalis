@@ -6,7 +6,7 @@ import it.polimi.ingsw.model.exceptions.*;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-
+//TODO: ELEONORA
 public interface Loggable extends Remote {
     //metodi che vengono chiamati dal client sul server rmi
     ConnectionAckMessage login(String client, Connection callback) throws RemoteException, CannotJoinGameException;

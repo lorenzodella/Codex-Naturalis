@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+//TODO: ELEONORA
+
 public class SocketConnection implements Connection  {
 
     private ObjectOutputStream outputStream;

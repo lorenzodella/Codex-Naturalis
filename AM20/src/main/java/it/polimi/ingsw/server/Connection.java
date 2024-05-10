@@ -5,7 +5,7 @@ import it.polimi.ingsw.controller.messages.*;
 import java.io.IOException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-
+//TODO: ELEONORA
 public interface Connection extends Remote {
     void callChatMessage(ChatMessage message) throws IOException;
     void callStopGame(StopGameMessage message) throws IOException;

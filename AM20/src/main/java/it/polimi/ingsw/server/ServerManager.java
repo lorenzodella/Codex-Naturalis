@@ -17,9 +17,18 @@ public class ServerManager {
     //per ogni utente dice se è connesso con RMI o SOCKET
 
     //per ogni utente che si è collegato all'inzio della partita ho memorizzato il modo in cui si sono connessi
+    /**
+     * This attribute is a map that, per each player, says how they connected to the game (if with socket or RMI)
+     */
     private HashMap<String, Connection> connections;
     //il controller ha la lista dei nickname dei player che sono realmente collegati
+    /**
+     * This attribute stands for the controller reference
+     */
     private Controller controller;
+    /**
+     * This attribute is a timer
+     */
     private EndGameTimer timer;
 
     public ServerManager(){
@@ -55,6 +64,12 @@ public class ServerManager {
         this.timer.startCountdown(connection);
     }
 
+    /**
+     * This method allows the serverManager to remove the player that's just left the game :
+     * 1. it removes the nickname for the connected players' nicknames
+     * 2. it sends an AcknowledgeMessage to all other players telling them that the "nickname" player just left the game
+     * @param nickname the nickname of the player that just left the game
+     */
     //questo è il metodo che gestisce quando un client si è disconnesso
     public void detectDisconnection(String nickname) {
         System.out.println(nickname + " disconnected!");
