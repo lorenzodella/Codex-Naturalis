@@ -6,9 +6,21 @@ import java.util.concurrent.*;
 
 public class ServerSKT {
 
+    /**
+     * this attribute stands for the server's port
+     */
     private int port;
+    /**
+     * this attribute stands as a reference to the serverManager
+     */
     private ServerManager manager;
 
+
+    /**
+     * This method creates a thread pool and the object serverSocket that allows to accept connections from the clients.
+     * @param port the server's port
+     * @param manager the reference to the serverManager
+     */
     public ServerSKT(int port, ServerManager manager) {
         this.manager = manager;
         this.port = port;
@@ -42,12 +54,6 @@ public class ServerSKT {
             }
         }
         executor.shutdown();
-    }
-
-    public static void main(String[] args) {
-        //crea e fa partire server SKT, ovvero un processo
-        /*ServerSKT serverSKT = new ServerSKT(Integer.parseInt(args[0]));
-        serverSKT.startServer();*/
     }
 
 }
