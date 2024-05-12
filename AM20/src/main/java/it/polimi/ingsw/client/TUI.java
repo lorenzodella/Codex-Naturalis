@@ -1,16 +1,18 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.controller.PlayerInfo;
+import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.cards.Kingdom;
 import it.polimi.ingsw.model.cards.SpecialObject;
 import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
-import it.polimi.ingsw.model.cards.playable.PlayableCard;
-import it.polimi.ingsw.model.cards.playable.StarterCard;
+import it.polimi.ingsw.model.cards.playable.*;
 import it.polimi.ingsw.model.util.XMLparser;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class TUI implements UIManager {
 
@@ -33,6 +35,8 @@ public class TUI implements UIManager {
         this.mapMsg = new HashMap<>();
         this.consoleColors = new ConsoleColors();
         this.listOtherPlayer = new ArrayList<>();
+        this.cards = new ArrayList<>();
+
     }
 
 
@@ -256,20 +260,15 @@ public class TUI implements UIManager {
 
                 }else {
                     if(i==0)
-                        System.out.println(this.consoleColors.TEXT_RESET+ "The UL is not coverable");
+                        System.out.println(this.consoleColors.TEXT_RESET+ "The UL doesn't exist");
                     if(i==1)
-                        System.out.println(this.consoleColors.TEXT_RESET+ "The UR is not coverable");
+                        System.out.println(this.consoleColors.TEXT_RESET+ "The UR doesn't exist");
                     if(i==2)
-                        System.out.println(this.consoleColors.TEXT_RESET+ "The DL is not coverable");
+                        System.out.println(this.consoleColors.TEXT_RESET+ "The DL doesn't exist");
                     if(i==3)
-                        System.out.println(this.consoleColors.TEXT_RESET+ "The DR is not coverable");
-
+                        System.out.println(this.consoleColors.TEXT_RESET+ "The DR doesn't exist");
                 }
-
             }
-
-
-
         }
 
         System.out.print(this.consoleColors.TEXT_RESET+ "\nThe back of the card has" + this.starterCard.getResources().toArray().length + " resources in the middle: ");
@@ -285,24 +284,238 @@ public class TUI implements UIManager {
                 System.out.print(this.consoleColors.TEXT_CYAN + "ANIMAL ");
             }
         }
-
     }
+    public void viewHandCards(){
+        //???
+        //assegnazione carte iniziali x esempio
+        this.cards.add(this.getExampleResourceCard());
+        this.cards.add(this.getExampleCornerGoldCard());
+        this.cards.add(this.getExampleObjectGoldCard());
 
+        System.out.println("These are your cards: \n");
+
+        //scorro lista delle carte
+        for(int i=0; i< this.cards.size(); i++) {
+            //FRONT
+            if(this.cards.get(i) instanceof ResourceCard) {
+                System.out.println("This card is a resource card\n");
+            }else
+                System.out.println("This card is a gold card\n");
+
+            System.out.println("The front of this card has " + this.cards.get(i).getFrontCorners().length + " visible corners: \n");
+            //scorro angoli FRONT
+            for(int j=0; j < this.cards.get(i).getFrontCorners().length; j++){
+                //UL
+                if(this.cards.get(i).getFrontCorners()[i] != null && i==0 ){
+                    System.out.print("- UL: ");
+                    if(this.cards.get(i).getFrontCorners()[i].getContentKingdom().equals(Kingdom.Plant)){
+                        System.out.println(this.consoleColors.TEXT_GREEN+ "PLANT");
+                    }else if(this.cards.get(i).getFrontCorners()[i].getContentKingdom().equals(Kingdom.Insect)){
+                        System.out.println(this.consoleColors.TEXT_PURPLE+ "INSECT");
+                        //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
+                    }else if(this.cards.get(i).getFrontCorners()[i].getContentKingdom().equals(Kingdom.Fungi)){
+                        System.out.println(this.consoleColors.TEXT_RED+ "FUNGI");
+                    }else if (this.cards.get(i).getFrontCorners()[i].getContentKingdom().equals(Kingdom.Animal)){
+                        System.out.println(this.consoleColors.TEXT_CYAN+ "ANIMAL");
+                    }else if (this.cards.get(i).getFrontCorners()[i].getContentObject().equals(SpecialObject.Inkwell)){
+                        System.out.println(this.consoleColors.TEXT_RESET+ "INKWELL");
+                    }else if (this.cards.get(i).getFrontCorners()[i].getContentObject().equals(SpecialObject.Quill)){
+                        System.out.println(this.consoleColors.TEXT_RESET+ "QUILL");
+                    }else if (this.cards.get(i).getFrontCorners()[i].getContentObject().equals(SpecialObject.Manuscript)){
+                        System.out.println(this.consoleColors.TEXT_RESET+ "MANUSCRIPT");
+                    }else
+                        System.out.println(this.consoleColors.TEXT_RESET + "The UL corner doesn't exist \n");
+                }
+                //UR
+                if(this.cards.get(i).getFrontCorners()[i] != null && i==0 ){
+                    System.out.print("- UR: ");
+                    if(this.cards.get(i).getFrontCorners()[i].getContentKingdom().equals(Kingdom.Plant)){
+                        System.out.println(this.consoleColors.TEXT_GREEN+ "PLANT");
+                    }else if(this.cards.get(i).getFrontCorners()[i].getContentKingdom().equals(Kingdom.Insect)){
+                        System.out.println(this.consoleColors.TEXT_PURPLE+ "INSECT");
+                        //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
+                    }else if(this.cards.get(i).getFrontCorners()[i].getContentKingdom().equals(Kingdom.Fungi)){
+                        System.out.println(this.consoleColors.TEXT_RED+ "FUNGI");
+                    }else if (this.cards.get(i).getFrontCorners()[i].getContentKingdom().equals(Kingdom.Animal)){
+                        System.out.println(this.consoleColors.TEXT_CYAN+ "ANIMAL");
+                    }else if (this.cards.get(i).getFrontCorners()[i].getContentObject().equals(SpecialObject.Inkwell)){
+                        System.out.println(this.consoleColors.TEXT_RESET+ "INKWELL");
+                    }else if (this.cards.get(i).getFrontCorners()[i].getContentObject().equals(SpecialObject.Quill)){
+                        System.out.println(this.consoleColors.TEXT_RESET+ "QUILL");
+                    }else if (this.cards.get(i).getFrontCorners()[i].getContentObject().equals(SpecialObject.Manuscript)){
+                        System.out.println(this.consoleColors.TEXT_RESET+ "MANUSCRIPT");
+                    }else
+                        System.out.println(this.consoleColors.TEXT_RESET + "The UL corner doesn't exist \n");
+                }
+                //DL
+                if(this.cards.get(i).getFrontCorners()[i] != null && i==0 ){
+                    System.out.print("- DL: ");
+                    if(this.cards.get(i).getFrontCorners()[i].getContentKingdom().equals(Kingdom.Plant)){
+                        System.out.println(this.consoleColors.TEXT_GREEN+ "PLANT");
+                    }else if(this.cards.get(i).getFrontCorners()[i].getContentKingdom().equals(Kingdom.Insect)){
+                        System.out.println(this.consoleColors.TEXT_PURPLE+ "INSECT");
+                        //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
+                    }else if(this.cards.get(i).getFrontCorners()[i].getContentKingdom().equals(Kingdom.Fungi)){
+                        System.out.println(this.consoleColors.TEXT_RED+ "FUNGI");
+                    }else if (this.cards.get(i).getFrontCorners()[i].getContentKingdom().equals(Kingdom.Animal)){
+                        System.out.println(this.consoleColors.TEXT_CYAN+ "ANIMAL");
+                    }else if (this.cards.get(i).getFrontCorners()[i].getContentObject().equals(SpecialObject.Inkwell)){
+                        System.out.println(this.consoleColors.TEXT_RESET+ "INKWELL");
+                    }else if (this.cards.get(i).getFrontCorners()[i].getContentObject().equals(SpecialObject.Quill)){
+                        System.out.println(this.consoleColors.TEXT_RESET+ "QUILL");
+                    }else if (this.cards.get(i).getFrontCorners()[i].getContentObject().equals(SpecialObject.Manuscript)){
+                        System.out.println(this.consoleColors.TEXT_RESET+ "MANUSCRIPT");
+                    }else
+                        System.out.println(this.consoleColors.TEXT_RESET + "The UL corner doesn't exist \n");
+                }
+                //DR
+                if(this.cards.get(i).getFrontCorners()[i] != null && i==0 ){
+                    System.out.print("- DR: ");
+                    if(this.cards.get(i).getFrontCorners()[i].getContentKingdom().equals(Kingdom.Plant)){
+                        System.out.println(this.consoleColors.TEXT_GREEN+ "PLANT");
+                    }else if(this.cards.get(i).getFrontCorners()[i].getContentKingdom().equals(Kingdom.Insect)){
+                        System.out.println(this.consoleColors.TEXT_PURPLE+ "INSECT");
+                        //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
+                    }else if(this.cards.get(i).getFrontCorners()[i].getContentKingdom().equals(Kingdom.Fungi)){
+                        System.out.println(this.consoleColors.TEXT_RED+ "FUNGI");
+                    }else if (this.cards.get(i).getFrontCorners()[i].getContentKingdom().equals(Kingdom.Animal)){
+                        System.out.println(this.consoleColors.TEXT_CYAN+ "ANIMAL");
+                    }else if (this.cards.get(i).getFrontCorners()[i].getContentObject().equals(SpecialObject.Inkwell)){
+                        System.out.println(this.consoleColors.TEXT_RESET+ "INKWELL");
+                    }else if (this.cards.get(i).getFrontCorners()[i].getContentObject().equals(SpecialObject.Quill)){
+                        System.out.println(this.consoleColors.TEXT_RESET+ "QUILL");
+                    }else if (this.cards.get(i).getFrontCorners()[i].getContentObject().equals(SpecialObject.Manuscript)){
+                        System.out.println(this.consoleColors.TEXT_RESET+ "MANUSCRIPT");
+                    }else
+                        System.out.println(this.consoleColors.TEXT_RESET + "The UL corner doesn't exist \n");
+                }
+            }
+
+            //BACK
+            System.out.println("The back of this card has " + this.cards.get(i).getBackCorners().length + " visible corners: \n");
+            //scorro angoli BACK
+            for(int j=0; j < this.cards.get(i).getBackCorners().length; j++){
+                //UL
+                if(this.cards.get(i).getBackCorners()[i] != null && i==0 ){
+                    System.out.print("- UL: ");
+                    if(this.cards.get(i).getBackCorners()[i].getContentKingdom().equals(Kingdom.Plant)){
+                        System.out.println(this.consoleColors.TEXT_GREEN+ "PLANT");
+                    }else if(this.cards.get(i).getBackCorners()[i].getContentKingdom().equals(Kingdom.Insect)){
+                        System.out.println(this.consoleColors.TEXT_PURPLE+ "INSECT");
+                        //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
+                    }else if(this.cards.get(i).getBackCorners()[i].getContentKingdom().equals(Kingdom.Fungi)){
+                        System.out.println(this.consoleColors.TEXT_RED+ "FUNGI");
+                    }else if (this.cards.get(i).getBackCorners()[i].getContentKingdom().equals(Kingdom.Animal)){
+                        System.out.println(this.consoleColors.TEXT_CYAN+ "ANIMAL");
+                    }else if (this.cards.get(i).getBackCorners()[i].getContentObject().equals(SpecialObject.Inkwell)){
+                        System.out.println(this.consoleColors.TEXT_RESET+ "INKWELL");
+                    }else if (this.cards.get(i).getBackCorners()[i].getContentObject().equals(SpecialObject.Quill)){
+                        System.out.println(this.consoleColors.TEXT_RESET+ "QUILL");
+                    }else if (this.cards.get(i).getBackCorners()[i].getContentObject().equals(SpecialObject.Manuscript)){
+                        System.out.println(this.consoleColors.TEXT_RESET+ "MANUSCRIPT");
+                    }else
+                        System.out.println(this.consoleColors.TEXT_RESET + "The UL corner doesn't exist \n");
+                }
+                //UR
+                if(this.cards.get(i).getBackCorners()[i] != null && i==0 ){
+                    System.out.print("- UR: ");
+                    if(this.cards.get(i).getBackCorners()[i].getContentKingdom().equals(Kingdom.Plant)){
+                        System.out.println(this.consoleColors.TEXT_GREEN+ "PLANT");
+                    }else if(this.cards.get(i).getBackCorners()[i].getContentKingdom().equals(Kingdom.Insect)){
+                        System.out.println(this.consoleColors.TEXT_PURPLE+ "INSECT");
+                        //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
+                    }else if(this.cards.get(i).getBackCorners()[i].getContentKingdom().equals(Kingdom.Fungi)){
+                        System.out.println(this.consoleColors.TEXT_RED+ "FUNGI");
+                    }else if (this.cards.get(i).getBackCorners()[i].getContentKingdom().equals(Kingdom.Animal)){
+                        System.out.println(this.consoleColors.TEXT_CYAN+ "ANIMAL");
+                    }else if (this.cards.get(i).getBackCorners()[i].getContentObject().equals(SpecialObject.Inkwell)){
+                        System.out.println(this.consoleColors.TEXT_RESET+ "INKWELL");
+                    }else if (this.cards.get(i).getBackCorners()[i].getContentObject().equals(SpecialObject.Quill)){
+                        System.out.println(this.consoleColors.TEXT_RESET+ "QUILL");
+                    }else if (this.cards.get(i).getBackCorners()[i].getContentObject().equals(SpecialObject.Manuscript)){
+                        System.out.println(this.consoleColors.TEXT_RESET+ "MANUSCRIPT");
+                    }else
+                        System.out.println(this.consoleColors.TEXT_RESET + "The UL corner doesn't exist \n");
+                }
+                //DL
+                if(this.cards.get(i).getBackCorners()[i] != null && i==0 ){
+                    System.out.print("- DL: ");
+                    if(this.cards.get(i).getBackCorners()[i].getContentKingdom().equals(Kingdom.Plant)){
+                        System.out.println(this.consoleColors.TEXT_GREEN+ "PLANT");
+                    }else if(this.cards.get(i).getBackCorners()[i].getContentKingdom().equals(Kingdom.Insect)){
+                        System.out.println(this.consoleColors.TEXT_PURPLE+ "INSECT");
+                        //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
+                    }else if(this.cards.get(i).getBackCorners()[i].getContentKingdom().equals(Kingdom.Fungi)){
+                        System.out.println(this.consoleColors.TEXT_RED+ "FUNGI");
+                    }else if (this.cards.get(i).getBackCorners()[i].getContentKingdom().equals(Kingdom.Animal)){
+                        System.out.println(this.consoleColors.TEXT_CYAN+ "ANIMAL");
+                    }else if (this.cards.get(i).getBackCorners()[i].getContentObject().equals(SpecialObject.Inkwell)){
+                        System.out.println(this.consoleColors.TEXT_RESET+ "INKWELL");
+                    }else if (this.cards.get(i).getBackCorners()[i].getContentObject().equals(SpecialObject.Quill)){
+                        System.out.println(this.consoleColors.TEXT_RESET+ "QUILL");
+                    }else if (this.cards.get(i).getBackCorners()[i].getContentObject().equals(SpecialObject.Manuscript)){
+                        System.out.println(this.consoleColors.TEXT_RESET+ "MANUSCRIPT");
+                    }else
+                        System.out.println(this.consoleColors.TEXT_RESET + "The UL corner doesn't exist \n");
+                }
+                //DR
+                if(this.cards.get(i).getBackCorners()[i] != null && i==0 ){
+                    System.out.print("- DR: ");
+                    if(this.cards.get(i).getBackCorners()[i].getContentKingdom().equals(Kingdom.Plant)){
+                        System.out.println(this.consoleColors.TEXT_GREEN+ "PLANT");
+                    }else if(this.cards.get(i).getBackCorners()[i].getContentKingdom().equals(Kingdom.Insect)){
+                        System.out.println(this.consoleColors.TEXT_PURPLE+ "INSECT");
+                        //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
+                    }else if(this.cards.get(i).getBackCorners()[i].getContentKingdom().equals(Kingdom.Fungi)){
+                        System.out.println(this.consoleColors.TEXT_RED+ "FUNGI");
+                    }else if (this.cards.get(i).getBackCorners()[i].getContentKingdom().equals(Kingdom.Animal)){
+                        System.out.println(this.consoleColors.TEXT_CYAN+ "ANIMAL");
+                    }else if (this.cards.get(i).getBackCorners()[i].getContentObject().equals(SpecialObject.Inkwell)){
+                        System.out.println(this.consoleColors.TEXT_RESET+ "INKWELL");
+                    }else if (this.cards.get(i).getBackCorners()[i].getContentObject().equals(SpecialObject.Quill)){
+                        System.out.println(this.consoleColors.TEXT_RESET+ "QUILL");
+                    }else if (this.cards.get(i).getBackCorners()[i].getContentObject().equals(SpecialObject.Manuscript)){
+                        System.out.println(this.consoleColors.TEXT_RESET+ "MANUSCRIPT");
+                    }else
+                        System.out.println(this.consoleColors.TEXT_RESET + "The UL corner doesn't exist \n");
+                }
+            }
+
+            //SE SONO CARTE GOLD
+            if(this.cards.get(i) instanceof GoldCard){
+                //REQUIREMENTS
+                for(int j=0; j < this.cards.get(i).getRequirements().size(); j++){
+                    if(this.cards.get(i).getRequirements().equals(Kingdom.Plant)){
+                        System.out.println(this.consoleColors.TEXT_GREEN+ "PLANT");
+                    }else if(this.cards.get(i).getRequirements().equals(Kingdom.Insect)){
+                        System.out.println(this.consoleColors.TEXT_PURPLE+ "INSECT");
+                    }else if(this.cards.get(i).getRequirements().equals(Kingdom.Fungi)){
+                        System.out.println(this.consoleColors.TEXT_RED+ "FUNGI");
+                    }else if(this.cards.get(i).getRequirements().equals(Kingdom.Animal)){
+                        System.out.println(this.consoleColors.TEXT_CYAN+ "ANIMAL");
+                    }
+                }
+                //TIPO DI GOLD CARD
+                if(this.cards.get(i) instanceof PointsGoldCard){
+                    System.out.println("You get" + ((PointsGoldCard) this.cards.get(i)).getPoints() + "points if you play this card correctly \n");
+                }else if(this.cards.get(i) instanceof ObjectGoldCard){
+                    System.out.println("You get" + ((ObjectGoldCard) this.cards.get(i)).getPoints() + "points if you play this card correctly " +
+                                       " and if you have" + this.cards.get(i).getSpecialObjects() + "as a special object \n");
+                }else if(this.cards.get(i) instanceof CornerGoldCard){
+                    System.out.println("You get 2 points every time you cover another card's angle with this card ");
+                }
+            }
+        }
+    }
 
     public void viewCommonObjective(){
 
-
     }
-
 
     public void viewSecretObjective(){
 
     }
 
-
-    public void viewHandCards(){
-
-    }
 
     public void viewGoldTop(){
 
@@ -473,7 +686,18 @@ public class TUI implements UIManager {
         ArrayList<PlayableCard> starterCards = XMLparser.parseStarterCards("starterCards.xml");
         return (StarterCard) starterCards.stream().filter(x->x.getID().equals("S85")).findAny().orElse(null);
     }
-
+    ResourceCard getExampleResourceCard(String id){
+        ArrayList<PlayableCard> ResourceCard = XMLparser.parseResourceCards("resourceCards.xml");
+        return (ResourceCard) ResourceCard.stream().filter(x->x.getID().equals("R15")).findAny().orElse(null);
+    }
+    CornerGoldCard getExampleCornerGoldCard(String id){
+        ArrayList<PlayableCard> CornerGoldCard = XMLparser.parseGoldCards("goldCards.xml");
+        return (CornerGoldCard) CornerGoldCard.stream().filter(x->x.getID().equals("G74")).findAny().orElse(null);
+    }
+    ObjectGoldCard getExampleObjectGoldCard(){
+        ArrayList<PlayableCard> ObjectGoldCard = XMLparser.parseGoldCards("goldCards.xml");
+        return (ObjectGoldCard) ObjectGoldCard.stream().filter(x->x.getID().equals("G42")).findAny().orElse(null);
+    }
 
 
 }

@@ -57,4 +57,8 @@ public class PointsGoldCard extends GoldCard{
         else
             return 0;
     }
+
+    public int getPoints(){
+        return points;
+    }
 }
