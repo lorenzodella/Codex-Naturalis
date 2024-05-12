@@ -51,4 +51,8 @@ public class PairOfObjectsObjectiveCard extends ObjectiveCard{
     public int computePoints(PlayerTable table) {
         return 2*(table.getStats().getNumberOfObjects(this.specialObject)/2);
     }
+    public SpecialObject getSpecialObject(){
+        return specialObject;
+    }
+
 }

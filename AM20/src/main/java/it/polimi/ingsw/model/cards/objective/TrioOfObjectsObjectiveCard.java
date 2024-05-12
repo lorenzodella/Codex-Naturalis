@@ -11,6 +11,7 @@ public class TrioOfObjectsObjectiveCard extends ObjectiveCard{
         super(ID, points);
     }
 
+
     @Override
     public String toString() {
         return "TrioOfObjectsObjectiveCard{" +
@@ -33,4 +34,5 @@ public class TrioOfObjectsObjectiveCard extends ObjectiveCard{
         tmp.put(SpecialObject.Manuscript, table.getStats().getNumberOfObjects(SpecialObject.Manuscript));
         return 3*tmp.values().stream().mapToInt(i->i).min().orElse(0);
     }
+
 }

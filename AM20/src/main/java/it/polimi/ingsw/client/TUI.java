@@ -36,7 +36,6 @@ public class TUI implements UIManager {
         this.consoleColors = new ConsoleColors();
         this.listOtherPlayer = new ArrayList<>();
         this.cards = new ArrayList<>();
-
     }
 
 
@@ -121,8 +120,8 @@ public class TUI implements UIManager {
         System.err.println(error);
     }
 
-    //TODO tia metodi per stampare le cose
 
+    //TODO ELE E TIA: si puo migliorare
     //si può migliorare
     public void viewStarterCard(){
         this.starterCard = getExampleStarterCard();
@@ -285,9 +284,10 @@ public class TUI implements UIManager {
             }
         }
     }
+
+    //TODO: NPASSAGGIO DELLE CARTE PER PROVARE SE VA
     public void viewHandCards(){
-        //???
-        //assegnazione carte iniziali x esempio
+        //assegnazione carte iniziali x esempio --> HELP
         this.cards.add(this.getExampleResourceCard());
         this.cards.add(this.getExampleCornerGoldCard());
         this.cards.add(this.getExampleObjectGoldCard());
@@ -422,44 +422,286 @@ public class TUI implements UIManager {
         }
     }
 
+    //TODO ELE: FINIRE E RISOLVERE PROBLEMI (SI MA LORE DAI UN'OCCHIATA DAI GRAZIE)
+    /*
+     domande:
+     - ci sono due tipi di vertical configuration --> mi manca da dire dove deve ster la seconda occorrenza della carta del 2^ kingdom
+     - qui non dico nulla sul back degli objective perchès sono tutti uguali?
+     */
     public void viewCommonObjective(){
         System.out.println("These are the common objectives: \n");
         //scorro array dei common objectives
         for(int i=0; i<commonObjectives.length; i++){
             if(commonObjectives[i] instanceof DiagonalConfigurationObjectiveCard){
-
+                System.out.println("- DIAGONAL CONFIGURATION OBJECTIVE: \n");
+                System.out.println("You need to create a diagonal configuration, with" +
+                                       ((DiagonalConfigurationObjectiveCard) commonObjectives[i]).getKingdom() + "resource cards only," +
+                                       "starting by covering the" + ((DiagonalConfigurationObjectiveCard) commonObjectives[i]).getCoveredCorner() +
+                                        "first \n");
+                System.out.println("You get 2 points every time you create this kind of configuration \n");
             }else if(commonObjectives[i] instanceof PairOfObjectsObjectiveCard){
-
+                System.out.println("- PAIR OF OBJECTS OBJECTIVES: \n");
+                System.out.println("You get 2 points every time you collect two" +
+                                   ((PairOfObjectsObjectiveCard) commonObjectives[i]).getSpecialObject() +"objects \n");
             }else if(commonObjectives[i] instanceof TrioOfObjectsObjectiveCard){
-
+                System.out.println("- TRIO OF OBJECTS OBJECTIVE: \n");
+                System.out.println("You get 2 points every time you collect an inkwell, a manuscript and a quill \n");
             }else if(commonObjectives[i] instanceof TrioOfResourcesObjectiveCard){
-
-            }else{
-
+                System.out.println("- TRIO OF RESOURCES OBJECTIVE: \n");
+                System.out.println("You get 2 points every time you collect three" +
+                                    ((TrioOfResourcesObjectiveCard) commonObjectives[i]).getResourcesKingdom() +"resource cards \n");
+            }else if(commonObjectives[i] instanceof VerticalConfigurationObjectiveCard){
+                System.out.println("- VERTICAL CONFIGURATION OBJECTIVE: \n");
+                System.out.println("You need to create a vertical configuration, with just an occurrence of a"
+                                  + ((VerticalConfigurationObjectiveCard) commonObjectives[i]).getKingdom1() + " resource card.\n" +
+                                  " This card needs to cover the" + ((VerticalConfigurationObjectiveCard) commonObjectives[i]).getCoveredCorner() + "angle " +
+                                  "of a " + ((VerticalConfigurationObjectiveCard) commonObjectives[i]).getKingdom2() + "resource card, which needs to have 2 occurrences in the configuration \n");
+                System.out.println("You get 3 points every time you create this kind of configuration \n");
             }
+        }
+    }
+
+    //TODO ELE: UGUALE A COMMON OBJECTIVES
+    public void viewSecretObjective(){
+        System.out.println("These is your secret objective: \n");
+        if(secretObjectives[0] instanceof DiagonalConfigurationObjectiveCard){
+            System.out.println("- DIAGONAL CONFIGURATION OBJECTIVE: \n");
+            System.out.println("You need to create a diagonal configuration, with" +
+                    ((DiagonalConfigurationObjectiveCard) secretObjectives[0]).getKingdom() + "resource cards only," +
+                    "starting by covering the" + ((DiagonalConfigurationObjectiveCard) secretObjectives[0]).getCoveredCorner() +
+                    "first \n");
+            System.out.println("You get 2 points every time you create this kind of configuration \n");
+        }else if(secretObjectives[0] instanceof PairOfObjectsObjectiveCard){
+            System.out.println("- PAIR OF OBJECTS OBJECTIVES: \n");
+            System.out.println("You get 2 points every time you collect two" +
+                    ((PairOfObjectsObjectiveCard) secretObjectives[0]).getSpecialObject() +"objects \n");
+        }else if(secretObjectives[0] instanceof TrioOfObjectsObjectiveCard){
+            System.out.println("- TRIO OF OBJECTS OBJECTIVE: \n");
+            System.out.println("You get 2 points every time you collect an inkwell, a manuscript and a quill \n");
+        }else if(secretObjectives[0] instanceof TrioOfResourcesObjectiveCard){
+            System.out.println("- TRIO OF RESOURCES OBJECTIVE: \n");
+            System.out.println("You get 2 points every time you collect three" +
+                    ((TrioOfResourcesObjectiveCard) secretObjectives[0]).getResourcesKingdom() +"resource cards \n");
+        }else if(secretObjectives[0] instanceof VerticalConfigurationObjectiveCard){
+            System.out.println("- VERTICAL CONFIGURATION OBJECTIVE: \n");
+            System.out.println("You need to create a vertical configuration, with just an occurrence of a"
+                    + ((VerticalConfigurationObjectiveCard) secretObjectives[0]).getKingdom1() + " resource card.\n" +
+                    " This card needs to cover the" + ((VerticalConfigurationObjectiveCard) secretObjectives[0]).getCoveredCorner() + "angle " +
+                    "of a " + ((VerticalConfigurationObjectiveCard) secretObjectives[0] ).getKingdom2() + "resource card, which needs to have 2 occurrences in the configuration \n");
+            System.out.println("You get 3 points every time you create this kind of configuration \n");
         }
 
     }
 
-    public void viewSecretObjective(){
-
-    }
-
-
     public void viewGoldTop(){
+        System.out.println("The card that's now on top of the gold deck is a ");
 
+        //KINGDOM
+        if(this.goldTop.getKingdoms().equals(Kingdom.Plant)){
+            System.out.println(this.consoleColors.TEXT_GREEN+ " PLANT");
+        }else if(this.goldTop.getKingdoms().equals(Kingdom.Insect)){
+            System.out.println(this.consoleColors.TEXT_PURPLE+ " INSECT");
+        }else if(this.goldTop.getKingdoms().equals(Kingdom.Fungi)){
+            System.out.println(this.consoleColors.TEXT_RED+ " FUNGI");
+        }else if(this.goldTop.getKingdoms().equals(Kingdom.Animal)){
+            System.out.println(this.consoleColors.TEXT_CYAN+ " ANIMAL");
+        }
+        System.out.println(this.consoleColors.TEXT_RESET+ "card \n");
     }
 
     public void viewResourceTop(){
+        System.out.println("The card that's now on top of the resource deck is a ");
 
+        //KINGDOM
+        if(this.resourceTop.getKingdoms().equals(Kingdom.Plant)){
+            System.out.println(this.consoleColors.TEXT_GREEN+ " PLANT");
+        }else if(this.resourceTop.getKingdoms().equals(Kingdom.Insect)){
+            System.out.println(this.consoleColors.TEXT_PURPLE+ " INSECT");
+        }else if(this.resourceTop.getKingdoms().equals(Kingdom.Fungi)){
+            System.out.println(this.consoleColors.TEXT_RED+ " FUNGI");
+        }else if(this.resourceTop.getKingdoms().equals(Kingdom.Animal)){
+            System.out.println(this.consoleColors.TEXT_CYAN+ " ANIMAL");
+        }
+        System.out.println(this.consoleColors.TEXT_RESET+ "card\n");
     }
 
-    public void viewGoldVisible(){
 
+    public void viewGoldVisibleCards(){
+        System.out.println("The gold cards that are now visible on the table are the following \n");
+        for(int i=0; i< goldVisible.length; i++) {
+            //KINGDOM GENERICO
+            if (i == 0) {
+                System.out.println("First card:" + goldVisible[0].getCardKingdom() + "card\n");
+            } else
+                System.out.println("Second card:" + goldVisible[1].getCardKingdom() + "card\n");
+
+            //ELENCO DELLE RISORSE IN OGNI CORNER:
+            System.out.println("This card has " + this.goldVisible[i].getFrontCorners().length + " visible corners: \n");
+            //scorro angoli FRONT
+            for(int j=0; j < this.cards.get(i).getFrontCorners().length; j++) {
+                //UL
+                if (this.goldVisible[i] != null && i == 0) {
+                    System.out.print("- UL: ");
+                    if (this.goldVisible[i].getFrontCorners()[i].getContentKingdom().equals(Kingdom.Plant)) {
+                        System.out.println(this.consoleColors.TEXT_GREEN + "PLANT");
+                    } else if (this.goldVisible[i].getFrontCorners()[i].getContentKingdom().equals(Kingdom.Insect)) {
+                        System.out.println(this.consoleColors.TEXT_PURPLE + "INSECT");
+                        //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
+                    } else if (this.goldVisible[i].getFrontCorners()[i].getContentKingdom().equals(Kingdom.Fungi)) {
+                        System.out.println(this.consoleColors.TEXT_RED + "FUNGI");
+                    } else if (this.goldVisible[i].getFrontCorners()[i].getContentKingdom().equals(Kingdom.Animal)) {
+                        System.out.println(this.consoleColors.TEXT_CYAN + "ANIMAL");
+                    } else if (this.goldVisible[i].getFrontCorners()[i].getContentObject().equals(SpecialObject.Inkwell)) {
+                        System.out.println(this.consoleColors.TEXT_RESET + "INKWELL");
+                    } else if (this.goldVisible[i].getFrontCorners()[i].getContentObject().equals(SpecialObject.Quill)) {
+                        System.out.println(this.consoleColors.TEXT_RESET + "QUILL");
+                    } else if (this.goldVisible[i].getFrontCorners()[i].getContentObject().equals(SpecialObject.Manuscript)) {
+                        System.out.println(this.consoleColors.TEXT_RESET + "MANUSCRIPT");
+                    } else
+                        System.out.println(this.consoleColors.TEXT_RESET + "The UL corner doesn't exist \n");
+                }
+                //DL
+                if (this.goldVisible[i] != null && i == 0) {
+                    System.out.print("- DL: ");
+                    if (this.goldVisible[i].getFrontCorners()[i].getContentKingdom().equals(Kingdom.Plant)) {
+                        System.out.println(this.consoleColors.TEXT_GREEN + "PLANT");
+                    } else if (this.goldVisible[i].getFrontCorners()[i].getContentKingdom().equals(Kingdom.Insect)) {
+                        System.out.println(this.consoleColors.TEXT_PURPLE + "INSECT");
+                        //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
+                    } else if (this.goldVisible[i].getFrontCorners()[i].getContentKingdom().equals(Kingdom.Fungi)) {
+                        System.out.println(this.consoleColors.TEXT_RED + "FUNGI");
+                    } else if (this.goldVisible[i].getFrontCorners()[i].getContentKingdom().equals(Kingdom.Animal)) {
+                        System.out.println(this.consoleColors.TEXT_CYAN + "ANIMAL");
+                    } else if (this.goldVisible[i].getFrontCorners()[i].getContentObject().equals(SpecialObject.Inkwell)) {
+                        System.out.println(this.consoleColors.TEXT_RESET + "INKWELL");
+                    } else if (this.goldVisible[i].getFrontCorners()[i].getContentObject().equals(SpecialObject.Quill)) {
+                        System.out.println(this.consoleColors.TEXT_RESET + "QUILL");
+                    } else if (this.goldVisible[i].getFrontCorners()[i].getContentObject().equals(SpecialObject.Manuscript)) {
+                        System.out.println(this.consoleColors.TEXT_RESET + "MANUSCRIPT");
+                    } else
+                        System.out.println(this.consoleColors.TEXT_RESET + "The UL corner doesn't exist \n");
+                }
+                //DL
+                if (this.goldVisible[i] != null && i == 0) {
+                    System.out.print("- DL: ");
+                    if (this.goldVisible[i].getFrontCorners()[i].getContentKingdom().equals(Kingdom.Plant)) {
+                        System.out.println(this.consoleColors.TEXT_GREEN + "PLANT");
+                    } else if (this.goldVisible[i].getFrontCorners()[i].getContentKingdom().equals(Kingdom.Insect)) {
+                        System.out.println(this.consoleColors.TEXT_PURPLE + "INSECT");
+                        //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
+                    } else if (this.goldVisible[i].getFrontCorners()[i].getContentKingdom().equals(Kingdom.Fungi)) {
+                        System.out.println(this.consoleColors.TEXT_RED + "FUNGI");
+                    } else if (this.goldVisible[i].getFrontCorners()[i].getContentKingdom().equals(Kingdom.Animal)) {
+                        System.out.println(this.consoleColors.TEXT_CYAN + "ANIMAL");
+                    } else if (this.goldVisible[i].getFrontCorners()[i].getContentObject().equals(SpecialObject.Inkwell)) {
+                        System.out.println(this.consoleColors.TEXT_RESET + "INKWELL");
+                    } else if (this.goldVisible[i].getFrontCorners()[i].getContentObject().equals(SpecialObject.Quill)) {
+                        System.out.println(this.consoleColors.TEXT_RESET + "QUILL");
+                    } else if (this.goldVisible[i].getFrontCorners()[i].getContentObject().equals(SpecialObject.Manuscript)) {
+                        System.out.println(this.consoleColors.TEXT_RESET + "MANUSCRIPT");
+                    } else
+                        System.out.println(this.consoleColors.TEXT_RESET + "The UL corner doesn't exist \n");
+                }
+                //DR
+                if (this.goldVisible[i] != null && i == 0) {
+                    System.out.print("- DR: ");
+                    if (this.goldVisible[i].getFrontCorners()[i].getContentKingdom().equals(Kingdom.Plant)) {
+                        System.out.println(this.consoleColors.TEXT_GREEN + "PLANT");
+                    } else if (this.goldVisible[i].getFrontCorners()[i].getContentKingdom().equals(Kingdom.Insect)) {
+                        System.out.println(this.consoleColors.TEXT_PURPLE + "INSECT");
+                        //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
+                    } else if (this.goldVisible[i].getFrontCorners()[i].getContentKingdom().equals(Kingdom.Fungi)) {
+                        System.out.println(this.consoleColors.TEXT_RED + "FUNGI");
+                    } else if (this.goldVisible[i].getFrontCorners()[i].getContentKingdom().equals(Kingdom.Animal)) {
+                        System.out.println(this.consoleColors.TEXT_CYAN + "ANIMAL");
+                    } else if (this.goldVisible[i].getFrontCorners()[i].getContentObject().equals(SpecialObject.Inkwell)) {
+                        System.out.println(this.consoleColors.TEXT_RESET + "INKWELL");
+                    } else if (this.goldVisible[i].getFrontCorners()[i].getContentObject().equals(SpecialObject.Quill)) {
+                        System.out.println(this.consoleColors.TEXT_RESET + "QUILL");
+                    } else if (this.goldVisible[i].getFrontCorners()[i].getContentObject().equals(SpecialObject.Manuscript)) {
+                        System.out.println(this.consoleColors.TEXT_RESET + "MANUSCRIPT");
+                    } else
+                        System.out.println(this.consoleColors.TEXT_RESET + "The UL corner doesn't exist \n");
+                }
+            }
+        }
     }
 
-    public void viewResourceVisible(){
+    public void viewResourceVisibleCards(){
+        System.out.println("The resource cards that are now visible on the table are the following \n");
+        for(int i=0; i< resourceVisible.length; i++){
+            //KINGDOM GENERICO
+            if(i==0){
+                System.out.println("First card:" + resourceVisible[0].getCardKingdom() + "card\n");
+            }else
+                System.out.println("Second card:" + resourceVisible[1].getCardKingdom() + "card\n");
 
+            //ELENCO DELLE RISORSE IN OGNI CORNER:
+            System.out.println("This card has " + this.resourceVisible[i].getFrontCorners().length + " visible corners: \n");
+            //scorro angoli FRONT
+            for(int j=0; j < this.resourceVisible[i].getFrontCorners().length; j++) {
+                //UL
+                if (this.resourceVisible[i].getFrontCorners()[i] != null && i == 0) {
+                    System.out.print("- UL: ");
+                    if (this.resourceVisible[i].getFrontCorners()[i].getContentKingdom().equals(Kingdom.Plant)) {
+                        System.out.println(this.consoleColors.TEXT_GREEN + "PLANT");
+                    } else if (this.resourceVisible[i].getFrontCorners()[i].getContentKingdom().equals(Kingdom.Insect)) {
+                        System.out.println(this.consoleColors.TEXT_PURPLE + "INSECT");
+                        //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
+                    } else if (this.resourceVisible[i].getFrontCorners()[i].getContentKingdom().equals(Kingdom.Fungi)) {
+                        System.out.println(this.consoleColors.TEXT_RED + "FUNGI");
+                    } else if (this.resourceVisible[i].getFrontCorners()[i].getContentKingdom().equals(Kingdom.Animal)) {
+                        System.out.println(this.consoleColors.TEXT_CYAN + "ANIMAL");
+                    }else
+                        System.out.println(this.consoleColors.TEXT_RESET + "The UL corner doesn't have any resource\n");
+                }
+                //UR
+                if (this.resourceVisible[i].getFrontCorners()[i] != null && i == 0) {
+                    System.out.print("- UR: ");
+                    if (this.resourceVisible[i].getFrontCorners()[i].getContentKingdom().equals(Kingdom.Plant)) {
+                        System.out.println(this.consoleColors.TEXT_GREEN + "PLANT");
+                    } else if (this.resourceVisible[i].getFrontCorners()[i].getContentKingdom().equals(Kingdom.Insect)) {
+                        System.out.println(this.consoleColors.TEXT_PURPLE + "INSECT");
+                        //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
+                    } else if (this.resourceVisible[i].getFrontCorners()[i].getContentKingdom().equals(Kingdom.Fungi)) {
+                        System.out.println(this.consoleColors.TEXT_RED + "FUNGI");
+                    } else if (this.resourceVisible[i].getFrontCorners()[i].getContentKingdom().equals(Kingdom.Animal)) {
+                        System.out.println(this.consoleColors.TEXT_CYAN + "ANIMAL");
+                    }else
+                        System.out.println(this.consoleColors.TEXT_RESET + "The UL corner doesn't have any resource\n");
+                }
+                //DL
+                if (this.resourceVisible[i].getFrontCorners()[i] != null && i == 0) {
+                    System.out.print("- DL: ");
+                    if (this.resourceVisible[i].getFrontCorners()[i].getContentKingdom().equals(Kingdom.Plant)) {
+                        System.out.println(this.consoleColors.TEXT_GREEN + "PLANT");
+                    } else if (this.resourceVisible[i].getFrontCorners()[i].getContentKingdom().equals(Kingdom.Insect)) {
+                        System.out.println(this.consoleColors.TEXT_PURPLE + "INSECT");
+                        //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
+                    } else if (this.resourceVisible[i].getFrontCorners()[i].getContentKingdom().equals(Kingdom.Fungi)) {
+                        System.out.println(this.consoleColors.TEXT_RED + "FUNGI");
+                    } else if (this.resourceVisible[i].getFrontCorners()[i].getContentKingdom().equals(Kingdom.Animal)) {
+                        System.out.println(this.consoleColors.TEXT_CYAN + "ANIMAL");
+                    }else
+                        System.out.println(this.consoleColors.TEXT_RESET + "The UL corner doesn't have any resource\n");
+                }
+                //DR
+                if (this.resourceVisible[i].getFrontCorners()[i] != null && i == 0) {
+                    System.out.print("- DR: ");
+                    if (this.resourceVisible[i].getFrontCorners()[i].getContentKingdom().equals(Kingdom.Plant)) {
+                        System.out.println(this.consoleColors.TEXT_GREEN + "PLANT");
+                    } else if (this.resourceVisible[i].getFrontCorners()[i].getContentKingdom().equals(Kingdom.Insect)) {
+                        System.out.println(this.consoleColors.TEXT_PURPLE + "INSECT");
+                        //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
+                    } else if (this.resourceVisible[i].getFrontCorners()[i].getContentKingdom().equals(Kingdom.Fungi)) {
+                        System.out.println(this.consoleColors.TEXT_RED + "FUNGI");
+                    } else if (this.resourceVisible[i].getFrontCorners()[i].getContentKingdom().equals(Kingdom.Animal)) {
+                        System.out.println(this.consoleColors.TEXT_CYAN + "ANIMAL");
+                    }else
+                        System.out.println(this.consoleColors.TEXT_RESET + "The UL corner doesn't have any resource\n");
+                }
+            }
+        }
     }
 
     public void viewPlayerInfo(){
