@@ -2,6 +2,7 @@ package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.controller.PlayerInfo;
 import it.polimi.ingsw.model.cards.Kingdom;
+import it.polimi.ingsw.model.cards.SpecialObject;
 import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.model.cards.playable.StarterCard;
@@ -26,10 +27,12 @@ public class TUI implements UIManager {
     private ObjectiveCard[] commonObjectives;
     private StarterCard starterCard;
     private String nickname;
+    private List<String> listOtherPlayer;
 
     public TUI(){
         this.mapMsg = new HashMap<>();
         this.consoleColors = new ConsoleColors();
+        this.listOtherPlayer = new ArrayList<>();
     }
 
 
@@ -76,6 +79,7 @@ public class TUI implements UIManager {
     @Override
     public void updateOtherPlayerInfo(HashMap<String, PlayerInfo> otherPlayerInfo) {
         this.othersPlayerInfo = otherPlayerInfo;
+        this.listOtherPlayer.addAll(otherPlayerInfo.keySet());
     }
 
     @Override
@@ -115,6 +119,7 @@ public class TUI implements UIManager {
 
     //TODO tia metodi per stampare le cose
 
+    //si può migliorare
     public void viewStarterCard(){
         this.starterCard = getExampleStarterCard();
         this.printTitle();
@@ -283,17 +288,118 @@ public class TUI implements UIManager {
 
     }
 
+
+    public void viewCommonObjective(){
+
+
+    }
+
+
+    public void viewSecretObjective(){
+
+    }
+
+
+    public void viewHandCards(){
+
+    }
+
+    public void viewGoldTop(){
+
+    }
+
+    public void viewResourceTop(){
+
+    }
+
+    public void viewGoldVisible(){
+
+    }
+
+    public void viewResourceVisible(){
+
+    }
+
     public void viewPlayerInfo(){
+
+        this.printTitle();
+        System.out.println("These are your inforamtion");
+
+        System.out.println("You have done "+ this.yourPlayerInfo.getScore());
+
+        //TODO
+        //System.out.println("The common objective "); oppure chaiamata al metodo viewCommonObjective
+
+        System.out.println("You have: ");
+        System.out.print("- ");
+        System.out.print(this.consoleColors.TEXT_GREEN+"PLANT: ");
+        System.out.println(this.consoleColors.TEXT_RESET + this.yourPlayerInfo.getStats().getNumberOfResources(Kingdom.Plant));
+        System.out.print(this.consoleColors.TEXT_RESET + "- ");
+        System.out.print(this.consoleColors.TEXT_PURPLE+"INSECT: ");
+        System.out.println(this.consoleColors.TEXT_RESET + this.yourPlayerInfo.getStats().getNumberOfResources(Kingdom.Insect));
+        System.out.print(this.consoleColors.TEXT_RESET + "- ");
+        System.out.print(this.consoleColors.TEXT_RED+"FUNGI: ");
+        System.out.println(this.consoleColors.TEXT_RESET + this.yourPlayerInfo.getStats().getNumberOfResources(Kingdom.Fungi));
+        System.out.print(this.consoleColors.TEXT_RESET + "- ");
+        System.out.print(this.consoleColors.TEXT_CYAN+"ANIMAL: ");
+        System.out.println(this.consoleColors.TEXT_RESET + this.yourPlayerInfo.getStats().getNumberOfResources(Kingdom.Animal));
+        System.out.println("- QUILL: "+ this.yourPlayerInfo.getStats().getNumberOfObjects(SpecialObject.Quill));
+        System.out.println("- INKWELL: "+ this.yourPlayerInfo.getStats().getNumberOfObjects(SpecialObject.Inkwell));
+        System.out.println("- MANUSCRIPT: "+ this.yourPlayerInfo.getStats().getNumberOfObjects(SpecialObject.Manuscript));
+
+        System.out.println("The player has the follwoing board:");
+        System.out.println(this.yourPlayerInfo.getMap().toString());
 
     }
 
     public void viewOtherPlayerInfo(String username){
+        this.printTitle();
+        System.out.println("The following information are the one of " + username+" game");
+
+        System.out.println(username + " has done "+ this.othersPlayerInfo.get(username).getScore());
+
+        //TODO
+        //System.out.println("The common objective "); oppure chaiamata al metodo viewCommonObjective
+
+        System.out.println(username + " has:");
+        System.out.print("- ");
+        System.out.print(this.consoleColors.TEXT_GREEN+"PLANT: ");
+        System.out.println(this.consoleColors.TEXT_RESET + this.othersPlayerInfo.get(username).getStats().getNumberOfResources(Kingdom.Plant));
+        System.out.print(this.consoleColors.TEXT_RESET + "- ");
+        System.out.print(this.consoleColors.TEXT_PURPLE+"INSECT: ");
+        System.out.println(this.consoleColors.TEXT_RESET + this.othersPlayerInfo.get(username).getStats().getNumberOfResources(Kingdom.Insect));
+        System.out.print(this.consoleColors.TEXT_RESET + "- ");
+        System.out.print(this.consoleColors.TEXT_RED+"FUNGI: ");
+        System.out.println(this.consoleColors.TEXT_RESET + this.othersPlayerInfo.get(username).getStats().getNumberOfResources(Kingdom.Fungi));
+        System.out.print(this.consoleColors.TEXT_RESET + "- ");
+        System.out.print(this.consoleColors.TEXT_CYAN+"ANIMAL: ");
+        System.out.println(this.consoleColors.TEXT_RESET + this.othersPlayerInfo.get(username).getStats().getNumberOfResources(Kingdom.Animal));
+        System.out.println("- QUILL: "+ this.othersPlayerInfo.get(username).getStats().getNumberOfObjects(SpecialObject.Quill));
+        System.out.println("- INKWELL: "+ this.othersPlayerInfo.get(username).getStats().getNumberOfObjects(SpecialObject.Inkwell));
+        System.out.println("- MANUSCRIPT: "+ this.othersPlayerInfo.get(username).getStats().getNumberOfObjects(SpecialObject.Manuscript));
+
+        System.out.println("The player has the follwoing board:");
+        System.out.println(this.othersPlayerInfo.get(username).getMap().toString());
 
     }
 
     public void viewPlacement(){
+        System.out.println("The placement has the following order: ");
+        System.out.println("- " + this.nickname + " has " + this.yourPlayerInfo.getScore());
+        for(String s : this.listOtherPlayer){
+            System.out.println("- " + s + " has " + this.othersPlayerInfo.get(s));
+        }
 
     }
+
+    public void viewChatMessage(){
+
+    }
+
+//    public void viewBroadcastChatMessage(){
+//
+//    }
+
 
 
 
