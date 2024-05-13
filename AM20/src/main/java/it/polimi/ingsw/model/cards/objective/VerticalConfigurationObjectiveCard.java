@@ -11,12 +11,11 @@ public class VerticalConfigurationObjectiveCard extends ObjectiveCard {
      */
     private Kingdom kingdom1;
     /**
-     * this attribute says the kingdom of the card that has a single occurrence in this specific vertical configuration
+     * this attribute says the kingdom of the card that has a double occurrence in this specific vertical configuration
      */
     private Kingdom kingdom2;
     /**
-     * this attribute says which corner (of the card that's been placed on the top of the configuration)
-     * has to be covered in this specific vertical configuration
+     * this attribute says which corner .....
      */
     private int coveredCorner;
 

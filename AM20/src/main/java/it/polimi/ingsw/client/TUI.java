@@ -17,7 +17,9 @@ import it.polimi.ingsw.model.util.XMLparser;
 import java.util.*;
 
 public class TUI implements UIManager {
-
+    /*TODO:
+      - ATTRIBUTO PER CAPIRE DI CHE ANGOLO SI TRATTA --> PER ITERARE SU ANGOLI
+    */
     private ConsoleColors consoleColors = new ConsoleColors();
     private List<PlayableCard> cards;
     private List<ChatMessage> messages;
@@ -143,7 +145,6 @@ public class TUI implements UIManager {
         System.err.println(error);
     }
 
-
     //TODO ELE E TIA: si puo migliorare
     //si può migliorare
     public void viewStarterCard(){
@@ -151,8 +152,6 @@ public class TUI implements UIManager {
         this.viewCommand();
         System.out.println("\nYou have received the starter card:\n");
         System.out.println("The front of this card has " + this.starterCard.getFrontCorners().length + " visible corners: \n");
-
-
 
         for(int i=0;i<this.starterCard.getFrontCorners().length;i++){
             if(i==0){
@@ -180,8 +179,6 @@ public class TUI implements UIManager {
                 } else {
                     System.out.println(ConsoleColors.TEXT_RESET + "The corner is visible but it doesn't have any resource or object");
                 }
-
-
             }else if(i==1){
                 if(this.starterCard.getFrontCorners()[i] == null)
                     System.out.println("The UL corner doesn't exist");
@@ -207,11 +204,7 @@ public class TUI implements UIManager {
                 }else {
                     System.out.println(ConsoleColors.TEXT_RESET + "The corner is visible but it doesn't have any resource or object");
                 }
-
-
-
             }else if(i==2){
-
                 if(this.starterCard.getFrontCorners()[i] == null)
                     System.out.println("The DL corner doesn't exist");
                 else if(this.starterCard.getFrontCorners()[i].getContentKingdom() != null){
@@ -236,10 +229,7 @@ public class TUI implements UIManager {
                 }else {
                     System.out.println(ConsoleColors.TEXT_RESET + "The corner is visible but it doesn't have any resource or object");
                 }
-
-
             }else {
-
                 if(this.starterCard.getFrontCorners()[i] == null)
                     System.out.println("The DR corner doesn't exist");
                 else if(this.starterCard.getFrontCorners()[i].getContentKingdom() != null){
@@ -264,15 +254,10 @@ public class TUI implements UIManager {
                 }else {
                     System.out.println(ConsoleColors.TEXT_RESET + "The corner is visible but it doesn't have any resource or object");
                 }
-
             }
         }
-
-
         System.out.println("\n");
         System.out.println(ConsoleColors.TEXT_RESET + "The back of this card has " + this.starterCard.getBackCorners().length + " visible corners: \n");
-
-
         //da qua
         for(int i=0;i<this.starterCard.getBackCorners().length;i++){
             if(i==0){
@@ -300,8 +285,6 @@ public class TUI implements UIManager {
                 } else {
                     System.out.println(ConsoleColors.TEXT_RESET + "The corner is visible but it doesn't have any resource or object");
                 }
-
-
             }else if(i==1){
                 if(this.starterCard.getBackCorners()[i] == null)
                     System.out.println("The UL corner doesn't exist");
@@ -327,9 +310,6 @@ public class TUI implements UIManager {
                 }else {
                     System.out.println(ConsoleColors.TEXT_RESET + "The corner is visible but it doesn't have any resource or object");
                 }
-
-
-
             }else if(i==2){
 
                 if(this.starterCard.getBackCorners()[i] == null)
@@ -408,7 +388,6 @@ public class TUI implements UIManager {
     public void viewHandCards(){
         //assegnazione carte iniziali x esempio --> HELP
 
-
         this.printTitle();
         System.out.println(ConsoleColors.TEXT_RESET + "These are your cards: \n");
 
@@ -421,7 +400,6 @@ public class TUI implements UIManager {
                     System.out.print(" resource card");
                 }else
                     System.out.print(" gold card");
-
             }
 
             if(i==1){
@@ -431,9 +409,6 @@ public class TUI implements UIManager {
                     System.out.print(" resource card");
                 }else
                     System.out.print(" gold card");
-
-
-
             }
 
             if(i==2){
@@ -443,7 +418,6 @@ public class TUI implements UIManager {
                     System.out.print(" resource card");
                 }else
                     System.out.print(" gold card");
-
             }
             System.out.print(" of ");
 
@@ -456,7 +430,6 @@ public class TUI implements UIManager {
                 System.out.println(ConsoleColors.TEXT_RED + "FUNGI");
             else if (this.cards.get(i).getCardKingdom().equals(Kingdom.Animal))
                 System.out.println(ConsoleColors.TEXT_CYAN + "ANIMAL");
-
 
             //SE SONO CARTE GOLD
             if(this.cards.get(i) instanceof GoldCard){
@@ -490,24 +463,18 @@ public class TUI implements UIManager {
                         System.out.println(" Quill as a special object");
                     else if(this.cards.get(i).getSpecialObjects().get(SpecialObject.Manuscript) != 0)
                         System.out.println(" Manuscript as a special object");
-
-
                 }else if(this.cards.get(i) instanceof CornerGoldCard){
                     System.out.println(ConsoleColors.TEXT_RESET + "You get 2 points every time you cover another card's angle with this card ");
                 }
             }
 
-
-
-
-
             System.out.println(ConsoleColors.TEXT_RESET + "\nThe front of this card has " + this.cards.get(i).getFrontCorners().length + " visible corners: ");
             //scorro angoli FRONT
             for(int j=0; j < this.cards.get(i).getFrontCorners().length; j++){
-
                 if(j==0){
                     if(this.cards.get(i).getFrontCorners()[j] == null)
                         System.out.println("The UL corner doesn't exist");
+                    //se ha una risorsa
                     else if(this.cards.get(i).getFrontCorners()[j].getContentKingdom() != null){
                         System.out.print(ConsoleColors.TEXT_RESET + "- UL: ");
                         if(this.cards.get(i).getFrontCorners()[j].getContentKingdom().equals(Kingdom.Plant))
@@ -519,6 +486,7 @@ public class TUI implements UIManager {
                             System.out.println(ConsoleColors.TEXT_RED + "FUNGI");
                         else if (this.cards.get(i).getFrontCorners()[j].getContentKingdom().equals(Kingdom.Animal))
                             System.out.println(ConsoleColors.TEXT_CYAN + "ANIMAL");
+                    //se ha un oggetto
                     } else if(this.cards.get(i).getFrontCorners()[j].getContentObject() != null){
                         System.out.print(ConsoleColors.TEXT_RESET + "- UL: ");
                         if (this.cards.get(i).getFrontCorners()[j].getContentObject().equals(SpecialObject.Inkwell))
@@ -527,14 +495,14 @@ public class TUI implements UIManager {
                             System.out.println(ConsoleColors.TEXT_RESET + "QUILL");
                         else if (this.cards.get(i).getFrontCorners()[j].getContentObject().equals(SpecialObject.Manuscript))
                             System.out.println(ConsoleColors.TEXT_RESET + "MANUSCRIPT");
+                    //se non ha nulla
                     } else {
                         System.out.println(ConsoleColors.TEXT_RESET + "The corner is visible but it doesn't have any resource or object");
                     }
 
-
                 }else if(j==1){
                     if(this.cards.get(i).getFrontCorners()[j] == null)
-                        System.out.println("The UL corner doesn't exist");
+                        System.out.println("The UR corner doesn't exist");
                     else if(this.cards.get(i).getFrontCorners()[j].getContentKingdom() != null){
                         System.out.print(ConsoleColors.TEXT_RESET + "- UR: ");
                         if(this.cards.get(i).getFrontCorners()[j].getContentKingdom().equals(Kingdom.Plant))
@@ -558,10 +526,7 @@ public class TUI implements UIManager {
                         System.out.println(ConsoleColors.TEXT_RESET + "The corner is visible but it doesn't have any resource or object");
                     }
 
-
-
                 }else if(j==2){
-
                     if(this.cards.get(i).getFrontCorners()[j] == null)
                         System.out.println("The DL corner doesn't exist");
                     else if(this.cards.get(i).getFrontCorners()[j].getContentKingdom() != null){
@@ -589,7 +554,6 @@ public class TUI implements UIManager {
 
 
                 }else {
-
                     if(this.cards.get(i).getFrontCorners()[j] == null)
                         System.out.println("The DR corner doesn't exist");
                     else if(this.cards.get(i).getFrontCorners()[j].getContentKingdom() != null){
@@ -614,14 +578,8 @@ public class TUI implements UIManager {
                     }else {
                         System.out.println(ConsoleColors.TEXT_RESET + "The corner is visible but it doesn't have any resource or object");
                     }
-
                 }
-
-
             }
-
-
-
 
             //BACK
             //ps il back di ogni carta ha 4 visible corners sempre
@@ -636,20 +594,10 @@ public class TUI implements UIManager {
             else if (this.cards.get(i).getCardKingdom().equals(Kingdom.Animal))
                 System.out.print(ConsoleColors.TEXT_CYAN + "ANIMAL");
             System.out.println(ConsoleColors.TEXT_RESET + " resource");
-
         }
     }
 
-    //TODO ELE: FINIRE E RISOLVERE PROBLEMI (SI MA LORE DAI UN'OCCHIATA DAI GRAZIE)
-    /*
-     domande:
-     - ci sono due tipi di vertical configuration --> mi manca da dire dove deve ster la seconda occorrenza della carta del 2^ kingdom
-     - qui non dico nulla sul back degli objective perchès sono tutti uguali?
-     */
     public void viewCommonObjective(){
-
-
-
         System.out.println("These are the common objectives: \n");
         //scorro array dei common objectives
         for(int i=0; i<this.commonObjectives.length; i++){
@@ -736,9 +684,8 @@ public class TUI implements UIManager {
         }
     }
 
-    //TODO ELE: UGUALE A COMMON OBJECTIVES
+    //TODO ELE: GUARDARE COME SCRIVERE BENE VERTICAL E DIAGONAL CONFIG
     public void viewSecretObjective(){
-
         System.out.println("This is your secret objectives: \n");
         //scorro array dei common objectives
         for(int i=0; i<this.secretObjectives.size(); i++){
@@ -813,23 +760,21 @@ public class TUI implements UIManager {
                 System.out.print(ConsoleColors.TEXT_RESET+ " card that should cover the ");
 
                 if(((VerticalConfigurationObjectiveCard) this.secretObjectives.get(i)).getCoveredCorner() == 0)
-                    System.out.println("DR angle of the bottom " +((VerticalConfigurationObjectiveCard) this.secretObjectives.get(i)).getKingdom2() + " card." );
+                    System.out.println("DR angle of the top " +((VerticalConfigurationObjectiveCard) this.secretObjectives.get(i)).getKingdom2() + " card." );
                 else if(((VerticalConfigurationObjectiveCard) this.secretObjectives.get(i)).getCoveredCorner() == 1)
-                    System.out.println("DL angle of the bottom " + ((VerticalConfigurationObjectiveCard) this.secretObjectives.get(i)).getKingdom2() + " card.");
+                    System.out.println("DL angle of the top " + ((VerticalConfigurationObjectiveCard) this.secretObjectives.get(i)).getKingdom2() + " card.");
                 else if(((VerticalConfigurationObjectiveCard) this.secretObjectives.get(i)).getCoveredCorner() == 2)
-                    System.out.println("UR angle of the top "+ ((VerticalConfigurationObjectiveCard) this.secretObjectives.get(i)).getKingdom2() + " card." );
+                    System.out.println("UR angle of the bottom "+ ((VerticalConfigurationObjectiveCard) this.secretObjectives.get(i)).getKingdom2() + " card." );
                 else
-                    System.out.println("UL angle of the top "+ ((VerticalConfigurationObjectiveCard) this.secretObjectives.get(i)).getKingdom2() + " card.");
+                    System.out.println("UL angle of the bottom "+ ((VerticalConfigurationObjectiveCard) this.secretObjectives.get(i)).getKingdom2() + " card.");
                 System.out.println("You get 3 points every time you create this kind of configuration \n");
             }
         }
-
     }
 
     public void viewGoldTop(){
         System.out.print("The card that's now on top of the gold deck is a ");
         //KINGDOM
-
         if(this.goldTop.getCardKingdom().equals(Kingdom.Fungi))
             System.out.print(ConsoleColors.TEXT_RED + "FUNGI");
         else if(this.goldTop.getCardKingdom().equals(Kingdom.Insect))
@@ -838,13 +783,11 @@ public class TUI implements UIManager {
             System.out.print(ConsoleColors.TEXT_GREEN + "PLANT");
         else
             System.out.print(ConsoleColors.TEXT_CYAN + "ANIMAL");
-
         System.out.println(ConsoleColors.TEXT_RESET + " card \n");
     }
 
     public void viewResourceTop(){
         System.out.print("The card that's now on top of the resource deck is a ");
-
         if(this.resourceTop.getCardKingdom().equals(Kingdom.Fungi))
             System.out.print(ConsoleColors.TEXT_RED + "FUNGI");
         else if(this.resourceTop.getCardKingdom().equals(Kingdom.Insect))
@@ -853,16 +796,11 @@ public class TUI implements UIManager {
             System.out.print(ConsoleColors.TEXT_GREEN + "PLANT");
         else
             System.out.print(ConsoleColors.TEXT_CYAN + "ANIMAL");
-
         System.out.println(ConsoleColors.TEXT_RESET + " card \n");
-
     }
-
 
     public void viewGoldVisibleCards(){
         //List<PlayableCard> listTest = new ArrayList<>();
-
-
         System.out.println("The gold cards that are now visible on the table are the following: \n");
         for(int i=0; i < this.goldVisible.length; i++) {
             //KINGDOM GENERICO
@@ -882,14 +820,10 @@ public class TUI implements UIManager {
 
             System.out.println(ConsoleColors.TEXT_RESET + " card \n");
 
-
             //ELENCO DELLE RISORSE IN OGNI CORNER:
             System.out.println("This card has " + this.goldVisible[i].getFrontCorners().length + " visible corners: ");
             //scorro angoli FRONT
             for(int j=0; j < this.goldVisible[i].getFrontCorners().length; j++) {
-
-
-
                 if(j==0){
                     if(this.goldVisible[i].getFrontCorners()[j] == null)
                         System.out.println("The UL corner doesn't exist");
@@ -915,8 +849,6 @@ public class TUI implements UIManager {
                     } else {
                         System.out.println(ConsoleColors.TEXT_RESET + "The corner is visible but it doesn't have any resource or object");
                     }
-
-
                 }else if(j==1){
                     if(this.goldVisible[i].getFrontCorners()[j] == null)
                         System.out.println("The UL corner doesn't exist");
@@ -942,11 +874,7 @@ public class TUI implements UIManager {
                     }else {
                         System.out.println(ConsoleColors.TEXT_RESET + "The corner is visible but it doesn't have any resource or object");
                     }
-
-
-
                 }else if(j==2){
-
                     if(this.goldVisible[i].getFrontCorners()[j] == null)
                         System.out.println("The DL corner doesn't exist");
                     else if(this.goldVisible[i].getFrontCorners()[j].getContentKingdom() != null){
@@ -971,10 +899,7 @@ public class TUI implements UIManager {
                     }else {
                         System.out.println(ConsoleColors.TEXT_RESET + "The corner is visible but it doesn't have any resource or object");
                     }
-
-
                 }else {
-
                     if(this.goldVisible[i].getFrontCorners()[j] == null)
                         System.out.println("The DR corner doesn't exist");
                     else if(this.goldVisible[i].getFrontCorners()[j].getContentKingdom() != null){
@@ -999,10 +924,7 @@ public class TUI implements UIManager {
                     }else {
                         System.out.println(ConsoleColors.TEXT_RESET + "The corner is visible but it doesn't have any resource or object");
                     }
-
                 }
-
-
             }
             System.out.println("\n");
         }
@@ -1010,17 +932,13 @@ public class TUI implements UIManager {
 
     public void viewResourceVisibleCards(){
         System.out.println("The resource cards that are now visible on the table are the following \n");
-
         //List<PlayableCard> listTest = new ArrayList<>();
-
-
         for(int i=0; i < this.resourceVisible.length; i++) {
             //KINGDOM GENERICO
             if (i == 0) {
                 System.out.print(ConsoleColors.TEXT_RESET + "First card: ");
             } else
                 System.out.print(ConsoleColors.TEXT_RESET +  "Second card: ");
-
             if(this.resourceVisible[i].getCardKingdom().equals(Kingdom.Fungi))
                 System.out.print(ConsoleColors.TEXT_RED + "FUNGI");
             else if(this.resourceVisible[i].getCardKingdom().equals(Kingdom.Insect))
@@ -1029,17 +947,12 @@ public class TUI implements UIManager {
                 System.out.print(ConsoleColors.TEXT_GREEN + "PLANT");
             else
                 System.out.print(ConsoleColors.TEXT_CYAN + "ANIMAL");
-
             System.out.println(ConsoleColors.TEXT_RESET + " card \n");
-
 
             //ELENCO DELLE RISORSE IN OGNI CORNER:
             System.out.println("This card has " + this.resourceVisible[i].getFrontCorners().length + " visible corners: ");
             //scorro angoli FRONT
             for(int j=0; j < this.resourceVisible[i].getFrontCorners().length; j++) {
-
-
-
                 if(j==0){
                     if(this.resourceVisible[i].getFrontCorners()[j] == null)
                         System.out.println("The UL corner doesn't exist");
@@ -1065,8 +978,6 @@ public class TUI implements UIManager {
                     } else {
                         System.out.println(ConsoleColors.TEXT_RESET + "The corner is visible but it doesn't have any resource or object");
                     }
-
-
                 }else if(j==1){
                     if(this.resourceVisible[i].getFrontCorners()[j] == null)
                         System.out.println("The UL corner doesn't exist");
@@ -1092,11 +1003,7 @@ public class TUI implements UIManager {
                     }else {
                         System.out.println(ConsoleColors.TEXT_RESET + "The corner is visible but it doesn't have any resource or object");
                     }
-
-
-
                 }else if(j==2){
-
                     if(this.resourceVisible[i].getFrontCorners()[j] == null)
                         System.out.println("The DL corner doesn't exist");
                     else if(this.resourceVisible[i].getFrontCorners()[j].getContentKingdom() != null){
@@ -1121,10 +1028,7 @@ public class TUI implements UIManager {
                     }else {
                         System.out.println(ConsoleColors.TEXT_RESET + "The corner is visible but it doesn't have any resource or object");
                     }
-
-
                 }else {
-
                     if(this.resourceVisible[i].getFrontCorners()[j] == null)
                         System.out.println("The DR corner doesn't exist");
                     else if(this.resourceVisible[i].getFrontCorners()[j].getContentKingdom() != null){
@@ -1149,27 +1053,19 @@ public class TUI implements UIManager {
                     }else {
                         System.out.println(ConsoleColors.TEXT_RESET + "The corner is visible but it doesn't have any resource or object");
                     }
-
                 }
-
-
             }
             System.out.println("\n");
         }
-
-
     }
 
     public void viewPlayerInfo(){
-
         this.printTitle();
         System.out.println("These are your inforamtion");
-
         System.out.println("You have done "+ this.yourPlayerInfo.getScore());
 
         //TODO
         //System.out.println("The common objective "); oppure chaiamata al metodo viewCommonObjective
-
         System.out.println("You have: ");
         System.out.print("- ");
         System.out.print(ConsoleColors.TEXT_GREEN +"PLANT: ");
@@ -1189,18 +1085,15 @@ public class TUI implements UIManager {
 
         System.out.println("The player has the follwoing board:");
         System.out.println(this.yourPlayerInfo.getMap().toString());
-
     }
 
     public void viewOtherPlayerInfo(String username){
         this.printTitle();
         System.out.println("The following information are the one of " + username+" game");
-
         System.out.println(username + " has done "+ this.othersPlayerInfo.get(username).getScore());
 
         //TODO
         //System.out.println("The common objective "); oppure chaiamata al metodo viewCommonObjective
-
         System.out.println(username + " has:");
         System.out.print("- ");
         System.out.print(ConsoleColors.TEXT_GREEN +"PLANT: ");
@@ -1220,7 +1113,6 @@ public class TUI implements UIManager {
 
         System.out.println("The player has the follwoing board:");
         System.out.println(this.othersPlayerInfo.get(username).getMap().toString());
-
     }
 
     public void viewPlacement(){
@@ -1229,7 +1121,6 @@ public class TUI implements UIManager {
         for(String s : othersPlayerInfo.keySet()){
             System.out.println("- " + s + " has " + this.othersPlayerInfo.get(s));
         }
-
     }
 
     public void viewChat(){
@@ -1243,16 +1134,9 @@ public class TUI implements UIManager {
                 System.out.println("[from: "+m.getSender()+"] " + m.getMessage());
         }
     }
-
     public void viewErrorCommand(){
 
     }
-
-
-
-
-
-
 
     public void printTitle(){
         System.out.println("   ____          _             _   _       _                   _ _     ");
@@ -1263,7 +1147,6 @@ public class TUI implements UIManager {
         System.out.println("                                                                       ");
         System.out.println("\n");
     }
-
 
     public void clearTerminal(int linesToPreserve) {
         String ANSI_RESET = "\u001B[0m";
@@ -1277,7 +1160,6 @@ public class TUI implements UIManager {
         System.out.print("\u001B[H");
         System.out.flush();
     }
-
 
     public static void waitSeconds(int seconds) {
         long startTime = System.currentTimeMillis();
@@ -1339,11 +1221,5 @@ public class TUI implements UIManager {
 //        table.insertCard(myTui.getExampleResourceCard("R15"), Corner.UL, "S85", PlayableCard.BACK);
 //
 //        CardPrinter.printMap(table.getMap());
-
     }
-
-
-
-
-
 }
