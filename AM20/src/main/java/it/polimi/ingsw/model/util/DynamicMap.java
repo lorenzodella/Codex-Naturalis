@@ -230,11 +230,11 @@ public class DynamicMap<K,T> implements Serializable {
     }
 
     /**
-     * Creates a list of sorted maps with the elements of the map.
+     * Creates a list of sorted maps with the elements' key of the map.
      * Maps are sorted by y-position (descending), their elements are sorted by x-position (ascending).
      * @return a list of maps representing a matrix: key is the position, value is the element
      */
-    public List<Map<Point, K>> getMapElementsLocation(){
+    private List<Map<Point, K>> getMapElementsKeyLocation(){
         Collection<Map<Point, K>> list = map.entrySet().stream()
                 .collect(Collectors.groupingBy(e -> e.getValue().pos.y, TreeMap::new,
                         Collectors.toMap(e -> e.getValue().pos, Map.Entry::getKey)))
@@ -250,23 +250,47 @@ public class DynamicMap<K,T> implements Serializable {
     }
 
     /**
+     * Creates a list of sorted maps with the elements of the map.
+     * Maps are sorted by y-position (descending), their elements are sorted by x-position (ascending).
+     * @return a list of maps representing a matrix: key is the position, value is the element
+     */
+    public List<Map<Point, T>> getMapElementsLocation(){
+        Collection<Map<Point, T>> list = map.values().stream()
+                .collect(Collectors.groupingBy(e -> e.pos.y, TreeMap::new,
+                        Collectors.toMap(e -> e.pos, e -> e.value)))
+                .values();
+        return list.stream()
+                .sorted((a,b) -> Integer.compare(
+                        b.keySet().stream().findAny().map(e->e.y).orElse(0),
+                        a.keySet().stream().findAny().map(e->e.y).orElse(0)
+                ))
+                .map(m -> m.entrySet().stream().sorted(Comparator.comparingInt(a -> a.getKey().x))
+                        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (a,b)->a, LinkedHashMap::new)))
+                .collect(Collectors.toList());
+    }
+
+    public int min(){
+        return map.values().stream().min(Comparator.comparingInt(a -> a.pos.x)).map(e->e.pos.x).orElse(0);
+    }
+
+    /**
      * Display the map.
      * @return a string representative the map
      */
     public String toString(){
         int min = map.values().stream().min(Comparator.comparingInt(a -> a.pos.x)).map(e->e.pos.x).orElse(0);
         int tmp;
-        List<Map<Point, K>> m = getMapElementsLocation();
+        List<Map<Point, K>> m = getMapElementsKeyLocation();
         StringBuilder s = new StringBuilder();
         for (Map<Point, K> orderedMap : m) {
             tmp = min;
             for (Map.Entry<Point, K> t : orderedMap.entrySet()) {
                 for(int i=tmp; i<t.getKey().x; i++){
-                    s.append("    ");
+                    s.append("  ");
                 }
-                tmp = t.getKey().x;
+                tmp = t.getKey().x+1;
                 //s.append(t.value+"("+t.pos.x+","+t.pos.y+")");
-                s.append(t.getValue());
+                s.append(t.getValue()+" ");
             }
             s.append("\n");
         }

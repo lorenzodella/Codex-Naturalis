@@ -26,7 +26,6 @@ public class RMIClientReceiver extends UnicastRemoteObject implements Connection
 
     @Override
     public void callConnectionAckMessage(ConnectionAckMessage message) throws RemoteException {
-
         if(!message.doesGameStarts()){ //false è ConnectionAckMessage
             this.uiUpdater.connectionAck(message);
         }else if(message.doesGameStarts()){ //true è StartGameMessage

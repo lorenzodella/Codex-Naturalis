@@ -30,7 +30,8 @@ public class RMIClientSender extends ClientSender{
     void login(String client) {
         try {
             Message msg = stub.login(client, receiver);
-            System.out.println("stub.login: \n"+ msg);
+            receiver.callMessage(msg);
+            //System.out.println("stub.login: \n"+ msg);
         } catch (RemoteException e) {
             receiver.callErrorMessage(new ErrorMessage("Server not reachable"));
         } catch (CannotJoinGameException e) {
@@ -43,7 +44,7 @@ public class RMIClientSender extends ClientSender{
         try {
             Message msg = stub.startNewGame(client, numPlayers, receiver);
             receiver.callMessage(msg);
-            System.out.println("stub.startNewGame: \n"+ msg);
+            //System.out.println("stub.startNewGame: \n"+ msg);
         } catch (RemoteException e) {
             receiver.callErrorMessage(new ErrorMessage("Server not reachable"));
         } catch (InvalidArgumentException | InvalidPlayingException e) {
@@ -56,7 +57,7 @@ public class RMIClientSender extends ClientSender{
         try {
             StarterCardAckMessage msg = stub.chooseStarterCardSide(nickname, side);
             receiver.callStarterCardAckMessage(msg);
-            System.out.println("stub.chooseStarterCardSide: \n"+msg);
+            //System.out.println("stub.chooseStarterCardSide: \n"+msg);
         } catch (RemoteException e) {
             receiver.callErrorMessage(new ErrorMessage("Server not reachable"));
         } catch (InvalidArgumentException | InvalidPlayingException e) {
@@ -69,7 +70,7 @@ public class RMIClientSender extends ClientSender{
         try {
             ObjectiveAckMessage msg = stub.chooseObjective(nickname, index);
             receiver.callObjectiveAckMessage(msg);
-            System.out.println("stub.chooseObjective: \n"+msg);
+            //System.out.println("stub.chooseObjective: \n"+msg);
 
         } catch (RemoteException e) {
             receiver.callErrorMessage(new ErrorMessage("Server not reachable"));
@@ -84,7 +85,7 @@ public class RMIClientSender extends ClientSender{
         try {
             AcknowledgeMessage msg = this.stub.playCard(playerNickname, cardIndex, angle, targetID, side);
             receiver.callAcknowledgeMessage(msg);
-            System.out.println("stub.playCard: \n"+msg);
+            //System.out.println("stub.playCard: \n"+msg);
         } catch (RemoteException e) {
             receiver.callErrorMessage(new ErrorMessage("Server not reachable"));
         } catch (InvalidArgumentException | RequirementsNotRespectedException | InvalidPlayingException |
@@ -100,7 +101,7 @@ public class RMIClientSender extends ClientSender{
         try {
             AcknowledgeMessage msg = this.stub.pickCard(playerNickname, deck);
             receiver.callAcknowledgeMessage(msg);
-            System.out.println("stub.pickCardDeck: \n"+msg);
+            //System.out.println("stub.pickCardDeck: \n"+msg);
         } catch (RemoteException e) {
             receiver.callErrorMessage(new ErrorMessage("Server not reachable"));
         } catch (InvalidArgumentException | InvalidPlayingException | FinishedCardStackException e) {
@@ -114,7 +115,7 @@ public class RMIClientSender extends ClientSender{
         try {
             AcknowledgeMessage msg = this.stub.pickCard(playerNickname, deck, index);
             receiver.callAcknowledgeMessage(msg);
-            System.out.println("stub.playCard: \n"+msg);
+            //System.out.println("stub.playCard: \n"+msg);
         } catch (RemoteException e) {
             receiver.callErrorMessage(new ErrorMessage("Server not reachable"));
         } catch (InvalidArgumentException | InvalidPlayingException | FinishedCardStackException e) {
@@ -129,7 +130,7 @@ public class RMIClientSender extends ClientSender{
 
             Message msg = this.stub.sendChatMessage(sender, recipient, message);
             receiver.callMessage(msg);
-            System.out.println("stub.sendChatMessage: \n"+msg);
+            //System.out.println("stub.sendChatMessage: \n"+msg);
         } catch (RemoteException e) {
             receiver.callErrorMessage(new ErrorMessage("Server not reachable"));
         }
@@ -141,7 +142,7 @@ public class RMIClientSender extends ClientSender{
         try {
             Message msg = this.stub.sendBroadcastChatMessage(sender, message);
             receiver.callMessage(msg);
-            System.out.println("stub.sendBroadcastChatMessage: \n"+msg);
+            //System.out.println("stub.sendBroadcastChatMessage: \n"+msg);
         } catch (RemoteException e) {
             receiver.callErrorMessage(new ErrorMessage("Server not reachable"));
         }

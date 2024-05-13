@@ -1,24 +1,26 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.controller.PlayerInfo;
-import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.controller.messages.ChatMessage;
+import it.polimi.ingsw.model.PlayerTable;
+import it.polimi.ingsw.model.cards.Corner;
 import it.polimi.ingsw.model.cards.Kingdom;
 import it.polimi.ingsw.model.cards.SpecialObject;
 import it.polimi.ingsw.model.cards.objective.*;
 import it.polimi.ingsw.model.cards.playable.*;
+import it.polimi.ingsw.model.exceptions.InvalidAngleCoveredException;
+import it.polimi.ingsw.model.exceptions.InvalidPositionException;
+import it.polimi.ingsw.model.exceptions.RequirementsNotRespectedException;
+import it.polimi.ingsw.model.exceptions.TargetNotPresentException;
 import it.polimi.ingsw.model.util.XMLparser;
 
-import java.sql.SQLOutput;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class TUI implements UIManager {
 
     private ConsoleColors consoleColors = new ConsoleColors();
     private List<PlayableCard> cards;
-    private HashMap<String, List<String>> mapMsg;
+    private List<ChatMessage> messages;
     private ObjectiveCard[] secretObjectives;
     private PlayableCard goldTop;
     private PlayableCard resourceTop;
@@ -29,70 +31,85 @@ public class TUI implements UIManager {
     private ObjectiveCard[] commonObjectives;
     private StarterCard starterCard;
     private String nickname;
-    private List<String> listOtherPlayer;
 
     public TUI(){
-        this.mapMsg = new HashMap<>();
-        this.listOtherPlayer = new ArrayList<>();
+        this.messages = new LinkedList<>();
         this.cards = new ArrayList<>();
 
     }
 
+    @Override
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
 
     @Override
     public void updateCards(List<PlayableCard> cards) {
         this.cards = cards;
+        viewHandCards();
     }
 
     @Override
-    public void updateChatMessage(String sender, String message) {
-        this.mapMsg.get(sender).add(message);
+    public void updateChatMessage(ChatMessage msg) {
+        this.messages.add(msg);
+        if(msg.getRecipient().equals(nickname))
+            System.out.println("You received a message");
+        viewChat();
     }
 
     @Override
     public void updateSecretObjectives(ObjectiveCard[] secretObjectives) {
         this.secretObjectives = secretObjectives;
+        viewSecretObjective();
     }
 
     @Override
     public void updateGoldTop(PlayableCard goldTop) {
         this.goldTop = goldTop;
+        viewGoldTop();
     }
 
     @Override
     public void updateResourceTop(PlayableCard resourceTop) {
         this.resourceTop = resourceTop;
+        viewResourceTop();
     }
 
     @Override
     public void updateGoldVisible(PlayableCard[] goldVisible) {
         this.goldVisible = goldVisible;
+        viewGoldVisibleCards();
     }
 
     @Override
     public void updateResourceVisible(PlayableCard[] resourceVisible) {
         this.resourceVisible = resourceVisible;
+        viewResourceVisibleCards();
     }
 
     @Override
     public void updateYourPlayerInfo(PlayerInfo yourPlayerInfo) {
         this.yourPlayerInfo = yourPlayerInfo;
+        viewPlayerInfo();
     }
 
     @Override
     public void updateOtherPlayerInfo(HashMap<String, PlayerInfo> otherPlayerInfo) {
         this.othersPlayerInfo = otherPlayerInfo;
-        this.listOtherPlayer.addAll(otherPlayerInfo.keySet());
+        for (String nickname : otherPlayerInfo.keySet())
+            viewOtherPlayerInfo(nickname);
     }
 
     @Override
     public void updateCommonObjectives(ObjectiveCard[] commonObjectives) {
         this.commonObjectives = commonObjectives;
+        viewCommonObjective();
     }
 
     @Override
     public void updateStarterCard(StarterCard starterCard) {
         this.starterCard = starterCard;
+        viewStarterCard();
     }
 
     @Override
@@ -1224,20 +1241,23 @@ public class TUI implements UIManager {
     public void viewPlacement(){
         System.out.println("The placement has the following order: ");
         System.out.println("- " + this.nickname + " has " + this.yourPlayerInfo.getScore());
-        for(String s : this.listOtherPlayer){
+        for(String s : othersPlayerInfo.keySet()){
             System.out.println("- " + s + " has " + this.othersPlayerInfo.get(s));
         }
 
     }
 
-    public void viewChatMessage(){
-
+    public void viewChat(){
+        System.out.println("CHAT");
+        for(ChatMessage m : messages){
+            if(m.getSender().equals(nickname))
+                System.out.println("[to: "+m.getRecipient()+"] " + m.getMessage());
+            else if(m.getRecipient()==null)
+                System.out.println("[to: everyone] " + m.getMessage());
+            else if(m.getRecipient().equals(nickname))
+                System.out.println("[from: "+m.getSender()+"] " + m.getMessage());
+        }
     }
-
-//    public void viewBroadcastChatMessage(){
-//
-//    }
-
 
 
 
@@ -1296,7 +1316,7 @@ public class TUI implements UIManager {
         System.out.println("/placement (view the placement of the game)");
     }
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, TargetNotPresentException, InvalidPositionException, RequirementsNotRespectedException, InvalidAngleCoveredException {
         TUI myTui = new TUI();
         //myTui.printTitle();
 
@@ -1315,6 +1335,13 @@ public class TUI implements UIManager {
         //myTui.viewGoldVisibleCards();
         //myTui.viewResourceVisibleCards();
         ;
+        //myTui.viewStarterCard();
+
+//        PlayerTable table = new PlayerTable();
+//        table.insertStarterCard(PlayableCard.FRONT, myTui.getExampleStarterCard());
+//        table.insertCard(myTui.getExampleResourceCard("R15"), Corner.UL, "S85", PlayableCard.BACK);
+//
+//        CardPrinter.printMap(table.getMap());
 
     }
 
@@ -1324,11 +1351,11 @@ public class TUI implements UIManager {
     }
     ResourceCard getExampleResourceCard(String id){
         ArrayList<PlayableCard> ResourceCard = XMLparser.parseResourceCards("resourceCards.xml");
-        return (ResourceCard) ResourceCard.stream().filter(x->x.getID().equals("R15")).findAny().orElse(null);
+        return (ResourceCard) ResourceCard.stream().filter(x->x.getID().equals(id)).findAny().orElse(null);
     }
     CornerGoldCard getExampleCornerGoldCard(String id){
         ArrayList<PlayableCard> CornerGoldCard = XMLparser.parseGoldCards("goldCards.xml");
-        return (CornerGoldCard) CornerGoldCard.stream().filter(x->x.getID().equals("G74")).findAny().orElse(null);
+        return (CornerGoldCard) CornerGoldCard.stream().filter(x->x.getID().equals(id)).findAny().orElse(null);
     }
     ObjectGoldCard getExampleObjectGoldCard(){
         ArrayList<PlayableCard> ObjectGoldCard = XMLparser.parseGoldCards("goldCards.xml");

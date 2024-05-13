@@ -67,7 +67,7 @@ public class UIUpdater  {
     }
 
     public void chatMessage(ChatMessage msg){
-        manager.updateChatMessage(msg.getSender(), msg.getMessage());
+        manager.updateChatMessage(msg);
     }
 
     public void objectiveMessage(ObjectiveAckMessage msg){

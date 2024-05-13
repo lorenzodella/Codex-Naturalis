@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.controller.PlayerInfo;
+import it.polimi.ingsw.controller.messages.ChatMessage;
 import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.model.cards.playable.StarterCard;
@@ -11,12 +12,17 @@ import java.util.List;
 public class GUI implements UIManager {
 
     @Override
+    public void setNickname(String nickname) {
+
+    }
+
+    @Override
     public void updateCards(List<PlayableCard> cards) {
 
     }
 
     @Override
-    public void updateChatMessage(String sender, String message) {
+    public void updateChatMessage(ChatMessage msg) {
 
     }
 
