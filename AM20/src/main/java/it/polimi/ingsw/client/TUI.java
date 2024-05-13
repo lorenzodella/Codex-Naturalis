@@ -1244,6 +1244,10 @@ public class TUI implements UIManager {
         }
     }
 
+    public void viewErrorCommand(){
+
+    }
+
 
 
 
@@ -1299,6 +1303,14 @@ public class TUI implements UIManager {
         System.out.println("/myPlayerInfo (to visualize your info)");
         System.out.println("/playerInfo + username (usarname of the player you want to view)");
         System.out.println("/placement (view the placement of the game)");
+        System.out.println("/viewDeck + index (0 for the resource deck and 1 for gold deck)");
+        System.out.println("/viewCommonObjective");
+        System.out.println("/viewSecretObjective");
+        System.out.println("/viewStarterCard");
+        System.out.println("/viewResourceVisibile");
+        System.out.println("/viewGoldVisible");
+        System.out.println("/viewChat");
+        System.out.println("/viewHand");
     }
 
     public static void main(String[] args) throws InterruptedException, TargetNotPresentException, InvalidPositionException, RequirementsNotRespectedException, InvalidAngleCoveredException {

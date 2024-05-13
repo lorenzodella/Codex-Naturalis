@@ -75,14 +75,28 @@ public class TUIController extends ClientController implements Runnable{
 
                 }else if(command[0].equals("/placement")){
                     this.myTUI.viewPlacement();
+                }else if(command[0].equals("/viewDeck")){
+                    if(command[1].equals("0"))
+                        this.myTUI.viewResourceTop();
+                    else
+                        this.myTUI.viewGoldTop();
+                }else if(command[0].equals("/viewCommonObjective")){
+                    this.myTUI.viewCommonObjective();
+                }else if(command[0].equals("/viewSecretObjective")){
+                    this.myTUI.viewSecretObjective();
+                }else if(command[0].equals("/viewStarterCard")){
+                    this.myTUI.viewStarterCard();
+                }else if(command[0].equals("/viewResourceVisibile")){
+                    this.myTUI.viewResourceVisibleCards();
+                }else if(command[1].equals("/viewGoldVisible")){
+                    this.myTUI.viewGoldVisibleCards();
+                }else if(command[0].equals("/viewChat")){
+                    this.myTUI.viewChat();
+                }else if(command[0].equals("/viewHand")){
+                    this.myTUI.viewHandCards();
+                }else {
+                    this.myTUI.viewErrorCommand();
                 }
-                //TODO manca la gestione del caso in cui il comando non è valido
-                //TODO manca il comando per vedere i deck
-                //TODO manca il comando per vedere gli obiettivi (comuni e non)
-                //TODO manca il comando per vedere la propria starter card
-                //TODO manca il comando per vedere le proprie carte
-                //TODO manca il comando per aprire la chat
-
 
             } catch (IOException e) {
                 throw new RuntimeException(e);
