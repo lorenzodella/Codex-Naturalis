@@ -54,7 +54,7 @@ class GameTest {
             //correct number of cards
             assertEquals(3, p.getCards().stream().filter(Objects::nonNull).distinct().count());
             //two objectives per player
-            assertEquals(2, Arrays.stream(p.getSecretObjective()).filter(Objects::nonNull).distinct().count());
+            assertEquals(2, p.getSecretObjective().stream().filter(Objects::nonNull).distinct().count());
         }
         //no duplicate card
         assertEquals(3L*playersList.size(), playersList.stream().flatMap(p -> p.getCards().stream()).distinct().count());
@@ -88,10 +88,14 @@ class GameTest {
         Player p2 = game.getPlayers().stream()
                 .filter(p -> p.getNickname().equals("p2"))
                 .findFirst().get();
-        ObjectiveCard[] old = p2.getSecretObjective().clone();
+        ArrayList<ObjectiveCard> old = new ArrayList<ObjectiveCard>();
+        old.add(p2.getSecretObjective().get(0));
+        old.add(p2.getSecretObjective().get(1));
         game.chooseObjective(1, "p2");
-        assertEquals(old[1], p2.getSecretObjective()[0]);
-        assertNull(p2.getSecretObjective()[1]);
+        assertEquals(1, p2.getSecretObjective().size());
+        assertEquals(old.get(1), p2.getSecretObjective().get(0));
+        //assertEquals(old.get(1), p2.getSecretObjective().get(0));
+        //assertNull(p2.getSecretObjective().get(1));
     }
 
     @Test

@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.model.cards.playable.StarterCard;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class GUI implements UIManager {
     }
 
     @Override
-    public void updateSecretObjectives(ObjectiveCard[] secretObjectives) {
+    public void updateSecretObjectives(ArrayList<ObjectiveCard> secretObjectives) {
 
     }
 

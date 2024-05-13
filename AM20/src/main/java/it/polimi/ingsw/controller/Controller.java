@@ -316,7 +316,7 @@ public class Controller implements GameManager {
         for(Player p : gameModel.getPlayers()){
             //check if someone has not chosen his objectiveCard yet
             //negativo
-            if(p.getSecretObjective()[1] != null){
+            if(p.getSecretObjective().get(1) != null){
                 HashMap<String, ObjectiveAckMessage> msg = messageBuilder.notifyChosenSecretObjective(player); //setti secretobjectives[]
                 return msg;
             }

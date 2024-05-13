@@ -66,9 +66,9 @@ class PlayerTest {
         DiagonalConfigurationObjectiveCard diagonalConfigurationObjectiveCard1 = getExampleDiagonalConfigurationObjectiveCard("O87");
         DiagonalConfigurationObjectiveCard diagonalConfigurationObjectiveCard2 = getExampleDiagonalConfigurationObjectiveCard("O88");
 
-        ObjectiveCard[] vet = new ObjectiveCard[2];
-        vet[0] = diagonalConfigurationObjectiveCard1;
-        vet[1] = diagonalConfigurationObjectiveCard2;
+        ArrayList<ObjectiveCard> vet = new ArrayList<>();
+        vet.add(0, diagonalConfigurationObjectiveCard1);
+        vet.add(1, diagonalConfigurationObjectiveCard2);
         p.setSecretObjective(vet);
         p.chooseObjectiveCard(0);
 

@@ -3,6 +3,7 @@ package it.polimi.ingsw.controller.messages;
 import it.polimi.ingsw.controller.PlayerInfo;
 import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class StarterCardAckMessage extends Message {
@@ -37,11 +38,11 @@ public class StarterCardAckMessage extends Message {
     public void setCommonObjectives(ObjectiveCard[] commonObjectives) {
     }
 
-    public ObjectiveCard[] getSecretObjectives() {
+    public ArrayList<ObjectiveCard> getSecretObjectives() {
         return null;
     }
 
-    public void setSecretObjectives(ObjectiveCard[] secretObjectives) {
+    public void setSecretObjectives(ArrayList<ObjectiveCard> secretObjectives) {
 
     }
 

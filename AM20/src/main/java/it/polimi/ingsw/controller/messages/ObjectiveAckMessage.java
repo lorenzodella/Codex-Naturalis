@@ -2,11 +2,13 @@ package it.polimi.ingsw.controller.messages;
 
 import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
 
+import java.util.ArrayList;
+
 public class ObjectiveAckMessage extends Message {
     /**
      * This attribute a 2 items array that contains the 2 secret objectives
      */
-    private ObjectiveCard[] secretObjectives;
+    private ArrayList<ObjectiveCard> secretObjectives;
 
 
     public boolean shouldStartPlaying() {
@@ -14,11 +16,11 @@ public class ObjectiveAckMessage extends Message {
     }
 
 
-    public ObjectiveCard[] getSecretObjectives() {
+    public ArrayList<ObjectiveCard> getSecretObjectives() {
         return secretObjectives;
     }
 
-    public void setSecretObjectives(ObjectiveCard[] secretObjectives) {
+    public void setSecretObjectives(ArrayList<ObjectiveCard> secretObjectives) {
         this.secretObjectives = secretObjectives;
     }
 

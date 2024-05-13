@@ -337,9 +337,9 @@ class ControllerTest {
         });
 
         //first choose
-        ObjectiveCard  card = c.getGameModel().getPlayers().get(1).getSecretObjective()[1];
+        ObjectiveCard  card = c.getGameModel().getPlayers().get(1).getSecretObjective().get(1);
         objectiveAckMessages = c.chooseObjective("Pippo", 1);
-        assertEquals(card, c.getGameModel().getPlayers().get(1).getSecretObjective()[0] );
+        assertEquals(card, c.getGameModel().getPlayers().get(1).getSecretObjective().get(0));
         assertEquals(1, objectiveAckMessages.size());
         assertFalse(objectiveAckMessages.get("Pippo").shouldStartPlaying());
         //check info of objectives

@@ -21,7 +21,7 @@ public class TUI implements UIManager {
     private ConsoleColors consoleColors = new ConsoleColors();
     private List<PlayableCard> cards;
     private List<ChatMessage> messages;
-    private ObjectiveCard[] secretObjectives;
+    private ArrayList<ObjectiveCard> secretObjectives;
     private PlayableCard goldTop;
     private PlayableCard resourceTop;
     private PlayableCard[] goldVisible;
@@ -58,7 +58,7 @@ public class TUI implements UIManager {
     }
 
     @Override
-    public void updateSecretObjectives(ObjectiveCard[] secretObjectives) {
+    public void updateSecretObjectives(ArrayList<ObjectiveCard> secretObjectives) {
         if(secretObjectives!=null) {
             this.secretObjectives = secretObjectives;
             viewSecretObjective();
@@ -741,58 +741,58 @@ public class TUI implements UIManager {
 
         System.out.println("This is your secret objectives: \n");
         //scorro array dei common objectives
-        for(int i=0; i<this.secretObjectives.length; i++){
-            if(this.secretObjectives[i] instanceof DiagonalConfigurationObjectiveCard){
+        for(int i=0; i<this.secretObjectives.size(); i++){
+            if(this.secretObjectives.get(i) instanceof DiagonalConfigurationObjectiveCard){
                 System.out.println("- DIAGONAL CONFIGURATION OBJECTIVE: ");
                 System.out.print("You need to create a diagonal configuration, with ");
 
-                if(((DiagonalConfigurationObjectiveCard) this.secretObjectives[i]).getKingdom().equals(Kingdom.Fungi))
+                if(((DiagonalConfigurationObjectiveCard) this.secretObjectives.get(i)).getKingdom().equals(Kingdom.Fungi))
                     System.out.print(ConsoleColors.TEXT_RED + "FUNGI");
-                else if(((DiagonalConfigurationObjectiveCard) this.secretObjectives[i]).getKingdom().equals(Kingdom.Insect))
+                else if(((DiagonalConfigurationObjectiveCard) this.secretObjectives.get(i)).getKingdom().equals(Kingdom.Insect))
                     System.out.print(ConsoleColors.TEXT_PURPLE + "INSECT");
-                else if(((DiagonalConfigurationObjectiveCard) this.secretObjectives[i]).getKingdom().equals(Kingdom.Plant))
+                else if(((DiagonalConfigurationObjectiveCard) this.secretObjectives.get(i)).getKingdom().equals(Kingdom.Plant))
                     System.out.print(ConsoleColors.TEXT_GREEN + "PLANT");
                 else
                     System.out.println(ConsoleColors.TEXT_CYAN + "ANIMAL");
                 System.out.print(ConsoleColors.TEXT_RESET + " resource cards only, starting by covering the ");
 
-                if(((DiagonalConfigurationObjectiveCard) this.secretObjectives[i]).getCoveredCorner() == 0)
+                if(((DiagonalConfigurationObjectiveCard) this.secretObjectives.get(i)).getCoveredCorner() == 0)
                     System.out.println("UL first");
-                else if(((DiagonalConfigurationObjectiveCard) this.secretObjectives[i]).getCoveredCorner() == 1)
+                else if(((DiagonalConfigurationObjectiveCard) this.secretObjectives.get(i)).getCoveredCorner() == 1)
                     System.out.println("UR first");
-                else if(((DiagonalConfigurationObjectiveCard) this.secretObjectives[i]).getCoveredCorner() == 2)
+                else if(((DiagonalConfigurationObjectiveCard) this.secretObjectives.get(i)).getCoveredCorner() == 2)
                     System.out.println("DL first");
-                else if(((DiagonalConfigurationObjectiveCard) this.secretObjectives[i]).getCoveredCorner() == 3)
+                else if(((DiagonalConfigurationObjectiveCard) this.secretObjectives.get(i)).getCoveredCorner() == 3)
                     System.out.println("DR first");
                 System.out.println("You get 2 points every time you create this kind of configuration\n ");
-            }else if(this.secretObjectives[i] instanceof PairOfObjectsObjectiveCard){
+            }else if(this.secretObjectives.get(i) instanceof PairOfObjectsObjectiveCard){
                 System.out.println("- PAIR OF OBJECTS OBJECTIVES: ");
                 System.out.println("You get 2 points every time you collect two " +
-                        ((PairOfObjectsObjectiveCard) this.secretObjectives[i]).getSpecialObject() +" objects \n");
-            }else if(this.secretObjectives[i] instanceof TrioOfObjectsObjectiveCard){
+                        ((PairOfObjectsObjectiveCard) this.secretObjectives.get(i)).getSpecialObject() +" objects \n");
+            }else if(this.secretObjectives.get(i) instanceof TrioOfObjectsObjectiveCard){
                 System.out.println("- TRIO OF OBJECTS OBJECTIVE: ");
                 System.out.println("You get 2 points every time you collect an Inkwell, a Manuscript and a Quill \n");
-            }else if(this.secretObjectives[i] instanceof TrioOfResourcesObjectiveCard){
+            }else if(this.secretObjectives.get(i) instanceof TrioOfResourcesObjectiveCard){
                 System.out.println("- TRIO OF RESOURCES OBJECTIVE: ");
                 System.out.print("You get 2 points every time you collect three ");
-                if(((TrioOfResourcesObjectiveCard) this.secretObjectives[i]).getResourcesKingdom().equals(Kingdom.Fungi))
+                if(((TrioOfResourcesObjectiveCard) this.secretObjectives.get(i)).getResourcesKingdom().equals(Kingdom.Fungi))
                     System.out.print(ConsoleColors.TEXT_RED + "FUNGI");
-                else if(((TrioOfResourcesObjectiveCard)this.secretObjectives[i]).getResourcesKingdom().equals(Kingdom.Insect))
+                else if(((TrioOfResourcesObjectiveCard)this.secretObjectives.get(i)).getResourcesKingdom().equals(Kingdom.Insect))
                     System.out.print(ConsoleColors.TEXT_PURPLE + "INSECT");
-                else if(((TrioOfResourcesObjectiveCard) this.secretObjectives[i]).getResourcesKingdom().equals(Kingdom.Plant))
+                else if(((TrioOfResourcesObjectiveCard) this.secretObjectives.get(i)).getResourcesKingdom().equals(Kingdom.Plant))
                     System.out.print(ConsoleColors.TEXT_GREEN + "PLANT");
                 else
                     System.out.print(ConsoleColors.TEXT_CYAN + "ANIMAL");
                 System.out.println(ConsoleColors.TEXT_RESET + " resource cards \n");
 
-            }else if(this.secretObjectives[i] instanceof VerticalConfigurationObjectiveCard){
+            }else if(this.secretObjectives.get(i) instanceof VerticalConfigurationObjectiveCard){
                 System.out.println("- VERTICAL CONFIGURATION OBJECTIVE: ");
                 System.out.print("You need to create a vertical configuration, with a vertical occurrence of a ");
-                if(((VerticalConfigurationObjectiveCard) this.secretObjectives[i]).getKingdom2().equals(Kingdom.Fungi))
+                if(((VerticalConfigurationObjectiveCard) this.secretObjectives.get(i)).getKingdom2().equals(Kingdom.Fungi))
                     System.out.print(ConsoleColors.TEXT_RED + "FUNGI");
-                else if(((VerticalConfigurationObjectiveCard) this.secretObjectives[i]).getKingdom2().equals(Kingdom.Insect))
+                else if(((VerticalConfigurationObjectiveCard) this.secretObjectives.get(i)).getKingdom2().equals(Kingdom.Insect))
                     System.out.print(ConsoleColors.TEXT_PURPLE + "INSECT");
-                else if(((VerticalConfigurationObjectiveCard) this.secretObjectives[i]).getKingdom2().equals(Kingdom.Plant))
+                else if(((VerticalConfigurationObjectiveCard) this.secretObjectives.get(i)).getKingdom2().equals(Kingdom.Plant))
                     System.out.print(ConsoleColors.TEXT_GREEN + "PLANT");
                 else
                     System.out.print(ConsoleColors.TEXT_CYAN + "ANIMAL");
@@ -801,25 +801,25 @@ public class TUI implements UIManager {
 
                 System.out.print(" This objective also needs of a ");
 
-                if(((VerticalConfigurationObjectiveCard) this.secretObjectives[i]).getKingdom1().equals(Kingdom.Fungi))
+                if(((VerticalConfigurationObjectiveCard) this.secretObjectives.get(i)).getKingdom1().equals(Kingdom.Fungi))
                     System.out.print(ConsoleColors.TEXT_RED + "FUNGI");
-                else if(((VerticalConfigurationObjectiveCard) this.secretObjectives[i]).getKingdom1().equals(Kingdom.Insect))
+                else if(((VerticalConfigurationObjectiveCard) this.secretObjectives.get(i)).getKingdom1().equals(Kingdom.Insect))
                     System.out.print(ConsoleColors.TEXT_PURPLE + "INSECT");
-                else if(((VerticalConfigurationObjectiveCard) this.secretObjectives[i]).getKingdom1().equals(Kingdom.Plant))
+                else if(((VerticalConfigurationObjectiveCard) this.secretObjectives.get(i)).getKingdom1().equals(Kingdom.Plant))
                     System.out.print(ConsoleColors.TEXT_GREEN + "PLANT");
                 else
                     System.out.print(ConsoleColors.TEXT_CYAN + "ANIMAL");
 
                 System.out.print(ConsoleColors.TEXT_RESET+ " card that should cover the ");
 
-                if(((VerticalConfigurationObjectiveCard) this.secretObjectives[i]).getCoveredCorner() == 0)
-                    System.out.println("DR angle of the bottom " +((VerticalConfigurationObjectiveCard) this.secretObjectives[i]).getKingdom2() + " card." );
-                else if(((VerticalConfigurationObjectiveCard) this.secretObjectives[i]).getCoveredCorner() == 1)
-                    System.out.println("DL angle of the bottom " + ((VerticalConfigurationObjectiveCard) this.secretObjectives[i]).getKingdom2() + " card.");
-                else if(((VerticalConfigurationObjectiveCard) this.secretObjectives[i]).getCoveredCorner() == 2)
-                    System.out.println("UR angle of the top "+ ((VerticalConfigurationObjectiveCard) this.secretObjectives[i]).getKingdom2() + " card." );
+                if(((VerticalConfigurationObjectiveCard) this.secretObjectives.get(i)).getCoveredCorner() == 0)
+                    System.out.println("DR angle of the bottom " +((VerticalConfigurationObjectiveCard) this.secretObjectives.get(i)).getKingdom2() + " card." );
+                else if(((VerticalConfigurationObjectiveCard) this.secretObjectives.get(i)).getCoveredCorner() == 1)
+                    System.out.println("DL angle of the bottom " + ((VerticalConfigurationObjectiveCard) this.secretObjectives.get(i)).getKingdom2() + " card.");
+                else if(((VerticalConfigurationObjectiveCard) this.secretObjectives.get(i)).getCoveredCorner() == 2)
+                    System.out.println("UR angle of the top "+ ((VerticalConfigurationObjectiveCard) this.secretObjectives.get(i)).getKingdom2() + " card." );
                 else
-                    System.out.println("UL angle of the top "+ ((VerticalConfigurationObjectiveCard) this.secretObjectives[i]).getKingdom2() + " card.");
+                    System.out.println("UL angle of the top "+ ((VerticalConfigurationObjectiveCard) this.secretObjectives.get(i)).getKingdom2() + " card.");
                 System.out.println("You get 3 points every time you create this kind of configuration \n");
             }
         }

@@ -2,7 +2,10 @@ package it.polimi.ingsw.controller.messages;
 
 import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
 
+import java.util.ArrayList;
+
 public class StartChoosingObjectiveMessage extends StarterCardAckMessage {
+
     /**
      * This attribute a 2 items array that contains the 2 common objectives
      */
@@ -11,7 +14,7 @@ public class StartChoosingObjectiveMessage extends StarterCardAckMessage {
      * This attribute a 2 items array that contains the 2 secret objectives
      * ps: the player now needs to choose the secret objective they want
      */
-    private ObjectiveCard[] secretObjectives;
+    private ArrayList<ObjectiveCard> secretObjectives;
 
     @Override
     public boolean shouldChooseObjective() {
@@ -29,14 +32,15 @@ public class StartChoosingObjectiveMessage extends StarterCardAckMessage {
     }
 
     @Override
-    public ObjectiveCard[] getSecretObjectives() {
+    public ArrayList<ObjectiveCard> getSecretObjectives() {
         return secretObjectives;
     }
 
-    @Override
-    public void setSecretObjectives(ObjectiveCard[] secretObjectives) {
+    public void setSecretObjectives(ArrayList<ObjectiveCard> secretObjectives) {
         this.secretObjectives = secretObjectives;
     }
+
+
 
     @Override
     public String toString() {

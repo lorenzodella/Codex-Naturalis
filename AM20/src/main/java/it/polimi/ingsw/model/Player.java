@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.model.cards.playable.StarterCard;
 import it.polimi.ingsw.model.exceptions.*;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class Player {
     /**
      * This attribute stands for the secret objective card of this specific player
      */
-    private ObjectiveCard[] secretObjective;
+    private ArrayList<ObjectiveCard> secretObjective;
     /**
      * This attribute stands for the "table spot" of this specific player
      */
@@ -75,13 +76,14 @@ public class Player {
         return score;
     }
 
-    public ObjectiveCard[] getSecretObjective() {
+    public ArrayList<ObjectiveCard> getSecretObjective() {
         return secretObjective;
     }
 
-    public void setSecretObjective(ObjectiveCard[] secretObjective) {
+    public void setSecretObjective(ArrayList<ObjectiveCard> secretObjective) {
         this.secretObjective = secretObjective;
     }
+
 
     public String getNickname() {
         return nickname;
@@ -144,17 +146,21 @@ public class Player {
      */
     //dopo la chaimata al metodo il  sarà sempre in posizione zero e quello in posizione 1 saraà null
     public void chooseObjectiveCard(int index) throws InvalidPlayingException {
-        if(secretObjective[1] == null)
+        if(secretObjective.size()==1)
             throw new InvalidPlayingException("You already chosen your objective card");
-        this.secretObjective[0] = this.secretObjective[index];
-        this.secretObjective[1] = null;
+        else {
+            if(index==0)
+                this.secretObjective.remove(1);
+            else
+                this.secretObjective.remove(0);
+        }
     }
 
     /**
      * This method computes the points of the secret objective of that specific player
      */
     public void computeSecretObjective(){
-        addPoints(secretObjective[0]);
+        addPoints(secretObjective.get(0));
     }
 
     /**

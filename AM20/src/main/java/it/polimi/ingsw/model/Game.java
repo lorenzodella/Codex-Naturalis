@@ -184,9 +184,9 @@ public class Game implements GameObservable{
         commonObjectives[1] = tmp.get(1);
 
         for(int i=0; i<players.size();i++){
-            ObjectiveCard[] obj = new ObjectiveCard[2];
-            obj[0] = tmp.get(i+2);
-            obj[1] = tmp.get(i+3);
+            ArrayList<ObjectiveCard> obj = new ArrayList<>();
+            obj.add(tmp.get(i+2));
+            obj.add(tmp.get(i+3));
             players.get(i).setSecretObjective(obj);
         }
 
