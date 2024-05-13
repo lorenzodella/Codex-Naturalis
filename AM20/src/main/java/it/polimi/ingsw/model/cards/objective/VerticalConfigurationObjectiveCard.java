@@ -66,7 +66,7 @@ public class VerticalConfigurationObjectiveCard extends ObjectiveCard {
     /**
      * After the user plays the card, and thanks to their PlayerTable (given by the param), this method returns
      * the points of that action.
-     * PS: playertable allows us to know the number of this type of diagonal configuration that there are on the table
+     * PS: playertable allows us to know the number of this type of vertical configuration that there are on the table
      * @param table: the table of the player that plays the card
      * @return the number of the points of that action
      */

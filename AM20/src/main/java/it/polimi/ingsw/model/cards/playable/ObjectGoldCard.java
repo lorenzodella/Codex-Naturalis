@@ -63,7 +63,5 @@ public class ObjectGoldCard extends GoldCard{
             return 0;
     }
 
-    public int getPoints(){
-        return points;
-    }
+
 }

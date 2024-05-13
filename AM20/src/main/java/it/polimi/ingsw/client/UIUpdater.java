@@ -38,6 +38,7 @@ public class UIUpdater  {
         manager.updateCards(msg.getCards());
         manager.showResult(msg.getResult());
 
+
     }
 
     public void playAck(PlayAckMessage msg){
