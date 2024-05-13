@@ -1135,7 +1135,7 @@ public class TUI implements UIManager {
         }
     }
     public void viewErrorCommand(){
-
+        System.out.println("The command executed is wrong");
     }
 
     public void printTitle(){
