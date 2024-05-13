@@ -59,8 +59,10 @@ public class TUI implements UIManager {
 
     @Override
     public void updateSecretObjectives(ObjectiveCard[] secretObjectives) {
-        this.secretObjectives = secretObjectives;
-        viewSecretObjective();
+        if(secretObjectives!=null) {
+            this.secretObjectives = secretObjectives;
+            viewSecretObjective();
+        }
     }
 
     @Override
@@ -89,15 +91,19 @@ public class TUI implements UIManager {
 
     @Override
     public void updateYourPlayerInfo(PlayerInfo yourPlayerInfo) {
-        this.yourPlayerInfo = yourPlayerInfo;
-        viewPlayerInfo();
+        if(yourPlayerInfo!=null) {
+            this.yourPlayerInfo = yourPlayerInfo;
+            viewPlayerInfo();
+        }
     }
 
     @Override
     public void updateOtherPlayerInfo(HashMap<String, PlayerInfo> otherPlayerInfo) {
-        this.othersPlayerInfo = otherPlayerInfo;
-        for (String nickname : otherPlayerInfo.keySet())
-            viewOtherPlayerInfo(nickname);
+        if(otherPlayerInfo!=null) {
+            this.othersPlayerInfo = otherPlayerInfo;
+            for (String nickname : otherPlayerInfo.keySet())
+                viewOtherPlayerInfo(nickname);
+        }
     }
 
     @Override
@@ -395,6 +401,7 @@ public class TUI implements UIManager {
                 System.out.print(ConsoleColors.TEXT_CYAN + "ANIMAL ");
             }
         }
+        System.out.println(ConsoleColors.TEXT_RESET);
     }
 
     //TODO: NPASSAGGIO DELLE CARTE PER PROVARE SE VA

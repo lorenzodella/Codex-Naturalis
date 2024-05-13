@@ -40,7 +40,9 @@ public class ServerRMI implements Loggable{
     @Override
     public  ConnectionAckMessage login(String client, Connection callback) throws RemoteException, CannotJoinGameException {
         HashMap<String, ConnectionAckMessage> res;
-        manager.addConnection(client, callback);
+        if(!manager.getConnections().containsKey(client)){
+            manager.addConnection(client, callback);
+        }
         res = this.manager.getController().joinGame(client);
 
         //stop countdown if someone joined
@@ -72,7 +74,9 @@ public class ServerRMI implements Loggable{
      */
     @Override
     public Message startNewGame(String client, int numPlayers, Connection callback) throws RemoteException, InvalidArgumentException, InvalidPlayingException {
-        this.manager.getConnections().put(client, callback);
+        if(!manager.getConnections().containsKey(client)){
+            manager.addConnection(client, callback);
+        }
         return this.manager.getController().newGame(client,numPlayers);
     }
 

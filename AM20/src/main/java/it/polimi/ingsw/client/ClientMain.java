@@ -60,6 +60,7 @@ public class ClientMain {
             //create controller
             if(ui.equals("1")){
                 clientController = new TUIController(sender, (TUI) manager);
+                new Thread((TUIController) clientController).start();
             }else {
                 //clientController = new GUIController(sender);
             }

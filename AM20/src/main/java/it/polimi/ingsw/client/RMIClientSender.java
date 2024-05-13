@@ -29,8 +29,8 @@ public class RMIClientSender extends ClientSender{
     @Override
     void login(String client) {
         try {
-            Message msg = stub.login(client, receiver);
-            receiver.callMessage(msg);
+            ConnectionAckMessage msg = stub.login(client, receiver);
+            receiver.callConnectionAckMessage(msg);
             //System.out.println("stub.login: \n"+ msg);
         } catch (RemoteException e) {
             receiver.callErrorMessage(new ErrorMessage("Server not reachable"));

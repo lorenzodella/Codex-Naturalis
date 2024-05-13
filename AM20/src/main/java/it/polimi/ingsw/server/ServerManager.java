@@ -30,6 +30,7 @@ public class ServerManager {
      * This attribute is a timer
      */
     private EndGameTimer timer;
+    private Thread t;
 
     public ServerManager(){
         timer = new EndGameTimer(this);
@@ -44,8 +45,10 @@ public class ServerManager {
 
     public synchronized void addConnection(String nickname, Connection connection){
         connections.put(nickname, connection);
-        Thread t = new Thread(new PingThread(this));
-        t.start();
+        if(t==null || !t.isAlive()) {
+            t = new Thread(new PingThread(this));
+            t.start();
+        }
     }
 
     public synchronized HashMap<String, Connection> getConnections() {

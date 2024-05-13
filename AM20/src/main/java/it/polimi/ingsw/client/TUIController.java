@@ -32,7 +32,9 @@ public class TUIController extends ClientController implements Runnable{
 
                 String input = br.readLine();
                 String[] command = input.split(" ");
-                if(command[0].equals("/join")){
+                if(command[0].equals("/help")){
+                    myTUI.viewCommand();
+                }else if(command[0].equals("/join")){
                     this.username = command[1];
                     this.clientSender.login(command[1]);
                     myTUI.setNickname(username);

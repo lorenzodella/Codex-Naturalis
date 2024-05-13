@@ -15,12 +15,16 @@ public class SKTClientReceiver implements Runnable {
     public SKTClientReceiver(Socket socket, UIUpdater uiUpdater) throws IOException {
         this.socket = socket;
         this.uiUpdater = uiUpdater;
-        this.objectInputStream = new ObjectInputStream(socket.getInputStream());
+        //this.objectInputStream = new ObjectInputStream(socket.getInputStream());
     }
 
     @Override
     public void run(){
-
+        try {
+            this.objectInputStream = new ObjectInputStream(socket.getInputStream());
+        } catch (IOException e) {
+            uiUpdater.errorMessage(new ErrorMessage("Server not reachable"));
+        }
         Message message;
         while(true){
             try {
@@ -75,6 +79,7 @@ public class SKTClientReceiver implements Runnable {
                 }
             } catch (IOException | ClassNotFoundException e) {
                 uiUpdater.errorMessage(new ErrorMessage("Server not reachable"));
+                break;
             }
 
         }

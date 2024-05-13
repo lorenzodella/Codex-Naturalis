@@ -1,6 +1,8 @@
 package it.polimi.ingsw.clientmessage;
 
-public class ClientMessage {
+import java.io.Serializable;
+
+public class ClientMessage implements Serializable {
     public static final String LOGIN = "Login";
     public static final String NEWGAME = "NewGame";
     public static final String CHOOSE_STARTERCARD_SIDE = "ChooseStarterCardSide";

@@ -19,52 +19,56 @@ public class SocketConnection implements Connection  {
 
 
     @Override
-    public void callChatMessage(ChatMessage message) throws IOException {
+    public synchronized void callChatMessage(ChatMessage message) throws IOException {
         outputStream.writeObject(message);
+        outputStream.flush();
     }
 
     @Override
-    public void callStopGame(StopGameMessage message) throws IOException {
+    public synchronized void callStopGame(StopGameMessage message) throws IOException {
         outputStream.writeObject(message);
-
+        outputStream.flush();
     }
 
     @Override
-    public void callConnectionAckMessage(ConnectionAckMessage message) throws IOException {
+    public synchronized void callConnectionAckMessage(ConnectionAckMessage message) throws IOException {
         outputStream.writeObject(message);
-
+        outputStream.flush();
     }
 
     @Override
-    public void callAcknowledgeMessage(AcknowledgeMessage message) throws IOException {
+    public synchronized void callAcknowledgeMessage(AcknowledgeMessage message) throws IOException {
         outputStream.writeObject(message);
-
+        outputStream.flush();
     }
 
     @Override
-    public void callStarterCardAckMessage(StarterCardAckMessage message) throws IOException {
+    public synchronized void callStarterCardAckMessage(StarterCardAckMessage message) throws IOException {
         outputStream.writeObject(message);
-
+        outputStream.flush();
     }
 
     @Override
-    public void callObjectiveAckMessage(ObjectiveAckMessage message) throws IOException {
+    public synchronized void callObjectiveAckMessage(ObjectiveAckMessage message) throws IOException {
         outputStream.writeObject(message);
-
+        outputStream.flush();
     }
 
-    public void callMessage(Message message) throws IOException{
+    public synchronized void callMessage(Message message) throws IOException{
         outputStream.writeObject(message);
+        outputStream.flush();
     }
 
-    public void callErrorMessage(ErrorMessage message) throws IOException{
+    public synchronized void callErrorMessage(ErrorMessage message) throws IOException{
         outputStream.writeObject(message);
+        outputStream.flush();
     }
 
     /* se il messaggio viene inviato ritorna vero altrimenti manda exc */
     @Override
-    public boolean callPingMessage(PingMessage message) throws IOException {
+    public synchronized boolean callPingMessage(PingMessage message) throws IOException {
         outputStream.writeObject(message);
+        outputStream.flush();
         return true;
     }
 

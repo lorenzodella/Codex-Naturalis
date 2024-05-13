@@ -15,69 +15,73 @@ public class UIUpdater  {
     }
 
     public void startGame(StartGameMessage msg){
+        manager.showResult(msg.getResult());
         manager.updateGoldTop(msg.getGoldTop());
         manager.updateResourceTop(msg.getResourceTop());
         manager.updateGoldVisible(msg.getGoldVisible());
         manager.updateResourceVisible(msg.getResourceVisible());
         manager.updateStarterCard(msg.getStarterCard());
-        manager.showResult(msg.getResult());
+        manager.updateYourPlayerInfo(msg.getPlayerInfo());
+        manager.updateOtherPlayerInfo(msg.getOthersPlayerInfo());
     }
 
     public void acknowledge(AcknowledgeMessage msg){
-        manager.updateCards(msg.getCards());
-        manager.showNextTurn(msg.getNextPlayer());
         manager.showResult(msg.getResult());
+        manager.showNextTurn(msg.getNextPlayer());
     }
 
     public void pickAck(PickAckMessage msg){
+        manager.showResult(msg.getResult());
         manager.updateGoldTop(msg.getGoldTop());
         manager.updateResourceTop(msg.getResourceTop());
         manager.updateGoldVisible(msg.getGoldVisible());
         manager.updateResourceVisible(msg.getResourceVisible());
-        manager.showNextTurn(msg.getNextPlayer());
         manager.updateCards(msg.getCards());
-        manager.showResult(msg.getResult());
+        manager.showNextTurn(msg.getNextPlayer());
 
 
     }
 
     public void playAck(PlayAckMessage msg){
+        manager.showResult(msg.getResult());
         manager.updateYourPlayerInfo(msg.getYourPlayerInfo());
         manager.updateOtherPlayerInfo(msg.getOthersPlayerInfo());
+        manager.updateCards(msg.getCards());
         if(msg.mustPick()){
             manager.showMustPick();
         }
         else{
             manager.showNextTurn(msg.getNextPlayer());
         }
-        manager.updateCards(msg.getCards());
-        manager.showResult(msg.getResult());
     }
 
     public void starterCard(StarterCardAckMessage msg){
+        manager.showResult(msg.getResult());
         manager.updateYourPlayerInfo(msg.getPlayerInfo());
         manager.updateOtherPlayerInfo(msg.getOthersPlayerInfo());
-        manager.showResult(msg.getResult());
     }
 
     public void startChoosingObjective(StartChoosingObjectiveMessage msg){
+        manager.showResult(msg.getResult());
+        manager.updateYourPlayerInfo(msg.getPlayerInfo());
+        manager.updateOtherPlayerInfo(msg.getOthersPlayerInfo());
         manager.updateCommonObjectives(msg.getCommonObjectives());
         manager.updateSecretObjectives(msg.getSecretObjectives());
+    }
+
+    public void objectiveMessage(ObjectiveAckMessage msg){
         manager.showResult(msg.getResult());
+        manager.updateSecretObjectives(msg.getSecretObjectives());
+    }
+
+    public void startPlaying(StartPlayingMessage msg){
+        manager.showResult(msg.getResult());
+        manager.updateSecretObjectives(msg.getSecretObjectives());
+        manager.showNextTurn(msg.getFirstPlayer());
     }
 
     public void chatMessage(ChatMessage msg){
         manager.updateChatMessage(msg);
-    }
-
-    public void objectiveMessage(ObjectiveAckMessage msg){
-        manager.updateSecretObjectives(msg.getSecretObjectives());
-        manager.showResult(msg.getResult());
-    }
-
-    public void startPlaying(StartPlayingMessage msg){
-        manager.showNextTurn(msg.getFirstPlayer());
-        manager.showResult(msg.getResult());
     }
 
     public void message(Message msg){

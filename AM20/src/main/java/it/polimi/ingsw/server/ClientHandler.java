@@ -43,13 +43,16 @@ public class ClientHandler implements Runnable{
 
         ClientMessage message;
         while(true){
+            System.out.println("Waiting for message...");
             try {
                 message = (ClientMessage) objectInputStream.readObject();
 
                 if(message.getAction().equals(ClientMessage.LOGIN)){
 
                     LoginMessage msg = (LoginMessage) message;
-                    this.manager.addConnection(msg.getClient(),new SocketConnection(this.socket));
+                    if(!manager.getConnections().containsKey(msg.getClient())){
+                        this.manager.addConnection(msg.getClient(),new SocketConnection(this.socket));
+                    }
                     HashMap<String, ConnectionAckMessage> res;
                     this.usernameClient = msg.getClient();
 
@@ -58,7 +61,7 @@ public class ClientHandler implements Runnable{
                         res = this.manager.getController().joinGame(msg.getClient());
                         this.manager.resetTimer();
                         HashMap<String, Connection> connectedPlayer = this.manager.getConnections();
-                        for(String s : connectedPlayer.keySet()){
+                        for(String s : res.keySet()){
                             try {
                                 connectedPlayer.get(s).callConnectionAckMessage(res.get(s));
                             } catch (IOException e) {
@@ -74,6 +77,10 @@ public class ClientHandler implements Runnable{
                     NewGameMessage msg = (NewGameMessage) message;
                     Message messageToSend;
                     try {
+                        this.usernameClient = msg.getClient();
+                        if(!manager.getConnections().containsKey(msg.getClient())){
+                            this.manager.addConnection(msg.getClient(),new SocketConnection(this.socket));
+                        }
                         messageToSend = this.manager.getController().newGame(msg.getClient(), msg.getNumPlayers());
                         HashMap<String, Connection> connectedPlayer = this.manager.getConnections();
                         connectedPlayer.get(this.usernameClient).callMessage(messageToSend);
@@ -88,7 +95,7 @@ public class ClientHandler implements Runnable{
                     try {
                         res = this.manager.getController().chooseObjective(msg.getNickname(), msg.getIndex());
                         HashMap<String, Connection> connectedPlayer = this.manager.getConnections();
-                        for(String s : connectedPlayer.keySet()){
+                        for(String s : res.keySet()){
                             try {
                                 connectedPlayer.get(s).callObjectiveAckMessage(res.get(s));
                             } catch (IOException e) {
@@ -106,7 +113,7 @@ public class ClientHandler implements Runnable{
                     try {
                         res = this.manager.getController().chooseStarterCardSide(msg.getNickname(), msg.getSide());
                         HashMap<String, Connection> connectedPlayer = this.manager.getConnections();
-                        for(String s : connectedPlayer.keySet()){
+                        for(String s : res.keySet()){
                             try {
                                 connectedPlayer.get(s).callStarterCardAckMessage(res.get(s));
                             } catch (IOException e) {
@@ -124,7 +131,7 @@ public class ClientHandler implements Runnable{
                     try {
                         res = this.manager.getController().pickCard(msg.getPlayerNickname(), msg.getDeck());
                         HashMap<String, Connection> connectedPlayer = this.manager.getConnections();
-                        for(String s : connectedPlayer.keySet()){
+                        for(String s : res.keySet()){
                             try {
                                 connectedPlayer.get(s).callAcknowledgeMessage(res.get(s));
                             } catch (IOException e) {
@@ -145,7 +152,7 @@ public class ClientHandler implements Runnable{
                         res = this.manager.getController().pickCard(msg.getPlayerNickname(), msg.getDeck(), msg.getIndex());
 
                         HashMap<String, Connection> connectedPlayer = this.manager.getConnections();
-                        for(String s : connectedPlayer.keySet()){
+                        for(String s : res.keySet()){
                             try {
                                 connectedPlayer.get(s).callAcknowledgeMessage(res.get(s));
                             } catch (IOException e) {
@@ -166,7 +173,7 @@ public class ClientHandler implements Runnable{
                     try {
                         res = this.manager.getController().playCard(msg.getPlayerNickname(),msg.getCardIndex(), msg.getAngle(), msg.getTargetID(),msg.getSide());
                         HashMap<String, Connection> connectedPlayer = this.manager.getConnections();
-                        for(String s : connectedPlayer.keySet()){
+                        for(String s : res.keySet()){
                             try {
                                 connectedPlayer.get(s).callAcknowledgeMessage(res.get(s));
                             } catch (IOException e) {

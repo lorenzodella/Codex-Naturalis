@@ -29,7 +29,7 @@ public class ServerSKT {
     //spiegazione metodo
     public void startServer() {
         //creazione insieme di thread
-        ExecutorService executor = Executors.newCachedThreadPool();
+        //ExecutorService executor = Executors.newCachedThreadPool();
         //crea oggetto serverSocket che permette di accettare le connessioni
         ServerSocket serverSocket;
         try {
@@ -39,21 +39,21 @@ public class ServerSKT {
             System.err.println(e.getMessage()); // Porta non disponibile
             return;
         }
-        System.out.println("Server ready");
         //ciclo infinito che aspetta
         while (true) {
             try {
+                System.out.println("Waiting for connection...");
                 //metodo che aspetta, interrompe il processo finchè qualcuno non si connette e ritorna il socket
                 //specifico del client (con "tubi" di andata e di ritorno)
                 Socket socket = serverSocket.accept();
 
                 //thread parte e ascolta sul socket grazie alla socketconnection
-                executor.submit(new ClientHandler(socket, manager));
+                new Thread(new ClientHandler(socket, manager)).start();
             } catch(IOException e) {
                 break;
             }
         }
-        executor.shutdown();
+        //executor.shutdown();
     }
 
 }
