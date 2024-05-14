@@ -342,6 +342,9 @@ public class TUI implements UIManager {
             else if (this.cards.get(i).getCardKingdom().equals(Kingdom.Animal))
                 System.out.println(ConsoleColors.TEXT_CYAN + "ANIMAL"+ ConsoleColors.TEXT_RESET);
 
+            if(((ResourceCard) this.cards.get(i)).getPoints()>0){
+                System.out.println(ConsoleColors.TEXT_RESET +  "You get 1 point if you play this card");
+            }
 
 
             //TODO: da copiare
