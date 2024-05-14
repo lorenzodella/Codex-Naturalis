@@ -125,7 +125,11 @@ public class TUIController extends ClientController implements Runnable{
                     this.myTUI.viewPlayerInfo();
 
                 }else if(command[0].equals("/playerInfo")){
-                    this.myTUI.viewOtherPlayerInfo(command[1]);
+                    if(command.length == 2){
+                        this.myTUI.viewOtherPlayerInfo(command[1]);
+
+                    }else
+                        myTUI.viewErrorCommand();
 
                 }else if(command[0].equals("/placement")){
                     this.myTUI.viewPlacement();

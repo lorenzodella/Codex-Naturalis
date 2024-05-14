@@ -173,7 +173,7 @@ public class TUI implements UIManager {
 
     public void viewStarterCard(){
         this.printTitle();
-        this.viewCommand();
+        //this.viewCommand();
         System.out.println("\nYou have received the starter card:");
 
         //FRONT
@@ -271,7 +271,7 @@ public class TUI implements UIManager {
         }
         System.out.println(ConsoleColors.TEXT_RESET);
         System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------");
-        this.viewCommand();
+        //this.viewCommand();
 
     }
 
@@ -417,7 +417,7 @@ public class TUI implements UIManager {
             System.out.println("---------------------------------------------------------------------------------------------------");
         }
         System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------");
-        this.viewCommand();
+        //this.viewCommand();
     }
 
     public void viewCommonObjective(){
@@ -509,10 +509,10 @@ public class TUI implements UIManager {
                 System.out.println( angle + "angle of the bottom " +((VerticalConfigurationObjectiveCard) this.commonObjectives[i]).getKingdom2() + " card." );
                 System.out.println("You get 3 points every time you create this kind of configuration \n");
             }
-            System.out.println("---------------------------------------------------------------------------------------------------");
+            //System.out.println("---------------------------------------------------------------------------------------------------");
         }
         System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------");
-        this.viewCommand();
+        //this.viewCommand();
     }
 
     public void viewSecretObjective(){
@@ -604,10 +604,10 @@ public class TUI implements UIManager {
                     angle1= "DR";
                 System.out.println("You get 3 points every time you create this kind of configuration \n");
             }
-            System.out.println("---------------------------------------------------------------------------------------------------");
+            //System.out.println("---------------------------------------------------------------------------------------------------");
         }
         System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------");
-        this.viewCommand();
+        //this.viewCommand();
     }
 
     public void viewGoldTop(){
@@ -624,7 +624,7 @@ public class TUI implements UIManager {
         System.out.println(ConsoleColors.TEXT_RESET + " card \n");
 
         System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------");
-        this.viewCommand();
+        //this.viewCommand();
     }
 
     public void viewResourceTop(){
@@ -640,7 +640,7 @@ public class TUI implements UIManager {
         System.out.println(ConsoleColors.TEXT_RESET + " card \n");
 
         System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------");
-        this.viewCommand();
+        //this.viewCommand();
     }
 
     public void viewGoldVisibleCards(){
@@ -701,11 +701,11 @@ public class TUI implements UIManager {
                 } else {
                     System.out.println(ConsoleColors.TEXT_RESET + "The corner is visible but it doesn't have any resource or object");
                 }
-                System.out.println("---------------------------------------------------------------------------------------------------");
+                //System.out.println("---------------------------------------------------------------------------------------------------");
             }
         }
         System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------");
-        this.viewCommand();
+        //this.viewCommand();
     }
 
     public void viewResourceVisibleCards(){
@@ -766,11 +766,11 @@ public class TUI implements UIManager {
                 } else {
                     System.out.println(ConsoleColors.TEXT_RESET + "The corner is visible but it doesn't have any resource or object");
                 }
-                System.out.println("---------------------------------------------------------------------------------------------------");
+                //System.out.println("---------------------------------------------------------------------------------------------------");
             }
         }
         System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------");
-        this.viewCommand();
+        //this.viewCommand();
     }
 
     public void viewPlayerInfo(){
@@ -801,7 +801,7 @@ public class TUI implements UIManager {
         CardPrinter.printMap(this.yourPlayerInfo.getMap());
 
         System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------");
-        this.viewCommand();
+        //this.viewCommand();
     }
 
     public void viewOtherPlayerInfo(String username){
@@ -832,7 +832,7 @@ public class TUI implements UIManager {
         CardPrinter.printMap(this.othersPlayerInfo.get(username).getMap());
 
         System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------");
-        this.viewCommand();
+        //this.viewCommand();
     }
 
     public void viewPlacement(){
@@ -843,7 +843,7 @@ public class TUI implements UIManager {
         }
 
         System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------");
-        this.viewCommand();
+        //this.viewCommand();
     }
 
     public void viewChat(){
@@ -858,13 +858,13 @@ public class TUI implements UIManager {
         }
 
         System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------");
-        this.viewCommand();
+        //this.viewCommand();
     }
     public void viewErrorCommand(){
         System.out.println("The command executed is wrong");
 
         System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------");
-        this.viewCommand();
+        //this.viewCommand();
     }
 
     public void printTitle(){
@@ -910,9 +910,9 @@ public class TUI implements UIManager {
         System.out.println("/pickCardVisible +  deck (0 for gold deck / 1 for resource deck) +  index  (0 for the left card and 1 for the right one)");
         System.out.println("/playCard + index (index of the card you want to play) +  angle (angel of the card you want to cover: 0 for UL / 1 for UR / 2 for DL /3  for DR)+  targetIDcard (ID of the card you want to cover) + side (0 for back / 1 for front)");
         System.out.println("/chat + broadCast + message ");
-        System.out.println("/chat + username (username of the reciever) + message");
+        System.out.println("/chat + username (username of the receiver) + message");
         System.out.println("/myPlayerInfo (to visualize your info)");
-        System.out.println("/playerInfo + username (usarname of the player you want to view)");
+        System.out.println("/playerInfo + username (username of the player you want to view)");
         System.out.println("/placement (view the placement of the game)");
         System.out.println("/viewDeck + index (0 for the gold deck and 1 for resource deck)");
         System.out.println("/viewCommonObjective");

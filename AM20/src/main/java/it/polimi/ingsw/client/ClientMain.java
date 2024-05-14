@@ -11,6 +11,18 @@ public class ClientMain {
 
     public static void main(String[] args) {
 
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        System.out.println("Insert IP of the server:");
+        String input;
+        try {
+             input = br.readLine();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
+
         ClientRMI clientRMI;
         ClientSKT clientSKT;
 
@@ -23,7 +35,7 @@ public class ClientMain {
 
 
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
         try {
             System.out.println("Choose user interface:");
             System.out.println("1) TUI");
@@ -48,12 +60,12 @@ public class ClientMain {
             if(scelta.equals("1")){
                 System.out.println("Ha scelto RMI");
                 clientRMI = new ClientRMI(updater);
-                clientRMI.connect(args[0], Integer.parseInt(args[1]));
+                clientRMI.connect(input, Integer.parseInt(args[0]));
                 sender = clientRMI.getSender();
             }else {
                 System.out.println("Ha scelto Socket");
                 clientSKT = new ClientSKT(updater);
-                clientSKT.connect(args[0], Integer.parseInt(args[1]));
+                clientSKT.connect(input, Integer.parseInt(args[0]));
                 sender = clientSKT.getSender();
             }
 
