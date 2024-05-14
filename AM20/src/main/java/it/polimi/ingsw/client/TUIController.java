@@ -33,63 +33,93 @@ public class TUIController extends ClientController implements Runnable{
                 String input = br.readLine();
                 String[] command = input.split(" ");
                 if(command[0].equals("/help")){
-                    myTUI.viewCommand();
+                    if(command.length==1)
+                        myTUI.viewCommand();
+                    else
+                        myTUI.viewErrorCommand();
                 }else if(command[0].equals("/join")){
-                    this.username = command[1];
-                    this.clientSender.login(command[1]);
+                    if(command.length==2){
+                        this.username = command[1];
+                        this.clientSender.login(command[1]);
+                    }else
+                        myTUI.viewErrorCommand();
+
                     myTUI.setNickname(username);
                 }else if(command[0].equals("/newGame")){
-                    this.username = command[1];
-                    try{
-                        this.clientSender.startNewGame(command[1], Integer.parseInt(command[2]));
-                    }catch(NumberFormatException e){
-                        this.myTUI.viewErrorCommand();
-                    }
-                    myTUI.setNickname(username);
-                }else if(command[0].equals("/chooseObjective")){
+                    if(command.length == 3){
+                        this.username = command[1];
+                        try{
+                            this.clientSender.startNewGame(command[1], Integer.parseInt(command[2]));
+                        }catch(NumberFormatException e){
+                            this.myTUI.viewErrorCommand();
+                        }
+                        myTUI.setNickname(username);
+                    }else
+                        myTUI.viewErrorCommand();
 
-                    try{
-                        this.clientSender.chooseObjective(this.username, Integer.parseInt(command[1]));
-                    }catch (NumberFormatException e){
-                        this.myTUI.viewErrorCommand();
-                    }
+                }else if(command[0].equals("/chooseObjective")){
+                    if(command.length == 2){
+                        try{
+                            this.clientSender.chooseObjective(this.username, Integer.parseInt(command[1]));
+                        }catch (NumberFormatException e){
+                            this.myTUI.viewErrorCommand();
+                        }
+                    }else
+                        myTUI.viewErrorCommand();
+
+
                 }else if(command[0].equals("/chooseStarterSide")){
-                    try{
-                        this.clientSender.chooseStarterCardSide(this.username, Integer.parseInt(command[1]));
-                    }catch (NumberFormatException e){
-                        this.myTUI.viewErrorCommand();
-                    }
+                    if(command.length == 2){
+                        try{
+                            this.clientSender.chooseStarterCardSide(this.username, Integer.parseInt(command[1]));
+                        }catch (NumberFormatException e){
+                            this.myTUI.viewErrorCommand();
+                        }
+                    }else
+                        myTUI.viewErrorCommand();
+
 
                 }else if(command[0].equals("/pickCardDeck")){
-                    try{
-                        this.clientSender.pickCard(this.username, Integer.parseInt(command[1]));
-                    }catch (NumberFormatException e){
-                        this.myTUI.viewErrorCommand();
-                    }
+                    if(command.length == 2){
+                        try{
+                            this.clientSender.pickCard(this.username, Integer.parseInt(command[1]));
+                        }catch (NumberFormatException e){
+                            this.myTUI.viewErrorCommand();
+                        }
+                    }else
+                        myTUI.viewErrorCommand();
 
                 }else if(command[0].equals("/pickCardVisible")){
-                    try{
-                        this.clientSender.pickCard(this.username, Integer.parseInt(command[1]), Integer.parseInt(command[2]));
+                    if(command.length == 3){
+                        try{
+                            this.clientSender.pickCard(this.username, Integer.parseInt(command[1]), Integer.parseInt(command[2]));
 
-                    }catch (NumberFormatException e){
-                        this.myTUI.viewErrorCommand();
-                    }
+                        }catch (NumberFormatException e){
+                            this.myTUI.viewErrorCommand();
+                        }
+                    }else
+                        myTUI.viewErrorCommand();
 
                 }else if(command[0].equals("/playCard")){
-                    try{
-                        this.clientSender.playCard(this.username, Integer.parseInt(command[1]), Integer.parseInt(command[2]), command[3], Integer.parseInt(command[4]));
-                    }catch (NumberFormatException e){
-                        this.myTUI.viewErrorCommand();
-                    }
-
+                    if(command.length == 5){
+                        try{
+                            this.clientSender.playCard(this.username, Integer.parseInt(command[1]), Integer.parseInt(command[2]), command[3], Integer.parseInt(command[4]));
+                        }catch (NumberFormatException e){
+                            this.myTUI.viewErrorCommand();
+                        }
+                    }else
+                        myTUI.viewErrorCommand();
                 }else if(command[0].equals("/chat")){
-                    if(command[1]. equals("broadcast")) {
-                        this.clientSender.sendBroadcastChatMessage(this.username, command[2]);
-                        myTUI.updateChatMessage(new BroadcastChatMessage(this.username, command[2]));
-                    }else {
-                        this.clientSender.sendChatMessage(this.username, command[1], command[2]);
-                        myTUI.updateChatMessage(new ChatMessage(this.username, command[1], command[2]));
-                    }
+                    if(command.length == 3){
+                        if(command[1]. equals("broadcast")) {
+                            this.clientSender.sendBroadcastChatMessage(this.username, command[2]);
+                            myTUI.updateChatMessage(new BroadcastChatMessage(this.username, command[2]));
+                        }else {
+                            this.clientSender.sendChatMessage(this.username, command[1], command[2]);
+                            myTUI.updateChatMessage(new ChatMessage(this.username, command[1], command[2]));
+                        }
+                    }else
+                        myTUI.viewErrorCommand();
 
                 }else if(command[0].equals("/myPlayerInfo")){
                     this.myTUI.viewPlayerInfo();
@@ -100,19 +130,22 @@ public class TUIController extends ClientController implements Runnable{
                 }else if(command[0].equals("/placement")){
                     this.myTUI.viewPlacement();
                 }else if(command[0].equals("/viewDeck")){
-                    if(command[1].equals("0"))
-                        this.myTUI.viewGoldTop();
-                    else
-                        this.myTUI.viewResourceTop();
+                    if(command.length == 2){
+                        if(command[1].equals("0"))
+                            this.myTUI.viewGoldTop();
+                        else
+                            this.myTUI.viewResourceTop();
+                    }else
+                        myTUI.viewErrorCommand();
                 }else if(command[0].equals("/viewCommonObjective")){
                     this.myTUI.viewCommonObjective();
                 }else if(command[0].equals("/viewSecretObjective")){
                     this.myTUI.viewSecretObjective();
                 }else if(command[0].equals("/viewStarterCard")){
                     this.myTUI.viewStarterCard();
-                }else if(command[0].equals("/viewResourceVisibile")){
+                }else if(command[0].equals("/viewResourceVisible")){
                     this.myTUI.viewResourceVisibleCards();
-                }else if(command[1].equals("/viewGoldVisible")){
+                }else if(command[0].equals("/viewGoldVisible")){
                     this.myTUI.viewGoldVisibleCards();
                 }else if(command[0].equals("/viewChat")){
                     this.myTUI.viewChat();

@@ -20,46 +20,54 @@ public class SocketConnection implements Connection  {
 
     @Override
     public synchronized void callChatMessage(ChatMessage message) throws IOException {
+        outputStream.reset();
         outputStream.writeObject(message);
         outputStream.flush();
     }
 
     @Override
     public synchronized void callStopGame(StopGameMessage message) throws IOException {
+        outputStream.reset();
         outputStream.writeObject(message);
         outputStream.flush();
     }
 
     @Override
     public synchronized void callConnectionAckMessage(ConnectionAckMessage message) throws IOException {
+        outputStream.reset();
         outputStream.writeObject(message);
         outputStream.flush();
     }
 
     @Override
     public synchronized void callAcknowledgeMessage(AcknowledgeMessage message) throws IOException {
+        outputStream.reset();
         outputStream.writeObject(message);
         outputStream.flush();
     }
 
     @Override
     public synchronized void callStarterCardAckMessage(StarterCardAckMessage message) throws IOException {
+        outputStream.reset();
         outputStream.writeObject(message);
         outputStream.flush();
     }
 
     @Override
     public synchronized void callObjectiveAckMessage(ObjectiveAckMessage message) throws IOException {
+        outputStream.reset();
         outputStream.writeObject(message);
         outputStream.flush();
     }
 
     public synchronized void callMessage(Message message) throws IOException{
+        outputStream.reset();
         outputStream.writeObject(message);
         outputStream.flush();
     }
 
     public synchronized void callErrorMessage(ErrorMessage message) throws IOException{
+        outputStream.reset();
         outputStream.writeObject(message);
         outputStream.flush();
     }
@@ -67,6 +75,7 @@ public class SocketConnection implements Connection  {
     /* se il messaggio viene inviato ritorna vero altrimenti manda exc */
     @Override
     public synchronized boolean callPingMessage(PingMessage message) throws IOException {
+        outputStream.reset();
         outputStream.writeObject(message);
         outputStream.flush();
         return true;

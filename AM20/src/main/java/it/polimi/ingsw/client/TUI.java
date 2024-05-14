@@ -14,14 +14,12 @@ import it.polimi.ingsw.model.exceptions.RequirementsNotRespectedException;
 import it.polimi.ingsw.model.exceptions.TargetNotPresentException;
 import it.polimi.ingsw.model.util.XMLparser;
 
-import java.sql.SQLOutput;
 import java.util.*;
 
 public class TUI implements UIManager {
     /*TODO:
       - ATTRIBUTO PER CAPIRE DI CHE ANGOLO SI TRATTA --> PER ITERARE SU ANGOLI
     */
-    private ConsoleColors consoleColors = new ConsoleColors();
     private List<PlayableCard> cards;
     private List<ChatMessage> messages;
     private ArrayList<ObjectiveCard> secretObjectives;
@@ -47,8 +45,13 @@ public class TUI implements UIManager {
 
     @Override
     public void updateCards(List<PlayableCard> cards) {
-        this.cards = cards;
-        viewHandCards();
+        if(cards!=null){
+            this.cards = cards;
+            viewHandCards();
+        }
+
+
+
     }
 
     @Override
@@ -69,26 +72,38 @@ public class TUI implements UIManager {
 
     @Override
     public void updateGoldTop(PlayableCard goldTop) {
-        this.goldTop = goldTop;
-        viewGoldTop();
+        if(goldTop!=null){
+            this.goldTop = goldTop;
+            viewGoldTop();
+        }
+
     }
 
     @Override
     public void updateResourceTop(PlayableCard resourceTop) {
-        this.resourceTop = resourceTop;
-        viewResourceTop();
+        if(resourceTop!=null){
+            this.resourceTop = resourceTop;
+            viewResourceTop();
+        }
+
     }
 
     @Override
     public void updateGoldVisible(PlayableCard[] goldVisible) {
-        this.goldVisible = goldVisible;
-        viewGoldVisibleCards();
+        if(goldVisible!=null){
+            this.goldVisible = goldVisible;
+            viewGoldVisibleCards();
+        }
+
     }
 
     @Override
     public void updateResourceVisible(PlayableCard[] resourceVisible) {
-        this.resourceVisible = resourceVisible;
-        viewResourceVisibleCards();
+        if(resourceVisible!=null){
+            this.resourceVisible = resourceVisible;
+            viewResourceVisibleCards();
+        }
+
     }
 
     @Override
@@ -103,21 +118,27 @@ public class TUI implements UIManager {
     public void updateOtherPlayerInfo(HashMap<String, PlayerInfo> otherPlayerInfo) {
         if(otherPlayerInfo!=null) {
             this.othersPlayerInfo = otherPlayerInfo;
-            for (String nickname : otherPlayerInfo.keySet())
-                viewOtherPlayerInfo(nickname);
+            /*for (String nickname : otherPlayerInfo.keySet())
+                viewOtherPlayerInfo(nickname);*/
         }
     }
 
     @Override
     public void updateCommonObjectives(ObjectiveCard[] commonObjectives) {
-        this.commonObjectives = commonObjectives;
-        viewCommonObjective();
+        if(commonObjectives!=null){
+            this.commonObjectives = commonObjectives;
+            viewCommonObjective();
+        }
+
     }
 
     @Override
     public void updateStarterCard(StarterCard starterCard) {
-        this.starterCard = starterCard;
-        viewStarterCard();
+        if(starterCard!=null){
+            this.starterCard = starterCard;
+            viewStarterCard();
+        }
+
     }
 
     @Override
@@ -129,6 +150,10 @@ public class TUI implements UIManager {
     public void showNextTurn(String nextPlayer){
         if(nextPlayer.equals(nickname)){
             System.out.println("Is your turn");
+            viewGoldVisibleCards();
+            viewResourceVisibleCards();
+            viewGoldTop();
+            viewResourceTop();
         }
         else{
             System.out.println("Is " + nextPlayer + "'s turn");
@@ -773,7 +798,7 @@ public class TUI implements UIManager {
         System.out.println("- MANUSCRIPT: "+ this.yourPlayerInfo.getStats().getNumberOfObjects(SpecialObject.Manuscript));
 
         System.out.println("The player has the follwoing board:");
-        System.out.println(this.yourPlayerInfo.getMap().toString());
+        CardPrinter.printMap(this.yourPlayerInfo.getMap());
 
         System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------");
         this.viewCommand();
@@ -804,7 +829,7 @@ public class TUI implements UIManager {
         System.out.println("- MANUSCRIPT: "+ this.othersPlayerInfo.get(username).getStats().getNumberOfObjects(SpecialObject.Manuscript));
 
         System.out.println("The player has the follwoing board:");
-        System.out.println(this.othersPlayerInfo.get(username).getMap().toString());
+        CardPrinter.printMap(this.othersPlayerInfo.get(username).getMap());
 
         System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------");
         this.viewCommand();

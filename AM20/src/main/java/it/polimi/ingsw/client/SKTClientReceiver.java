@@ -28,6 +28,7 @@ public class SKTClientReceiver implements Runnable {
         Message message;
         while(true){
             try {
+                message = new Message();
                 message = (Message) objectInputStream.readObject();
                 if(message.getType().equals(Message.CONNECTIONACK)){
                     ConnectionAckMessage msg = (ConnectionAckMessage) message;

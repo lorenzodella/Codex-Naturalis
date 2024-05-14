@@ -23,6 +23,7 @@ public class UIUpdater  {
         manager.updateStarterCard(msg.getStarterCard());
         manager.updateYourPlayerInfo(msg.getPlayerInfo());
         manager.updateOtherPlayerInfo(msg.getOthersPlayerInfo());
+        manager.updateCards(msg.getInitialCards());
     }
 
     public void acknowledge(AcknowledgeMessage msg){
@@ -50,7 +51,7 @@ public class UIUpdater  {
         if(msg.mustPick()){
             manager.showMustPick();
         }
-        else{
+        else if(msg.getNextPlayer()!=null){
             manager.showNextTurn(msg.getNextPlayer());
         }
     }
