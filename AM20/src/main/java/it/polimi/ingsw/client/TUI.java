@@ -57,7 +57,7 @@ public class TUI implements UIManager {
     @Override
     public void updateChatMessage(ChatMessage msg) {
         this.messages.add(msg);
-        if(msg.getRecipient().equals(nickname))
+        if(msg.getRecipient()!=null && msg.getRecipient().equals(nickname))
             System.out.println("You received a message");
         viewChat();
     }

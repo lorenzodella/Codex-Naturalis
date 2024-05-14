@@ -31,7 +31,8 @@ public class TUIController extends ClientController implements Runnable{
             try {
 
                 String input = br.readLine();
-                String[] command = input.split(" ");
+                String[] msg = input.split("\"");
+                String[] command = msg[0].split(" ");
                 if(command[0].equals("/help")){
                     if(command.length==1)
                         myTUI.viewCommand();
@@ -110,13 +111,13 @@ public class TUIController extends ClientController implements Runnable{
                     }else
                         myTUI.viewErrorCommand();
                 }else if(command[0].equals("/chat")){
-                    if(command.length == 3){
-                        if(command[1]. equals("broadcast")) {
-                            this.clientSender.sendBroadcastChatMessage(this.username, command[2]);
-                            myTUI.updateChatMessage(new BroadcastChatMessage(this.username, command[2]));
+                    if(command.length == 2 && msg.length == 2){
+                        if(command[1].equals("broadcast")) {
+                            this.clientSender.sendBroadcastChatMessage(this.username, msg[1]);
+                            myTUI.updateChatMessage(new BroadcastChatMessage(this.username, msg[1]));
                         }else {
-                            this.clientSender.sendChatMessage(this.username, command[1], command[2]);
-                            myTUI.updateChatMessage(new ChatMessage(this.username, command[1], command[2]));
+                            this.clientSender.sendChatMessage(this.username, command[1], msg[1]);
+                            myTUI.updateChatMessage(new ChatMessage(this.username, command[1], msg[1]));
                         }
                     }else
                         myTUI.viewErrorCommand();

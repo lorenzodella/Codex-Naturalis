@@ -26,10 +26,10 @@ public class ClientMain {
         ClientRMI clientRMI;
         ClientSKT clientSKT;
 
-        UIManager manager;
+        UIManager manager = null;
         UIUpdater updater;
 
-        ClientSender sender;
+        ClientSender sender = null;
         ClientController clientController;
 
 
@@ -37,37 +37,42 @@ public class ClientMain {
 
 
         try {
-            System.out.println("Choose user interface:");
-            System.out.println("1) TUI");
-            System.out.println("2) GUI");
-            String ui = br.readLine();
+            String ui;
+            do {
+                System.out.println("Choose user interface:");
+                System.out.println("1) TUI");
+                System.out.println("2) GUI");
+                ui = br.readLine();
 
-            //create ui
-            if(ui.equals("1")){
-                manager = new TUI();
-            }else {
-                manager = new GUI();
-            }
+                //create ui
+                if (ui.equals("1")) {
+                    manager = new TUI();
+                } else if (ui.equals("2")) {
+                    manager = new GUI();
+                }
+            }while(manager==null);
             updater = new UIUpdater(manager);
 
-            System.out.println("Choose how to connect to server:");
-            System.out.println("1) RMI");
-            System.out.println("2) Socket");
+            do {
+                System.out.println("Choose how to connect to server:");
+                System.out.println("1) RMI");
+                System.out.println("2) Socket");
 
-            String scelta = br.readLine();
+                String scelta = br.readLine();
 
-            //create client
-            if(scelta.equals("1")){
-                System.out.println("Ha scelto RMI");
-                clientRMI = new ClientRMI(updater);
-                clientRMI.connect(input, Integer.parseInt(args[0]));
-                sender = clientRMI.getSender();
-            }else {
-                System.out.println("Ha scelto Socket");
-                clientSKT = new ClientSKT(updater);
-                clientSKT.connect(input, Integer.parseInt(args[0]));
-                sender = clientSKT.getSender();
-            }
+                //create client
+                if (scelta.equals("1")) {
+                    System.out.println("Ha scelto RMI");
+                    clientRMI = new ClientRMI(updater);
+                    clientRMI.connect(input, Integer.parseInt(args[0]));
+                    sender = clientRMI.getSender();
+                } else if (scelta.equals("2")) {
+                    System.out.println("Ha scelto Socket");
+                    clientSKT = new ClientSKT(updater);
+                    clientSKT.connect(input, Integer.parseInt(args[0]));
+                    sender = clientSKT.getSender();
+                }
+            }while(sender==null);
 
             //create controller
             if(ui.equals("1")){
