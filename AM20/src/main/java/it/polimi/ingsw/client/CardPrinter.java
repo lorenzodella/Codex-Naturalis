@@ -108,8 +108,10 @@ public class CardPrinter {
                         s.append("    ");
                     }
                     tmp = t.getKey().x + 1;
-                    //s.append(t.value+"("+t.pos.x+","+t.pos.y+")");
-                    s.append("│ " + t.getValue().getID() + " │");
+                    String id = t.getValue().getID();
+                    if(id.length()==2)
+                        id += " ";
+                    s.append("│ " + id + " │");
                 }
             }
             s.append("\n");

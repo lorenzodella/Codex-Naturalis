@@ -154,8 +154,10 @@ public class TUIController extends ClientController implements Runnable{
                     this.myTUI.viewGoldVisibleCards();
                 }else if(command[0].equals("/viewChat")){
                     this.myTUI.viewChat();
-                }else if(command[0].equals("/viewHand")){
+                }else if(command[0].equals("/viewHand")) {
                     this.myTUI.viewHandCards();
+                }else if(command[0].equals("/currPlayer")){
+
                 }else {
                     this.myTUI.viewErrorCommand();
                 }

@@ -38,6 +38,7 @@ public class ServerManager {
     }
 
     public synchronized void reset(){
+        System.out.println("Server reset");
         this.resetTimer();
         connections = new HashMap<>();
         controller = new Controller();
@@ -75,11 +76,11 @@ public class ServerManager {
      */
     //questo è il metodo che gestisce quando un client si è disconnesso
     public void detectDisconnection(String nickname) {
-        System.out.println(nickname + " disconnected!");
         HashMap<String, AcknowledgeMessage> res;
         this.getConnections().remove(nickname);
         try {
             res = this.getController().disconnectPlayer(nickname);
+            System.out.println(nickname + " disconnected!");
             //if there's one player left start countdown
             Map.Entry<String, AcknowledgeMessage> m = res.entrySet().iterator().next();
             if(m.getValue().getNumOfConnectedPlayers()==1)
@@ -95,11 +96,13 @@ public class ServerManager {
                 }
             }
         } catch (InvalidConnectionStateException | InvalidArgumentException e){
-            throw new RuntimeException(e);
+            System.err.println("Someone suspicious disconnected...");
         } catch (NoOneIsConnectedException e){
             //if everyone disconnected, reset server w/o telling something to clients
+            System.err.println(e.toString());
             reset();
         } catch (InvalidDisconnectionException e) {
+            System.err.println(e.toString());
             //if someone disconnected during preliminary phase of the game, reset server after telling that to remaining clients
             StopGameMessage message = new StopGameMessage();
             message.setResult(e.toString());

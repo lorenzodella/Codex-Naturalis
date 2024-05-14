@@ -32,6 +32,7 @@ public class TUI implements UIManager {
     private ObjectiveCard[] commonObjectives;
     private StarterCard starterCard;
     private String nickname;
+    private String currPlayer;
 
     private static String getKingdomColor(Kingdom k){
         if(k==null)
@@ -165,15 +166,17 @@ public class TUI implements UIManager {
 
     @Override
     public void showNextTurn(String nextPlayer){
-        if(nextPlayer.equals(nickname)){
-            System.out.println("Is your turn");
-            viewGoldVisibleCards();
-            viewResourceVisibleCards();
-            viewGoldTop();
-            viewResourceTop();
-        }
-        else{
-            System.out.println("Is " + nextPlayer + "'s turn");
+        if(nextPlayer!=null) {
+            currPlayer = nextPlayer;
+            if (nextPlayer.equals(nickname)) {
+                System.out.println("Is your turn");
+                viewGoldVisibleCards();
+                viewResourceVisibleCards();
+                viewGoldTop();
+                viewResourceTop();
+            } else {
+                System.out.println("Is " + nextPlayer + "'s turn");
+            }
         }
     }
 
@@ -185,6 +188,10 @@ public class TUI implements UIManager {
     @Override
     public void showError(String error){
         System.err.println(error);
+    }
+
+    public void viewCurrPlayer(){
+        System.out.println("Current player is: "+currPlayer);
     }
 
 
@@ -796,7 +803,7 @@ public class TUI implements UIManager {
     public void viewPlayerInfo(){
         this.printTitle();
         System.out.println("These are your inforamtion");
-        System.out.println("You have done "+ this.yourPlayerInfo.getScore());
+        System.out.println("You have done "+ this.yourPlayerInfo.getScore() + " points");
 
         //TODO
         //System.out.println("The common objective "); oppure chaiamata al metodo viewCommonObjective
@@ -827,7 +834,7 @@ public class TUI implements UIManager {
     public void viewOtherPlayerInfo(String username){
         this.printTitle();
         System.out.println("The following information are the one of " + username+" game");
-        System.out.println(username + " has done "+ this.othersPlayerInfo.get(username).getScore());
+        System.out.println(username + " has done "+ this.othersPlayerInfo.get(username).getScore() + " points");
 
         //TODO
         //System.out.println("The common objective "); oppure chaiamata al metodo viewCommonObjective
@@ -857,9 +864,9 @@ public class TUI implements UIManager {
 
     public void viewPlacement(){
         System.out.println("The placement has the following order: ");
-        System.out.println("- " + this.nickname + " has " + this.yourPlayerInfo.getScore());
+        System.out.println("- " + this.nickname + " has " + this.yourPlayerInfo.getScore() + " points");
         for(String s : othersPlayerInfo.keySet()){
-            System.out.println("- " + s + " has " + this.othersPlayerInfo.get(s));
+            System.out.println("- " + s + " has " + this.othersPlayerInfo.get(s).getScore() + " points");
         }
 
         System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------");
@@ -941,6 +948,7 @@ public class TUI implements UIManager {
         System.out.println("/viewResourceVisibile");
         System.out.println("/viewGoldVisible");
         System.out.println("/viewChat");
+        System.out.println("/currPlayer");
         System.out.println("/viewHand \n");
         System.out.println("---------------------------------------------------------------------------------------------------");
     }
