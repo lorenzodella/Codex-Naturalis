@@ -14,6 +14,7 @@ import it.polimi.ingsw.model.exceptions.RequirementsNotRespectedException;
 import it.polimi.ingsw.model.exceptions.TargetNotPresentException;
 import it.polimi.ingsw.model.util.XMLparser;
 
+import java.sql.SQLOutput;
 import java.util.*;
 
 public class TUI implements UIManager {
@@ -37,7 +38,6 @@ public class TUI implements UIManager {
     public TUI(){
         this.messages = new LinkedList<>();
         this.cards = new ArrayList<>();
-
     }
 
     @Override
@@ -145,230 +145,93 @@ public class TUI implements UIManager {
         System.err.println(error);
     }
 
-    //TODO ELE E TIA: si puo migliorare
-    //si può migliorare
+
     public void viewStarterCard(){
         this.printTitle();
         this.viewCommand();
-        System.out.println("\nYou have received the starter card:\n");
-        System.out.println("The front of this card has " + this.starterCard.getFrontCorners().length + " visible corners: \n");
+        System.out.println("\nYou have received the starter card:");
 
+        //FRONT
+        System.out.println("\nFRONT CORNERS: ");
         for(int i=0;i<this.starterCard.getFrontCorners().length;i++){
-            if(i==0){
-                if(this.starterCard.getFrontCorners()[i] == null)
-                    System.out.println("The UL corner doesn't exist");
-                else if(this.starterCard.getFrontCorners()[i].getContentKingdom() != null){
-                    System.out.print(ConsoleColors.TEXT_RESET + "- UL: ");
-                    if(this.starterCard.getFrontCorners()[i].getContentKingdom().equals(Kingdom.Plant))
-                        System.out.println(ConsoleColors.TEXT_GREEN + "PLANT");
-                    else if(this.starterCard.getFrontCorners()[i].getContentKingdom().equals(Kingdom.Insect))
-                        System.out.println(ConsoleColors.TEXT_PURPLE + "INSECT");
-                        //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
-                    else if(this.starterCard.getFrontCorners()[i].getContentKingdom().equals(Kingdom.Fungi))
-                        System.out.println(ConsoleColors.TEXT_RED + "FUNGI");
-                    else if (this.starterCard.getFrontCorners()[i].getContentKingdom().equals(Kingdom.Animal))
-                        System.out.println(ConsoleColors.TEXT_CYAN + "ANIMAL");
-                } else if(this.starterCard.getFrontCorners()[i].getContentObject() != null){
-                    System.out.print(ConsoleColors.TEXT_RESET + "- UL: ");
-                    if (this.starterCard.getFrontCorners()[i].getContentObject().equals(SpecialObject.Inkwell))
-                        System.out.println(ConsoleColors.TEXT_RESET + "INKWELL");
-                    else if (this.starterCard.getFrontCorners()[i].getContentObject().equals(SpecialObject.Quill))
-                        System.out.println(ConsoleColors.TEXT_RESET + "QUILL");
-                    else if (this.starterCard.getFrontCorners()[i].getContentObject().equals(SpecialObject.Manuscript))
-                        System.out.println(ConsoleColors.TEXT_RESET + "MANUSCRIPT");
-                } else {
-                    System.out.println(ConsoleColors.TEXT_RESET + "The corner is visible but it doesn't have any resource or object");
-                }
-            }else if(i==1){
-                if(this.starterCard.getFrontCorners()[i] == null)
-                    System.out.println("The UL corner doesn't exist");
-                else if(this.starterCard.getFrontCorners()[i].getContentKingdom() != null){
-                    System.out.print(ConsoleColors.TEXT_RESET + "- UR: ");
-                    if(this.starterCard.getFrontCorners()[i].getContentKingdom().equals(Kingdom.Plant))
-                        System.out.println(ConsoleColors.TEXT_GREEN + "PLANT");
-                    else if(this.starterCard.getFrontCorners()[i].getContentKingdom().equals(Kingdom.Insect))
-                        System.out.println(ConsoleColors.TEXT_PURPLE + "INSECT");
-                        //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
-                    else if(this.starterCard.getFrontCorners()[i].getContentKingdom().equals(Kingdom.Fungi))
-                        System.out.println(ConsoleColors.TEXT_RED + "FUNGI");
-                    else if (this.starterCard.getFrontCorners()[i].getContentKingdom().equals(Kingdom.Animal))
-                        System.out.println(ConsoleColors.TEXT_CYAN + "ANIMAL");
-                } else if(this.starterCard.getFrontCorners()[i].getContentObject() != null) {
-                    System.out.print(ConsoleColors.TEXT_RESET + "- UR: ");
-                    if (this.starterCard.getFrontCorners()[i].getContentObject().equals(SpecialObject.Inkwell))
-                        System.out.println(ConsoleColors.TEXT_RESET + "INKWELL");
-                    else if (this.starterCard.getFrontCorners()[i].getContentObject().equals(SpecialObject.Quill))
-                        System.out.println(ConsoleColors.TEXT_RESET + "QUILL");
-                    else if (this.starterCard.getFrontCorners()[i].getContentObject().equals(SpecialObject.Manuscript))
-                        System.out.println(ConsoleColors.TEXT_RESET + "MANUSCRIPT");
-                }else {
-                    System.out.println(ConsoleColors.TEXT_RESET + "The corner is visible but it doesn't have any resource or object");
-                }
-            }else if(i==2){
-                if(this.starterCard.getFrontCorners()[i] == null)
-                    System.out.println("The DL corner doesn't exist");
-                else if(this.starterCard.getFrontCorners()[i].getContentKingdom() != null){
-                    System.out.print(ConsoleColors.TEXT_RESET + "- DL: ");
-                    if(this.starterCard.getFrontCorners()[i].getContentKingdom().equals(Kingdom.Plant))
-                        System.out.println(ConsoleColors.TEXT_GREEN + "PLANT");
-                    else if(this.starterCard.getFrontCorners()[i].getContentKingdom().equals(Kingdom.Insect))
-                        System.out.println(ConsoleColors.TEXT_PURPLE + "INSECT");
-                        //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
-                    else if(this.starterCard.getFrontCorners()[i].getContentKingdom().equals(Kingdom.Fungi))
-                        System.out.println(ConsoleColors.TEXT_RED + "FUNGI");
-                    else if (this.starterCard.getFrontCorners()[i].getContentKingdom().equals(Kingdom.Animal))
-                        System.out.println(ConsoleColors.TEXT_CYAN + "ANIMAL");
-                } else if(this.starterCard.getFrontCorners()[i].getContentObject() != null) {
-                    System.out.print(ConsoleColors.TEXT_RESET + "- DL: ");
-                    if (this.starterCard.getFrontCorners()[i].getContentObject().equals(SpecialObject.Inkwell))
-                        System.out.println(ConsoleColors.TEXT_RESET + "INKWELL");
-                    else if (this.starterCard.getFrontCorners()[i].getContentObject().equals(SpecialObject.Quill))
-                        System.out.println(ConsoleColors.TEXT_RESET + "QUILL");
-                    else if (this.starterCard.getFrontCorners()[i].getContentObject().equals(SpecialObject.Manuscript))
-                        System.out.println(ConsoleColors.TEXT_RESET + "MANUSCRIPT");
-                }else {
-                    System.out.println(ConsoleColors.TEXT_RESET + "The corner is visible but it doesn't have any resource or object");
-                }
-            }else {
-                if(this.starterCard.getFrontCorners()[i] == null)
-                    System.out.println("The DR corner doesn't exist");
-                else if(this.starterCard.getFrontCorners()[i].getContentKingdom() != null){
-                    System.out.print(ConsoleColors.TEXT_RESET + "- DR: ");
-                    if(this.starterCard.getFrontCorners()[i].getContentKingdom().equals(Kingdom.Plant))
-                        System.out.println(ConsoleColors.TEXT_GREEN + "PLANT");
-                    else if(this.starterCard.getFrontCorners()[i].getContentKingdom().equals(Kingdom.Insect))
-                        System.out.println(ConsoleColors.TEXT_PURPLE + "INSECT");
-                        //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
-                    else if(this.starterCard.getFrontCorners()[i].getContentKingdom().equals(Kingdom.Fungi))
-                        System.out.println(ConsoleColors.TEXT_RED + "FUNGI");
-                    else if (this.starterCard.getFrontCorners()[i].getContentKingdom().equals(Kingdom.Animal))
-                        System.out.println(ConsoleColors.TEXT_CYAN + "ANIMAL");
-                } else if(this.starterCard.getFrontCorners()[i].getContentObject() != null) {
-                    System.out.print(ConsoleColors.TEXT_RESET + "- DR: ");
-                    if (this.starterCard.getFrontCorners()[i].getContentObject().equals(SpecialObject.Inkwell))
-                        System.out.println(ConsoleColors.TEXT_RESET + "INKWELL");
-                    else if (this.starterCard.getFrontCorners()[i].getContentObject().equals(SpecialObject.Quill))
-                        System.out.println(ConsoleColors.TEXT_RESET + "QUILL");
-                    else if (this.starterCard.getFrontCorners()[i].getContentObject().equals(SpecialObject.Manuscript))
-                        System.out.println(ConsoleColors.TEXT_RESET + "MANUSCRIPT");
-                }else {
-                    System.out.println(ConsoleColors.TEXT_RESET + "The corner is visible but it doesn't have any resource or object");
-                }
+            //definisco angolo
+            String angle;
+            if(i==0)
+                angle= "UL";
+            else if(i==1)
+                angle= "UR";
+            else if(i==2)
+                angle= "DL";
+            else
+                angle= "DR";
+
+            if(this.starterCard.getFrontCorners()[i] == null)
+                System.out.println("The " + angle + " corner doesn't exist");
+            else if(this.starterCard.getFrontCorners()[i].getContentKingdom() != null){
+                System.out.print(ConsoleColors.TEXT_RESET + "- " + angle + ": ");
+                if(this.starterCard.getFrontCorners()[i].getContentKingdom().equals(Kingdom.Plant))
+                    System.out.println(ConsoleColors.TEXT_GREEN + "PLANT");
+                else if(this.starterCard.getFrontCorners()[i].getContentKingdom().equals(Kingdom.Insect))
+                    System.out.println(ConsoleColors.TEXT_PURPLE + "INSECT");
+                    //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
+                else if(this.starterCard.getFrontCorners()[i].getContentKingdom().equals(Kingdom.Fungi))
+                    System.out.println(ConsoleColors.TEXT_RED + "FUNGI");
+                else if (this.starterCard.getFrontCorners()[i].getContentKingdom().equals(Kingdom.Animal))
+                    System.out.println(ConsoleColors.TEXT_CYAN + "ANIMAL");
+            } else if(this.starterCard.getFrontCorners()[i].getContentObject() != null){
+                System.out.print(ConsoleColors.TEXT_RESET + "-" + angle + ": ");
+                if (this.starterCard.getFrontCorners()[i].getContentObject().equals(SpecialObject.Inkwell))
+                    System.out.println(ConsoleColors.TEXT_RESET + "INKWELL");
+                else if (this.starterCard.getFrontCorners()[i].getContentObject().equals(SpecialObject.Quill))
+                    System.out.println(ConsoleColors.TEXT_RESET + "QUILL");
+                else if (this.starterCard.getFrontCorners()[i].getContentObject().equals(SpecialObject.Manuscript))
+                    System.out.println(ConsoleColors.TEXT_RESET + "MANUSCRIPT");
+            } else {
+                System.out.println(ConsoleColors.TEXT_RESET + "The corner is visible but empty");
             }
         }
         System.out.println("\n");
-        System.out.println(ConsoleColors.TEXT_RESET + "The back of this card has " + this.starterCard.getBackCorners().length + " visible corners: \n");
-        //da qua
+
+        //BACK
+        System.out.println("\nBACK CORNERS: ");
         for(int i=0;i<this.starterCard.getBackCorners().length;i++){
-            if(i==0){
-                if(this.starterCard.getBackCorners()[i] == null)
-                    System.out.println("The UL corner doesn't exist");
-                else if(this.starterCard.getBackCorners()[i].getContentKingdom() != null){
-                    System.out.print(ConsoleColors.TEXT_RESET + "- UL: ");
-                    if(this.starterCard.getBackCorners()[i].getContentKingdom().equals(Kingdom.Plant))
-                        System.out.println(ConsoleColors.TEXT_GREEN + "PLANT");
-                    else if(this.starterCard.getBackCorners()[i].getContentKingdom().equals(Kingdom.Insect))
-                        System.out.println(ConsoleColors.TEXT_PURPLE + "INSECT");
-                        //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
-                    else if(this.starterCard.getBackCorners()[i].getContentKingdom().equals(Kingdom.Fungi))
-                        System.out.println(ConsoleColors.TEXT_RED + "FUNGI");
-                    else if (this.starterCard.getBackCorners()[i].getContentKingdom().equals(Kingdom.Animal))
-                        System.out.println(ConsoleColors.TEXT_CYAN + "ANIMAL");
-                } else if(this.starterCard.getBackCorners()[i].getContentObject() != null){
-                    System.out.print(ConsoleColors.TEXT_RESET + "- UL: ");
-                    if (this.starterCard.getBackCorners()[i].getContentObject().equals(SpecialObject.Inkwell))
-                        System.out.println(ConsoleColors.TEXT_RESET + "INKWELL");
-                    else if (this.starterCard.getBackCorners()[i].getContentObject().equals(SpecialObject.Quill))
-                        System.out.println(ConsoleColors.TEXT_RESET + "QUILL");
-                    else if (this.starterCard.getBackCorners()[i].getContentObject().equals(SpecialObject.Manuscript))
-                        System.out.println(ConsoleColors.TEXT_RESET + "MANUSCRIPT");
-                } else {
-                    System.out.println(ConsoleColors.TEXT_RESET + "The corner is visible but it doesn't have any resource or object");
-                }
-            }else if(i==1){
-                if(this.starterCard.getBackCorners()[i] == null)
-                    System.out.println("The UL corner doesn't exist");
-                else if(this.starterCard.getBackCorners()[i].getContentKingdom() != null){
-                    System.out.print(ConsoleColors.TEXT_RESET + "- UR: ");
-                    if(this.starterCard.getBackCorners()[i].getContentKingdom().equals(Kingdom.Plant))
-                        System.out.println(ConsoleColors.TEXT_GREEN + "PLANT");
-                    else if(this.starterCard.getBackCorners()[i].getContentKingdom().equals(Kingdom.Insect))
-                        System.out.println(ConsoleColors.TEXT_PURPLE + "INSECT");
-                        //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
-                    else if(this.starterCard.getBackCorners()[i].getContentKingdom().equals(Kingdom.Fungi))
-                        System.out.println(ConsoleColors.TEXT_RED + "FUNGI");
-                    else if (this.starterCard.getBackCorners()[i].getContentKingdom().equals(Kingdom.Animal))
-                        System.out.println(ConsoleColors.TEXT_CYAN + "ANIMAL");
-                } else if(this.starterCard.getBackCorners()[i].getContentObject() != null) {
-                    System.out.print(ConsoleColors.TEXT_RESET + "- UR: ");
-                    if (this.starterCard.getBackCorners()[i].getContentObject().equals(SpecialObject.Inkwell))
-                        System.out.println(ConsoleColors.TEXT_RESET + "INKWELL");
-                    else if (this.starterCard.getBackCorners()[i].getContentObject().equals(SpecialObject.Quill))
-                        System.out.println(ConsoleColors.TEXT_RESET + "QUILL");
-                    else if (this.starterCard.getBackCorners()[i].getContentObject().equals(SpecialObject.Manuscript))
-                        System.out.println(ConsoleColors.TEXT_RESET + "MANUSCRIPT");
-                }else {
-                    System.out.println(ConsoleColors.TEXT_RESET + "The corner is visible but it doesn't have any resource or object");
-                }
-            }else if(i==2){
+            //definisco angolo
+            String angle;
+            if(i==0)
+                angle= "UL";
+            else if(i==1)
+                angle= "UR";
+            else if(i==2)
+                angle= "DL";
+            else
+                angle= "DR";
 
-                if(this.starterCard.getBackCorners()[i] == null)
-                    System.out.println("The DL corner doesn't exist");
-                else if(this.starterCard.getBackCorners()[i].getContentKingdom() != null){
-                    System.out.print(ConsoleColors.TEXT_RESET + "- DL: ");
-                    if(this.starterCard.getBackCorners()[i].getContentKingdom().equals(Kingdom.Plant))
-                        System.out.println(ConsoleColors.TEXT_GREEN + "PLANT");
-                    else if(this.starterCard.getBackCorners()[i].getContentKingdom().equals(Kingdom.Insect))
-                        System.out.println(ConsoleColors.TEXT_PURPLE + "INSECT");
-                        //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
-                    else if(this.starterCard.getBackCorners()[i].getContentKingdom().equals(Kingdom.Fungi))
-                        System.out.println(ConsoleColors.TEXT_RED + "FUNGI");
-                    else if (this.starterCard.getBackCorners()[i].getContentKingdom().equals(Kingdom.Animal))
-                        System.out.println(ConsoleColors.TEXT_CYAN + "ANIMAL");
-                } else if(this.starterCard.getBackCorners()[i].getContentObject() != null) {
-                    System.out.print(ConsoleColors.TEXT_RESET + "- DL: ");
-                    if (this.starterCard.getBackCorners()[i].getContentObject().equals(SpecialObject.Inkwell))
-                        System.out.println(ConsoleColors.TEXT_RESET + "INKWELL");
-                    else if (this.starterCard.getBackCorners()[i].getContentObject().equals(SpecialObject.Quill))
-                        System.out.println(ConsoleColors.TEXT_RESET + "QUILL");
-                    else if (this.starterCard.getBackCorners()[i].getContentObject().equals(SpecialObject.Manuscript))
-                        System.out.println(ConsoleColors.TEXT_RESET + "MANUSCRIPT");
-                }else {
-                    System.out.println(ConsoleColors.TEXT_RESET + "The corner is visible but it doesn't have any resource or object");
-                }
-
-
-            }else {
-
-                if(this.starterCard.getBackCorners()[i] == null)
-                    System.out.println("The DR corner doesn't exist");
-                else if(this.starterCard.getBackCorners()[i].getContentKingdom() != null){
-                    System.out.print(ConsoleColors.TEXT_RESET + "- DR: ");
-                    if(this.starterCard.getBackCorners()[i].getContentKingdom().equals(Kingdom.Plant))
-                        System.out.println(ConsoleColors.TEXT_GREEN + "PLANT");
-                    else if(this.starterCard.getBackCorners()[i].getContentKingdom().equals(Kingdom.Insect))
-                        System.out.println(ConsoleColors.TEXT_PURPLE + "INSECT");
-                        //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
-                    else if(this.starterCard.getBackCorners()[i].getContentKingdom().equals(Kingdom.Fungi))
-                        System.out.println(ConsoleColors.TEXT_RED + "FUNGI");
-                    else if (this.starterCard.getBackCorners()[i].getContentKingdom().equals(Kingdom.Animal))
-                        System.out.println(ConsoleColors.TEXT_CYAN + "ANIMAL");
-                } else if(this.starterCard.getBackCorners()[i].getContentObject() != null) {
-                    System.out.print(ConsoleColors.TEXT_RESET + "- DR: ");
-                    if (this.starterCard.getBackCorners()[i].getContentObject().equals(SpecialObject.Inkwell))
-                        System.out.println(ConsoleColors.TEXT_RESET + "INKWELL");
-                    else if (this.starterCard.getBackCorners()[i].getContentObject().equals(SpecialObject.Quill))
-                        System.out.println(ConsoleColors.TEXT_RESET + "QUILL");
-                    else if (this.starterCard.getBackCorners()[i].getContentObject().equals(SpecialObject.Manuscript))
-                        System.out.println(ConsoleColors.TEXT_RESET + "MANUSCRIPT");
-                }else {
-                    System.out.println(ConsoleColors.TEXT_RESET + "The corner is visible but it doesn't have any resource or object");
-                }
-
+            if(this.starterCard.getBackCorners()[i] == null)
+                System.out.println("The " + angle + " corner doesn't exist");
+            else if(this.starterCard.getBackCorners()[i].getContentKingdom() != null){
+                System.out.print(ConsoleColors.TEXT_RESET + "- " + angle + ": ");
+                if(this.starterCard.getBackCorners()[i].getContentKingdom().equals(Kingdom.Plant))
+                    System.out.println(ConsoleColors.TEXT_GREEN + "PLANT");
+                else if(this.starterCard.getBackCorners()[i].getContentKingdom().equals(Kingdom.Insect))
+                    System.out.println(ConsoleColors.TEXT_PURPLE + "INSECT");
+                    //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
+                else if(this.starterCard.getBackCorners()[i].getContentKingdom().equals(Kingdom.Fungi))
+                    System.out.println(ConsoleColors.TEXT_RED + "FUNGI");
+                else if (this.starterCard.getBackCorners()[i].getContentKingdom().equals(Kingdom.Animal))
+                    System.out.println(ConsoleColors.TEXT_CYAN + "ANIMAL");
+            } else if(this.starterCard.getBackCorners()[i].getContentObject() != null){
+                System.out.print(ConsoleColors.TEXT_RESET + "- UL: ");
+                if (this.starterCard.getBackCorners()[i].getContentObject().equals(SpecialObject.Inkwell))
+                    System.out.println(ConsoleColors.TEXT_RESET + "INKWELL");
+                else if (this.starterCard.getBackCorners()[i].getContentObject().equals(SpecialObject.Quill))
+                    System.out.println(ConsoleColors.TEXT_RESET + "QUILL");
+                else if (this.starterCard.getBackCorners()[i].getContentObject().equals(SpecialObject.Manuscript))
+                    System.out.println(ConsoleColors.TEXT_RESET + "MANUSCRIPT");
+            } else {
+                System.out.println(ConsoleColors.TEXT_RESET + "The corner is visible but empty");
             }
         }
-
-        System.out.print(ConsoleColors.TEXT_RESET + "\nThe back of the card has " + this.starterCard.getResources().toArray().length + " resources in the middle: ");
+        System.out.println("Resources in the middle: ");
         for(int i=0; i< this.starterCard.getResources().toArray().length;i++){
             if(this.starterCard.getResources().get(i).equals(Kingdom.Plant)){
                 System.out.print(ConsoleColors.TEXT_GREEN + "PLANT ");
@@ -382,19 +245,18 @@ public class TUI implements UIManager {
             }
         }
         System.out.println(ConsoleColors.TEXT_RESET);
+        System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------");
+        this.viewCommand();
+
     }
 
-    //TODO: NPASSAGGIO DELLE CARTE PER PROVARE SE VA
     public void viewHandCards(){
-        //assegnazione carte iniziali x esempio --> HELP
-
-        this.printTitle();
         System.out.println(ConsoleColors.TEXT_RESET + "These are your cards: \n");
 
         //scorro lista delle carte
         for(int i=0; i< this.cards.size(); i++) {
             if(i==0){
-                System.out.print("The card to the left is a");
+                System.out.print("The card on the left is a");
 
                 if(this.cards.get(i) instanceof ResourceCard) {
                     System.out.print(" resource card");
@@ -412,7 +274,7 @@ public class TUI implements UIManager {
             }
 
             if(i==2){
-                System.out.print(ConsoleColors.TEXT_RESET + "\nThe card to the right is a");
+                System.out.print(ConsoleColors.TEXT_RESET + "\nThe card on the right is a");
 
                 if(this.cards.get(i) instanceof ResourceCard) {
                     System.out.print(" resource card");
@@ -468,121 +330,52 @@ public class TUI implements UIManager {
                 }
             }
 
-            System.out.println(ConsoleColors.TEXT_RESET + "\nThe front of this card has " + this.cards.get(i).getFrontCorners().length + " visible corners: ");
             //scorro angoli FRONT
+            System.out.println("\nFRONT CORNERS: ");
             for(int j=0; j < this.cards.get(i).getFrontCorners().length; j++){
-                if(j==0){
-                    if(this.cards.get(i).getFrontCorners()[j] == null)
-                        System.out.println("The UL corner doesn't exist");
-                    //se ha una risorsa
-                    else if(this.cards.get(i).getFrontCorners()[j].getContentKingdom() != null){
-                        System.out.print(ConsoleColors.TEXT_RESET + "- UL: ");
-                        if(this.cards.get(i).getFrontCorners()[j].getContentKingdom().equals(Kingdom.Plant))
-                            System.out.println(ConsoleColors.TEXT_GREEN + "PLANT");
-                        else if(this.cards.get(i).getFrontCorners()[j].getContentKingdom().equals(Kingdom.Insect))
-                            System.out.println(ConsoleColors.TEXT_PURPLE + "INSECT");
-                            //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
-                        else if(this.cards.get(i).getFrontCorners()[j].getContentKingdom().equals(Kingdom.Fungi))
-                            System.out.println(ConsoleColors.TEXT_RED + "FUNGI");
-                        else if (this.cards.get(i).getFrontCorners()[j].getContentKingdom().equals(Kingdom.Animal))
-                            System.out.println(ConsoleColors.TEXT_CYAN + "ANIMAL");
-                    //se ha un oggetto
-                    } else if(this.cards.get(i).getFrontCorners()[j].getContentObject() != null){
-                        System.out.print(ConsoleColors.TEXT_RESET + "- UL: ");
-                        if (this.cards.get(i).getFrontCorners()[j].getContentObject().equals(SpecialObject.Inkwell))
-                            System.out.println(ConsoleColors.TEXT_RESET + "INKWELL");
-                        else if (this.cards.get(i).getFrontCorners()[j].getContentObject().equals(SpecialObject.Quill))
-                            System.out.println(ConsoleColors.TEXT_RESET + "QUILL");
-                        else if (this.cards.get(i).getFrontCorners()[j].getContentObject().equals(SpecialObject.Manuscript))
-                            System.out.println(ConsoleColors.TEXT_RESET + "MANUSCRIPT");
-                    //se non ha nulla
-                    } else {
-                        System.out.println(ConsoleColors.TEXT_RESET + "The corner is visible but it doesn't have any resource or object");
-                    }
 
-                }else if(j==1){
-                    if(this.cards.get(i).getFrontCorners()[j] == null)
-                        System.out.println("The UR corner doesn't exist");
-                    else if(this.cards.get(i).getFrontCorners()[j].getContentKingdom() != null){
-                        System.out.print(ConsoleColors.TEXT_RESET + "- UR: ");
-                        if(this.cards.get(i).getFrontCorners()[j].getContentKingdom().equals(Kingdom.Plant))
-                            System.out.println(ConsoleColors.TEXT_GREEN + "PLANT");
-                        else if(this.cards.get(i).getFrontCorners()[j].getContentKingdom().equals(Kingdom.Insect))
-                            System.out.println(ConsoleColors.TEXT_PURPLE + "INSECT");
-                            //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
-                        else if(this.cards.get(i).getFrontCorners()[j].getContentKingdom().equals(Kingdom.Fungi))
-                            System.out.println(ConsoleColors.TEXT_RED + "FUNGI");
-                        else if (this.cards.get(i).getFrontCorners()[j].getContentKingdom().equals(Kingdom.Animal))
-                            System.out.println(ConsoleColors.TEXT_CYAN + "ANIMAL");
-                    } else if(this.cards.get(i).getFrontCorners()[j].getContentObject() != null) {
-                        System.out.print(ConsoleColors.TEXT_RESET + "- UR: ");
-                        if (this.cards.get(i).getFrontCorners()[j].getContentObject().equals(SpecialObject.Inkwell))
-                            System.out.println(ConsoleColors.TEXT_RESET + "INKWELL");
-                        else if (this.cards.get(i).getFrontCorners()[j].getContentObject().equals(SpecialObject.Quill))
-                            System.out.println(ConsoleColors.TEXT_RESET + "QUILL");
-                        else if (this.cards.get(i).getFrontCorners()[j].getContentObject().equals(SpecialObject.Manuscript))
-                            System.out.println(ConsoleColors.TEXT_RESET + "MANUSCRIPT");
-                    }else {
-                        System.out.println(ConsoleColors.TEXT_RESET + "The corner is visible but it doesn't have any resource or object");
-                    }
+                //definisco angolo
+                String angle;
+                if(j==0)
+                    angle= "UL";
+                else if(j==1)
+                    angle= "UR";
+                else if(j==2)
+                    angle= "DL";
+                else
+                    angle= "DR";
 
-                }else if(j==2){
-                    if(this.cards.get(i).getFrontCorners()[j] == null)
-                        System.out.println("The DL corner doesn't exist");
-                    else if(this.cards.get(i).getFrontCorners()[j].getContentKingdom() != null){
-                        System.out.print(ConsoleColors.TEXT_RESET + "- DL: ");
-                        if(this.cards.get(i).getFrontCorners()[j].getContentKingdom().equals(Kingdom.Plant))
-                            System.out.println(ConsoleColors.TEXT_GREEN + "PLANT");
-                        else if(this.cards.get(i).getFrontCorners()[j].getContentKingdom().equals(Kingdom.Insect))
-                            System.out.println(ConsoleColors.TEXT_PURPLE + "INSECT");
-                            //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
-                        else if(this.cards.get(i).getFrontCorners()[j].getContentKingdom().equals(Kingdom.Fungi))
-                            System.out.println(ConsoleColors.TEXT_RED + "FUNGI");
-                        else if (this.cards.get(i).getFrontCorners()[j].getContentKingdom().equals(Kingdom.Animal))
-                            System.out.println(ConsoleColors.TEXT_CYAN + "ANIMAL");
-                    } else if(this.cards.get(i).getFrontCorners()[j].getContentObject() != null) {
-                        System.out.print(ConsoleColors.TEXT_RESET + "- DL: ");
-                        if (this.cards.get(i).getFrontCorners()[j].getContentObject().equals(SpecialObject.Inkwell))
-                            System.out.println(ConsoleColors.TEXT_RESET + "INKWELL");
-                        else if (this.cards.get(i).getFrontCorners()[j].getContentObject().equals(SpecialObject.Quill))
-                            System.out.println(ConsoleColors.TEXT_RESET + "QUILL");
-                        else if (this.cards.get(i).getFrontCorners()[j].getContentObject().equals(SpecialObject.Manuscript))
-                            System.out.println(ConsoleColors.TEXT_RESET + "MANUSCRIPT");
-                    }else {
-                        System.out.println(ConsoleColors.TEXT_RESET + "The corner is visible but it doesn't have any resource or object");
-                    }
-
-
-                }else {
-                    if(this.cards.get(i).getFrontCorners()[j] == null)
-                        System.out.println("The DR corner doesn't exist");
-                    else if(this.cards.get(i).getFrontCorners()[j].getContentKingdom() != null){
-                        System.out.print(ConsoleColors.TEXT_RESET + "- DR: ");
-                        if(this.cards.get(i).getFrontCorners()[j].getContentKingdom().equals(Kingdom.Plant))
-                            System.out.println(ConsoleColors.TEXT_GREEN + "PLANT");
-                        else if(this.cards.get(i).getFrontCorners()[j].getContentKingdom().equals(Kingdom.Insect))
-                            System.out.println(ConsoleColors.TEXT_PURPLE + "INSECT");
-                            //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
-                        else if(this.cards.get(i).getFrontCorners()[j].getContentKingdom().equals(Kingdom.Fungi))
-                            System.out.println(ConsoleColors.TEXT_RED + "FUNGI");
-                        else if (this.cards.get(i).getFrontCorners()[j].getContentKingdom().equals(Kingdom.Animal))
-                            System.out.println(ConsoleColors.TEXT_CYAN + "ANIMAL");
-                    } else if(this.cards.get(i).getFrontCorners()[j].getContentObject() != null) {
-                        System.out.print(ConsoleColors.TEXT_RESET + "- DR: ");
-                        if (this.cards.get(i).getFrontCorners()[j].getContentObject().equals(SpecialObject.Inkwell))
-                            System.out.println(ConsoleColors.TEXT_RESET + "INKWELL");
-                        else if (this.cards.get(i).getFrontCorners()[j].getContentObject().equals(SpecialObject.Quill))
-                            System.out.println(ConsoleColors.TEXT_RESET + "QUILL");
-                        else if (this.cards.get(i).getFrontCorners()[j].getContentObject().equals(SpecialObject.Manuscript))
-                            System.out.println(ConsoleColors.TEXT_RESET + "MANUSCRIPT");
-                    }else {
-                        System.out.println(ConsoleColors.TEXT_RESET + "The corner is visible but it doesn't have any resource or object");
-                    }
+                if(this.cards.get(i).getFrontCorners()[j] == null)
+                    System.out.println("The " + angle + " corner doesn't exist");
+                //se ha una risorsa
+                else if(this.cards.get(i).getFrontCorners()[j].getContentKingdom() != null){
+                    System.out.print(ConsoleColors.TEXT_RESET + "- " + angle + ": ");
+                    if(this.cards.get(i).getFrontCorners()[j].getContentKingdom().equals(Kingdom.Plant))
+                        System.out.println(ConsoleColors.TEXT_GREEN + "PLANT");
+                    else if(this.cards.get(i).getFrontCorners()[j].getContentKingdom().equals(Kingdom.Insect))
+                        System.out.println(ConsoleColors.TEXT_PURPLE + "INSECT");
+                        //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
+                    else if(this.cards.get(i).getFrontCorners()[j].getContentKingdom().equals(Kingdom.Fungi))
+                        System.out.println(ConsoleColors.TEXT_RED + "FUNGI");
+                    else if (this.cards.get(i).getFrontCorners()[j].getContentKingdom().equals(Kingdom.Animal))
+                        System.out.println(ConsoleColors.TEXT_CYAN + "ANIMAL");
+                //se ha un oggetto
+                } else if(this.cards.get(i).getFrontCorners()[j].getContentObject() != null){
+                    System.out.print(ConsoleColors.TEXT_RESET + "- " + angle + ": ");
+                    if (this.cards.get(i).getFrontCorners()[j].getContentObject().equals(SpecialObject.Inkwell))
+                        System.out.println(ConsoleColors.TEXT_RESET + "INKWELL");
+                    else if (this.cards.get(i).getFrontCorners()[j].getContentObject().equals(SpecialObject.Quill))
+                        System.out.println(ConsoleColors.TEXT_RESET + "QUILL");
+                    else if (this.cards.get(i).getFrontCorners()[j].getContentObject().equals(SpecialObject.Manuscript))
+                        System.out.println(ConsoleColors.TEXT_RESET + "MANUSCRIPT");
+                //se non ha nulla
+                } else {
+                    System.out.println(ConsoleColors.TEXT_RESET + "The corner is visible but it doesn't have any resource or object");
                 }
             }
 
-            //BACK
-            //ps il back di ogni carta ha 4 visible corners sempre
+            System.out.println("\nBACK CORNERS: ");
+            //BACK: back di ogni carta ha 4 visible corners sempre
             System.out.print(ConsoleColors. TEXT_RESET + "\nThe back of this card has the 4 visible corners and a ");
             if(this.cards.get(i).getCardKingdom().equals(Kingdom.Plant))
                 System.out.print(ConsoleColors.TEXT_GREEN + "PLANT");
@@ -594,11 +387,16 @@ public class TUI implements UIManager {
             else if (this.cards.get(i).getCardKingdom().equals(Kingdom.Animal))
                 System.out.print(ConsoleColors.TEXT_CYAN + "ANIMAL");
             System.out.println(ConsoleColors.TEXT_RESET + " resource");
+
+            //SPAZIATURA TRA DIVERSE CARTE
+            System.out.println("---------------------------------------------------------------------------------------------------");
         }
+        System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------");
+        this.viewCommand();
     }
 
     public void viewCommonObjective(){
-        System.out.println("These are the common objectives: \n");
+        System.out.println("Common objectives: \n");
         //scorro array dei common objectives
         for(int i=0; i<this.commonObjectives.length; i++){
             if(this.commonObjectives[i] instanceof DiagonalConfigurationObjectiveCard){
@@ -615,15 +413,19 @@ public class TUI implements UIManager {
                     System.out.println(ConsoleColors.TEXT_CYAN + "ANIMAL");
                 System.out.print(ConsoleColors.TEXT_RESET + " resource cards only, starting by covering the ");
 
+                //definisco angolo per scorrerli
+                String angle;
                 if(((DiagonalConfigurationObjectiveCard) this.commonObjectives[i]).getCoveredCorner() == 0)
-                    System.out.println("UL first");
+                    angle= "UL";
                 else if(((DiagonalConfigurationObjectiveCard) this.commonObjectives[i]).getCoveredCorner() == 1)
-                    System.out.println("UR first");
+                    angle= "UR";
                 else if(((DiagonalConfigurationObjectiveCard) this.commonObjectives[i]).getCoveredCorner() == 2)
-                    System.out.println("DL first");
-                else if(((DiagonalConfigurationObjectiveCard) this.commonObjectives[i]).getCoveredCorner() == 3)
-                    System.out.println("DR first");
+                    angle= "DL";
+                else
+                    angle= "DR";
+                System.out.println(angle + "angle.");
                 System.out.println("You get 2 points every time you create this kind of configuration\n ");
+
             }else if(this.commonObjectives[i] instanceof PairOfObjectsObjectiveCard){
                 System.out.println("- PAIR OF OBJECTS OBJECTIVES: ");
                 System.out.println("You get 2 points every time you collect two " +
@@ -659,7 +461,6 @@ public class TUI implements UIManager {
                 System.out.print(ConsoleColors.TEXT_RESET + " card.");
 
                 System.out.print(" This objective also needs of a ");
-
                 if(((VerticalConfigurationObjectiveCard) this.commonObjectives[i]).getKingdom1().equals(Kingdom.Fungi))
                     System.out.print(ConsoleColors.TEXT_RED + "FUNGI");
                 else if(((VerticalConfigurationObjectiveCard) this.commonObjectives[i]).getKingdom1().equals(Kingdom.Insect))
@@ -671,22 +472,26 @@ public class TUI implements UIManager {
 
                 System.out.print(ConsoleColors.TEXT_RESET+ " card that should cover the ");
 
+                String angle;
                 if(((VerticalConfigurationObjectiveCard) this.commonObjectives[i]).getCoveredCorner() == 0)
-                    System.out.println("DR angle of the bottom " +((VerticalConfigurationObjectiveCard) this.commonObjectives[i]).getKingdom2() + " card." );
+                    angle= "UL";
                 else if(((VerticalConfigurationObjectiveCard) this.commonObjectives[i]).getCoveredCorner() == 1)
-                    System.out.println("DL angle of the bottom " + ((VerticalConfigurationObjectiveCard) this.commonObjectives[i]).getKingdom2() + " card.");
+                    angle= "UR";
                 else if(((VerticalConfigurationObjectiveCard) this.commonObjectives[i]).getCoveredCorner() == 2)
-                    System.out.println("UR angle of the top "+ ((VerticalConfigurationObjectiveCard) this.commonObjectives[i]).getKingdom2() + " card." );
+                    angle= "DL";
                 else
-                    System.out.println("UL angle of the top "+ ((VerticalConfigurationObjectiveCard) this.commonObjectives[i]).getKingdom2() + " card.");
+                    angle= "DR";
+                System.out.println( angle + "angle of the bottom " +((VerticalConfigurationObjectiveCard) this.commonObjectives[i]).getKingdom2() + " card." );
                 System.out.println("You get 3 points every time you create this kind of configuration \n");
             }
+            System.out.println("---------------------------------------------------------------------------------------------------");
         }
+        System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------");
+        this.viewCommand();
     }
 
-    //TODO ELE: GUARDARE COME SCRIVERE BENE VERTICAL E DIAGONAL CONFIG
     public void viewSecretObjective(){
-        System.out.println("This is your secret objectives: \n");
+        System.out.println("Your secret objective: \n");
         //scorro array dei common objectives
         for(int i=0; i<this.secretObjectives.size(); i++){
             if(this.secretObjectives.get(i) instanceof DiagonalConfigurationObjectiveCard){
@@ -703,14 +508,18 @@ public class TUI implements UIManager {
                     System.out.println(ConsoleColors.TEXT_CYAN + "ANIMAL");
                 System.out.print(ConsoleColors.TEXT_RESET + " resource cards only, starting by covering the ");
 
+                //definisco angolo per scorrerli
+                String angle;
                 if(((DiagonalConfigurationObjectiveCard) this.secretObjectives.get(i)).getCoveredCorner() == 0)
-                    System.out.println("UL first");
+                    angle= "UL";
                 else if(((DiagonalConfigurationObjectiveCard) this.secretObjectives.get(i)).getCoveredCorner() == 1)
-                    System.out.println("UR first");
+                    angle= "UR";
                 else if(((DiagonalConfigurationObjectiveCard) this.secretObjectives.get(i)).getCoveredCorner() == 2)
-                    System.out.println("DL first");
-                else if(((DiagonalConfigurationObjectiveCard) this.secretObjectives.get(i)).getCoveredCorner() == 3)
-                    System.out.println("DR first");
+                    angle= "DL";
+                else
+                    angle= "DR";
+                System.out.println(angle + "angle.");
+
                 System.out.println("You get 2 points every time you create this kind of configuration\n ");
             }else if(this.secretObjectives.get(i) instanceof PairOfObjectsObjectiveCard){
                 System.out.println("- PAIR OF OBJECTS OBJECTIVES: ");
@@ -747,7 +556,6 @@ public class TUI implements UIManager {
                 System.out.print(ConsoleColors.TEXT_RESET + " card.");
 
                 System.out.print(" This objective also needs of a ");
-
                 if(((VerticalConfigurationObjectiveCard) this.secretObjectives.get(i)).getKingdom1().equals(Kingdom.Fungi))
                     System.out.print(ConsoleColors.TEXT_RED + "FUNGI");
                 else if(((VerticalConfigurationObjectiveCard) this.secretObjectives.get(i)).getKingdom1().equals(Kingdom.Insect))
@@ -759,17 +567,22 @@ public class TUI implements UIManager {
 
                 System.out.print(ConsoleColors.TEXT_RESET+ " card that should cover the ");
 
+                //definisco angolo per scorrerli
+                String angle1;
                 if(((VerticalConfigurationObjectiveCard) this.secretObjectives.get(i)).getCoveredCorner() == 0)
-                    System.out.println("DR angle of the top " +((VerticalConfigurationObjectiveCard) this.secretObjectives.get(i)).getKingdom2() + " card." );
+                    angle1= "UL";
                 else if(((VerticalConfigurationObjectiveCard) this.secretObjectives.get(i)).getCoveredCorner() == 1)
-                    System.out.println("DL angle of the top " + ((VerticalConfigurationObjectiveCard) this.secretObjectives.get(i)).getKingdom2() + " card.");
+                    angle1= "UR";
                 else if(((VerticalConfigurationObjectiveCard) this.secretObjectives.get(i)).getCoveredCorner() == 2)
-                    System.out.println("UR angle of the bottom "+ ((VerticalConfigurationObjectiveCard) this.secretObjectives.get(i)).getKingdom2() + " card." );
+                    angle1= "DL";
                 else
-                    System.out.println("UL angle of the bottom "+ ((VerticalConfigurationObjectiveCard) this.secretObjectives.get(i)).getKingdom2() + " card.");
+                    angle1= "DR";
                 System.out.println("You get 3 points every time you create this kind of configuration \n");
             }
+            System.out.println("---------------------------------------------------------------------------------------------------");
         }
+        System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------");
+        this.viewCommand();
     }
 
     public void viewGoldTop(){
@@ -784,6 +597,9 @@ public class TUI implements UIManager {
         else
             System.out.print(ConsoleColors.TEXT_CYAN + "ANIMAL");
         System.out.println(ConsoleColors.TEXT_RESET + " card \n");
+
+        System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------");
+        this.viewCommand();
     }
 
     public void viewResourceTop(){
@@ -797,6 +613,9 @@ public class TUI implements UIManager {
         else
             System.out.print(ConsoleColors.TEXT_CYAN + "ANIMAL");
         System.out.println(ConsoleColors.TEXT_RESET + " card \n");
+
+        System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------");
+        this.viewCommand();
     }
 
     public void viewGoldVisibleCards(){
@@ -821,113 +640,47 @@ public class TUI implements UIManager {
             System.out.println(ConsoleColors.TEXT_RESET + " card \n");
 
             //ELENCO DELLE RISORSE IN OGNI CORNER:
-            System.out.println("This card has " + this.goldVisible[i].getFrontCorners().length + " visible corners: ");
             //scorro angoli FRONT
             for(int j=0; j < this.goldVisible[i].getFrontCorners().length; j++) {
-                if(j==0){
-                    if(this.goldVisible[i].getFrontCorners()[j] == null)
-                        System.out.println("The UL corner doesn't exist");
-                    else if(this.goldVisible[i].getFrontCorners()[j].getContentKingdom() != null){
-                        System.out.print(ConsoleColors.TEXT_RESET + "- UL: ");
-                        if(this.goldVisible[i].getFrontCorners()[j].getContentKingdom().equals(Kingdom.Plant))
-                            System.out.println(ConsoleColors.TEXT_GREEN + "PLANT");
-                        else if(this.goldVisible[i].getFrontCorners()[j].getContentKingdom().equals(Kingdom.Insect))
-                            System.out.println(ConsoleColors.TEXT_PURPLE + "INSECT");
-                            //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
-                        else if(this.goldVisible[i].getFrontCorners()[j].getContentKingdom().equals(Kingdom.Fungi))
-                            System.out.println(ConsoleColors.TEXT_RED + "FUNGI");
-                        else if (this.goldVisible[i].getFrontCorners()[j].getContentKingdom().equals(Kingdom.Animal))
-                            System.out.println(ConsoleColors.TEXT_CYAN + "ANIMAL");
-                    } else if(this.goldVisible[i].getFrontCorners()[j].getContentObject() != null){
-                        System.out.print(ConsoleColors.TEXT_RESET + "- UL: ");
-                        if (this.goldVisible[i].getFrontCorners()[j].getContentObject().equals(SpecialObject.Inkwell))
-                            System.out.println(ConsoleColors.TEXT_RESET + "INKWELL");
-                        else if (this.goldVisible[i].getFrontCorners()[j].getContentObject().equals(SpecialObject.Quill))
-                            System.out.println(ConsoleColors.TEXT_RESET + "QUILL");
-                        else if (this.goldVisible[i].getFrontCorners()[j].getContentObject().equals(SpecialObject.Manuscript))
-                            System.out.println(ConsoleColors.TEXT_RESET + "MANUSCRIPT");
-                    } else {
-                        System.out.println(ConsoleColors.TEXT_RESET + "The corner is visible but it doesn't have any resource or object");
-                    }
-                }else if(j==1){
-                    if(this.goldVisible[i].getFrontCorners()[j] == null)
-                        System.out.println("The UL corner doesn't exist");
-                    else if(this.goldVisible[i].getFrontCorners()[j].getContentKingdom() != null){
-                        System.out.print(ConsoleColors.TEXT_RESET + "- UR: ");
-                        if(this.goldVisible[i].getFrontCorners()[j].getContentKingdom().equals(Kingdom.Plant))
-                            System.out.println(ConsoleColors.TEXT_GREEN + "PLANT");
-                        else if(this.goldVisible[i].getFrontCorners()[j].getContentKingdom().equals(Kingdom.Insect))
-                            System.out.println(ConsoleColors.TEXT_PURPLE + "INSECT");
-                            //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
-                        else if(this.goldVisible[i].getFrontCorners()[j].getContentKingdom().equals(Kingdom.Fungi))
-                            System.out.println(ConsoleColors.TEXT_RED + "FUNGI");
-                        else if (this.goldVisible[i].getFrontCorners()[j].getContentKingdom().equals(Kingdom.Animal))
-                            System.out.println(ConsoleColors.TEXT_CYAN + "ANIMAL");
-                    } else if(this.goldVisible[i].getFrontCorners()[j].getContentObject() != null) {
-                        System.out.print(ConsoleColors.TEXT_RESET + "- UR: ");
-                        if (this.goldVisible[i].getFrontCorners()[j].getContentObject().equals(SpecialObject.Inkwell))
-                            System.out.println(ConsoleColors.TEXT_RESET + "INKWELL");
-                        else if (this.goldVisible[i].getFrontCorners()[j].getContentObject().equals(SpecialObject.Quill))
-                            System.out.println(ConsoleColors.TEXT_RESET + "QUILL");
-                        else if (this.goldVisible[i].getFrontCorners()[j].getContentObject().equals(SpecialObject.Manuscript))
-                            System.out.println(ConsoleColors.TEXT_RESET + "MANUSCRIPT");
-                    }else {
-                        System.out.println(ConsoleColors.TEXT_RESET + "The corner is visible but it doesn't have any resource or object");
-                    }
-                }else if(j==2){
-                    if(this.goldVisible[i].getFrontCorners()[j] == null)
-                        System.out.println("The DL corner doesn't exist");
-                    else if(this.goldVisible[i].getFrontCorners()[j].getContentKingdom() != null){
-                        System.out.print(ConsoleColors.TEXT_RESET + "- DL: ");
-                        if(this.goldVisible[i].getFrontCorners()[j].getContentKingdom().equals(Kingdom.Plant))
-                            System.out.println(ConsoleColors.TEXT_GREEN + "PLANT");
-                        else if(this.goldVisible[i].getFrontCorners()[j].getContentKingdom().equals(Kingdom.Insect))
-                            System.out.println(ConsoleColors.TEXT_PURPLE + "INSECT");
-                            //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
-                        else if(this.goldVisible[i].getFrontCorners()[j].getContentKingdom().equals(Kingdom.Fungi))
-                            System.out.println(ConsoleColors.TEXT_RED + "FUNGI");
-                        else if (this.goldVisible[i].getFrontCorners()[j].getContentKingdom().equals(Kingdom.Animal))
-                            System.out.println(ConsoleColors.TEXT_CYAN + "ANIMAL");
-                    } else if(this.goldVisible[i].getFrontCorners()[j].getContentObject() != null) {
-                        System.out.print(ConsoleColors.TEXT_RESET + "- DL: ");
-                        if (this.goldVisible[i].getFrontCorners()[j].getContentObject().equals(SpecialObject.Inkwell))
-                            System.out.println(ConsoleColors.TEXT_RESET + "INKWELL");
-                        else if (this.goldVisible[i].getFrontCorners()[j].getContentObject().equals(SpecialObject.Quill))
-                            System.out.println(ConsoleColors.TEXT_RESET + "QUILL");
-                        else if (this.goldVisible[i].getFrontCorners()[j].getContentObject().equals(SpecialObject.Manuscript))
-                            System.out.println(ConsoleColors.TEXT_RESET + "MANUSCRIPT");
-                    }else {
-                        System.out.println(ConsoleColors.TEXT_RESET + "The corner is visible but it doesn't have any resource or object");
-                    }
-                }else {
-                    if(this.goldVisible[i].getFrontCorners()[j] == null)
-                        System.out.println("The DR corner doesn't exist");
-                    else if(this.goldVisible[i].getFrontCorners()[j].getContentKingdom() != null){
-                        System.out.print(ConsoleColors.TEXT_RESET + "- DR: ");
-                        if(this.goldVisible[i].getFrontCorners()[j].getContentKingdom().equals(Kingdom.Plant))
-                            System.out.println(ConsoleColors.TEXT_GREEN + "PLANT");
-                        else if(this.goldVisible[i].getFrontCorners()[j].getContentKingdom().equals(Kingdom.Insect))
-                            System.out.println(ConsoleColors.TEXT_PURPLE + "INSECT");
-                            //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
-                        else if(this.goldVisible[i].getFrontCorners()[j].getContentKingdom().equals(Kingdom.Fungi))
-                            System.out.println(ConsoleColors.TEXT_RED + "FUNGI");
-                        else if (this.goldVisible[i].getFrontCorners()[j].getContentKingdom().equals(Kingdom.Animal))
-                            System.out.println(ConsoleColors.TEXT_CYAN + "ANIMAL");
-                    } else if(this.goldVisible[i].getFrontCorners()[j].getContentObject() != null) {
-                        System.out.print(ConsoleColors.TEXT_RESET + "- DR: ");
-                        if (this.goldVisible[i].getFrontCorners()[j].getContentObject().equals(SpecialObject.Inkwell))
-                            System.out.println(ConsoleColors.TEXT_RESET + "INKWELL");
-                        else if (this.goldVisible[i].getFrontCorners()[j].getContentObject().equals(SpecialObject.Quill))
-                            System.out.println(ConsoleColors.TEXT_RESET + "QUILL");
-                        else if (this.goldVisible[i].getFrontCorners()[j].getContentObject().equals(SpecialObject.Manuscript))
-                            System.out.println(ConsoleColors.TEXT_RESET + "MANUSCRIPT");
-                    }else {
-                        System.out.println(ConsoleColors.TEXT_RESET + "The corner is visible but it doesn't have any resource or object");
-                    }
+                String angle;
+                if (j == 0)
+                    angle = "UL";
+                else if (j == 1)
+                    angle = "UR";
+                else if (j == 2)
+                    angle = "DL";
+                else
+                    angle = "DR";
+
+                if(this.goldVisible[i].getFrontCorners()[j] == null)
+                    System.out.println("The " + angle + " corner doesn't exist");
+                else if (this.goldVisible[i].getFrontCorners()[j].getContentKingdom() != null) {
+                    System.out.print(ConsoleColors.TEXT_RESET + "- " + angle + ": ");
+                    if (this.goldVisible[i].getFrontCorners()[j].getContentKingdom().equals(Kingdom.Plant))
+                        System.out.println(ConsoleColors.TEXT_GREEN + "PLANT");
+                    else if (this.goldVisible[i].getFrontCorners()[j].getContentKingdom().equals(Kingdom.Insect))
+                        System.out.println(ConsoleColors.TEXT_PURPLE + "INSECT");
+                        //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
+                    else if (this.goldVisible[i].getFrontCorners()[j].getContentKingdom().equals(Kingdom.Fungi))
+                        System.out.println(ConsoleColors.TEXT_RED + "FUNGI");
+                    else if (this.goldVisible[i].getFrontCorners()[j].getContentKingdom().equals(Kingdom.Animal))
+                        System.out.println(ConsoleColors.TEXT_CYAN + "ANIMAL");
+                } else if (this.goldVisible[i].getFrontCorners()[j].getContentObject() != null) {
+                    System.out.print(ConsoleColors.TEXT_RESET + "- UL: ");
+                    if (this.goldVisible[i].getFrontCorners()[j].getContentObject().equals(SpecialObject.Inkwell))
+                        System.out.println(ConsoleColors.TEXT_RESET + "INKWELL");
+                    else if (this.goldVisible[i].getFrontCorners()[j].getContentObject().equals(SpecialObject.Quill))
+                        System.out.println(ConsoleColors.TEXT_RESET + "QUILL");
+                    else if (this.goldVisible[i].getFrontCorners()[j].getContentObject().equals(SpecialObject.Manuscript))
+                        System.out.println(ConsoleColors.TEXT_RESET + "MANUSCRIPT");
+                } else {
+                    System.out.println(ConsoleColors.TEXT_RESET + "The corner is visible but it doesn't have any resource or object");
                 }
+                System.out.println("---------------------------------------------------------------------------------------------------");
             }
-            System.out.println("\n");
         }
+        System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------");
+        this.viewCommand();
     }
 
     public void viewResourceVisibleCards(){
@@ -939,6 +692,7 @@ public class TUI implements UIManager {
                 System.out.print(ConsoleColors.TEXT_RESET + "First card: ");
             } else
                 System.out.print(ConsoleColors.TEXT_RESET +  "Second card: ");
+
             if(this.resourceVisible[i].getCardKingdom().equals(Kingdom.Fungi))
                 System.out.print(ConsoleColors.TEXT_RED + "FUNGI");
             else if(this.resourceVisible[i].getCardKingdom().equals(Kingdom.Insect))
@@ -950,113 +704,48 @@ public class TUI implements UIManager {
             System.out.println(ConsoleColors.TEXT_RESET + " card \n");
 
             //ELENCO DELLE RISORSE IN OGNI CORNER:
-            System.out.println("This card has " + this.resourceVisible[i].getFrontCorners().length + " visible corners: ");
             //scorro angoli FRONT
-            for(int j=0; j < this.resourceVisible[i].getFrontCorners().length; j++) {
-                if(j==0){
-                    if(this.resourceVisible[i].getFrontCorners()[j] == null)
-                        System.out.println("The UL corner doesn't exist");
-                    else if(this.resourceVisible[i].getFrontCorners()[j].getContentKingdom() != null){
-                        System.out.print(ConsoleColors.TEXT_RESET + "- UL: ");
-                        if(this.resourceVisible[i].getFrontCorners()[j].getContentKingdom().equals(Kingdom.Plant))
-                            System.out.println(ConsoleColors.TEXT_GREEN + "PLANT");
-                        else if(this.resourceVisible[i].getFrontCorners()[j].getContentKingdom().equals(Kingdom.Insect))
-                            System.out.println(ConsoleColors.TEXT_PURPLE + "INSECT");
-                            //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
-                        else if(this.resourceVisible[i].getFrontCorners()[j].getContentKingdom().equals(Kingdom.Fungi))
-                            System.out.println(ConsoleColors.TEXT_RED + "FUNGI");
-                        else if (this.resourceVisible[i].getFrontCorners()[j].getContentKingdom().equals(Kingdom.Animal))
-                            System.out.println(ConsoleColors.TEXT_CYAN + "ANIMAL");
-                    } else if(this.resourceVisible[i].getFrontCorners()[j].getContentObject() != null){
-                        System.out.print(ConsoleColors.TEXT_RESET + "- UL: ");
-                        if (this.resourceVisible[i].getFrontCorners()[j].getContentObject().equals(SpecialObject.Inkwell))
-                            System.out.println(ConsoleColors.TEXT_RESET + "INKWELL");
-                        else if (this.resourceVisible[i].getFrontCorners()[j].getContentObject().equals(SpecialObject.Quill))
-                            System.out.println(ConsoleColors.TEXT_RESET + "QUILL");
-                        else if (this.resourceVisible[i].getFrontCorners()[j].getContentObject().equals(SpecialObject.Manuscript))
-                            System.out.println(ConsoleColors.TEXT_RESET + "MANUSCRIPT");
-                    } else {
-                        System.out.println(ConsoleColors.TEXT_RESET + "The corner is visible but it doesn't have any resource or object");
-                    }
-                }else if(j==1){
-                    if(this.resourceVisible[i].getFrontCorners()[j] == null)
-                        System.out.println("The UL corner doesn't exist");
-                    else if(this.resourceVisible[i].getFrontCorners()[j].getContentKingdom() != null){
-                        System.out.print(ConsoleColors.TEXT_RESET + "- UR: ");
-                        if(this.resourceVisible[i].getFrontCorners()[j].getContentKingdom().equals(Kingdom.Plant))
-                            System.out.println(ConsoleColors.TEXT_GREEN + "PLANT");
-                        else if(this.resourceVisible[i].getFrontCorners()[j].getContentKingdom().equals(Kingdom.Insect))
-                            System.out.println(ConsoleColors.TEXT_PURPLE + "INSECT");
-                            //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
-                        else if(this.resourceVisible[i].getFrontCorners()[j].getContentKingdom().equals(Kingdom.Fungi))
-                            System.out.println(ConsoleColors.TEXT_RED + "FUNGI");
-                        else if (this.resourceVisible[i].getFrontCorners()[j].getContentKingdom().equals(Kingdom.Animal))
-                            System.out.println(ConsoleColors.TEXT_CYAN + "ANIMAL");
-                    } else if(this.resourceVisible[i].getFrontCorners()[j].getContentObject() != null) {
-                        System.out.print(ConsoleColors.TEXT_RESET + "- UR: ");
-                        if (this.resourceVisible[i].getFrontCorners()[j].getContentObject().equals(SpecialObject.Inkwell))
-                            System.out.println(ConsoleColors.TEXT_RESET + "INKWELL");
-                        else if (this.resourceVisible[i].getFrontCorners()[j].getContentObject().equals(SpecialObject.Quill))
-                            System.out.println(ConsoleColors.TEXT_RESET + "QUILL");
-                        else if (this.resourceVisible[i].getFrontCorners()[j].getContentObject().equals(SpecialObject.Manuscript))
-                            System.out.println(ConsoleColors.TEXT_RESET + "MANUSCRIPT");
-                    }else {
-                        System.out.println(ConsoleColors.TEXT_RESET + "The corner is visible but it doesn't have any resource or object");
-                    }
-                }else if(j==2){
-                    if(this.resourceVisible[i].getFrontCorners()[j] == null)
-                        System.out.println("The DL corner doesn't exist");
-                    else if(this.resourceVisible[i].getFrontCorners()[j].getContentKingdom() != null){
-                        System.out.print(ConsoleColors.TEXT_RESET + "- DL: ");
-                        if(this.resourceVisible[i].getFrontCorners()[j].getContentKingdom().equals(Kingdom.Plant))
-                            System.out.println(ConsoleColors.TEXT_GREEN + "PLANT");
-                        else if(this.resourceVisible[i].getFrontCorners()[j].getContentKingdom().equals(Kingdom.Insect))
-                            System.out.println(ConsoleColors.TEXT_PURPLE + "INSECT");
-                            //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
-                        else if(this.resourceVisible[i].getFrontCorners()[j].getContentKingdom().equals(Kingdom.Fungi))
-                            System.out.println(ConsoleColors.TEXT_RED + "FUNGI");
-                        else if (this.resourceVisible[i].getFrontCorners()[j].getContentKingdom().equals(Kingdom.Animal))
-                            System.out.println(ConsoleColors.TEXT_CYAN + "ANIMAL");
-                    } else if(this.resourceVisible[i].getFrontCorners()[j].getContentObject() != null) {
-                        System.out.print(ConsoleColors.TEXT_RESET + "- DL: ");
-                        if (this.resourceVisible[i].getFrontCorners()[j].getContentObject().equals(SpecialObject.Inkwell))
-                            System.out.println(ConsoleColors.TEXT_RESET + "INKWELL");
-                        else if (this.resourceVisible[i].getFrontCorners()[j].getContentObject().equals(SpecialObject.Quill))
-                            System.out.println(ConsoleColors.TEXT_RESET + "QUILL");
-                        else if (this.resourceVisible[i].getFrontCorners()[j].getContentObject().equals(SpecialObject.Manuscript))
-                            System.out.println(ConsoleColors.TEXT_RESET + "MANUSCRIPT");
-                    }else {
-                        System.out.println(ConsoleColors.TEXT_RESET + "The corner is visible but it doesn't have any resource or object");
-                    }
-                }else {
-                    if(this.resourceVisible[i].getFrontCorners()[j] == null)
-                        System.out.println("The DR corner doesn't exist");
-                    else if(this.resourceVisible[i].getFrontCorners()[j].getContentKingdom() != null){
-                        System.out.print(ConsoleColors.TEXT_RESET + "- DR: ");
-                        if(this.resourceVisible[i].getFrontCorners()[j].getContentKingdom().equals(Kingdom.Plant))
-                            System.out.println(ConsoleColors.TEXT_GREEN + "PLANT");
-                        else if(this.resourceVisible[i].getFrontCorners()[j].getContentKingdom().equals(Kingdom.Insect))
-                            System.out.println(ConsoleColors.TEXT_PURPLE + "INSECT");
-                            //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
-                        else if(this.resourceVisible[i].getFrontCorners()[j].getContentKingdom().equals(Kingdom.Fungi))
-                            System.out.println(ConsoleColors.TEXT_RED + "FUNGI");
-                        else if (this.resourceVisible[i].getFrontCorners()[j].getContentKingdom().equals(Kingdom.Animal))
-                            System.out.println(ConsoleColors.TEXT_CYAN + "ANIMAL");
-                    } else if(this.resourceVisible[i].getFrontCorners()[j].getContentObject() != null) {
-                        System.out.print(ConsoleColors.TEXT_RESET + "- DR: ");
-                        if (this.resourceVisible[i].getFrontCorners()[j].getContentObject().equals(SpecialObject.Inkwell))
-                            System.out.println(ConsoleColors.TEXT_RESET + "INKWELL");
-                        else if (this.resourceVisible[i].getFrontCorners()[j].getContentObject().equals(SpecialObject.Quill))
-                            System.out.println(ConsoleColors.TEXT_RESET + "QUILL");
-                        else if (this.resourceVisible[i].getFrontCorners()[j].getContentObject().equals(SpecialObject.Manuscript))
-                            System.out.println(ConsoleColors.TEXT_RESET + "MANUSCRIPT");
-                    }else {
-                        System.out.println(ConsoleColors.TEXT_RESET + "The corner is visible but it doesn't have any resource or object");
-                    }
+            for(int j=0; j < this.resourceVisible[i].getFrontCorners().length; j++){
+                //definisco angoli
+                String angle;
+                if (j == 0)
+                    angle = "UL";
+                else if (j == 1)
+                    angle = "UR";
+                else if (j == 2)
+                    angle = "DL";
+                else
+                    angle = "DR";
+
+                if(this.resourceVisible[i].getFrontCorners()[j] == null)
+                    System.out.println("The" + angle + " corner doesn't exist");
+                else if(this.resourceVisible[i].getFrontCorners()[j].getContentKingdom() != null){
+                    System.out.print(ConsoleColors.TEXT_RESET + "- " + angle + ": ");
+                    if(this.resourceVisible[i].getFrontCorners()[j].getContentKingdom().equals(Kingdom.Plant))
+                        System.out.println(ConsoleColors.TEXT_GREEN + "PLANT");
+                    else if(this.resourceVisible[i].getFrontCorners()[j].getContentKingdom().equals(Kingdom.Insect))
+                        System.out.println(ConsoleColors.TEXT_PURPLE + "INSECT");
+                        //sSystem.out.format("%s", this.consoleColors.TEXT_PURPLE);
+                    else if(this.resourceVisible[i].getFrontCorners()[j].getContentKingdom().equals(Kingdom.Fungi))
+                        System.out.println(ConsoleColors.TEXT_RED + "FUNGI");
+                    else if (this.resourceVisible[i].getFrontCorners()[j].getContentKingdom().equals(Kingdom.Animal))
+                        System.out.println(ConsoleColors.TEXT_CYAN + "ANIMAL");
+                } else if(this.resourceVisible[i].getFrontCorners()[j].getContentObject() != null){
+                    System.out.print(ConsoleColors.TEXT_RESET + "- UL: ");
+                    if (this.resourceVisible[i].getFrontCorners()[j].getContentObject().equals(SpecialObject.Inkwell))
+                        System.out.println(ConsoleColors.TEXT_RESET + "INKWELL");
+                    else if (this.resourceVisible[i].getFrontCorners()[j].getContentObject().equals(SpecialObject.Quill))
+                        System.out.println(ConsoleColors.TEXT_RESET + "QUILL");
+                    else if (this.resourceVisible[i].getFrontCorners()[j].getContentObject().equals(SpecialObject.Manuscript))
+                        System.out.println(ConsoleColors.TEXT_RESET + "MANUSCRIPT");
+                } else {
+                    System.out.println(ConsoleColors.TEXT_RESET + "The corner is visible but it doesn't have any resource or object");
                 }
+                System.out.println("---------------------------------------------------------------------------------------------------");
             }
-            System.out.println("\n");
         }
+        System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------");
+        this.viewCommand();
     }
 
     public void viewPlayerInfo(){
@@ -1085,6 +774,9 @@ public class TUI implements UIManager {
 
         System.out.println("The player has the follwoing board:");
         System.out.println(this.yourPlayerInfo.getMap().toString());
+
+        System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------");
+        this.viewCommand();
     }
 
     public void viewOtherPlayerInfo(String username){
@@ -1113,6 +805,9 @@ public class TUI implements UIManager {
 
         System.out.println("The player has the follwoing board:");
         System.out.println(this.othersPlayerInfo.get(username).getMap().toString());
+
+        System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------");
+        this.viewCommand();
     }
 
     public void viewPlacement(){
@@ -1121,6 +816,9 @@ public class TUI implements UIManager {
         for(String s : othersPlayerInfo.keySet()){
             System.out.println("- " + s + " has " + this.othersPlayerInfo.get(s));
         }
+
+        System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------");
+        this.viewCommand();
     }
 
     public void viewChat(){
@@ -1133,9 +831,15 @@ public class TUI implements UIManager {
             else if(m.getRecipient().equals(nickname))
                 System.out.println("[from: "+m.getSender()+"] " + m.getMessage());
         }
+
+        System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------");
+        this.viewCommand();
     }
     public void viewErrorCommand(){
         System.out.println("The command executed is wrong");
+
+        System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------");
+        this.viewCommand();
     }
 
     public void printTitle(){
@@ -1171,8 +875,8 @@ public class TUI implements UIManager {
     }
 
     public void viewCommand( ){
-        System.out.println("The following lines explain which are the parameters for every action: \n");
-        System.out.println("Reminder: ypu don't need to type the + but just a space between parameters");
+        System.out.println("---------------------------------------------------------------------------------------------------");
+        System.out.println("The following lines explain the parameters for every action: \n");
         System.out.println("/join + username");
         System.out.println("/newGame + username +  numPlayers");
         System.out.println("/chooseObjective +  index  ");
@@ -1185,14 +889,15 @@ public class TUI implements UIManager {
         System.out.println("/myPlayerInfo (to visualize your info)");
         System.out.println("/playerInfo + username (usarname of the player you want to view)");
         System.out.println("/placement (view the placement of the game)");
-        System.out.println("/viewDeck + index (0 for the resource deck and 1 for gold deck)");
+        System.out.println("/viewDeck + index (0 for the gold deck and 1 for resource deck)");
         System.out.println("/viewCommonObjective");
         System.out.println("/viewSecretObjective");
         System.out.println("/viewStarterCard");
         System.out.println("/viewResourceVisibile");
         System.out.println("/viewGoldVisible");
         System.out.println("/viewChat");
-        System.out.println("/viewHand");
+        System.out.println("/viewHand \n");
+        System.out.println("---------------------------------------------------------------------------------------------------");
     }
 
     public static void main(String[] args) throws InterruptedException, TargetNotPresentException, InvalidPositionException, RequirementsNotRespectedException, InvalidAngleCoveredException {

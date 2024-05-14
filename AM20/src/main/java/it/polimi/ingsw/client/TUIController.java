@@ -101,9 +101,9 @@ public class TUIController extends ClientController implements Runnable{
                     this.myTUI.viewPlacement();
                 }else if(command[0].equals("/viewDeck")){
                     if(command[1].equals("0"))
-                        this.myTUI.viewResourceTop();
-                    else
                         this.myTUI.viewGoldTop();
+                    else
+                        this.myTUI.viewResourceTop();
                 }else if(command[0].equals("/viewCommonObjective")){
                     this.myTUI.viewCommonObjective();
                 }else if(command[0].equals("/viewSecretObjective")){
