@@ -157,7 +157,7 @@ public class TUIController extends ClientController implements Runnable{
                 }else if(command[0].equals("/viewHand")) {
                     this.myTUI.viewHandCards();
                 }else if(command[0].equals("/currPlayer")){
-
+                    this.myTUI.viewCurrPlayer();
                 }else {
                     this.myTUI.viewErrorCommand();
                 }
