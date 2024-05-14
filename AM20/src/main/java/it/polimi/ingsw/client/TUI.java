@@ -191,7 +191,15 @@ public class TUI implements UIManager {
     }
 
     public void viewCurrPlayer(){
-        System.out.println("Current player is: "+currPlayer);
+        if(currPlayer!=null){
+            if(currPlayer.equals(nickname))
+                System.out.println("You are the current player");
+            else
+                System.out.println("Current player is "+currPlayer);
+        }
+        else{
+            System.out.println("There is no current player yet");
+        }
     }
 
 
@@ -342,10 +350,6 @@ public class TUI implements UIManager {
             else if (this.cards.get(i).getCardKingdom().equals(Kingdom.Animal))
                 System.out.println(ConsoleColors.TEXT_CYAN + "ANIMAL"+ ConsoleColors.TEXT_RESET);
 
-            if(((ResourceCard) this.cards.get(i)).getPoints()>0){
-                System.out.println(ConsoleColors.TEXT_RESET +  "You get 1 point if you play this card");
-            }
-
 
             //TODO: da copiare
             //SE SONO CARTE GOLD
@@ -383,6 +387,9 @@ public class TUI implements UIManager {
                 }else if(this.cards.get(i) instanceof CornerGoldCard){
                     System.out.println(ConsoleColors.TEXT_RESET + "You get 2 points every time you cover another card's angle with this card ");
                 }
+            }
+            else if(this.cards.get(i).getPoints()>0){
+                System.out.println(ConsoleColors.TEXT_RESET +  "You get 1 point if you play this card");
             }
 
             //scorro angoli FRONT

@@ -134,5 +134,9 @@ public abstract class PlayableCard extends Card {
                 ", backCorners=" + Arrays.toString(backCorners) +
                 ", ";
     }
+
+    public int getPoints(){
+        return 0;
+    }
 }
 
