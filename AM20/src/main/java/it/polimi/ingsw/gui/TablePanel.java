@@ -1,6 +1,8 @@
 package it.polimi.ingsw.gui;
 
+import it.polimi.ingsw.model.cards.Card;
 import it.polimi.ingsw.model.cards.Corner;
+import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.model.cards.playable.StarterCard;
 import it.polimi.ingsw.model.exceptions.InvalidPositionException;
@@ -25,7 +27,7 @@ public class TablePanel extends JScrollPane {
     private StarterCard starterCard;
     private SpringLayout layout;
     private JLayeredPane layeredPane;
-    private Dimension cardDim = new Dimension(200, 133);
+    
     private ActionListener buttonListener;
 
     /**
@@ -43,7 +45,7 @@ public class TablePanel extends JScrollPane {
         layeredPane = new JLayeredPane() {
             @Override
             public Dimension getPreferredSize() {
-                return new Dimension(map.width()*(cardDim.width+100), (map.height())*(cardDim.height+100));
+                return new Dimension(map.width()*(GUIUtils.cardDim.width+100), (map.height())*(GUIUtils.cardDim.height+100));
             }
         };
         layeredPane.setLayout(layout);
@@ -131,7 +133,7 @@ public class TablePanel extends JScrollPane {
 
     private JButton createCard1(PlayableCard card){
         JButton b = new JButton();
-        b.setPreferredSize(cardDim);
+        b.setPreferredSize(GUIUtils.cardDim);
         b.setOpaque(true);
         b.setFocusPainted(false);
         b.setText(card.getID() +"-"+ card.getOrder() +"-"+ card.getSide());
@@ -154,7 +156,7 @@ public class TablePanel extends JScrollPane {
         }
         JComponent imgPanel = new ImagePanel(image);
         imgPanel.setBorder(new LineBorder(Color.BLACK, 1));
-        imgPanel.setPreferredSize(cardDim);
+        imgPanel.setPreferredSize(GUIUtils.cardDim);
         return imgPanel;
     }
 
@@ -167,7 +169,7 @@ public class TablePanel extends JScrollPane {
     private JButton createButton(PlayableCard card){
         JButton b = new JButton();
         b.setName(card.getID());
-        b.setPreferredSize(cardDim);
+        b.setPreferredSize(GUIUtils.cardDim);
         b.setContentAreaFilled(false);
         b.setBorder(BorderFactory.createDashedBorder(Color.GRAY));
 
@@ -216,6 +218,29 @@ class ImagePanel extends JPanel {
 
     protected void renderImage(Graphics g, Image image, int x, int y, int w, int h){
         g.drawImage(image, x, y, w, h, this);
+    }
+
+    public static Image loadImage(PlayableCard card) {
+        String side = card.getSide() == PlayableCard.FRONT ? "front" : "back";
+        String url = "src/main/resources/CODEX_cards_gold_"+side+"/"+card.getID()+".png";
+        BufferedImage image = null;
+        try {
+            image = ImageIO.read(new File(url));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return image;
+    }
+
+    public static Image loadImage(ObjectiveCard card) {
+        String url = "src/main/resources/CODEX_cards_gold_front/"+card.getID()+".png";
+        BufferedImage image = null;
+        try {
+            image = ImageIO.read(new File(url));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return image;
     }
 
 }

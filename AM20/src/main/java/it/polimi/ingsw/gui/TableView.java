@@ -84,7 +84,36 @@ public class TableView extends JFrame implements ActionListener{
 //        playerTable.insertCard(list.get(1), Corner.UL, starterCard.getID(), PlayableCard.FRONT);
 //        System.out.println(playerTable.getMatrix());
 
-        new TableView(playerTable);
+        TableView f = new TableView(playerTable);
+
+        //JOptionPane.showMessageDialog(f, "Caca", "Errore", JOptionPane.PLAIN_MESSAGE);
+        //JOptionPane.showInputDialog(f, "inserisci il numero di giocatori", "info", JOptionPane.PLAIN_MESSAGE);
+        showInputDialog();
+
+        JDialog d = new JDialog();
+        //d.setUndecorated(true);
+        d.add(new JLabel("ciao"));
+        d.setVisible(true);
+    }
+
+    public static void showInputDialog(){
+        JTextField username = new JTextField();
+        JTextField password = new JPasswordField();
+        Object[] message = {
+                "Username:", username,
+                "Password:", password
+        };
+
+        int option = JOptionPane.showConfirmDialog(null, message, "Login", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        if (option == JOptionPane.OK_OPTION) {
+            if (username.getText().equals("h") && password.getText().equals("h")) {
+                System.out.println("Login successful");
+            } else {
+                System.out.println("login failed");
+            }
+        } else {
+            System.out.println("Login canceled");
+        }
     }
 
     int n = 2;
