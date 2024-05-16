@@ -234,6 +234,14 @@ public class ClientHandler implements Runnable{
                 //thrown when the player disconnect
                 this.manager.detectDisconnection(this.usernameClient);
                 break;
+            }catch(NullPointerException e){
+                try {
+                    socket.close();
+                    System.err.println("Client disconnected, client handler will be closed");
+                    break;
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
 
         }
