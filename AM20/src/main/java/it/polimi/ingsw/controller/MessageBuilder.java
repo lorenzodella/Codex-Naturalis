@@ -197,7 +197,7 @@ public class MessageBuilder implements GameObserver {
             starterCardAckMessages.get(nickname).setNumOfConnectedPlayers(connectedPlayerNicknames.size());
         }
         starterCardAckMessages.get(player.getNickname()).setPlayerInfo(playerUpdates);
-        starterCardAckMessages.get(player.getNickname()).setResult("You chose the side of the starter card");
+        starterCardAckMessages.get(player.getNickname()).setResult("You chose the side of the starter card and waiting for all player to choose it");
         return starterCardAckMessages;
     }
 
@@ -238,7 +238,7 @@ public class MessageBuilder implements GameObserver {
             objectiveAckMessages.put(player.getNickname(), new ObjectiveAckMessage());
         objectiveAckMessages.get(player.getNickname()).setNumOfConnectedPlayers(connectedPlayerNicknames.size());
         objectiveAckMessages.get(player.getNickname()).setSecretObjectives(player.getSecretObjective());
-        objectiveAckMessages.get(player.getNickname()).setResult("You chose your secret objective");
+        objectiveAckMessages.get(player.getNickname()).setResult("You chose your secret objective. Waiting for the other player");
         return objectiveAckMessages;
     }
     @Override

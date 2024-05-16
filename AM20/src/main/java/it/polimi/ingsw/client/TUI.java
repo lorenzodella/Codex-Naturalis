@@ -74,7 +74,7 @@ public class TUI implements UIManager {
     public void updateChatMessage(ChatMessage msg) {
         this.messages.add(msg);
         if(msg.getRecipient()!=null && msg.getRecipient().equals(nickname))
-            System.out.println("You received a message");
+            System.out.println("\nYou received a message");
         viewChat();
     }
 
@@ -167,11 +167,11 @@ public class TUI implements UIManager {
         if(nextPlayer!=null) {
             currPlayer = nextPlayer;
             if (nextPlayer.equals(nickname)) {
-                System.out.println("Is your turn");
                 viewGoldVisibleCards();
                 viewResourceVisibleCards();
                 viewGoldTop();
                 viewResourceTop();
+                System.out.println("Is your turn");
             } else {
                 System.out.println("Is " + nextPlayer + "'s turn");
             }
@@ -204,17 +204,18 @@ public class TUI implements UIManager {
     public void viewStarterCard(){
         //this.printTitle();
         //this.viewCommand();
-        System.out.println("You have received the starter card");
+
         StarterCardClient starterCardClient = new StarterCardClient(starterCard);
         starterCardClient.draw();
         System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------\n");
+        System.out.println("You have received the starter card and now you should choose the side");
 
         //this.viewCommand();
 
     }
 
     public void viewHandCards(){
-        System.out.println("HAND CARD: \n");
+        System.out.println(ConsoleColors.TEXT_BLUE + "HAND CARD: \n" + ConsoleColors.TEXT_RESET);
         for(int i=0;i<this.cards.size();i++){
             if(this.cards.get(i) instanceof ResourceCard){
                 ResourceCardClient resourceCardClient = new ResourceCardClient((ResourceCard) this.cards.get(i),i);
@@ -235,7 +236,7 @@ public class TUI implements UIManager {
 
     public void viewCommonObjective(){
 
-        System.out.println("COMMON OBJECTIVE: \n");
+        System.out.println(ConsoleColors.TEXT_BLUE + "COMMON OBJECTIVE: \n" + ConsoleColors.TEXT_RESET);
         //scorro array dei common objectives
         for(int i=0; i<this.commonObjectives.length; i++) {
 
@@ -261,7 +262,7 @@ public class TUI implements UIManager {
     }
 
     public void viewSecretObjective(){
-        System.out.println("SECRET OBJECTIVE: \n");
+        System.out.println(ConsoleColors.TEXT_BLUE + "SECRET OBJECTIVE: \n"+ConsoleColors.TEXT_RESET);
         //scorro array dei common objectives
         for(int i=0; i<this.secretObjectives.size(); i++){
 
@@ -294,7 +295,7 @@ public class TUI implements UIManager {
     }
 
     public void viewGoldTop(){
-        System.out.print("The card that's now on top of the gold deck is a ");
+        System.out.print("\nThe card that's now on top of the gold deck is a ");
         //KINGDOM
         if(this.goldTop.getCardKingdom().equals(Kingdom.Fungi))
             System.out.print(ConsoleColors.TEXT_RED + "FUNGI"+ ConsoleColors.TEXT_RESET);
@@ -368,7 +369,7 @@ public class TUI implements UIManager {
 
     public void viewPlayerInfo(){
         this.printTitle();
-        System.out.println("These are your inforamtion");
+        System.out.println("These are your information");
         System.out.println("You have done "+ this.yourPlayerInfo.getScore() + " points");
 
         //TODO
@@ -440,7 +441,7 @@ public class TUI implements UIManager {
     }
 
     public void viewChat(){
-        System.out.println("CHAT");
+        System.out.println("\nCHAT");
         for(ChatMessage m : messages){
             if(m.getSender().equals(nickname))
                 System.out.println("[to: "+m.getRecipient()+"] " + m.getMessage());

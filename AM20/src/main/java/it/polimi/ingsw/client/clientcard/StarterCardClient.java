@@ -18,7 +18,7 @@ public class StarterCardClient implements Drawer {
         System.out.println("STARTER CARD\n");
 
         //FRONT
-        System.out.println("\nFRONT CORNERS: ");
+        System.out.println(ConsoleColors.TEXT_BLUE + "\nFRONT CORNERS: "+ConsoleColors.TEXT_RESET);
         for(int i=0;i<this.starterCard.getFrontCorners().length;i++){
             //definisco angolo
             String angle;

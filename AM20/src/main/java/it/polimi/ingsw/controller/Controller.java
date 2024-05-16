@@ -104,7 +104,7 @@ public class Controller implements GameManager {
         players.add(playerNickname);
         this.numPlayers = numPlayers;
         Message tmp = new Message();
-        tmp.setResult("You created a new game");
+        tmp.setResult("You created a new game and waiting for all player to connect");
         phase = PRELIMINARY;
         return tmp;
     }
@@ -281,7 +281,7 @@ public class Controller implements GameManager {
         //poi aggiungo le informazioni dell'ultimo che ha scelto
         HashMap<String, StarterCardAckMessage> msg1 = messageBuilder.notifyStarterCardSide(player); //setta playerinfo
         for(StarterCardAckMessage message: msg1.values()){
-            message.setResult("Everyone's chosen the side of the starter card");
+            message.setResult("Everyone's chosen the side of the starter card. Now you can choose the secret objective");
         }
         phase = OBJECTIVES;
         return msg1;

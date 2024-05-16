@@ -26,8 +26,8 @@ public class TUIController extends ClientController implements Runnable{
 
 
     public void run(){
+        System.out.println("Decide which command you want to do:");
         while(true){
-            System.out.println("Decide which command you want to do:\n");
             try {
 
                 String input = br.readLine();

@@ -64,12 +64,12 @@ public class ClientMain {
                 if (scelta.equals("1")) {
                     System.out.println("Ha scelto RMI");
                     clientRMI = new ClientRMI(updater);
-                    clientRMI.connect(input, Integer.parseInt(args[0]));
+                    clientRMI.connect(input.trim(), Integer.parseInt(args[0]));
                     sender = clientRMI.getSender();
                 } else if (scelta.equals("2")) {
                     System.out.println("Ha scelto Socket");
                     clientSKT = new ClientSKT(updater);
-                    clientSKT.connect(input, Integer.parseInt(args[0]));
+                    clientSKT.connect(input.trim(), Integer.parseInt(args[0]));
                     sender = clientSKT.getSender();
                 }
             }while(sender==null);
