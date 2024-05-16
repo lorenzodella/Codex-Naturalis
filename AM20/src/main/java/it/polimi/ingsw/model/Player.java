@@ -43,7 +43,7 @@ public class Player {
 
     public Player(String nickname){
         this.nickname = nickname;
-        this.score = 19;
+        this.score = 0;
         this.online = true;
         this.table = new PlayerTable();
     }

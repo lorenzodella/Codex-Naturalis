@@ -97,13 +97,6 @@ public class Game implements GameObservable{
         resourceCardDeck.shuffle();
         resourceCardDeck.initVisibleCards();
 
-        for(PlayableCard card : resourceCardDeck.getCards()){
-            if(card.getPoints() > 0){
-                resourceCardDeck.getCards().push(card);
-                break;
-            }
-        }
-
         goldCardDeck = new Deck(XMLparser.parseGoldCards("goldCards.xml"));
         goldCardDeck.shuffle();
         goldCardDeck.initVisibleCards();
