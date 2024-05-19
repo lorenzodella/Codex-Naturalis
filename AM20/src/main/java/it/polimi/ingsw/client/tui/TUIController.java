@@ -1,14 +1,13 @@
-package it.polimi.ingsw.client;
+package it.polimi.ingsw.client.tui;
 
+import it.polimi.ingsw.client.ClientController;
+import it.polimi.ingsw.client.connections.ClientSender;
 import it.polimi.ingsw.controller.messages.BroadcastChatMessage;
 import it.polimi.ingsw.controller.messages.ChatMessage;
-import it.polimi.ingsw.server.ServerManager;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.Socket;
-import java.nio.Buffer;
 
 public class TUIController extends ClientController implements Runnable{
 

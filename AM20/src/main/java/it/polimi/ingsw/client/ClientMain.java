@@ -1,10 +1,15 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.client.connections.ClientRMI;
+import it.polimi.ingsw.client.connections.ClientSKT;
+import it.polimi.ingsw.client.connections.ClientSender;
+import it.polimi.ingsw.client.gui.GUI;
+import it.polimi.ingsw.client.tui.TUI;
+import it.polimi.ingsw.client.tui.TUIController;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 
 public class ClientMain {
 

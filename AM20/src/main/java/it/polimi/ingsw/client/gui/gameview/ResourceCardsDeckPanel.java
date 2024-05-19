@@ -1,10 +1,7 @@
-package it.polimi.ingsw.gui;
-
-import it.polimi.ingsw.model.cards.playable.PlayableCard;
+package it.polimi.ingsw.client.gui.gameview;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
 
 public class ResourceCardsDeckPanel extends JPanel {
 

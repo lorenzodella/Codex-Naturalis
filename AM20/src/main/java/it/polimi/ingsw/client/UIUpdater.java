@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.client.tui.ConsoleColors;
 import it.polimi.ingsw.controller.messages.*;
 
 public class UIUpdater  {

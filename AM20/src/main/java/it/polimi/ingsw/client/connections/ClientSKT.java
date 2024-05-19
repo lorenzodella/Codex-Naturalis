@@ -1,5 +1,6 @@
-package it.polimi.ingsw.client;
+package it.polimi.ingsw.client.connections;
 
+import it.polimi.ingsw.client.UIUpdater;
 import it.polimi.ingsw.controller.messages.ErrorMessage;
 
 import java.io.IOException;

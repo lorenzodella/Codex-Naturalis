@@ -1,16 +1,13 @@
-package it.polimi.ingsw.client;
+package it.polimi.ingsw.client.connections;
 
 import it.polimi.ingsw.controller.exceptions.CannotJoinGameException;
 import it.polimi.ingsw.controller.messages.*;
 import it.polimi.ingsw.model.exceptions.*;
 import it.polimi.ingsw.server.Loggable;
 
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 
-public class RMIClientSender extends ClientSender{
+public class RMIClientSender extends ClientSender {
 
     private RMIClientReceiver receiver;
     private Loggable stub;
@@ -27,7 +24,7 @@ public class RMIClientSender extends ClientSender{
     }
 
     @Override
-    void login(String client) {
+    public void login(String client) {
         try {
             ConnectionAckMessage msg = stub.login(client, receiver);
             receiver.callConnectionAckMessage(msg);
@@ -40,7 +37,7 @@ public class RMIClientSender extends ClientSender{
     }
 
     @Override
-    void startNewGame(String client, int numPlayers) {
+    public void startNewGame(String client, int numPlayers) {
         try {
             Message msg = stub.startNewGame(client, numPlayers, receiver);
             receiver.callMessage(msg);
@@ -53,7 +50,7 @@ public class RMIClientSender extends ClientSender{
     }
 
     @Override
-    void chooseStarterCardSide(String nickname, int side) {
+    public void chooseStarterCardSide(String nickname, int side) {
         try {
             StarterCardAckMessage msg = stub.chooseStarterCardSide(nickname, side);
             receiver.callStarterCardAckMessage(msg);
@@ -66,7 +63,7 @@ public class RMIClientSender extends ClientSender{
     }
 
     @Override
-    void chooseObjective(String nickname, int index) {
+    public void chooseObjective(String nickname, int index) {
         try {
             ObjectiveAckMessage msg = stub.chooseObjective(nickname, index);
             receiver.callObjectiveAckMessage(msg);
@@ -81,7 +78,7 @@ public class RMIClientSender extends ClientSender{
     }
 
     @Override
-    void playCard(String playerNickname, int cardIndex, int angle, String targetID, int side) {
+    public void playCard(String playerNickname, int cardIndex, int angle, String targetID, int side) {
         try {
             AcknowledgeMessage msg = this.stub.playCard(playerNickname, cardIndex, angle, targetID, side);
             receiver.callAcknowledgeMessage(msg);
@@ -97,7 +94,7 @@ public class RMIClientSender extends ClientSender{
     }
 
     @Override
-    void pickCard(String playerNickname, int deck) {
+    public void pickCard(String playerNickname, int deck) {
         try {
             AcknowledgeMessage msg = this.stub.pickCard(playerNickname, deck);
             receiver.callAcknowledgeMessage(msg);
@@ -111,7 +108,7 @@ public class RMIClientSender extends ClientSender{
     }
 
     @Override
-    void pickCard(String playerNickname, int deck, int index) {
+    public void pickCard(String playerNickname, int deck, int index) {
         try {
             AcknowledgeMessage msg = this.stub.pickCard(playerNickname, deck, index);
             receiver.callAcknowledgeMessage(msg);
@@ -125,7 +122,7 @@ public class RMIClientSender extends ClientSender{
     }
 
     @Override
-    void sendChatMessage(String sender, String recipient, String message) {
+    public void sendChatMessage(String sender, String recipient, String message) {
         try {
 
             Message msg = this.stub.sendChatMessage(sender, recipient, message);
@@ -138,7 +135,7 @@ public class RMIClientSender extends ClientSender{
     }
 
     @Override
-    void sendBroadcastChatMessage(String sender, String message) {
+    public void sendBroadcastChatMessage(String sender, String message) {
         try {
             Message msg = this.stub.sendBroadcastChatMessage(sender, message);
             receiver.callMessage(msg);

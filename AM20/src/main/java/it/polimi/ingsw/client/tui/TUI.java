@@ -1,5 +1,7 @@
-package it.polimi.ingsw.client;
+package it.polimi.ingsw.client.tui;
 
+import it.polimi.ingsw.client.clientcard.CardPrinter;
+import it.polimi.ingsw.client.UIManager;
 import it.polimi.ingsw.client.clientcard.*;
 import it.polimi.ingsw.controller.PlayerInfo;
 import it.polimi.ingsw.controller.messages.ChatMessage;

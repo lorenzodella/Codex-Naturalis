@@ -1,4 +1,6 @@
-package it.polimi.ingsw.client;
+package it.polimi.ingsw.client.connections;
+
+import it.polimi.ingsw.client.UIUpdater;
 
 public abstract class Client {
 

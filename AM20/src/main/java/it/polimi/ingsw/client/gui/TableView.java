@@ -1,5 +1,6 @@
-package it.polimi.ingsw.gui;
+package it.polimi.ingsw.client.gui;
 
+import it.polimi.ingsw.client.gui.gameview.TablePanel;
 import it.polimi.ingsw.model.PlayerTable;
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.model.cards.playable.StarterCard;

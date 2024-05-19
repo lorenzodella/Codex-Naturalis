@@ -1,4 +1,4 @@
-package it.polimi.ingsw.gui;
+package it.polimi.ingsw.client.gui.gameview;
 
 import it.polimi.ingsw.model.PlayerTable;
 import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
@@ -15,6 +15,13 @@ public class GameFrame extends JFrame {
     PlayerPanel playerPanel;
     public GameFrame(){
         super("Codex Naturalis");
+        try {
+            UIManager.setLookAndFeel(
+                    UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
+                 UnsupportedLookAndFeelException e) {
+            throw new RuntimeException(e);
+        }
 
         ObjectiveCard[] objectiveCards = new ObjectiveCard[2];
         objectiveCards[0] = getExamplePairOfObjectsObjectiveCard();

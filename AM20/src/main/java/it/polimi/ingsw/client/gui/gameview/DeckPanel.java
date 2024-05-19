@@ -1,4 +1,4 @@
-package it.polimi.ingsw.gui;
+package it.polimi.ingsw.client.gui.gameview;
 
 import javax.swing.*;
 import java.awt.*;

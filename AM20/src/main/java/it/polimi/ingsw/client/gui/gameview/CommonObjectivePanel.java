@@ -1,15 +1,10 @@
-package it.polimi.ingsw.gui;
+package it.polimi.ingsw.client.gui.gameview;
 
-import it.polimi.ingsw.client.GUI;
+import it.polimi.ingsw.client.gui.GUIUtils;
 import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
-import it.polimi.ingsw.model.cards.playable.PlayableCard;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 public class CommonObjectivePanel extends JPanel {
 

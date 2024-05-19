@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.client.CardPrinter;
+import it.polimi.ingsw.client.clientcard.CardPrinter;
 import it.polimi.ingsw.model.exceptions.InvalidPlayingException;
 import it.polimi.ingsw.model.cards.Corner;
 import it.polimi.ingsw.model.cards.Kingdom;
@@ -10,12 +10,10 @@ import it.polimi.ingsw.model.cards.playable.ResourceCard;
 import it.polimi.ingsw.model.cards.playable.StarterCard;
 import it.polimi.ingsw.model.exceptions.*;
 import it.polimi.ingsw.model.exceptions.InvalidArgumentException;
-import it.polimi.ingsw.model.util.DynamicMap;
 import it.polimi.ingsw.model.util.XMLparser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.awt.*;
 import java.util.*;
 import java.util.List;
 

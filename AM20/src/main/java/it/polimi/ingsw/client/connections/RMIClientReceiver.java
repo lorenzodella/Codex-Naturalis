@@ -1,8 +1,9 @@
-package it.polimi.ingsw.client;
+package it.polimi.ingsw.client.connections;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
+import it.polimi.ingsw.client.UIUpdater;
 import it.polimi.ingsw.controller.messages.*;
 import it.polimi.ingsw.server.Connection;
 

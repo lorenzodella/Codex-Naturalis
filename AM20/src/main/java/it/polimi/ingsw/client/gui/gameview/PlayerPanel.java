@@ -1,16 +1,7 @@
-package it.polimi.ingsw.gui;
-
-import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
-import it.polimi.ingsw.model.cards.objective.PairOfObjectsObjectiveCard;
-import it.polimi.ingsw.model.cards.objective.TrioOfObjectsObjectiveCard;
-import it.polimi.ingsw.model.cards.playable.PlayableCard;
-import it.polimi.ingsw.model.cards.playable.ResourceCard;
-import it.polimi.ingsw.model.cards.playable.StarterCard;
-import it.polimi.ingsw.model.util.XMLparser;
+package it.polimi.ingsw.client.gui.gameview;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 public class PlayerPanel extends JPanel {
     private CommonObjectivePanel commonObjectivePanel;

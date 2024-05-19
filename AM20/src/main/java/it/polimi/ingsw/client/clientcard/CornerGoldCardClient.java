@@ -1,11 +1,9 @@
 package it.polimi.ingsw.client.clientcard;
 
-import it.polimi.ingsw.client.ConsoleColors;
-import it.polimi.ingsw.model.PlayerTable;
+import it.polimi.ingsw.client.tui.ConsoleColors;
 import it.polimi.ingsw.model.cards.Kingdom;
 import it.polimi.ingsw.model.cards.SpecialObject;
 import it.polimi.ingsw.model.cards.playable.CornerGoldCard;
-import it.polimi.ingsw.model.cards.playable.PlayableCard;
 
 public class CornerGoldCardClient implements GoldCardClient{
     private CornerGoldCard cornerGoldCard;

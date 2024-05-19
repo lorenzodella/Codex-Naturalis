@@ -1,5 +1,6 @@
-package it.polimi.ingsw.gui;
+package it.polimi.ingsw.client.gui.gameview;
 
+import it.polimi.ingsw.client.gui.GUIUtils;
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
 
 import javax.swing.*;

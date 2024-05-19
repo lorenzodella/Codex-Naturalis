@@ -1,6 +1,6 @@
 package it.polimi.ingsw.client.clientcard;
 
-import it.polimi.ingsw.client.ConsoleColors;
+import it.polimi.ingsw.client.tui.ConsoleColors;
 import it.polimi.ingsw.model.cards.Kingdom;
 import it.polimi.ingsw.model.cards.objective.VerticalConfigurationObjectiveCard;
 
