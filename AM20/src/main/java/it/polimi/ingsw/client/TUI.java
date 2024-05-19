@@ -404,7 +404,7 @@ public class TUI implements UIManager {
         System.out.println(username + " has done "+ this.othersPlayerInfo.get(username).getScore() + " points");
 
         //TODO
-        //System.out.println("The common objective "); oppure chaiamata al metodo viewCommonObjective
+        //System.out.println("The common objective "); oppure chiamata al metodo viewCommonObjective
         System.out.println(username + " has:");
         System.out.print("- ");
         System.out.print(ConsoleColors.TEXT_GREEN +"PLANT: "+ConsoleColors.TEXT_RESET);
