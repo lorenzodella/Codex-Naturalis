@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.gui.gameview;
 
+import it.polimi.ingsw.model.PlayerStats;
 import it.polimi.ingsw.model.PlayerTable;
 import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.model.cards.objective.PairOfObjectsObjectiveCard;
@@ -66,11 +67,19 @@ public class GameFrame extends JFrame {
         TablePanel tablePanel = new TablePanel(playerTable.getMap(), starterCard);
         tablePanel.update(playerTable.getMap());
 
+        PlayerStats playerStats = new PlayerStats();
 
-        this.playerPanel = new PlayerPanel(commonObjectivePanel, secretObjectivePanel, yourCardsPanel ,tablePanel, deckPanel);
+        PlayerInfoPanel playerInfoPanel= new PlayerInfoPanel(3, playerStats, "ireneer");
+
+        LogPanel logPanel = new LogPanel();
 
 
-        add(playerPanel);
+        this.playerPanel = new PlayerPanel(commonObjectivePanel, secretObjectivePanel, yourCardsPanel ,tablePanel, deckPanel, playerInfoPanel, logPanel);
+
+        JTabbedPane tabbedPane = new JTabbedPane();
+        tabbedPane.add("Me", playerPanel);
+        tabbedPane.add("You", new JPanel());
+        add(tabbedPane);
 
         pack();
         setVisible(true);

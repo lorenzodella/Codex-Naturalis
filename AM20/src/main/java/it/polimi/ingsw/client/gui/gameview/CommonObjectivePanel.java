@@ -11,7 +11,9 @@ public class CommonObjectivePanel extends JPanel {
     public CommonObjectivePanel(ObjectiveCard[] objectiveCards){
         super();
 
-        setBorder(new TitledBorder("Common Objectives"));
+        TitledBorder titledBorder = BorderFactory.createTitledBorder("Common Objectives");
+        titledBorder.setTitleJustification(TitledBorder.CENTER);
+        setBorder(titledBorder);
 
 
         ImagePanel o1 = new ImagePanel(ImagePanel.loadImage(objectiveCards[0]));

@@ -10,7 +10,9 @@ public class SecretObjectivePanel extends JPanel {
     public SecretObjectivePanel(ObjectiveCard objectiveCard){
         super();
 
-        setBorder(new TitledBorder("Secret Objectives"));
+        TitledBorder titledBorder = BorderFactory.createTitledBorder("Secret Objectives");
+        titledBorder.setTitleJustification(TitledBorder.CENTER);
+        setBorder(titledBorder);
 
 
         ImagePanel o1 = new ImagePanel(ImagePanel.loadImage(objectiveCard));

@@ -11,7 +11,9 @@ public class YourCardsPanel extends JPanel {
     public YourCardsPanel(List<PlayableCard> playableCards) {
         super();
 
-        setBorder(new TitledBorder("Your cards"));
+        TitledBorder titledBorder = BorderFactory.createTitledBorder("Your cards");
+        titledBorder.setTitleJustification(TitledBorder.CENTER);
+        setBorder(titledBorder);
 
 
         ImagePanel o1 = new ImagePanel(ImagePanel.loadImage(playableCards.get(0)));
