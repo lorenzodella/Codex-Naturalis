@@ -22,7 +22,7 @@ public class PlayerInfoPanel extends JPanel {
         setMaximumSize(new Dimension(300, 300));
 
         Border lineBorder = new LineBorder(Color.BLACK);
-        Border marginBorder = new EmptyBorder(7,7,7,7);
+        Border marginBorder = new EmptyBorder(0,7,0,7);
         Border compoundBorder = new CompoundBorder(lineBorder, marginBorder);
         setBorder(compoundBorder);
 

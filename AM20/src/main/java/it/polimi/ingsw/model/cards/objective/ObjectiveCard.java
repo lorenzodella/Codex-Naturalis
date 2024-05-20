@@ -2,6 +2,7 @@ package it.polimi.ingsw.model.cards.objective;
 
 import it.polimi.ingsw.model.cards.Card;
 import it.polimi.ingsw.model.cards.PointsProvider;
+import it.polimi.ingsw.model.cards.playable.PlayableCard;
 
 import java.util.Objects;
 
@@ -35,5 +36,15 @@ public abstract class ObjectiveCard extends Card implements PointsProvider {
         return super.toString() +
                 "points=" + points +
                 ", ";
+    }
+
+    @Override
+    public int getSide() {
+        return PlayableCard.FRONT;
+    }
+
+    @Override
+    public void flip() {
+        //do nothing
     }
 }

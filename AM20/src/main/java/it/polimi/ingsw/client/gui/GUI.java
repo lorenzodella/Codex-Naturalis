@@ -1,8 +1,12 @@
 package it.polimi.ingsw.client.gui;
 
 import it.polimi.ingsw.client.UIManager;
+import it.polimi.ingsw.client.gui.gameview.GameFrame;
+import it.polimi.ingsw.client.gui.listeners.MapListener;
+import it.polimi.ingsw.client.gui.listeners.YourCardsListener;
 import it.polimi.ingsw.controller.PlayerInfo;
 import it.polimi.ingsw.controller.messages.ChatMessage;
+import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.model.cards.playable.StarterCard;
@@ -13,8 +17,19 @@ import java.util.List;
 
 public class GUI implements UIManager {
 
+    GameFrame gameFrame;
+
+    public GUI() {
+        gameFrame = new GameFrame();
+    }
+
     @Override
     public void setNickname(String nickname) {
+
+    }
+
+    @Override
+    public void startGame() {
 
     }
 
@@ -91,5 +106,21 @@ public class GUI implements UIManager {
     @Override
     public void showError(String error) {
 
+    }
+
+    public void show() {
+        gameFrame.setVisible(true);
+    }
+
+    public void log(String log) {
+        gameFrame.getLogPanel().log(log);
+    }
+
+    public void addMapListener(MapListener mapListener){
+        gameFrame.getTablePanel().setMapListener(mapListener);
+    }
+
+    public void addYourCardsListener(YourCardsListener yourCardsListener){
+        gameFrame.getYourCardsPanel().setYourCardsListener(yourCardsListener);
     }
 }

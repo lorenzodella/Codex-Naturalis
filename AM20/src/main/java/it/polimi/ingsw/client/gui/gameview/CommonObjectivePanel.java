@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.gui.gameview;
 
 import it.polimi.ingsw.client.gui.GUIUtils;
+import it.polimi.ingsw.client.gui.CardButton;
 import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
 
 import javax.swing.*;
@@ -16,9 +17,9 @@ public class CommonObjectivePanel extends JPanel {
         setBorder(titledBorder);
 
 
-        ImagePanel o1 = new ImagePanel(ImagePanel.loadImage(objectiveCards[0]));
+        CardButton o1 = new CardButton(objectiveCards[0]);
         o1.setPreferredSize(GUIUtils.cardDim);
-        ImagePanel o2 = new ImagePanel(ImagePanel.loadImage(objectiveCards[1]));
+        CardButton o2 = new CardButton(objectiveCards[1]);
         o2.setPreferredSize(GUIUtils.cardDim);
 
         add(o1);

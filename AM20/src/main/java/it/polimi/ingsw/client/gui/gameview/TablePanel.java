@@ -1,22 +1,19 @@
 package it.polimi.ingsw.client.gui.gameview;
 
 import it.polimi.ingsw.client.gui.GUIUtils;
+import it.polimi.ingsw.client.gui.CardButton;
+import it.polimi.ingsw.client.gui.listeners.MapListener;
 import it.polimi.ingsw.model.cards.Corner;
-import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.model.cards.playable.StarterCard;
 import it.polimi.ingsw.model.exceptions.InvalidPositionException;
 import it.polimi.ingsw.model.exceptions.TargetNotPresentException;
 import it.polimi.ingsw.model.util.DynamicMap;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.HashSet;
 
 /**
@@ -57,14 +54,20 @@ public class TablePanel extends JScrollPane {
         layeredPane.setFocusable(true);
 
         setViewportView(layeredPane);
+        update(map);
     }
 
     /**
      * Add a listener for click of buttons. It's called when user want to insert a new card.
      * @param buttonListener ActionListener to be added to every button
      */
-    public void setButtonListener(ActionListener buttonListener){
+    public void setMapListener(MapListener buttonListener){
         this.buttonListener = buttonListener;
+        for(Component c : layeredPane.getComponents()){
+            CardButton b = (CardButton) c;
+            if(b.isClickable())
+                b.addActionListener(buttonListener);
+        }
     }
 
     /**
@@ -145,16 +148,8 @@ public class TablePanel extends JScrollPane {
      * @param card the card whose image will be displayed
      * @return an ImagePanel to display
      */
-    private JComponent createCard(PlayableCard card){
-        String side = card.getSide() == PlayableCard.FRONT ? "front" : "back";
-        String url = "src/main/resources/CODEX_cards_gold_"+side+"/"+card.getID()+".png";
-        BufferedImage image = null;
-        try {
-            image = ImageIO.read(new File(url));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        JComponent imgPanel = new ImagePanel(image);
+    private CardButton createCard(PlayableCard card){
+        CardButton imgPanel = new CardButton(card);
         imgPanel.setBorder(new LineBorder(Color.BLACK, 1));
         imgPanel.setPreferredSize(GUIUtils.cardDim);
         return imgPanel;
@@ -166,13 +161,8 @@ public class TablePanel extends JScrollPane {
      * @param card dummy card
      * @return a JButton to display
      */
-    private JButton createButton(PlayableCard card){
-        JButton b = new JButton();
-        b.setName(card.getID());
-        b.setPreferredSize(GUIUtils.cardDim);
-        b.setContentAreaFilled(false);
-        b.setBorder(BorderFactory.createDashedBorder(Color.GRAY));
-
+    private CardButton createButton(PlayableCard card){
+        CardButton b = new CardButton(card.getID());
         b.addActionListener(buttonListener);
 
         return b;
@@ -192,7 +182,7 @@ public class TablePanel extends JScrollPane {
         revalidate();
         repaint();
 
-        System.out.println(map);
+        //System.out.println(map);
     }
 
 }
@@ -207,6 +197,11 @@ class Dragger extends MouseAdapter implements MouseMotionListener
 
     public Dragger(JComponent view){
         this.view = view;
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        view.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
     }
 
     @Override

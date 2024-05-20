@@ -18,7 +18,7 @@ public class PlayerPanel extends JPanel {
                        PlayerInfoPanel playerInfoPanel, LogPanel logPanel){
         super();
 
-        setBorder(new EmptyBorder(5,5,5,5));
+        //setBorder(new EmptyBorder(5,5,5,5));
         setLayout(new BorderLayout(5,5));
 
         JPanel sp = new JPanel();
@@ -28,13 +28,13 @@ public class PlayerPanel extends JPanel {
 
         JPanel eastPanel = new JPanel();
         eastPanel.setLayout(new BoxLayout(eastPanel, BoxLayout.PAGE_AXIS));
-        eastPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        //eastPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         eastPanel.add(playerInfoPanel);
         eastPanel.add(Box.createVerticalGlue());
         eastPanel.add(deckPanel);
         eastPanel.add(Box.createVerticalGlue());
         eastPanel.add(logPanel);
-        eastPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        //eastPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 
 
         JPanel centerPanel = new JPanel();

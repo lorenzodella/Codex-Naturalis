@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model.cards;
 
+import it.polimi.ingsw.model.cards.playable.PlayableCard;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -29,4 +31,7 @@ public abstract class Card implements Serializable {
     public String toString() {
         return "ID='" + ID + "', ";
     }
+
+    public abstract int getSide();
+    public abstract void flip();
 }

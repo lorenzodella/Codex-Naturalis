@@ -14,6 +14,7 @@ import java.util.List;
 public interface UIManager {
 
     public void setNickname(String nickname);
+    public void startGame();
     public void updateCards(List<PlayableCard> cards);
     public void updateChatMessage(ChatMessage msg);
     public void updateSecretObjectives(ArrayList<ObjectiveCard> secretObjectives);

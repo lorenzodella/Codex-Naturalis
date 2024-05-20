@@ -35,7 +35,7 @@ public class TableView extends JFrame implements ActionListener{
 
         try {
             tablePanel = new TablePanel(mat, findStarterCard());
-            tablePanel.setButtonListener(this);
+            //tablePanel.setMapListener(this);
             tablePanel.update(mat);
         } catch (TargetNotPresentException e) {
             throw new RuntimeException(e);

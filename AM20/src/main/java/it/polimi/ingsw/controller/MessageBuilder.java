@@ -284,6 +284,7 @@ public class MessageBuilder implements GameObserver {
             }
 
             acknowledgeMessages.get(nickname).setNumOfConnectedPlayers(connectedPlayerNicknames.size());
+            acknowledgeMessages.get(nickname).setNextPlayer(player.getNickname());
         }
         acknowledgeMessages.get(player.getNickname()).setCards(player.getCards());
         acknowledgeMessages.get(player.getNickname()).setYourPlayerInfo(playerUpdates);

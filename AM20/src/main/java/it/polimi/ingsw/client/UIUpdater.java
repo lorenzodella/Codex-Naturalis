@@ -17,6 +17,7 @@ public class UIUpdater  {
 
     public void startGame(StartGameMessage msg){
         System.out.println();
+        manager.startGame();
         manager.showResult(msg.getResult());
         manager.updateGoldTop(msg.getGoldTop());
         manager.updateResourceTop(msg.getResourceTop());
@@ -66,9 +67,7 @@ public class UIUpdater  {
         if(msg.mustPick()){
             manager.showMustPick();
         }
-        else if(msg.getNextPlayer()!=null){
-            manager.showNextTurn(msg.getNextPlayer());
-        }
+        manager.showNextTurn(msg.getNextPlayer());
 
         manager.showResult(msg.getResult());
         System.out.println(ConsoleColors.TEXT_YELLOW+ "For obtaining the parameters of the command and the full list of command type /help" + ConsoleColors.TEXT_RESET);

@@ -1,5 +1,7 @@
 package it.polimi.ingsw.client.gui.gameview;
 
+import it.polimi.ingsw.client.gui.GUI;
+import it.polimi.ingsw.client.gui.GUIController;
 import it.polimi.ingsw.model.PlayerStats;
 import it.polimi.ingsw.model.PlayerTable;
 import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
@@ -13,7 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameFrame extends JFrame {
-    PlayerPanel playerPanel;
+    private PlayerPanel playerPanel;
+    private LogPanel logPanel;
+    private YourCardsPanel yourCardsPanel;
+    private TablePanel tablePanel;
+
     public GameFrame(){
         super("Codex Naturalis");
         try {
@@ -52,7 +58,7 @@ public class GameFrame extends JFrame {
 
         CommonObjectivePanel commonObjectivePanel = new CommonObjectivePanel(objectiveCards);
         SecretObjectivePanel secretObjectivePanel = new SecretObjectivePanel(objectiveCards[0]);
-        YourCardsPanel yourCardsPanel = new YourCardsPanel(playableCards);
+        yourCardsPanel = new YourCardsPanel(playableCards);
         ResourceCardsDeckPanel resourceCardsDeckPanel = new ResourceCardsDeckPanel(resourceCardsPanelCovered, resourceCardsPanelVisible);
         GoldCardsDeckPanel goldCardsDeckPanel = new GoldCardsDeckPanel(goldCardsPanelCovered, goldCardsPanelVisible);
 
@@ -64,14 +70,13 @@ public class GameFrame extends JFrame {
         PlayerTable playerTable = new PlayerTable();
         playerTable.insertStarterCard(PlayableCard.BACK, starterCard);
 
-        TablePanel tablePanel = new TablePanel(playerTable.getMap(), starterCard);
-        tablePanel.update(playerTable.getMap());
+        tablePanel = new TablePanel(playerTable.getMap(), starterCard);
 
         PlayerStats playerStats = new PlayerStats();
 
         PlayerInfoPanel playerInfoPanel= new PlayerInfoPanel(3, playerStats, "ireneer");
 
-        LogPanel logPanel = new LogPanel();
+        logPanel = new LogPanel();
 
 
         this.playerPanel = new PlayerPanel(commonObjectivePanel, secretObjectivePanel, yourCardsPanel ,tablePanel, deckPanel, playerInfoPanel, logPanel);
@@ -82,12 +87,25 @@ public class GameFrame extends JFrame {
         add(tabbedPane);
 
         pack();
-        setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
+    public LogPanel getLogPanel() {
+        return logPanel;
+    }
+
+    public TablePanel getTablePanel() {
+        return tablePanel;
+    }
+
+    public YourCardsPanel getYourCardsPanel() {
+        return yourCardsPanel;
+    }
+
     public static void main(String[] args) {
-        GameFrame f = new GameFrame();
+        GUI gui = new GUI();
+        GUIController guiController = new GUIController(null, gui);
+        gui.show();
     }
 
     PairOfObjectsObjectiveCard getExamplePairOfObjectsObjectiveCard(){

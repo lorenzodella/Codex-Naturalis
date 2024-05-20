@@ -63,6 +63,11 @@ public abstract class PlayableCard extends Card {
         this.order = order;
     }
 
+    @Override
+    public void flip() {
+        side = side == FRONT ? BACK : FRONT;
+    }
+
     public int getOrder() {
         return order;
     }

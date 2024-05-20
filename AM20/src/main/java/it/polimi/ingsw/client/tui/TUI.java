@@ -62,6 +62,11 @@ public class TUI implements UIManager {
     }
 
     @Override
+    public void startGame() {
+        System.out.println("The game is starting now");
+    }
+
+    @Override
     public void updateCards(List<PlayableCard> cards) {
         if(cards!=null){
             this.cards = cards;
@@ -177,6 +182,9 @@ public class TUI implements UIManager {
             } else {
                 System.out.println("Is " + nextPlayer + "'s turn");
             }
+        }
+        else{
+            System.out.println(ConsoleColors.TEXT_BG_GREEN+"Game is over!");
         }
     }
 

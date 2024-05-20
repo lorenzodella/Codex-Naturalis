@@ -4,6 +4,7 @@ import it.polimi.ingsw.client.connections.ClientRMI;
 import it.polimi.ingsw.client.connections.ClientSKT;
 import it.polimi.ingsw.client.connections.ClientSender;
 import it.polimi.ingsw.client.gui.GUI;
+import it.polimi.ingsw.client.gui.GUIController;
 import it.polimi.ingsw.client.tui.TUI;
 import it.polimi.ingsw.client.tui.TUIController;
 
@@ -84,7 +85,8 @@ public class ClientMain {
                 clientController = new TUIController(sender, (TUI) manager);
                 new Thread((TUIController) clientController).start();
             }else {
-                //clientController = new GUIController(sender);
+                clientController = new GUIController(sender, (GUI) manager);
+                ((GUI) manager).show();
             }
 
 
