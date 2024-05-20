@@ -2,11 +2,13 @@ package it.polimi.ingsw.client.gui;
 
 import it.polimi.ingsw.client.UIManager;
 import it.polimi.ingsw.client.gui.gameview.GameFrame;
+import it.polimi.ingsw.client.gui.listeners.JoinGameListener;
 import it.polimi.ingsw.client.gui.listeners.MapListener;
+import it.polimi.ingsw.client.gui.listeners.NewGameListener;
 import it.polimi.ingsw.client.gui.listeners.YourCardsListener;
+import it.polimi.ingsw.client.gui.startscreen.StartScreenFrame;
 import it.polimi.ingsw.controller.PlayerInfo;
 import it.polimi.ingsw.controller.messages.ChatMessage;
-import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.model.cards.playable.StarterCard;
@@ -18,9 +20,11 @@ import java.util.List;
 public class GUI implements UIManager {
 
     GameFrame gameFrame;
+    StartScreenFrame startScreenFrame;
 
     public GUI() {
-        gameFrame = new GameFrame();
+        //crea schermata iniziale
+        startScreenFrame = new StartScreenFrame();
     }
 
     @Override
@@ -35,7 +39,6 @@ public class GUI implements UIManager {
 
     @Override
     public void updateCards(List<PlayableCard> cards) {
-
     }
 
     @Override
@@ -108,12 +111,20 @@ public class GUI implements UIManager {
 
     }
 
-    public void show() {
-        gameFrame.setVisible(true);
+    public void showStartScreen() {
+        startScreenFrame.setVisible(true);
     }
 
     public void log(String log) {
         gameFrame.getLogPanel().log(log);
+    }
+
+    public void addNewGameListener(NewGameListener newGameListener){
+        startScreenFrame.getStartPanel().setNewGameListener(newGameListener);
+    }
+
+    public void addJoinGameListener(JoinGameListener joinGameListener){
+        startScreenFrame.getStartPanel().setJoinGameListener(joinGameListener);
     }
 
     public void addMapListener(MapListener mapListener){
@@ -123,4 +134,5 @@ public class GUI implements UIManager {
     public void addYourCardsListener(YourCardsListener yourCardsListener){
         gameFrame.getYourCardsPanel().setYourCardsListener(yourCardsListener);
     }
+
 }

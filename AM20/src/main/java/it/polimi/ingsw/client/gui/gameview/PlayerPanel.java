@@ -17,15 +17,16 @@ public class PlayerPanel extends JPanel {
                        YourCardsPanel yourCardsPanel , TablePanel tablePanel, DeckPanel deckPanel,
                        PlayerInfoPanel playerInfoPanel, LogPanel logPanel){
         super();
-
         //setBorder(new EmptyBorder(5,5,5,5));
         setLayout(new BorderLayout(5,5));
 
         JPanel sp = new JPanel();
+        //ps: l'ordine conta
         sp.add(commonObjectivePanel);
         sp.add(secretObjectivePanel);
         sp.add(yourCardsPanel);
 
+        //panel delle info a dx
         JPanel eastPanel = new JPanel();
         eastPanel.setLayout(new BoxLayout(eastPanel, BoxLayout.PAGE_AXIS));
         //eastPanel.add(Box.createRigidArea(new Dimension(0, 10)));
@@ -36,7 +37,7 @@ public class PlayerPanel extends JPanel {
         eastPanel.add(logPanel);
         //eastPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-
+        //panel di gioco centrale
         JPanel centerPanel = new JPanel();
         centerPanel.setLayout(new BorderLayout(10,10));
         centerPanel.add(tablePanel, BorderLayout.CENTER);

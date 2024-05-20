@@ -45,13 +45,22 @@ public class CardButton extends JButton {
         set();
     }
 
+    public CardButton(){
+        super();
+        clear();
+    }
+
     private void set(){
         image = loadImage();
         setBorder(BorderFactory.createEmptyBorder());
         CardIcon icon = new CardIcon(image);
+        //per un bottone cliccabile
         setIcon(icon);
+        //per un bottone non cliccabile
         setDisabledIcon(icon);
+        //per sbiadire
         setRolloverIcon(new CardIcon(image, true));
+
         setClickable(clickable);
 
         setMouseListener();
@@ -122,6 +131,20 @@ public class CardButton extends JButton {
             throw new RuntimeException(e);
         }
         return image;
+    }
+
+    public void update(Card card){
+        this.card = card;
+        set();
+    }
+
+    public void clear(){
+        //carta con interno grigio, contorno visibile e non cliccable
+        this.card = null;
+        setPreferredSize(GUIUtils.cardDim);
+        setContentAreaFilled(false);
+        setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+        setClickable(false);
     }
 
 }

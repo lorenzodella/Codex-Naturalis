@@ -86,7 +86,7 @@ public class ClientMain {
                 new Thread((TUIController) clientController).start();
             }else {
                 clientController = new GUIController(sender, (GUI) manager);
-                ((GUI) manager).show();
+                ((GUI) manager).showStartScreen();
             }
 
 

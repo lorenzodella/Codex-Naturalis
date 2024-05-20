@@ -22,23 +22,54 @@ public class YourCardsPanel extends JPanel {
 
         cardButtons = new CardButton[3];
 
-        cardButtons[0] = new CardButton(playableCards.get(0));
+        if(playableCards.size()>=1)
+            cardButtons[0] = new CardButton(playableCards.get(0));
+        else
+            cardButtons[0] = new CardButton();
         cardButtons[0].setName("0");
         cardButtons[0].setPreferredSize(GUIUtils.cardDim);
 
-        cardButtons[1] = new CardButton(playableCards.get(1));
+
+        if(playableCards.size()>=2)
+            cardButtons[1] = new CardButton(playableCards.get(0));
+        else
+            cardButtons[1] = new CardButton();
         cardButtons[1].setName("1");
         cardButtons[1].setPreferredSize(GUIUtils.cardDim);
 
-        cardButtons[2] = new CardButton(playableCards.get(2));
+        if(playableCards.size()>=2)
+            cardButtons[2] = new CardButton(playableCards.get(0));
+        else
+            cardButtons[2] = new CardButton();
         cardButtons[2].setName("2");
         cardButtons[2].setPreferredSize(GUIUtils.cardDim);
 
+        //aggiungo fisicamente i bottoni
         add(cardButtons[0]);
         add(cardButtons[1]);
         add(cardButtons[2]);
 
         setCardsClickable(true);
+    }
+
+    public void update(List<PlayableCard> cards){
+        if(cards.size()>=1)
+            cardButtons[0].update(cards.get(0));
+        else
+            cardButtons[0].clear();
+
+        if(cards.size()>=2) {
+            cardButtons[1].update(cards.get(1));
+        }else {
+            cardButtons[1].clear();
+        }
+
+        if(cards.size()>=3) {
+            cardButtons[2].update(cards.get(2));
+        }else {
+            cardButtons[2].clear();
+        }
+
     }
 
     public void setCardsClickable(boolean clickable){
