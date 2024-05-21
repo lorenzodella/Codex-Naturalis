@@ -15,10 +15,10 @@ public class StarterCardClient implements Drawer {
 
     public void draw(){
         System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------");
-        System.out.println("STARTER CARD\n");
+        System.out.println(ConsoleColors.TEXT_BLUE + "STARTER CARD\n" + ConsoleColors.TEXT_RESET);
 
         //FRONT
-        System.out.println(ConsoleColors.TEXT_BLUE + "\nFRONT CORNERS: "+ConsoleColors.TEXT_RESET);
+        System.out.println("\nFRONT CORNERS: ");
         for(int i=0;i<this.starterCard.getFrontCorners().length;i++){
             //definisco angolo
             String angle;

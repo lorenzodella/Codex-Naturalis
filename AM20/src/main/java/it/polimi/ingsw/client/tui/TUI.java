@@ -503,9 +503,78 @@ public class TUI implements UIManager {
         }
     }
 
+    public void showCommand(){
+        System.out.println(ConsoleColors.TEXT_YELLOW+ "\nFor obtaining the full list of command type /help while for obtaining the parameter of a specific action type /help [command]" + ConsoleColors.TEXT_RESET);
+        System.out.println("Decide which command you want to do:\n");
+    }
+
     public void viewCommand( ){
         System.out.println("---------------------------------------------------------------------------------------------------");
-        System.out.println("The following lines explain the parameters for every action: \n");
+        System.out.println("The following lines explain the actions you can do: \n");
+        System.out.println("/join");
+        System.out.println("/newGame");
+        System.out.println("/chooseObjective");
+        System.out.println("/chooseStarterSide");
+        System.out.println("/pickCardDeck");
+        System.out.println("/pickCardVisible");
+        System.out.println("/playCard");
+        System.out.println("/chat");
+        System.out.println("/myPlayerInfo");
+        System.out.println("/playerInfo");
+        System.out.println("/placement");
+        System.out.println("/viewDeck");
+        System.out.println("/viewCommonObjective");
+        System.out.println("/viewSecretObjective");
+        System.out.println("/viewStarterCard");
+        System.out.println("/viewResourceVisibile");
+        System.out.println("/viewGoldVisible");
+        System.out.println("/viewChat");
+        System.out.println("/currPlayer");
+        System.out.println("/viewHand \n");
+        System.out.println("---------------------------------------------------------------------------------------------------");
+    }
+
+    public void viewCommandParam(String str){
+        System.out.println("\nThe " + str + " command has the parameters:");
+        switch (str){
+            case "join":
+                System.out.println("/join + username");
+                break;
+            case "newGame":
+                System.out.println("/newGame + username + numPlayers");
+                break;
+            case "chooseObjective":
+                System.out.println("/chooseObjective + index");
+                break;
+            case "chooseStarterSide":
+                System.out.println("/chooseStarterSide + side (0 for back / 1 for front)");
+                break;
+            case "pickCardDeck":
+                System.out.println("/pickCardDeck +  deck (0 for gold deck / 1 for resource deck)");
+                break;
+            case "pickCardVisible":
+                System.out.println("/pickCardVisible +  deck (0 for gold deck / 1 for resource deck) +  index  (0 for the left card and 1 for the right one)");
+                break;
+            case "playCard":
+                System.out.println("/playCard + index (index of the card you want to play) +  angle (angel of the card you want to cover: 0 for UL / 1 for UR / 2 for DL /3  for DR)+  targetIDcard (ID of the card you want to cover) + side (0 for back / 1 for front)");
+                break;
+            case "chat":
+                System.out.println("/chat + broadCast + message ");
+                System.out.println("/chat + username (username of the receiver) + message");
+                break;
+            case "playerInfo":
+                System.out.println("/playerInfo + username (username of the player you want to view)");
+                break;
+            case "viewDeck":
+                System.out.println("/viewDeck + index (0 for the gold deck and 1 for resource deck)");
+                break;
+            default:
+                System.out.println("The command executed hasn't any parameters");
+
+                System.out.println("---------------------------------------------------------------------------------------------------");
+
+        }
+        /*
         System.out.println("/join + username");
         System.out.println("/newGame + username +  numPlayers");
         System.out.println("/chooseObjective +  index  ");
@@ -527,7 +596,8 @@ public class TUI implements UIManager {
         System.out.println("/viewChat");
         System.out.println("/currPlayer");
         System.out.println("/viewHand \n");
-        System.out.println("---------------------------------------------------------------------------------------------------");
+        System.out.println("---------------------------------------------------------------------------------------------------");*/
+
     }
 
     public static void main(String[] args) throws InterruptedException, TargetNotPresentException, InvalidPositionException, RequirementsNotRespectedException, InvalidAngleCoveredException {

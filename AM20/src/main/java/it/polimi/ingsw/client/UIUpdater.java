@@ -27,18 +27,13 @@ public class UIUpdater  {
         manager.updateOtherPlayerInfo(msg.getOthersPlayerInfo());
         manager.updateCards(msg.getInitialCards());
         manager.updateStarterCard(msg.getStarterCard());
-        System.out.println(ConsoleColors.TEXT_YELLOW+ "For obtaining the parameters of the command and the full list of command type /help" + ConsoleColors.TEXT_RESET);
-
-        System.out.println("Decide which command you want to do:");
-
+        manager.showCommand();
     }
 
     public void acknowledge(AcknowledgeMessage msg){
         manager.showNextTurn(msg.getNextPlayer());
         manager.showResult(msg.getResult());
-        System.out.println(ConsoleColors.TEXT_YELLOW+ "For obtaining the parameters of the command and the full list of command type /help" + ConsoleColors.TEXT_RESET);
-
-        System.out.println("Decide which command you want to do:");
+        manager.showCommand();
 
     }
 
@@ -51,9 +46,7 @@ public class UIUpdater  {
         manager.updateCards(msg.getCards());
         manager.showNextTurn(msg.getNextPlayer());
         manager.showResult(msg.getResult());
-        System.out.println(ConsoleColors.TEXT_YELLOW+ "For obtaining the parameters of the command and the full list of command type /help" + ConsoleColors.TEXT_RESET);
-
-        System.out.println("Decide which command you want to do:");
+        manager.showCommand();
 
 
 
@@ -70,9 +63,7 @@ public class UIUpdater  {
         manager.showNextTurn(msg.getNextPlayer());
 
         manager.showResult(msg.getResult());
-        System.out.println(ConsoleColors.TEXT_YELLOW+ "For obtaining the parameters of the command and the full list of command type /help" + ConsoleColors.TEXT_RESET);
-
-        System.out.println("Decide which command you want to do:");
+        manager.showCommand();
 
     }
 
@@ -81,8 +72,7 @@ public class UIUpdater  {
         manager.updateYourPlayerInfo(msg.getPlayerInfo());
         manager.updateOtherPlayerInfo(msg.getOthersPlayerInfo());
         manager.showResult(msg.getResult());
-        System.out.println(ConsoleColors.TEXT_YELLOW+ "\nFor obtaining the parameters of the command and the full list of command type /help" + ConsoleColors.TEXT_RESET);
-        System.out.println("Decide which command you want to do:");
+        manager.showCommand();
 
 
     }
@@ -93,8 +83,7 @@ public class UIUpdater  {
         manager.updateCommonObjectives(msg.getCommonObjectives());
         manager.updateSecretObjectives(msg.getSecretObjectives());
         manager.showResult(msg.getResult());
-        System.out.println(ConsoleColors.TEXT_YELLOW+ "For obtaining the parameters of the command and the full list of command type /help" + ConsoleColors.TEXT_RESET);
-        System.out.println("Decide which command you want to do:");
+        manager.showCommand();
 
 
 
@@ -103,8 +92,7 @@ public class UIUpdater  {
     public void objectiveMessage(ObjectiveAckMessage msg){
         manager.updateSecretObjectives(msg.getSecretObjectives());
         manager.showResult(msg.getResult());
-        System.out.println(ConsoleColors.TEXT_YELLOW+ "For obtaining the parameters of the command and the full list of command type /help" + ConsoleColors.TEXT_RESET);
-        System.out.println("Decide which command you want to do:");
+        manager.showCommand();
 
 
     }
@@ -113,8 +101,7 @@ public class UIUpdater  {
         manager.updateSecretObjectives(msg.getSecretObjectives());
         manager.showResult(msg.getResult());
         manager.showNextTurn(msg.getFirstPlayer());
-        System.out.println(ConsoleColors.TEXT_YELLOW+ "For obtaining the parameters of the command and the full list of command type /help" + ConsoleColors.TEXT_RESET);
-        System.out.println("Decide which command you want to do:");
+        manager.showCommand();
 
 
     }

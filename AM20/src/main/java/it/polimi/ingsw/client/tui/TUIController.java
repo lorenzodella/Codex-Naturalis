@@ -25,6 +25,7 @@ public class TUIController extends ClientController implements Runnable{
 
 
     public void run(){
+        System.out.println(ConsoleColors.TEXT_YELLOW+ "\nFor obtaining the full list of command type /help while for obtaining the parameter of a specific action type /help [command]" + ConsoleColors.TEXT_RESET);
         System.out.println("Decide which command you want to do:");
         while(true){
             try {
@@ -35,8 +36,12 @@ public class TUIController extends ClientController implements Runnable{
                 if(command[0].equals("/help")){
                     if(command.length==1)
                         myTUI.viewCommand();
+                    else if(command.length==2)
+                        myTUI.viewCommandParam(command[1]);
                     else
                         myTUI.viewErrorCommand();
+
+                    myTUI.showCommand();
                 }else if(command[0].equals("/join")){
                     if(command.length==2){
                         this.username = command[1];
@@ -159,6 +164,7 @@ public class TUIController extends ClientController implements Runnable{
                     this.myTUI.viewCurrPlayer();
                 }else {
                     this.myTUI.viewErrorCommand();
+                    myTUI.showCommand();
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);

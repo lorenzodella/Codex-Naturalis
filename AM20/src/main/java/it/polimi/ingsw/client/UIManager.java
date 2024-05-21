@@ -30,4 +30,5 @@ public interface UIManager {
     public void showNextTurn(String nextPlayer);
     public void showMustPick();
     public void showError(String error);
+    public void showCommand();
 }

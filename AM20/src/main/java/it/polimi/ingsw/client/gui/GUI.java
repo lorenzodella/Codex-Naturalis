@@ -111,6 +111,11 @@ public class GUI implements UIManager {
 
     }
 
+    @Override
+    public void showCommand() {
+
+    }
+
     public void showStartScreen() {
         startScreenFrame.setVisible(true);
     }
