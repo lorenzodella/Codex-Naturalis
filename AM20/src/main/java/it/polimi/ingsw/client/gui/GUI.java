@@ -7,6 +7,7 @@ import it.polimi.ingsw.client.gui.startscreen.StartScreenFrame;
 import it.polimi.ingsw.controller.PlayerInfo;
 import it.polimi.ingsw.controller.messages.ChatMessage;
 import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
+import it.polimi.ingsw.model.cards.playable.GoldCard;
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.model.cards.playable.StarterCard;
 
@@ -32,6 +33,8 @@ public class GUI implements UIManager {
 
     @Override
     public void startGame() {
+        GUIUtils.disposeMessage();
+        startScreenFrame.dispose();
         gameFrame.pack();
         gameFrame.setVisible(true);
     }
@@ -53,7 +56,7 @@ public class GUI implements UIManager {
 
     @Override
     public void updateGoldTop(PlayableCard goldTop) {
-
+        gameFrame.getDeckPanel().updateGold(null, null, (GoldCard) goldTop);
     }
 
     @Override

@@ -94,40 +94,27 @@ public class TUI implements UIManager {
     }
 
     @Override
-    public void updateGoldTop(PlayableCard goldTop) {
-        if(goldTop!=null){
+    public void updateGold(PlayableCard goldTop, PlayableCard[] goldVisible) {
+        if(goldTop!=null && goldVisible !=null){
             this.goldTop = goldTop;
-            viewGoldTop();
-        }
-
-    }
-
-    @Override
-    public void updateResourceTop(PlayableCard resourceTop) {
-        if(resourceTop!=null){
-            this.resourceTop = resourceTop;
-            viewResourceTop();
-        }
-
-    }
-
-    @Override
-    public void updateGoldVisible(PlayableCard[] goldVisible) {
-        if(goldVisible!=null){
             this.goldVisible = goldVisible;
-            viewGoldVisibleCards();
+            viewGold();
         }
+
+
 
     }
 
     @Override
-    public void updateResourceVisible(PlayableCard[] resourceVisible) {
-        if(resourceVisible!=null){
+    public void updateResource(PlayableCard resourceTop, PlayableCard[] resourceVisible) {
+        if(resourceTop != null && resourceVisible != null){
+            this.resourceTop = resourceTop;
             this.resourceVisible = resourceVisible;
-            viewResourceVisibleCards();
+            viewResource();
         }
 
     }
+
 
     @Override
     public void updateYourPlayerInfo(PlayerInfo yourPlayerInfo) {
@@ -302,6 +289,16 @@ public class TUI implements UIManager {
         }
         System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------\n");
         //this.viewCommand();
+    }
+
+    //TODO
+    public void viewGold(){
+
+    }
+
+    //TODO
+    public void viewResource(){
+
     }
 
     public void viewGoldTop(){

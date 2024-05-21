@@ -18,10 +18,8 @@ public class UIUpdater  {
     public void startGame(StartGameMessage msg){
         System.out.println();
         manager.showResult(msg.getResult());
-        manager.updateGoldTop(msg.getGoldTop());
-        manager.updateResourceTop(msg.getResourceTop());
-        manager.updateGoldVisible(msg.getGoldVisible());
-        manager.updateResourceVisible(msg.getResourceVisible());
+        manager.updateGold(msg.getGoldTop(), msg.getGoldVisible());
+        manager.updateResource(msg.getResourceTop(),msg.getResourceVisible());
         manager.updateYourPlayerInfo(msg.getPlayerInfo());
         manager.updateOtherPlayerInfo(msg.getOthersPlayerInfo());
         manager.updateCards(msg.getInitialCards());
@@ -39,10 +37,8 @@ public class UIUpdater  {
 
     public void pickAck(PickAckMessage msg){
 
-        manager.updateGoldTop(msg.getGoldTop());
-        manager.updateResourceTop(msg.getResourceTop());
-        manager.updateGoldVisible(msg.getGoldVisible());
-        manager.updateResourceVisible(msg.getResourceVisible());
+        manager.updateGold(msg.getGoldTop(), msg.getGoldVisible());
+        manager.updateResource(msg.getResourceTop(),msg.getResourceVisible());
         manager.updateCards(msg.getCards());
         manager.showNextTurn(msg.getNextPlayer());
         manager.showResult(msg.getResult());

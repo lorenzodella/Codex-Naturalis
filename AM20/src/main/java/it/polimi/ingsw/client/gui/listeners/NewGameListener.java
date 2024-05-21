@@ -23,6 +23,7 @@ public class NewGameListener extends ClientController implements ActionListener 
     public void showInputDialog() {
         JTextField nickname = new JTextField();
         JSpinner number = new JSpinner(new SpinnerNumberModel(2, 2, 4, 1));
+        ((JSpinner.DefaultEditor) number.getEditor()).getTextField().setEditable(false);
         Object[] message = {
                 "Nickname:", nickname,
                 "Number of players:", number

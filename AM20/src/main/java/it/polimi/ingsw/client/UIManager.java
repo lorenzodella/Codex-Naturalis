@@ -18,10 +18,8 @@ public interface UIManager {
     public void updateCards(List<PlayableCard> cards);
     public void updateChatMessage(ChatMessage msg);
     public void updateSecretObjectives(ArrayList<ObjectiveCard> secretObjectives);
-    public void updateGoldTop(PlayableCard goldTop);
-    public void updateResourceTop(PlayableCard resourceTop);
-    public void updateGoldVisible(PlayableCard[] goldVisible);
-    public void updateResourceVisible(PlayableCard[] resourceVisible);
+    public void updateGold(PlayableCard goldTop, PlayableCard[] goldVisible);
+    public void updateResource(PlayableCard resourceTop, PlayableCard[] resourceVisible);
     public void updateYourPlayerInfo(PlayerInfo yourPlayerInfo);
     public void updateOtherPlayerInfo(HashMap<String, PlayerInfo> otherPlayerInfo);
     public void updateCommonObjectives(ObjectiveCard[] commonObjectives);
