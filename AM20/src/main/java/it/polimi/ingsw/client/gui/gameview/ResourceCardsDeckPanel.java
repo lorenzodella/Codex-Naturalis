@@ -1,14 +1,21 @@
 package it.polimi.ingsw.client.gui.gameview;
 
+import it.polimi.ingsw.client.gui.listeners.DeckCoveredListener;
+import it.polimi.ingsw.client.gui.listeners.DeckVisibleListener;
+
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 
 public class ResourceCardsDeckPanel extends JPanel {
+    ResourceCardsPanel resourceCardsPanelCovered;
+    ResourceCardsPanel resourceCardsPanelVisible;
 
 
     public ResourceCardsDeckPanel(ResourceCardsPanel resourceCardsPanelCovered, ResourceCardsPanel resourceCardsPanelVisible) {
         super();
+        this.resourceCardsPanelCovered = resourceCardsPanelCovered;
+        this.resourceCardsPanelVisible = resourceCardsPanelVisible;
 
         setLayout(new BorderLayout());
         TitledBorder titledBorder = new TitledBorder("Resource cards");
@@ -21,4 +28,12 @@ public class ResourceCardsDeckPanel extends JPanel {
 
 
     }
+
+    public void setDeckListener(DeckCoveredListener deckCoveredListener, DeckVisibleListener deckVisibleListener){
+        resourceCardsPanelCovered.setDeckCoveredListener(deckCoveredListener);
+        resourceCardsPanelVisible.setDeckVisibleListener(deckVisibleListener);
+
+    }
+
+
 }

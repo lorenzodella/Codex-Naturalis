@@ -2,8 +2,7 @@ package it.polimi.ingsw.client.gui;
 
 import it.polimi.ingsw.client.ClientController;
 import it.polimi.ingsw.client.connections.ClientSender;
-import it.polimi.ingsw.client.gui.listeners.JoinGameListener;
-import it.polimi.ingsw.client.gui.listeners.NewGameListener;
+import it.polimi.ingsw.client.gui.listeners.*;
 
 public class GUIController extends ClientController {
 
@@ -26,9 +25,12 @@ public class GUIController extends ClientController {
     private void createListeners() {
         gui.addNewGameListener(new NewGameListener(clientSender));
         gui.addJoinGameListener(new JoinGameListener(clientSender));
-        //MapListener mapListener = new MapListener(clientSender, this);
-        //gui.addMapListener(mapListener);
-        //gui.addYourCardsListener(new YourCardsListener(clientSender, mapListener));
+        gui.addDeckListener(new DeckCoveredListener(clientSender, this), new DeckVisibleListener(clientSender, this));
+
+
+        MapListener mapListener = new MapListener(clientSender, this);
+        gui.addMapListener(mapListener);
+        gui.addYourCardsListener(new YourCardsListener(clientSender, mapListener));
     }
 
     public void log(String log){

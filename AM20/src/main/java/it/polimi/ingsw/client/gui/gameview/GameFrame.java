@@ -19,6 +19,7 @@ public class GameFrame extends JFrame {
     private LogPanel logPanel;
     private YourCardsPanel yourCardsPanel;
     private TablePanel tablePanel;
+    private DeckPanel deckPanel;
 
     public GameFrame(){
         super("Codex Naturalis");
@@ -62,7 +63,7 @@ public class GameFrame extends JFrame {
         ResourceCardsDeckPanel resourceCardsDeckPanel = new ResourceCardsDeckPanel(resourceCardsPanelCovered, resourceCardsPanelVisible);
         GoldCardsDeckPanel goldCardsDeckPanel = new GoldCardsDeckPanel(goldCardsPanelCovered, goldCardsPanelVisible);
 
-        DeckPanel deckPanel = new DeckPanel(goldCardsDeckPanel, resourceCardsDeckPanel);
+        deckPanel = new DeckPanel(goldCardsDeckPanel, resourceCardsDeckPanel);
 
 
 
@@ -100,6 +101,10 @@ public class GameFrame extends JFrame {
 
     public YourCardsPanel getYourCardsPanel() {
         return yourCardsPanel;
+    }
+
+    public DeckPanel getDeckPanel() {
+        return deckPanel;
     }
 
     public static void main(String[] args) {

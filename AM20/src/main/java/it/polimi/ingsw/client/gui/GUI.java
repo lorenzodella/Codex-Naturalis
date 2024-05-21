@@ -2,10 +2,7 @@ package it.polimi.ingsw.client.gui;
 
 import it.polimi.ingsw.client.UIManager;
 import it.polimi.ingsw.client.gui.gameview.GameFrame;
-import it.polimi.ingsw.client.gui.listeners.JoinGameListener;
-import it.polimi.ingsw.client.gui.listeners.MapListener;
-import it.polimi.ingsw.client.gui.listeners.NewGameListener;
-import it.polimi.ingsw.client.gui.listeners.YourCardsListener;
+import it.polimi.ingsw.client.gui.listeners.*;
 import it.polimi.ingsw.client.gui.startscreen.StartScreenFrame;
 import it.polimi.ingsw.controller.PlayerInfo;
 import it.polimi.ingsw.controller.messages.ChatMessage;
@@ -25,6 +22,7 @@ public class GUI implements UIManager {
     public GUI() {
         //crea schermata iniziale
         startScreenFrame = new StartScreenFrame();
+        gameFrame = new GameFrame();
     }
 
     @Override
@@ -139,5 +137,12 @@ public class GUI implements UIManager {
     public void addYourCardsListener(YourCardsListener yourCardsListener){
         gameFrame.getYourCardsPanel().setYourCardsListener(yourCardsListener);
     }
+
+    public void addDeckListener(DeckCoveredListener deckCoveredListener, DeckVisibleListener deckVisibleListener){
+        gameFrame.getDeckPanel().setDeckListener(deckVisibleListener, deckCoveredListener);
+    }
+
+
+
 
 }
