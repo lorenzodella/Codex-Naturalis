@@ -8,6 +8,8 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
 public class CommonObjectivePanel extends JPanel {
+    private CardButton o1;
+    private CardButton o2;
 
     public CommonObjectivePanel(ObjectiveCard[] objectiveCards){
         super();
@@ -17,9 +19,9 @@ public class CommonObjectivePanel extends JPanel {
         setBorder(titledBorder);
 
 
-        CardButton o1 = new CardButton(objectiveCards[0]);
+        o1 = objectiveCards!=null ? new CardButton(objectiveCards[0]) : new CardButton();
         o1.setPreferredSize(GUIUtils.cardDim);
-        CardButton o2 = new CardButton(objectiveCards[1]);
+        o2 = objectiveCards!=null ? new CardButton(objectiveCards[1]) : new CardButton();
         o2.setPreferredSize(GUIUtils.cardDim);
 
         add(o1);

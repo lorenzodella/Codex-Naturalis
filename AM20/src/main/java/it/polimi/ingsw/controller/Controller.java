@@ -231,9 +231,10 @@ public class Controller implements GameManager {
         List<Player> playerList = gameModel.giveStarterCards();
         messageBuilder.notifyStarterCards(playerList);
         List<Player> playerList2 =  gameModel.giveInitialCards();
+        messageBuilder.notifyInitialCards(playerList2);
 
         //QUESTO RITORNA DEGLI STARTGAMEMESSAGE
-        HashMap<String, ConnectionAckMessage> msg = messageBuilder.notifyInitialCards(playerList2);
+        HashMap<String, ConnectionAckMessage> msg = messageBuilder.notifyDefaultPlayerInfo(playerList2);
         for(ConnectionAckMessage message: msg.values()){
             message.setResult("All players joined");
         }

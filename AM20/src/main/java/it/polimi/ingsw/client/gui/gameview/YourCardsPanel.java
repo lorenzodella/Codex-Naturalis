@@ -22,7 +22,7 @@ public class YourCardsPanel extends JPanel {
 
         cardButtons = new CardButton[3];
 
-        if(playableCards.size()>=1)
+        if(playableCards!=null && playableCards.size()>=1)
             cardButtons[0] = new CardButton(playableCards.get(0));
         else
             cardButtons[0] = new CardButton();
@@ -30,14 +30,14 @@ public class YourCardsPanel extends JPanel {
         cardButtons[0].setPreferredSize(GUIUtils.cardDim);
 
 
-        if(playableCards.size()>=2)
+        if(playableCards!=null && playableCards.size()>=2)
             cardButtons[1] = new CardButton(playableCards.get(0));
         else
             cardButtons[1] = new CardButton();
         cardButtons[1].setName("1");
         cardButtons[1].setPreferredSize(GUIUtils.cardDim);
 
-        if(playableCards.size()>=2)
+        if(playableCards!=null && playableCards.size()>=2)
             cardButtons[2] = new CardButton(playableCards.get(0));
         else
             cardButtons[2] = new CardButton();

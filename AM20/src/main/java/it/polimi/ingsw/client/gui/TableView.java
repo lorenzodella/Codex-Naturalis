@@ -98,19 +98,21 @@ public class TableView extends JFrame implements ActionListener{
     }
 
     public static void showInputDialog(){
-        JTextField username = new JTextField();
-        JTextField password = new JPasswordField();
+        JTextField nickname = new JTextField();
+        JSpinner number = new JSpinner(new SpinnerNumberModel(2, 2, 4, 1));
         Object[] message = {
-                "Username:", username,
-                "Password:", password
+                "Nickname:", nickname,
+                "Number of players:", number
         };
 
         int option = JOptionPane.showConfirmDialog(null, message, "Login", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
         if (option == JOptionPane.OK_OPTION) {
-            if (username.getText().equals("h") && password.getText().equals("h")) {
-                System.out.println("Login successful");
-            } else {
-                System.out.println("login failed");
+            if(!nickname.getText().isEmpty()) {
+                System.out.println("nickname: " + nickname.getText());
+                System.out.println("numplayers: " + number.getValue());
+            }
+            else {
+                JOptionPane.showMessageDialog(null, "Nickname cannot be empty", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } else {
             System.out.println("Login canceled");

@@ -401,8 +401,10 @@ public class TUI implements UIManager {
         System.out.println("- INKWELL: "+ this.yourPlayerInfo.getStats().getNumberOfObjects(SpecialObject.Inkwell));
         System.out.println("- MANUSCRIPT: "+ this.yourPlayerInfo.getStats().getNumberOfObjects(SpecialObject.Manuscript));
 
-        System.out.println("The player has the follwoing board:");
-        CardPrinter.printMap(this.yourPlayerInfo.getMap());
+        if(yourPlayerInfo.getMap()!=null) {
+            System.out.println("The player has the follwoing board:");
+            CardPrinter.printMap(this.yourPlayerInfo.getMap());
+        }
 
         System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------\n");
         //this.viewCommand();
@@ -432,8 +434,10 @@ public class TUI implements UIManager {
         System.out.println("- INKWELL: "+ this.othersPlayerInfo.get(username).getStats().getNumberOfObjects(SpecialObject.Inkwell));
         System.out.println("- MANUSCRIPT: "+ this.othersPlayerInfo.get(username).getStats().getNumberOfObjects(SpecialObject.Manuscript));
 
-        System.out.println("The player has the follwoing board:");
-        CardPrinter.printMap(this.othersPlayerInfo.get(username).getMap());
+        if(this.othersPlayerInfo.get(username).getMap()!=null) {
+            System.out.println("The player has the follwoing board:");
+            CardPrinter.printMap(this.othersPlayerInfo.get(username).getMap());
+        }
 
         System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------");
         //this.viewCommand();

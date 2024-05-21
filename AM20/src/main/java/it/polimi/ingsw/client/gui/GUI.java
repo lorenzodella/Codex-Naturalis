@@ -37,6 +37,7 @@ public class GUI implements UIManager {
 
     @Override
     public void updateCards(List<PlayableCard> cards) {
+
     }
 
     @Override

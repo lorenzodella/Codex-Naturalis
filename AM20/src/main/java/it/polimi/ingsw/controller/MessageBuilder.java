@@ -76,7 +76,7 @@ public class MessageBuilder implements GameObserver {
 
         for (String nickname : connectedPlayerNicknames) {
             if (connectionAckMessages.get(nickname) == null)
-                connectionAckMessages.put(nickname, new RestartGameMessage());
+                connectionAckMessages.put(nickname, new StartGameMessage());
 
             connectionAckMessages.get(nickname).setNumOfConnectedPlayers(connectedPlayerNicknames.size());
             connectionAckMessages.get(nickname).setResult(player.getNickname()+" reconnected to the game");
@@ -171,6 +171,31 @@ public class MessageBuilder implements GameObserver {
         }
         return connectionAckMessages;
     }
+
+    @Override
+    public HashMap<String, ConnectionAckMessage> notifyDefaultPlayerInfo(List<Player> players) {
+        if (connectionAckMessages == null)
+            connectionAckMessages = new HashMap<>();
+
+        for (Player p : players) {
+            if(connectedPlayerNicknames.contains(p.getNickname())){
+                if (connectionAckMessages.get(p.getNickname()) == null)
+                    connectionAckMessages.put(p.getNickname(), new StartGameMessage());
+
+                connectionAckMessages.get(p.getNickname()).setPlayerInfo(new PlayerInfo());
+                connectionAckMessages.get(p.getNickname()).setOthersPlayerInfo(
+                        players.stream().filter(x -> !p.getNickname().equals(x.getNickname()))
+                                        .collect(Collectors.toMap(
+                                            Player::getNickname,
+                                            x -> new PlayerInfo(),
+                                            (x, y) -> y,
+                                            HashMap::new))
+                );
+            }
+        }
+        return connectionAckMessages;
+    }
+
     /**
      * Notifies to all the connected players that this specific player "player" has just chosen the side of their card
      * @param player the specific player that's just chosen the side of the starter card

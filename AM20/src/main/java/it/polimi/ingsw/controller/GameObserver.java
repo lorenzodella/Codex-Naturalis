@@ -16,6 +16,7 @@ public interface GameObserver {
     HashMap<String, ConnectionAckMessage> notifyDecksCreated(Deck resourceCardDeck, Deck goldCardDeck);
     HashMap<String, ConnectionAckMessage> notifyStarterCards(List<Player> players);
     HashMap<String, ConnectionAckMessage> notifyInitialCards(List<Player> players);
+    HashMap<String, ConnectionAckMessage> notifyDefaultPlayerInfo(List<Player> players);
     HashMap<String, StarterCardAckMessage> notifyStarterCardSide(Player player);
     HashMap<String, StarterCardAckMessage> notifyObjectiveCards(ObjectiveCard[] commonObjectives, List<Player> players);
     HashMap<String, ObjectiveAckMessage> notifyChosenSecretObjective(Player player);
@@ -27,4 +28,5 @@ public interface GameObserver {
     HashMap<String, AcknowledgeMessage> notifyLastTurn();
     HashMap<String, AcknowledgeMessage> notifyPlayerObjectives(List<Player> players);
     HashMap<String, AcknowledgeMessage> notifyWin(Player winner);
+
 }

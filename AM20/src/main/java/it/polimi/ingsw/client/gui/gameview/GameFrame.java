@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.gui.gameview;
 
+import it.polimi.ingsw.client.gui.Chat;
 import it.polimi.ingsw.client.gui.GUI;
 import it.polimi.ingsw.client.gui.GUIController;
 import it.polimi.ingsw.model.PlayerStats;
@@ -20,8 +21,10 @@ public class GameFrame extends JFrame {
     private YourCardsPanel yourCardsPanel;
     private TablePanel tablePanel;
     private DeckPanel deckPanel;
+    private PlayerInfoPanel playerInfoPanel;
+    private Chat chat;
 
-    public GameFrame(){
+    /*public GameFrame(){
         super("Codex Naturalis");
         try {
             UIManager.setLookAndFeel(
@@ -31,35 +34,37 @@ public class GameFrame extends JFrame {
             throw new RuntimeException(e);
         }
 
-        ObjectiveCard[] objectiveCards = new ObjectiveCard[2];
-        objectiveCards[0] = getExamplePairOfObjectsObjectiveCard();
-        objectiveCards[1] = getExampleTrioOfObjectsObjectiveCard();
+//        ObjectiveCard[] objectiveCards = new ObjectiveCard[2];
+//        objectiveCards[0] = getExamplePairOfObjectsObjectiveCard();
+//        objectiveCards[1] = getExampleTrioOfObjectsObjectiveCard();
+//
+//        List<PlayableCard> playableCards = new ArrayList<>();
+//
+//        playableCards.add(getExampleResourceCard("R23"));
+//        playableCards.add(getExampleResourceCard("R14"));
+//        playableCards.add(getExampleResourceCard("R37"));
+//
+//        PlayableCard resourceCardCovered = getExampleResourceCard("R14");
+//        PlayableCard resourceCardVisible1 = getExampleResourceCard("R27");
+//        PlayableCard resourceCardVisible2 = getExampleResourceCard("R38");
+//
+//        PlayableCard goldCardCovered = getExampleObjectGoldCard();
+//        PlayableCard goldCardVisible1 = getExamplePointsGoldCard("G60");
+//        PlayableCard goldCardVisible2 = getExampleCornerGoldCard("G74");
+//
+//
 
-        List<PlayableCard> playableCards = new ArrayList<>();
+        CommonObjectivePanel commonObjectivePanel = new CommonObjectivePanel(objenullctiveCards);
+        SecretObjectivePanel secretObjectivePanel = new SecretObjectivePanel(null);
 
-        playableCards.add(getExampleResourceCard("R23"));
-        playableCards.add(getExampleResourceCard("R14"));
-        playableCards.add(getExampleResourceCard("R37"));
-
-        PlayableCard resourceCardCovered = getExampleResourceCard("R14");
-        PlayableCard resourceCardVisible1 = getExampleResourceCard("R27");
-        PlayableCard resourceCardVisible2 = getExampleResourceCard("R38");
-
-        PlayableCard goldCardCovered = getExampleObjectGoldCard();
-        PlayableCard goldCardVisible1 = getExamplePointsGoldCard("G60");
-        PlayableCard goldCardVisible2 = getExampleCornerGoldCard("G74");
+        yourCardsPanel = new YourCardsPanel(null);
 
 
         ResourceCardsPanel resourceCardsPanelCovered = new ResourceCardsPanel(resourceCardCovered);
         ResourceCardsPanel resourceCardsPanelVisible = new ResourceCardsPanel(resourceCardVisible1, resourceCardVisible2);
-
         GoldCardsPanel goldCardsPanelCovered = new GoldCardsPanel(goldCardCovered);
         GoldCardsPanel goldCardsPanelVisible = new GoldCardsPanel(goldCardVisible1, goldCardVisible2);
 
-
-        CommonObjectivePanel commonObjectivePanel = new CommonObjectivePanel(objectiveCards);
-        SecretObjectivePanel secretObjectivePanel = new SecretObjectivePanel(objectiveCards[0]);
-        yourCardsPanel = new YourCardsPanel(playableCards);
         ResourceCardsDeckPanel resourceCardsDeckPanel = new ResourceCardsDeckPanel(resourceCardsPanelCovered, resourceCardsPanelVisible);
         GoldCardsDeckPanel goldCardsDeckPanel = new GoldCardsDeckPanel(goldCardsPanelCovered, goldCardsPanelVisible);
 
@@ -67,17 +72,18 @@ public class GameFrame extends JFrame {
 
 
 
-        StarterCard starterCard = getExampleStarterCard();
-        PlayerTable playerTable = new PlayerTable();
-        playerTable.insertStarterCard(PlayableCard.BACK, starterCard);
+//        StarterCard starterCard = getExampleStarterCard();
+//        PlayerTable playerTable = new PlayerTable();
+//        playerTable.insertStarterCard(PlayableCard.BACK, starterCard);
 
         tablePanel = new TablePanel(playerTable.getMap(), starterCard);
 
-        PlayerStats playerStats = new PlayerStats();
+//        PlayerStats playerStats = new PlayerStats();
+//
+//        PlayerInfoPanel playerInfoPanel= new PlayerInfoPanel(3, playerStats, "ireneer");
 
-        PlayerInfoPanel playerInfoPanel= new PlayerInfoPanel(3, playerStats, "ireneer");
-
-        logPanel = new LogPanel();
+        chat = new Chat("Server", null, null);
+        logPanel = new LogPanel(chat);
 
 
         this.playerPanel = new PlayerPanel(commonObjectivePanel, secretObjectivePanel, yourCardsPanel ,tablePanel, deckPanel, playerInfoPanel, logPanel);
@@ -87,9 +93,8 @@ public class GameFrame extends JFrame {
         tabbedPane.add("You", new JPanel());
         add(tabbedPane);
 
-        pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    }
+    }*/
 
     public LogPanel getLogPanel() {
         return logPanel;
@@ -108,10 +113,9 @@ public class GameFrame extends JFrame {
     }
 
     public static void main(String[] args) {
-//        GUI gui = new GUI();
-//        GUIController guiController = new GUIController(null, gui);
-//        gui.showStartScreen();
-        new GameFrame().setVisible(true);
+        GUI gui = new GUI();
+        GUIController guiController = new GUIController(null, gui);
+        gui.showStartScreen();
     }
 
     PairOfObjectsObjectiveCard getExamplePairOfObjectsObjectiveCard(){

@@ -22,7 +22,7 @@ public class StartScreenFrame extends JFrame {
         startPanel = new StartPanel();
         add(startPanel);
 
-        pack();
+        setSize(1000, 750);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
@@ -35,4 +35,4 @@ public class StartScreenFrame extends JFrame {
         new GUIController(null, gui);
         gui.showStartScreen();
     }
-        }
+}

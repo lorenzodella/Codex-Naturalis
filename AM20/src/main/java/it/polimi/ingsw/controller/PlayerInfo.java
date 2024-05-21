@@ -23,6 +23,12 @@ public class PlayerInfo implements Serializable {
      */
     private PlayerStats stats;
 
+    public PlayerInfo() {
+        this.score = 0;
+        this.map = null;
+        this.stats = new PlayerStats();
+    }
+
     public int getScore() {
         return score;
     }

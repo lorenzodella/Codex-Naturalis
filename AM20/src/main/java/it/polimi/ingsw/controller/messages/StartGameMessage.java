@@ -33,6 +33,14 @@ public class StartGameMessage extends ConnectionAckMessage {
      * This attribute stands for the player's initial cards
      */
     private List<PlayableCard> initialCards;
+    /**
+     * The player's playerinfo
+     */
+    private PlayerInfo playerInfo;
+    /**
+     * The map that, per each player, says the other players' info
+     */
+    private HashMap<String, PlayerInfo> othersPlayerInfo;
 
 
     @Override
@@ -89,20 +97,21 @@ public class StartGameMessage extends ConnectionAckMessage {
     }
 
     public PlayerInfo getPlayerInfo() {
-        return null;
+        return playerInfo;
     }
 
     public void setPlayerInfo(PlayerInfo playerInfo) {
-
+        this.playerInfo = playerInfo;
     }
 
     @Override
     public HashMap<String, PlayerInfo> getOthersPlayerInfo() {
-        return null;
+        return othersPlayerInfo;
     }
 
     @Override
     public void setOthersPlayerInfo(HashMap<String, PlayerInfo> othersPlayerInfo) {
+        this.othersPlayerInfo = othersPlayerInfo;
     }
 
     @Override
