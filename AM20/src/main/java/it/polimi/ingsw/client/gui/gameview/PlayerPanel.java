@@ -17,6 +17,14 @@ public class PlayerPanel extends JPanel {
                        YourCardsPanel yourCardsPanel , TablePanel tablePanel, DeckPanel deckPanel,
                        PlayerInfoPanel playerInfoPanel, LogPanel logPanel){
         super();
+        this.commonObjectivePanel = commonObjectivePanel;
+        this.secretObjectivePanel = secretObjectivePanel;
+        this.yourCardsPanel = yourCardsPanel;
+        this.tablePanel = tablePanel;
+        this.deckPanel = deckPanel;
+        this.playerInfoPanel = playerInfoPanel;
+        this.logPanel = logPanel;
+
         //setBorder(new EmptyBorder(5,5,5,5));
         setLayout(new BorderLayout(5,5));
 
@@ -47,6 +55,10 @@ public class PlayerPanel extends JPanel {
         add(centerPanel, BorderLayout.CENTER);
         add(eastPanel, BorderLayout.EAST);
 
+    }
+
+    public PlayerInfoPanel getPlayerInfoPanel() {
+        return playerInfoPanel;
     }
 
 

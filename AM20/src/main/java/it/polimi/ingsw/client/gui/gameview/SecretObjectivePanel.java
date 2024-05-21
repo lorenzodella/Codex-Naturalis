@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
+import java.awt.*;
 
 public class SecretObjectivePanel extends JPanel {
     CardButton o1;
@@ -27,5 +28,9 @@ public class SecretObjectivePanel extends JPanel {
             o1.update(objectiveCard);
         else
             o1.clear();
+    }
+
+    public void setHidden(){
+        o1.setBackground(Color.GRAY);
     }
 }

@@ -78,7 +78,7 @@ public class GUI implements UIManager {
 
     @Override
     public void updateOtherPlayerInfo(HashMap<String, PlayerInfo> otherPlayerInfo) {
-
+        gameFrame.updateOtherPlayers(otherPlayerInfo);
     }
 
     @Override

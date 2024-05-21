@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.gui.gameview;
 import it.polimi.ingsw.client.gui.Chat;
 import it.polimi.ingsw.client.gui.GUI;
 import it.polimi.ingsw.client.gui.GUIController;
+import it.polimi.ingsw.controller.PlayerInfo;
 import it.polimi.ingsw.model.PlayerStats;
 import it.polimi.ingsw.model.PlayerTable;
 import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
@@ -15,6 +16,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class GameFrame extends JFrame {
@@ -24,6 +26,9 @@ public class GameFrame extends JFrame {
     private TablePanel tablePanel;
     private DeckPanel deckPanel;
     private PlayerInfoPanel playerInfoPanel;
+    private CommonObjectivePanel commonObjectivePanel;
+    private SecretObjectivePanel secretObjectivePanel;
+    private HashMap<String, PlayerPanel> otherPlayerPanels;
     private Chat chat;
 
     public GameFrame(){
@@ -36,28 +41,9 @@ public class GameFrame extends JFrame {
             throw new RuntimeException(e);
         }
 
-//        ObjectiveCard[] objectiveCards = new ObjectiveCard[2];
-//        objectiveCards[0] = getExamplePairOfObjectsObjectiveCard();
-//        objectiveCards[1] = getExampleTrioOfObjectsObjectiveCard();
-//
-//        List<PlayableCard> playableCards = new ArrayList<>();
-//
-//        playableCards.add(getExampleResourceCard("R23"));
-//        playableCards.add(getExampleResourceCard("R14"));
-//        playableCards.add(getExampleResourceCard("R37"));
-//
-//        PlayableCard resourceCardCovered = getExampleResourceCard("R14");
-//        PlayableCard resourceCardVisible1 = getExampleResourceCard("R27");
-//        PlayableCard resourceCardVisible2 = getExampleResourceCard("R38");
-//
-//        PlayableCard goldCardCovered = getExampleObjectGoldCard();
-//        PlayableCard goldCardVisible1 = getExamplePointsGoldCard("G60");
-//        PlayableCard goldCardVisible2 = getExampleCornerGoldCard("G74");
-//
-//
 
-        CommonObjectivePanel commonObjectivePanel = new CommonObjectivePanel();
-        SecretObjectivePanel secretObjectivePanel = new SecretObjectivePanel();
+        commonObjectivePanel = new CommonObjectivePanel();
+        secretObjectivePanel = new SecretObjectivePanel();
 
         yourCardsPanel = new YourCardsPanel();
 
@@ -113,20 +99,34 @@ public class GameFrame extends JFrame {
         return deckPanel;
     }
 
+    public void updateOtherPlayers(HashMap<String, PlayerInfo> otherPlayerInfo){
+        if(otherPlayerPanels == null){
+            createOtherPlayerPanels(otherPlayerInfo);
+        }else{
+            for(String playerName : otherPlayerInfo.keySet()){
+                otherPlayerPanels.get(playerName).getPlayerInfoPanel().update(otherPlayerInfo.get(playerName).getScore(), otherPlayerInfo.get(playerName).getStats() );
+            }
+        }
+    }
+
+    private void createOtherPlayerPanels(HashMap<String, PlayerInfo> otherPlayerInfo) {
+        otherPlayerPanels = new HashMap<>();
+        for(String playerName : otherPlayerInfo.keySet()){
+            SecretObjectivePanel secretObjectivePanel = new SecretObjectivePanel();
+            secretObjectivePanel.setHidden();
+            YourCardsPanel yourCardsPanel = new YourCardsPanel();
+            yourCardsPanel.setHidden();
+            //TablePanel tablePanel = new TablePanel();
+            PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(otherPlayerInfo.get(playerName).getScore(), otherPlayerInfo.get(playerName).getStats(), playerName);
+            PlayerPanel otherPanel = new PlayerPanel(commonObjectivePanel, secretObjectivePanel, yourCardsPanel ,tablePanel, deckPanel, playerInfoPanel, logPanel);
+            otherPlayerPanels.put(playerName, otherPanel);
+        }
+    }
+
     public static void main(String[] args) {
         GUI gui = new GUI();
         GUIController guiController = new GUIController(null, gui);
         gui.showStartScreen();
-    }
-
-    PairOfObjectsObjectiveCard getExamplePairOfObjectsObjectiveCard(){
-        ArrayList<ObjectiveCard> PairOfObjectsObjectiveCard = XMLparser.parseObjectiveCards("objectiveCards.xml");
-        return (PairOfObjectsObjectiveCard) PairOfObjectsObjectiveCard.stream().filter(x->x.getID().equals("O100")).findAny().orElse(null);
-    }
-
-    TrioOfObjectsObjectiveCard getExampleTrioOfObjectsObjectiveCard(){
-        ArrayList<ObjectiveCard> TrioOfObjectsObjectiveCard = XMLparser.parseObjectiveCards("objectiveCards.xml");
-        return (TrioOfObjectsObjectiveCard) TrioOfObjectsObjectiveCard.stream().filter(x->x.getID().equals("O99")).findAny().orElse(null);
     }
 
     StarterCard getExampleStarterCard(){
@@ -134,21 +134,4 @@ public class GameFrame extends JFrame {
         return (StarterCard) starterCards.stream().filter(x->x.getID().equals("S85")).findAny().orElse(null);
     }
 
-    ResourceCard getExampleResourceCard(String id){
-        ArrayList<PlayableCard> ResourceCard = XMLparser.parseResourceCards("resourceCards.xml");
-        return (ResourceCard) ResourceCard.stream().filter(x->x.getID().equals(id)).findAny().orElse(null);
-    }
-
-    ObjectGoldCard getExampleObjectGoldCard(){
-        ArrayList<PlayableCard> ObjectGoldCard = XMLparser.parseGoldCards("goldCards.xml");
-        return (ObjectGoldCard) ObjectGoldCard.stream().filter(x->x.getID().equals("G42")).findAny().orElse(null);
-    }
-    PointsGoldCard getExamplePointsGoldCard(String id){
-        ArrayList<PlayableCard> PointsGoldCard = XMLparser.parseGoldCards("goldCards.xml");
-        return (PointsGoldCard) PointsGoldCard.stream().filter(x->x.getID().equals(id)).findAny().orElse(null);
-    }
-    CornerGoldCard getExampleCornerGoldCard(String id){
-        ArrayList<PlayableCard> CornerGoldCard = XMLparser.parseGoldCards("goldCards.xml");
-        return (CornerGoldCard) CornerGoldCard.stream().filter(x->x.getID().equals(id)).findAny().orElse(null);
-    }
 }

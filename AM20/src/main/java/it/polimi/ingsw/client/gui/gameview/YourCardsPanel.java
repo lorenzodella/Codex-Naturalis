@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.cards.playable.PlayableCard;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
+import java.awt.*;
 import java.util.List;
 
 public class YourCardsPanel extends JPanel {
@@ -76,5 +77,12 @@ public class YourCardsPanel extends JPanel {
         for(CardButton card : cardButtons){
             card.addActionListener(listener);
         }
+    }
+
+    public void setHidden(){
+        for(CardButton card : cardButtons){
+            card.setBackground(Color.GRAY);
+        }
+
     }
 }
