@@ -108,9 +108,10 @@ public class GameFrame extends JFrame {
     }
 
     public static void main(String[] args) {
-        GUI gui = new GUI();
-        GUIController guiController = new GUIController(null, gui);
-        gui.showStartScreen();
+//        GUI gui = new GUI();
+//        GUIController guiController = new GUIController(null, gui);
+//        gui.showStartScreen();
+        new GameFrame().setVisible(true);
     }
 
     PairOfObjectsObjectiveCard getExamplePairOfObjectsObjectiveCard(){

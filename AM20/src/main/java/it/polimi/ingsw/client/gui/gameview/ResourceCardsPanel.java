@@ -6,6 +6,7 @@ import it.polimi.ingsw.client.gui.listeners.DeckCoveredListener;
 import it.polimi.ingsw.client.gui.listeners.DeckVisibleListener;
 import it.polimi.ingsw.model.Deck;
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
+import it.polimi.ingsw.model.cards.playable.ResourceCard;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -14,7 +15,6 @@ import java.awt.*;
 public class ResourceCardsPanel extends JPanel {
     CardButton o1;
     CardButton o2;
-
     public ResourceCardsPanel(PlayableCard resourceCards1, PlayableCard resourceCards2) {
         super();
 
@@ -26,10 +26,8 @@ public class ResourceCardsPanel extends JPanel {
         o2.setName(Deck.RESOURCE_CARDS +";1");
         o2.setPreferredSize(GUIUtils.cardDim);
 
-
         add(o1);
         add(o2);
-
     }
 
     public ResourceCardsPanel(PlayableCard resourceCard) {
@@ -43,6 +41,24 @@ public class ResourceCardsPanel extends JPanel {
         o1.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.DARK_GRAY));
 
         add(o1);
+    }
+    //2 update
+    public void updateVisible(ResourceCard visibleCard1, ResourceCard visibleCard2){
+        if(visibleCard1!=null)
+            o1.update(visibleCard1);
+        else
+            o1.clear();
+
+        if(visibleCard2!=null)
+            o2.update(visibleCard2);
+        else
+            o2.clear();
+    }
+    public void updateTop(ResourceCard top){
+        if(top!=null)
+            o1.update(top);
+        else
+            o1.clear();
     }
 
     public void setDeckCoveredListener(DeckCoveredListener deckCoveredListener){

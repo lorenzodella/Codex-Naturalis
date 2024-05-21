@@ -1,5 +1,8 @@
 package it.polimi.ingsw.client.gui.gameview;
 
+import it.polimi.ingsw.model.cards.playable.GoldCard;
+import it.polimi.ingsw.model.cards.playable.PlayableCard;
+
 import it.polimi.ingsw.client.gui.listeners.DeckCoveredListener;
 import it.polimi.ingsw.client.gui.listeners.DeckVisibleListener;
 
@@ -8,10 +11,8 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 
 public class GoldCardsDeckPanel extends JPanel {
-
     GoldCardsPanel goldCardsPanelCovered;
     GoldCardsPanel goldCardsPanelVisible;
-
     public GoldCardsDeckPanel(GoldCardsPanel goldCardsPanelCovered, GoldCardsPanel goldCardsPanelVisible) {
         super();
         this.goldCardsPanelCovered = goldCardsPanelCovered;
@@ -25,7 +26,13 @@ public class GoldCardsDeckPanel extends JPanel {
 
         add(goldCardsPanelCovered, BorderLayout.CENTER);
         add(goldCardsPanelVisible, BorderLayout.SOUTH);
+    }
 
+    //metodo che prende sempre 3 carte e che chiama i due update diversi (quando ho due parametri chiamo quello di due
+    //mentre quello di uno per quello di uno
+    public void update(GoldCard visibleCard1, GoldCard visibleCard2, GoldCard top){
+        goldCardsPanelVisible.updateVisible(visibleCard1, visibleCard2);
+        goldCardsPanelCovered.updateTop(top);
 
     }
 

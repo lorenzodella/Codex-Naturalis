@@ -4,6 +4,7 @@ import it.polimi.ingsw.client.gui.GUIUtils;
 import it.polimi.ingsw.client.gui.CardButton;
 import it.polimi.ingsw.client.gui.listeners.DeckCoveredListener;
 import it.polimi.ingsw.client.gui.listeners.DeckVisibleListener;
+import it.polimi.ingsw.model.cards.playable.GoldCard;
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
 
 import javax.swing.*;
@@ -24,15 +25,13 @@ public class GoldCardsPanel extends JPanel {
         o2 = new CardButton(goldCards2);
         o2.setPreferredSize(GUIUtils.cardDim);
 
-
         add(o1);
         add(o2);
-
     }
 
+    //top
     public GoldCardsPanel(PlayableCard goldCard) {
         super();
-
         goldCard.setSide(PlayableCard.BACK);
 
         o1 = new CardButton(goldCard);
@@ -51,4 +50,22 @@ public class GoldCardsPanel extends JPanel {
         o2.addActionListener(deckVisibleListener);
     }
 
+    //2 update
+    public void updateVisible(GoldCard visibleCard1, GoldCard visibleCard2){
+        if(visibleCard1 != null)
+            o1.update(visibleCard1);
+        else
+            o1.clear();
+
+        if(visibleCard2 != null)
+            o2.update(visibleCard2);
+        else
+            o2.clear();
+    }
+    public void updateTop(GoldCard top){
+        if(top != null)
+            o1.update(top);
+        else
+            o1.clear();
+    }
 }
