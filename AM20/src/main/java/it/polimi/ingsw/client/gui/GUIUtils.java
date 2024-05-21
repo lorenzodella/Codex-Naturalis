@@ -18,7 +18,8 @@ public class GUIUtils {
     }
 
     public static void disposeMessage(){
-        dialog.dispose();
+        if(dialog!=null)
+            dialog.dispose();
     }
 
 }
