@@ -161,10 +161,9 @@ public class TUI implements UIManager {
         if(nextPlayer!=null) {
             currPlayer = nextPlayer;
             if (nextPlayer.equals(nickname)) {
-                viewGoldVisibleCards();
-                viewResourceVisibleCards();
-                viewGoldTop();
-                viewResourceTop();
+                viewGold();
+                viewResource();
+
                 System.out.println("Is your turn");
             } else {
                 System.out.println("Is " + nextPlayer + "'s turn");
@@ -294,15 +293,8 @@ public class TUI implements UIManager {
     //TODO
     public void viewGold(){
 
-    }
-
-    //TODO
-    public void viewResource(){
-
-    }
-
-    public void viewGoldTop(){
-        System.out.print("\nThe card that's now on top of the gold deck is a ");
+        System.out.println(ConsoleColors.TEXT_BLUE+"GOLD DECK:"+ConsoleColors.TEXT_RESET);
+        System.out.print("The card that's now on top of the gold deck is a ");
         //KINGDOM
         if(this.goldTop.getCardKingdom().equals(Kingdom.Fungi))
             System.out.print(ConsoleColors.TEXT_RED + "FUNGI"+ ConsoleColors.TEXT_RESET);
@@ -312,30 +304,9 @@ public class TUI implements UIManager {
             System.out.print(ConsoleColors.TEXT_GREEN + "PLANT"+ConsoleColors.TEXT_RESET);
         else
             System.out.print(ConsoleColors.TEXT_CYAN + "ANIMAL"+ConsoleColors.TEXT_RESET);
-        System.out.println(ConsoleColors.TEXT_RESET + " card ");
+        System.out.println(ConsoleColors.TEXT_RESET + " card \n");
 
-        System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------\n");
-        //this.viewCommand();
-    }
 
-    public void viewResourceTop(){
-        System.out.print("The card that's now on top of the resource deck is a ");
-        if(this.resourceTop.getCardKingdom().equals(Kingdom.Fungi))
-            System.out.print(ConsoleColors.TEXT_RED + "FUNGI"+ ConsoleColors.TEXT_RESET);
-        else if(this.resourceTop.getCardKingdom().equals(Kingdom.Insect))
-            System.out.print(ConsoleColors.TEXT_PURPLE + "INSECT"+ConsoleColors.TEXT_RESET);
-        else if(this.resourceTop.getCardKingdom().equals(Kingdom.Plant))
-            System.out.print(ConsoleColors.TEXT_GREEN + "PLANT"+ConsoleColors.TEXT_RESET);
-        else
-            System.out.print(ConsoleColors.TEXT_CYAN + "ANIMAL"+ConsoleColors.TEXT_RESET);
-        System.out.println(ConsoleColors.TEXT_RESET + " card ");
-
-        System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------\n");
-        //this.viewCommand();
-    }
-
-    public void viewGoldVisibleCards(){
-        //List<PlayableCard> listTest = new ArrayList<>();
         System.out.println("The gold cards that are now visible on the table are the following: \n");
         if(this.goldVisible !=null){
             for(int i=0; i < this.goldVisible.length; i++) {
@@ -358,21 +329,49 @@ public class TUI implements UIManager {
             }
 
         }
+
+        System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------\n");
+
+
     }
 
-    public void viewResourceVisibleCards(){
-        System.out.println("The resource cards that are now visible on the table are the following \n");
+    //TODO
+    public void viewResource(){
+        System.out.println(ConsoleColors.TEXT_BLUE+"RESORUCE DECK" + ConsoleColors.TEXT_RESET);
+
+        System.out.print("The card that's now on top of the resource deck is a ");
+        if(this.resourceTop.getCardKingdom().equals(Kingdom.Fungi))
+            System.out.print(ConsoleColors.TEXT_RED + "FUNGI"+ ConsoleColors.TEXT_RESET);
+        else if(this.resourceTop.getCardKingdom().equals(Kingdom.Insect))
+            System.out.print(ConsoleColors.TEXT_PURPLE + "INSECT"+ConsoleColors.TEXT_RESET);
+        else if(this.resourceTop.getCardKingdom().equals(Kingdom.Plant))
+            System.out.print(ConsoleColors.TEXT_GREEN + "PLANT"+ConsoleColors.TEXT_RESET);
+        else
+            System.out.print(ConsoleColors.TEXT_CYAN + "ANIMAL"+ConsoleColors.TEXT_RESET);
+        System.out.println(ConsoleColors.TEXT_RESET + " card \n");
+
+
+        System.out.println("The resource cards that are now visible on the table are the following: \n");
         for(int i=0; i < this.resourceVisible.length; i++) {
             //KINGDOM GENERICO
             if (i == 0) {
                 System.out.print("The first card");
             } else
-                System.out.print("Second card is");
+                System.out.print("The second card");
 
             ResourceCardClient resourceCardClient = new ResourceCardClient((ResourceCard) this.resourceVisible[i]);
             resourceCardClient.draw();
         }
+
+
+
+        System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------\n");
+
+
+
+
     }
+
 
     public void viewPlayerInfo(){
         this.printTitle();
@@ -467,8 +466,6 @@ public class TUI implements UIManager {
     }
     public void viewErrorCommand(){
         System.out.println("The command executed is wrong");
-
-        System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------");
         //this.viewCommand();
     }
 
@@ -506,7 +503,7 @@ public class TUI implements UIManager {
 
     public void showCommand(){
         System.out.println(ConsoleColors.TEXT_YELLOW+ "\nFor obtaining the full list of command type /help while for obtaining the parameter of a specific action type /help [command]" + ConsoleColors.TEXT_RESET);
-        System.out.println("Decide which command you want to do:\n");
+        System.out.println("Decide which command you want to do:");
     }
 
     public void viewCommand( ){
@@ -527,8 +524,8 @@ public class TUI implements UIManager {
         System.out.println("/viewCommonObjective");
         System.out.println("/viewSecretObjective");
         System.out.println("/viewStarterCard");
-        System.out.println("/viewResourceVisibile");
-        System.out.println("/viewGoldVisible");
+//        System.out.println("/viewResourceVisibile");
+//        System.out.println("/viewGoldVisible");
         System.out.println("/viewChat");
         System.out.println("/currPlayer");
         System.out.println("/viewHand \n");

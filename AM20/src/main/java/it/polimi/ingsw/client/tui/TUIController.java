@@ -62,6 +62,7 @@ public class TUIController extends ClientController implements Runnable{
                     }else
                         myTUI.viewErrorCommand();
 
+                    myTUI.showCommand();
                 }else if(command[0].equals("/chooseObjective")){
                     if(command.length == 2){
                         try{
@@ -141,9 +142,9 @@ public class TUIController extends ClientController implements Runnable{
                 }else if(command[0].equals("/viewDeck")){
                     if(command.length == 2){
                         if(command[1].equals("0"))
-                            this.myTUI.viewGoldTop();
+                            this.myTUI.viewGold();
                         else
-                            this.myTUI.viewResourceTop();
+                            this.myTUI.viewResource();
                     }else
                         myTUI.viewErrorCommand();
                 }else if(command[0].equals("/viewCommonObjective")){
@@ -152,10 +153,6 @@ public class TUIController extends ClientController implements Runnable{
                     this.myTUI.viewSecretObjective();
                 }else if(command[0].equals("/viewStarterCard")){
                     this.myTUI.viewStarterCard();
-                }else if(command[0].equals("/viewResourceVisible")){
-                    this.myTUI.viewResourceVisibleCards();
-                }else if(command[0].equals("/viewGoldVisible")){
-                    this.myTUI.viewGoldVisibleCards();
                 }else if(command[0].equals("/viewChat")){
                     this.myTUI.viewChat();
                 }else if(command[0].equals("/viewHand")) {
@@ -164,7 +161,8 @@ public class TUIController extends ClientController implements Runnable{
                     this.myTUI.viewCurrPlayer();
                 }else {
                     this.myTUI.viewErrorCommand();
-                    myTUI.showCommand();
+                    this.myTUI.showCommand();
+
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
