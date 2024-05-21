@@ -21,28 +21,28 @@ import java.util.HashSet;
  */
 public class TablePanel extends JScrollPane {
     private DynamicMap<String, PlayableCard> map;
-    private StarterCard starterCard;
     private SpringLayout layout;
     private JLayeredPane layeredPane;
     
     private ActionListener buttonListener;
 
     /**
-     * Creates a new panel which displays cards in the <code>map</code>, starting from the <code>starterCard</code>.
-     * @param map map containing the cards
-     * @param starterCard starter card of the player
+     * Creates a new panel which displays cards in a map.
      */
-    public TablePanel(DynamicMap<String, PlayableCard> map, StarterCard starterCard){
+    public TablePanel(){
         super(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        this.map = map;
-        this.starterCard = starterCard;
 
         layout = new SpringLayout();
 
         layeredPane = new JLayeredPane() {
             @Override
             public Dimension getPreferredSize() {
-                return new Dimension(map.width()*(GUIUtils.cardDim.width+100), (map.height())*(GUIUtils.cardDim.height+100));
+                int w = 1, h = 1;
+                if(map!=null){
+                    w = map.width();
+                    h = map.height();
+                }
+                return new Dimension(w*(GUIUtils.cardDim.width+100), h*(GUIUtils.cardDim.height+100));
             }
         };
         layeredPane.setLayout(layout);
@@ -54,7 +54,6 @@ public class TablePanel extends JScrollPane {
         layeredPane.setFocusable(true);
 
         setViewportView(layeredPane);
-        update(map);
     }
 
     /**
@@ -75,7 +74,7 @@ public class TablePanel extends JScrollPane {
      */
     private void addCards() {
         HashSet<PlayableCard> alreadyPrinted = new HashSet<>();
-        PlayableCard card = starterCard;
+        PlayableCard card = map.getElement(0,0);
         alreadyPrinted.add(card);
         JComponent b = createCard(card);
         layeredPane.add(b);

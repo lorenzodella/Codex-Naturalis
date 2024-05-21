@@ -159,7 +159,8 @@ public class CardButton extends JButton {
     }
 
     public void hid(){
-        setContentAreaFilled(true);
+        setOpaque(true);
+        setBackground(Color.LIGHT_GRAY);
         setEnabled(false);
     }
 

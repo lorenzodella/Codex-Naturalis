@@ -51,12 +51,7 @@ public class GameFrame extends JFrame {
         DeckPanel deckPanel = new DeckPanel(goldCardsDeckPanel, resourceCardsDeckPanel);
 
 
-
-        StarterCard starterCard = getExampleStarterCard();
-        PlayerTable playerTable = new PlayerTable();
-        playerTable.insertStarterCard(PlayableCard.BACK, starterCard);
-
-        TablePanel tablePanel = new TablePanel(playerTable.getMap(), starterCard);
+        TablePanel tablePanel = new TablePanel();
 
         PlayerStats playerStats = new PlayerStats();
 
@@ -101,6 +96,7 @@ public class GameFrame extends JFrame {
             createOtherPlayerPanels(otherPlayerInfo);
         }else{
             for(String playerName : otherPlayerInfo.keySet()){
+                otherPlayerPanels.get(playerName).getTablePanel().update(otherPlayerInfo.get(playerName).getMap());
                 otherPlayerPanels.get(playerName).getPlayerInfoPanel().update(otherPlayerInfo.get(playerName).getScore(), otherPlayerInfo.get(playerName).getStats() );
             }
         }
@@ -113,12 +109,7 @@ public class GameFrame extends JFrame {
             secretObjectivePanel.setHidden();
             YourCardsPanel yourCardsPanel = new YourCardsPanel();
             yourCardsPanel.setHidden();
-            StarterCard starterCard = getExampleStarterCard();
-            //DI PROVA
-            PlayerTable playerTable = new PlayerTable();
-            playerTable.insertStarterCard(PlayableCard.BACK, starterCard);
-            TablePanel tablePanel = new TablePanel(playerTable.getMap(), starterCard);
-            //TablePanel tablePanel = new TablePanel(otherPlayerInfo.get(playerName).getMap(), (StarterCard) otherPlayerInfo.get(playerName).getMap().getElement(0,0));
+            TablePanel tablePanel = new TablePanel();
             PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(otherPlayerInfo.get(playerName).getScore(), otherPlayerInfo.get(playerName).getStats(), playerName);
 
             CommonObjectivePanel commonObjectivePanel = new CommonObjectivePanel(playerPanel.getCommonObjectivePanel());

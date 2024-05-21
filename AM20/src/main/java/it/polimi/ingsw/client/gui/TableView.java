@@ -33,13 +33,9 @@ public class TableView extends JFrame implements ActionListener{
         this.playerTable = playerTable;
         this.mat = playerTable.getMap();
 
-        try {
-            tablePanel = new TablePanel(mat, findStarterCard());
-            //tablePanel.setMapListener(this);
-            tablePanel.update(mat);
-        } catch (TargetNotPresentException e) {
-            throw new RuntimeException(e);
-        }
+        tablePanel = new TablePanel();
+        //tablePanel.setMapListener(this);
+        tablePanel.update(mat);
 
         setSize(1000, 500);
         setLocationRelativeTo(null);

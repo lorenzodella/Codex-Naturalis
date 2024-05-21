@@ -18,10 +18,10 @@ public class UIUpdater  {
     public void startGame(StartGameMessage msg){
         System.out.println();
         manager.showResult(msg.getResult());
-        manager.updateGold(msg.getGoldTop(), msg.getGoldVisible());
-        manager.updateResource(msg.getResourceTop(),msg.getResourceVisible());
         manager.updateYourPlayerInfo(msg.getPlayerInfo());
         manager.updateOtherPlayerInfo(msg.getOthersPlayerInfo());
+        manager.updateGold(msg.getGoldTop(), msg.getGoldVisible());
+        manager.updateResource(msg.getResourceTop(),msg.getResourceVisible());
         manager.updateCards(msg.getInitialCards());
         manager.updateStarterCard(msg.getStarterCard());
         manager.startGame();
