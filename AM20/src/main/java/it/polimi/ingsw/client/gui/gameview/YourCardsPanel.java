@@ -81,7 +81,7 @@ public class YourCardsPanel extends JPanel {
 
     public void setHidden(){
         for(CardButton card : cardButtons){
-            card.setBackground(Color.GRAY);
+            card.hid();
         }
 
     }

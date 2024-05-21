@@ -50,6 +50,17 @@ public class CardButton extends JButton {
         clear();
     }
 
+    public CardButton(CardButton copy){
+        super();
+        this.card = copy.card;
+        this.clickable = false;
+        if (card == null) {
+            clear();
+        } else {
+            set();
+        }
+    }
+
     private void set(){
         image = loadImage();
         setBorder(BorderFactory.createEmptyBorder());
@@ -145,6 +156,11 @@ public class CardButton extends JButton {
         setContentAreaFilled(false);
         setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
         setClickable(false);
+    }
+
+    public void hid(){
+        setContentAreaFilled(true);
+        setEnabled(false);
     }
 
 }

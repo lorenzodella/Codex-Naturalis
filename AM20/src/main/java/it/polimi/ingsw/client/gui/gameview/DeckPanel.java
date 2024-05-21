@@ -28,6 +28,19 @@ public class DeckPanel extends JPanel {
         add(resourceCardsDeckPanel, BorderLayout.SOUTH);
     }
 
+    public DeckPanel(DeckPanel copy){
+        super();
+        this.goldCardsDeckPanel = new GoldCardsDeckPanel(copy.goldCardsDeckPanel);
+        this.resourceCardsDeckPanel = new ResourceCardsDeckPanel(copy.resourceCardsDeckPanel);
+
+        //ISTANZA ATTRIBUTI
+        setLayout(new BorderLayout());
+        setMaximumSize(new Dimension(GUIUtils.cardDim.width*2+40, GUIUtils.cardDim.height*4+40));
+
+        add(goldCardsDeckPanel, BorderLayout.NORTH);
+        add(resourceCardsDeckPanel, BorderLayout.SOUTH);
+    }
+
     public void setDeckListener(DeckVisibleListener deckVisibleListener, DeckCoveredListener deckCoveredListener){
         goldCardsDeckPanel.setDeckListener(deckCoveredListener, deckVisibleListener);
         resourceCardsDeckPanel.setDeckListener(deckCoveredListener, deckVisibleListener);

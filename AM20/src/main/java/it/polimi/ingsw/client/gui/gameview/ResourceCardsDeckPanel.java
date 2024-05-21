@@ -29,6 +29,21 @@ public class ResourceCardsDeckPanel extends JPanel {
         add(resourceCardsPanelVisible, BorderLayout.SOUTH);
     }
 
+    public ResourceCardsDeckPanel(ResourceCardsDeckPanel copy){
+        super();
+        this.resourceCardsPanelCovered = new ResourceCardsPanel(copy.resourceCardsPanelCovered);
+        this.resourceCardsPanelVisible = new ResourceCardsPanel(copy.resourceCardsPanelVisible);
+
+        setLayout(new BorderLayout());
+        TitledBorder titledBorder = new TitledBorder("Resource cards");
+        titledBorder.setTitleJustification(TitledBorder.CENTER);
+        setBorder(titledBorder);
+        setOpaque(false);
+
+        add(resourceCardsPanelCovered, BorderLayout.CENTER);
+        add(resourceCardsPanelVisible, BorderLayout.SOUTH);
+    }
+
     public void update(ResourceCard visibleCard1, ResourceCard visibleCard2, ResourceCard top){
         resourceCardsPanelVisible.updateVisible(visibleCard1, visibleCard1);
         resourceCardsPanelCovered.updateTop(top);

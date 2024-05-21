@@ -15,8 +15,10 @@ import java.awt.*;
 public class ResourceCardsPanel extends JPanel {
     CardButton o1;
     CardButton o2;
+    boolean visible;
     public ResourceCardsPanel(boolean visible) {
         super();
+        this.visible = visible;
 
         o1 = new CardButton();
         o1.setName(Deck.RESOURCE_CARDS +";0");
@@ -26,6 +28,20 @@ public class ResourceCardsPanel extends JPanel {
         if(visible) {
             o2 = new CardButton();
             o2.setName(Deck.RESOURCE_CARDS +";1");
+            o2.setPreferredSize(GUIUtils.cardDim);
+            add(o2);
+        }
+    }
+
+    public ResourceCardsPanel(ResourceCardsPanel copy){
+        super();
+
+        o1 = new CardButton(copy.o1);
+        o1.setPreferredSize(GUIUtils.cardDim);
+        add(o1);
+
+        if(copy.visible) {
+            o2 = new CardButton(copy.o2);
             o2.setPreferredSize(GUIUtils.cardDim);
             add(o2);
         }

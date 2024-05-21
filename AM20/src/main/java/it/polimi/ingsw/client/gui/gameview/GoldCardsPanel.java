@@ -16,9 +16,11 @@ import java.awt.*;
 public class GoldCardsPanel extends JPanel {
     CardButton o1;
     CardButton o2;
+    boolean visible;
 
     public GoldCardsPanel(boolean visible) {
         super();
+        this.visible = visible;
 
         o1 = new CardButton();
         o1.setName(Deck.GOLD_CARDS +";0");
@@ -28,6 +30,20 @@ public class GoldCardsPanel extends JPanel {
         if(visible) {
             o2 = new CardButton();
             o2.setName(Deck.GOLD_CARDS +";1");
+            o2.setPreferredSize(GUIUtils.cardDim);
+            add(o2);
+        }
+    }
+
+    public GoldCardsPanel(GoldCardsPanel copy){
+        super();
+
+        o1 = new CardButton(copy.o1);
+        o1.setPreferredSize(GUIUtils.cardDim);
+        add(o1);
+
+        if(copy.visible) {
+            o2 = new CardButton(copy.o2);
             o2.setPreferredSize(GUIUtils.cardDim);
             add(o2);
         }

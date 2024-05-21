@@ -19,9 +19,26 @@ public class CommonObjectivePanel extends JPanel {
         setBorder(titledBorder);
 
 
-        CardButton o1 = new CardButton();
+        o1 = new CardButton();
         o1.setPreferredSize(GUIUtils.cardDim);
-        CardButton o2 = new CardButton();
+        o2 = new CardButton();
+        o2.setPreferredSize(GUIUtils.cardDim);
+
+        add(o1);
+        add(o2);
+    }
+
+    public CommonObjectivePanel(CommonObjectivePanel copy){
+        super();
+
+        TitledBorder titledBorder = BorderFactory.createTitledBorder("Common Objectives");
+        titledBorder.setTitleJustification(TitledBorder.CENTER);
+        setBorder(titledBorder);
+
+
+        o1 = new CardButton(copy.o1);
+        o1.setPreferredSize(GUIUtils.cardDim);
+        o2 = new CardButton(copy.o2);
         o2.setPreferredSize(GUIUtils.cardDim);
 
         add(o1);
@@ -38,4 +55,5 @@ public class CommonObjectivePanel extends JPanel {
         else
             o2.clear();
     }
+
 }

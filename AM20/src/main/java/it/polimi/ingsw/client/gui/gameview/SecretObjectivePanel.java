@@ -31,6 +31,6 @@ public class SecretObjectivePanel extends JPanel {
     }
 
     public void setHidden(){
-        o1.setBackground(Color.GRAY);
+        o1.hid();
     }
 }

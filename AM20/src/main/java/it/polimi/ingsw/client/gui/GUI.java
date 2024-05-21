@@ -55,22 +55,12 @@ public class GUI implements UIManager {
     }
 
     @Override
-    public void updateGoldTop(PlayableCard goldTop) {
-        gameFrame.getDeckPanel().updateGold(null, null, (GoldCard) goldTop);
-    }
-
-    @Override
-    public void updateResourceTop(PlayableCard resourceTop) {
+    public void updateGold(PlayableCard goldTop, PlayableCard[] goldVisible) {
 
     }
 
     @Override
-    public void updateGoldVisible(PlayableCard[] goldVisible) {
-
-    }
-
-    @Override
-    public void updateResourceVisible(PlayableCard[] resourceVisible) {
+    public void updateResource(PlayableCard resourceTop, PlayableCard[] resourceVisible) {
 
     }
 

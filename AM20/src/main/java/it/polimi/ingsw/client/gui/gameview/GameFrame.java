@@ -21,15 +21,9 @@ import java.util.List;
 
 public class GameFrame extends JFrame {
     private PlayerPanel playerPanel;
-    private LogPanel logPanel;
-    private YourCardsPanel yourCardsPanel;
-    private TablePanel tablePanel;
-    private DeckPanel deckPanel;
-    private PlayerInfoPanel playerInfoPanel;
-    private CommonObjectivePanel commonObjectivePanel;
-    private SecretObjectivePanel secretObjectivePanel;
     private HashMap<String, PlayerPanel> otherPlayerPanels;
     private Chat chat;
+    private JTabbedPane tabbedPane;
 
     public GameFrame(){
         super("Codex Naturalis");
@@ -42,20 +36,19 @@ public class GameFrame extends JFrame {
         }
 
 
-        commonObjectivePanel = new CommonObjectivePanel();
-        secretObjectivePanel = new SecretObjectivePanel();
+        CommonObjectivePanel commonObjectivePanel = new CommonObjectivePanel();
+        SecretObjectivePanel secretObjectivePanel = new SecretObjectivePanel();
 
-        yourCardsPanel = new YourCardsPanel();
+        YourCardsPanel yourCardsPanel = new YourCardsPanel();
 
         ResourceCardsPanel resourceCardsPanelCovered = new ResourceCardsPanel(false);
         ResourceCardsPanel resourceCardsPanelVisible = new ResourceCardsPanel(true);
         GoldCardsPanel goldCardsPanelCovered = new GoldCardsPanel(false);
         GoldCardsPanel goldCardsPanelVisible = new GoldCardsPanel(true);
-
         ResourceCardsDeckPanel resourceCardsDeckPanel = new ResourceCardsDeckPanel(resourceCardsPanelCovered, resourceCardsPanelVisible);
         GoldCardsDeckPanel goldCardsDeckPanel = new GoldCardsDeckPanel(goldCardsPanelCovered, goldCardsPanelVisible);
 
-        deckPanel = new DeckPanel(goldCardsDeckPanel, resourceCardsDeckPanel);
+        DeckPanel deckPanel = new DeckPanel(goldCardsDeckPanel, resourceCardsDeckPanel);
 
 
 
@@ -63,41 +56,45 @@ public class GameFrame extends JFrame {
         PlayerTable playerTable = new PlayerTable();
         playerTable.insertStarterCard(PlayableCard.BACK, starterCard);
 
-        tablePanel = new TablePanel(playerTable.getMap(), starterCard);
+        TablePanel tablePanel = new TablePanel(playerTable.getMap(), starterCard);
 
         PlayerStats playerStats = new PlayerStats();
 
-        playerInfoPanel = new PlayerInfoPanel(3, playerStats, "nickname");
+        PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(3, playerStats, "nickname");
 
         //chat = new Chat("Chat", Color.BLUE, Arrays.asList("uno", "due"));
-        logPanel = new LogPanel(null);
+        LogPanel logPanel = new LogPanel(null);
 
 
         this.playerPanel = new PlayerPanel(commonObjectivePanel, secretObjectivePanel, yourCardsPanel ,tablePanel, deckPanel, playerInfoPanel, logPanel);
 
-        JTabbedPane tabbedPane = new JTabbedPane();
+        tabbedPane = new JTabbedPane();
         tabbedPane.add("Me", playerPanel);
-        tabbedPane.add("You", new JPanel());
         add(tabbedPane);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     public LogPanel getLogPanel() {
-        return logPanel;
+        return playerPanel.getLogPanel();
     }
 
     public TablePanel getTablePanel() {
-        return tablePanel;
+        return playerPanel.getTablePanel();
     }
 
     public YourCardsPanel getYourCardsPanel() {
-        return yourCardsPanel;
+        return playerPanel.getYourCardsPanel();
     }
 
     public DeckPanel getDeckPanel() {
-        return deckPanel;
+        return playerPanel.getDeckPanel();
     }
+
+    /*TODO ELE TIA i metodi che aggiornano i deck devono aggiornare tutti i deck di tutti i PlayerPanel
+    fare metodo updateDecks() che cicla su tutti i deck dei playerPanel (anche quelli nella hashmap) e li aggiorna
+    */
+    //TODO ELE TIA uguale per i commonObjectives
 
     public void updateOtherPlayers(HashMap<String, PlayerInfo> otherPlayerInfo){
         if(otherPlayerPanels == null){
@@ -116,10 +113,20 @@ public class GameFrame extends JFrame {
             secretObjectivePanel.setHidden();
             YourCardsPanel yourCardsPanel = new YourCardsPanel();
             yourCardsPanel.setHidden();
-            //TablePanel tablePanel = new TablePanel();
+            StarterCard starterCard = getExampleStarterCard();
+            //DI PROVA
+            PlayerTable playerTable = new PlayerTable();
+            playerTable.insertStarterCard(PlayableCard.BACK, starterCard);
+            TablePanel tablePanel = new TablePanel(playerTable.getMap(), starterCard);
+            //TablePanel tablePanel = new TablePanel(otherPlayerInfo.get(playerName).getMap(), (StarterCard) otherPlayerInfo.get(playerName).getMap().getElement(0,0));
             PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(otherPlayerInfo.get(playerName).getScore(), otherPlayerInfo.get(playerName).getStats(), playerName);
-            PlayerPanel otherPanel = new PlayerPanel(commonObjectivePanel, secretObjectivePanel, yourCardsPanel ,tablePanel, deckPanel, playerInfoPanel, logPanel);
+
+            CommonObjectivePanel commonObjectivePanel = new CommonObjectivePanel(playerPanel.getCommonObjectivePanel());
+            DeckPanel deckPanel = new DeckPanel(playerPanel.getDeckPanel());
+
+            PlayerPanel otherPanel = new PlayerPanel(commonObjectivePanel, secretObjectivePanel, yourCardsPanel ,tablePanel, deckPanel, playerInfoPanel, new LogPanel(null));
             otherPlayerPanels.put(playerName, otherPanel);
+            tabbedPane.add(playerName, otherPanel);
         }
     }
 

@@ -61,5 +61,27 @@ public class PlayerPanel extends JPanel {
         return playerInfoPanel;
     }
 
+    public CommonObjectivePanel getCommonObjectivePanel() {
+        return commonObjectivePanel;
+    }
 
+    public SecretObjectivePanel getSecretObjectivePanel() {
+        return secretObjectivePanel;
+    }
+
+    public YourCardsPanel getYourCardsPanel() {
+        return yourCardsPanel;
+    }
+
+    public TablePanel getTablePanel() {
+        return tablePanel;
+    }
+
+    public DeckPanel getDeckPanel() {
+        return deckPanel;
+    }
+
+    public LogPanel getLogPanel() {
+        return logPanel;
+    }
 }
