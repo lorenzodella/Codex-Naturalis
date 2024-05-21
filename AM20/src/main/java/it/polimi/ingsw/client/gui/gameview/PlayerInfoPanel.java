@@ -9,10 +9,18 @@ import javax.swing.border.*;
 import java.awt.*;
 
 public class PlayerInfoPanel extends JPanel {
+    JLabel scoreLabel;
 
-    private int score;
-    private PlayerStats stats;
-    private String playerName;
+    //stats delle resource
+    JLabel animalLabel;
+    JLabel plantsLabel;
+    JLabel insectLabel;
+    JLabel fungiLabel;
+
+    //stats degli object
+    JLabel inkwellLabel;
+    JLabel quillLabel;
+    JLabel manuscriptLabel;
 
     public PlayerInfoPanel(int score, PlayerStats stats, String playerName) {
         super();
@@ -36,7 +44,7 @@ public class PlayerInfoPanel extends JPanel {
         centerPanel.setOpaque(false);
         centerPanel.setLayout(new BorderLayout(5,5));
 
-        JLabel scoreLabel = new JLabel("Score: "+score);
+        scoreLabel = new JLabel("Score: "+score);
         scoreLabel.setForeground(Color.BLUE);
         scoreLabel.setFont(new Font("Dialog", Font.BOLD, 15));
         scoreLabel.setBorder(new MatteBorder(0, 0, 1, 0, Color.BLACK));
@@ -50,19 +58,26 @@ public class PlayerInfoPanel extends JPanel {
         resourcesPanel.setLayout(new BoxLayout(resourcesPanel, BoxLayout.PAGE_AXIS));
         resourcesPanel.add(resourcesLabel);
 
-        JLabel plantsLabel = new JLabel("-Plants: " + stats.getNumberOfResources(Kingdom.Plant));
+        //plants
+        plantsLabel = new JLabel("-Plants: " + stats.getNumberOfResources(Kingdom.Plant));
         plantsLabel.setFont(new Font("Dialog", Font.PLAIN, 15));
         plantsLabel.setForeground(Color.GREEN);
         resourcesPanel.add(plantsLabel);
-        JLabel animalLabel = new JLabel("-Animals: " + stats.getNumberOfResources(Kingdom.Animal));
+
+        //animals
+        animalLabel = new JLabel("-Animals: " + stats.getNumberOfResources(Kingdom.Animal));
         animalLabel.setFont(new Font("Dialog", Font.PLAIN, 15));
         animalLabel.setForeground(Color.CYAN);
         resourcesPanel.add(animalLabel);
-        JLabel fungiLabel = new JLabel("-Fungi: " + stats.getNumberOfResources(Kingdom.Fungi));
+
+        //fungi
+        fungiLabel = new JLabel("-Fungi: " + stats.getNumberOfResources(Kingdom.Fungi));
         fungiLabel.setFont(new Font("TimesNewRomans", Font.PLAIN, 15));
         fungiLabel.setForeground(Color.RED);
         resourcesPanel.add(fungiLabel);
-        JLabel insectLabel = new JLabel("-Insect: " + stats.getNumberOfResources(Kingdom.Insect));
+
+        //insect
+        insectLabel = new JLabel("-Insect: " + stats.getNumberOfResources(Kingdom.Insect));
         insectLabel.setFont(new Font("TimesNewRomans", Font.PLAIN, 15));
         insectLabel.setForeground(Color.MAGENTA);
         resourcesPanel.add(insectLabel);
@@ -75,19 +90,34 @@ public class PlayerInfoPanel extends JPanel {
         objectsLabel.setFont(new Font("Dialog", Font.BOLD, 18));
         objectsPanel.setLayout(new BoxLayout(objectsPanel, BoxLayout.PAGE_AXIS));
         objectsPanel.add(objectsLabel);
-        JLabel inkwellLabel = new JLabel("-Inkwell: "+ stats.getNumberOfObjects(SpecialObject.Inkwell));
+
+        //inkwell
+        inkwellLabel = new JLabel("-Inkwell: "+ stats.getNumberOfObjects(SpecialObject.Inkwell));
         inkwellLabel.setFont(new Font("Dialog", Font.PLAIN, 15));
         objectsPanel.add(inkwellLabel);
-        JLabel quillLabel = new JLabel("-Quill: " + stats.getNumberOfObjects(SpecialObject.Quill));
+        //quilllabel
+        quillLabel = new JLabel("-Quill: " + stats.getNumberOfObjects(SpecialObject.Quill));
         quillLabel.setFont(new Font("Dialog", Font.PLAIN, 15));
         objectsPanel.add(quillLabel);
-        JLabel manuscriptLabel = new JLabel("-Manuscript: " + stats.getNumberOfObjects(SpecialObject.Manuscript));
+        //manuscript
+        manuscriptLabel = new JLabel("-Manuscript: " + stats.getNumberOfObjects(SpecialObject.Manuscript));
         manuscriptLabel.setFont(new Font("Dialog", Font.PLAIN, 15));
         objectsPanel.add(manuscriptLabel);
 
         centerPanel.add(objectsPanel, BorderLayout.EAST);
 
         add(centerPanel, BorderLayout.CENTER);
+    }
+    public void update(int score, PlayerStats stats){
+        scoreLabel.setText("Score: "+score);
 
+        animalLabel.setText("-Animals: " + stats.getNumberOfResources(Kingdom.Animal));
+        plantsLabel.setText("-Plants: " + stats.getNumberOfResources(Kingdom.Plant));
+        insectLabel.setText("-Insect: " + stats.getNumberOfResources(Kingdom.Insect));
+        fungiLabel.setText("-Fungi: " + stats.getNumberOfResources(Kingdom.Fungi));
+
+        inkwellLabel.setText("-Inkwell: "+ stats.getNumberOfObjects(SpecialObject.Inkwell));
+        quillLabel.setText("-Quill: " + stats.getNumberOfObjects(SpecialObject.Quill));
+        manuscriptLabel.setText("-Manuscript: " + stats.getNumberOfObjects(SpecialObject.Manuscript));
     }
 }
