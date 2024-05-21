@@ -32,12 +32,13 @@ public class GUI implements UIManager {
 
     @Override
     public void startGame() {
-
+        gameFrame.pack();
+        gameFrame.setVisible(true);
     }
 
     @Override
     public void updateCards(List<PlayableCard> cards) {
-
+        gameFrame.getYourCardsPanel().update(cards);
     }
 
     @Override

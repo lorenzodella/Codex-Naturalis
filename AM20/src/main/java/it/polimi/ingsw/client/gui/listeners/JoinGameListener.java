@@ -28,7 +28,7 @@ public class JoinGameListener extends ClientController implements ActionListener
         //quando utente schiaccia ok
         if (option == JOptionPane.OK_OPTION) {
             if (!nickname.getText().isEmpty()) {
-                //clientSender.login(nickname.getText());
+                clientSender.login(nickname.getText());
                 System.out.println("nickname: " + nickname.getText());
             } else {
                 JOptionPane.showMessageDialog(null, "Nickname cannot be empty", "Error", JOptionPane.ERROR_MESSAGE);

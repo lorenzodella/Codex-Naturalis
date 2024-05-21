@@ -32,7 +32,7 @@ public class NewGameListener extends ClientController implements ActionListener 
         //quando utente schiaccia ok
         if (option == JOptionPane.OK_OPTION) {
             if (!nickname.getText().isEmpty()) {
-                //clientSender.startNewGame(nickname.getText(), (Integer) number.getValue());
+                clientSender.startNewGame(nickname.getText(), (Integer) number.getValue());
                 GUIUtils.showMessage("Game created, waiting for other players");
             } else {
                 JOptionPane.showMessageDialog(null, "Nickname cannot be empty", "Error", JOptionPane.ERROR_MESSAGE);

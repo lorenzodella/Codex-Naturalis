@@ -17,7 +17,6 @@ public class UIUpdater  {
 
     public void startGame(StartGameMessage msg){
         System.out.println();
-        manager.startGame();
         manager.showResult(msg.getResult());
         manager.updateGoldTop(msg.getGoldTop());
         manager.updateResourceTop(msg.getResourceTop());
@@ -27,6 +26,7 @@ public class UIUpdater  {
         manager.updateOtherPlayerInfo(msg.getOthersPlayerInfo());
         manager.updateCards(msg.getInitialCards());
         manager.updateStarterCard(msg.getStarterCard());
+        manager.startGame();
         manager.showCommand();
     }
 
