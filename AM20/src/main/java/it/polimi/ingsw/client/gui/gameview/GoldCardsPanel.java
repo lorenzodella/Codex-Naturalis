@@ -4,6 +4,7 @@ import it.polimi.ingsw.client.gui.GUIUtils;
 import it.polimi.ingsw.client.gui.CardButton;
 import it.polimi.ingsw.client.gui.listeners.DeckCoveredListener;
 import it.polimi.ingsw.client.gui.listeners.DeckVisibleListener;
+import it.polimi.ingsw.model.Deck;
 import it.polimi.ingsw.model.cards.playable.GoldCard;
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
 
@@ -16,29 +17,20 @@ public class GoldCardsPanel extends JPanel {
     CardButton o1;
     CardButton o2;
 
-    public GoldCardsPanel(PlayableCard goldCards1, PlayableCard goldCards2) {
+    public GoldCardsPanel(boolean visible) {
         super();
 
-        o1 = new CardButton(goldCards1);
+        o1 = new CardButton();
+        o1.setName(Deck.GOLD_CARDS +";0");
         o1.setPreferredSize(GUIUtils.cardDim);
-
-        o2 = new CardButton(goldCards2);
-        o2.setPreferredSize(GUIUtils.cardDim);
-
         add(o1);
-        add(o2);
-    }
 
-    //top
-    public GoldCardsPanel(PlayableCard goldCard) {
-        super();
-        goldCard.setSide(PlayableCard.BACK);
-
-        o1 = new CardButton(goldCard);
-        o1.setPreferredSize(GUIUtils.cardDim);
-        o1.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.DARK_GRAY));
-
-        add(o1);
+        if(visible) {
+            o2 = new CardButton();
+            o2.setName(Deck.GOLD_CARDS +";1");
+            o2.setPreferredSize(GUIUtils.cardDim);
+            add(o2);
+        }
     }
 
     public void setDeckCoveredListener(DeckCoveredListener deckCoveredListener){
@@ -63,9 +55,13 @@ public class GoldCardsPanel extends JPanel {
             o2.clear();
     }
     public void updateTop(GoldCard top){
-        if(top != null)
+        if(top != null){
+            top.setSide(PlayableCard.BACK);
             o1.update(top);
-        else
+        }
+        else{
             o1.clear();
+        }
+
     }
 }

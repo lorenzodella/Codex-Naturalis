@@ -9,14 +9,14 @@ import javax.swing.border.TitledBorder;
 
 public class SecretObjectivePanel extends JPanel {
     CardButton o1;
-    public SecretObjectivePanel(ObjectiveCard objectiveCard){
+    public SecretObjectivePanel(){
         super();
 
         TitledBorder titledBorder = BorderFactory.createTitledBorder("Secret Objectives");
         titledBorder.setTitleJustification(TitledBorder.CENTER);
         setBorder(titledBorder);
 
-        o1 = new CardButton(objectiveCard);
+        o1 = new CardButton();
         o1.setPreferredSize(GUIUtils.cardDim);
 
         add(o1);

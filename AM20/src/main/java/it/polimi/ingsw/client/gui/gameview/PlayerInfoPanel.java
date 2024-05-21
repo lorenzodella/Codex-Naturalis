@@ -44,7 +44,7 @@ public class PlayerInfoPanel extends JPanel {
         centerPanel.setOpaque(false);
         centerPanel.setLayout(new BorderLayout(5,5));
 
-        scoreLabel = new JLabel("Score: "+score);
+        JLabel scoreLabel = new JLabel("Score: 0");
         scoreLabel.setForeground(Color.BLUE);
         scoreLabel.setFont(new Font("Dialog", Font.BOLD, 15));
         scoreLabel.setBorder(new MatteBorder(0, 0, 1, 0, Color.BLACK));
@@ -59,25 +59,25 @@ public class PlayerInfoPanel extends JPanel {
         resourcesPanel.add(resourcesLabel);
 
         //plants
-        plantsLabel = new JLabel("-Plants: " + stats.getNumberOfResources(Kingdom.Plant));
+        plantsLabel = new JLabel("-Plants: 0");
         plantsLabel.setFont(new Font("Dialog", Font.PLAIN, 15));
         plantsLabel.setForeground(Color.GREEN);
         resourcesPanel.add(plantsLabel);
 
         //animals
-        animalLabel = new JLabel("-Animals: " + stats.getNumberOfResources(Kingdom.Animal));
+        animalLabel = new JLabel("-Animals: 0");
         animalLabel.setFont(new Font("Dialog", Font.PLAIN, 15));
         animalLabel.setForeground(Color.CYAN);
         resourcesPanel.add(animalLabel);
 
         //fungi
-        fungiLabel = new JLabel("-Fungi: " + stats.getNumberOfResources(Kingdom.Fungi));
+        fungiLabel = new JLabel("-Fungi: 0");
         fungiLabel.setFont(new Font("TimesNewRomans", Font.PLAIN, 15));
         fungiLabel.setForeground(Color.RED);
         resourcesPanel.add(fungiLabel);
 
         //insect
-        insectLabel = new JLabel("-Insect: " + stats.getNumberOfResources(Kingdom.Insect));
+        insectLabel = new JLabel("-Insect: 0");
         insectLabel.setFont(new Font("TimesNewRomans", Font.PLAIN, 15));
         insectLabel.setForeground(Color.MAGENTA);
         resourcesPanel.add(insectLabel);
@@ -92,15 +92,15 @@ public class PlayerInfoPanel extends JPanel {
         objectsPanel.add(objectsLabel);
 
         //inkwell
-        inkwellLabel = new JLabel("-Inkwell: "+ stats.getNumberOfObjects(SpecialObject.Inkwell));
+        inkwellLabel = new JLabel("-Inkwell: 0");
         inkwellLabel.setFont(new Font("Dialog", Font.PLAIN, 15));
         objectsPanel.add(inkwellLabel);
         //quilllabel
-        quillLabel = new JLabel("-Quill: " + stats.getNumberOfObjects(SpecialObject.Quill));
+        quillLabel = new JLabel("-Quill: 0");
         quillLabel.setFont(new Font("Dialog", Font.PLAIN, 15));
         objectsPanel.add(quillLabel);
         //manuscript
-        manuscriptLabel = new JLabel("-Manuscript: " + stats.getNumberOfObjects(SpecialObject.Manuscript));
+        manuscriptLabel = new JLabel("-Manuscript: 0");
         manuscriptLabel.setFont(new Font("Dialog", Font.PLAIN, 15));
         objectsPanel.add(manuscriptLabel);
 
