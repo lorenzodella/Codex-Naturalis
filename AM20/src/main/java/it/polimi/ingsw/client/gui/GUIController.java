@@ -16,17 +16,14 @@ public class GUIController extends ClientController {
     }
 
     public String getUsername() {
-        return username;
-    }
-    public void setUsername(String username) {
-        this.username = username;
+        return gui.getNickname();
     }
 
     private void createListeners() {
         gui.addNewGameListener(new NewGameListener(clientSender));
         gui.addJoinGameListener(new JoinGameListener(clientSender));
         gui.addDeckListener(new DeckCoveredListener(clientSender, this), new DeckVisibleListener(clientSender, this));
-
+        gui.addChatListener(new ChatListener(clientSender, this));
 
         MapListener mapListener = new MapListener(clientSender, this);
         gui.addMapListener(mapListener);

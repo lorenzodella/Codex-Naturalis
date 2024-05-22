@@ -18,7 +18,7 @@ import java.util.List;
 public class GUI implements UIManager {
 
     String nickname;
-    GameFrame gameFrame;
+    public GameFrame gameFrame;
     StartScreenFrame startScreenFrame;
 
     public GUI() {
@@ -53,7 +53,8 @@ public class GUI implements UIManager {
 
     @Override
     public void updateChatMessage(ChatMessage msg) {
-
+        if(msg.getRecipient()==null || msg.getRecipient().equals(nickname))
+            gameFrame.getChat().receiveMessage(msg.getMessage(), msg.getSender());
     }
 
     @Override
@@ -144,7 +145,9 @@ public class GUI implements UIManager {
         gameFrame.setDeckListener(deckCoveredListener, deckVisibleListener);
     }
 
-
+    public void addChatListener(ChatListener chatListener){
+        gameFrame.getChat().setChatListener(chatListener);
+    }
 
 
 }

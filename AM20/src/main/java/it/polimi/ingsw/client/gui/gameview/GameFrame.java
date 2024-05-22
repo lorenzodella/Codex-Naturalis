@@ -61,8 +61,8 @@ public class GameFrame extends JFrame {
 
         PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(3, playerStats, "You");
 
-        //chat = new Chat("Chat", Color.BLUE, Arrays.asList("uno", "due"));
-        LogPanel logPanel = new LogPanel(null);
+        chat = new Chat();
+        LogPanel logPanel = new LogPanel(chat);
 
 
         this.playerPanel = new PlayerPanel(commonObjectivePanel, secretObjectivePanel, yourCardsPanel ,tablePanel, deckPanel, playerInfoPanel, logPanel);
@@ -89,9 +89,13 @@ public class GameFrame extends JFrame {
     public LogPanel getLogPanel() {
         return playerPanel.getLogPanel();
     }
+    public Chat getChat(){
+        return chat;
+    }
 
     public void setNickname(String nickname){
         playerPanel.getPlayerInfoPanel().setNickname(nickname);
+        chat.setNickname(nickname);
     }
 
     public void updateYourCards(List<PlayableCard> cards){
@@ -117,10 +121,11 @@ public class GameFrame extends JFrame {
 
     private void createOtherPlayerPanels(HashMap<String, PlayerInfo> otherPlayerInfo) {
         otherPlayerPanels = new HashMap<>();
+        chat.setPlayers(new ArrayList<>(otherPlayerInfo.keySet()));
         for(String playerName : otherPlayerInfo.keySet()){
             SecretObjectivePanel secretObjectivePanel = new SecretObjectivePanel();
             secretObjectivePanel.setHidden();
-            YourCardsPanel yourCardsPanel = new YourCardsPanel();
+            YourCardsPanel yourCardsPanel = new YourCardsPanel(playerName);
             yourCardsPanel.setHidden();
             TablePanel tablePanel = new TablePanel();
             PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(otherPlayerInfo.get(playerName).getScore(), otherPlayerInfo.get(playerName).getStats(), playerName);
@@ -128,7 +133,7 @@ public class GameFrame extends JFrame {
             CommonObjectivePanel commonObjectivePanel = new CommonObjectivePanel(playerPanel.getCommonObjectivePanel());
             DeckPanel deckPanel = new DeckPanel(playerPanel.getDeckPanel());
 
-            PlayerPanel otherPanel = new PlayerPanel(commonObjectivePanel, secretObjectivePanel, yourCardsPanel ,tablePanel, deckPanel, playerInfoPanel, new LogPanel(null));
+            PlayerPanel otherPanel = new PlayerPanel(commonObjectivePanel, secretObjectivePanel, yourCardsPanel ,tablePanel, deckPanel, playerInfoPanel, null);
             otherPlayerPanels.put(playerName, otherPanel);
             tabbedPane.add(playerName, otherPanel);
         }
@@ -137,12 +142,19 @@ public class GameFrame extends JFrame {
     public static void main(String[] args) {
         GUI gui = new GUI();
         GUIController guiController = new GUIController(null, gui);
-        gui.showStartScreen();
+
+        HashMap<String, PlayerInfo> map = new HashMap<>();
+        map.put("Player1", new PlayerInfo());
+        gui.updateOtherPlayerInfo(map);
+
+        //gui.gameFrame.playerPanel.getDeckPanel().updateResource(null, null, getExampleResourceCard("R18"));
+
+        gui.startGame();
     }
 
-    StarterCard getExampleStarterCard(){
-        ArrayList<PlayableCard> starterCards = XMLparser.parseStarterCards("starterCards.xml");
-        return (StarterCard) starterCards.stream().filter(x->x.getID().equals("S85")).findAny().orElse(null);
+    static ResourceCard getExampleResourceCard(String id){
+        ArrayList<PlayableCard> ResourceCard = XMLparser.parseResourceCards("resourceCards.xml");
+        return (ResourceCard) ResourceCard.stream().filter(x->x.getID().equals(id)).findAny().orElse(null);
     }
 
 }

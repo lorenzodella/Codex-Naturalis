@@ -19,12 +19,17 @@ public class ClientMain {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        System.out.println("Insert IP of the server:");
         String input;
-        try {
-             input = br.readLine();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        if(args.length>3) {
+            input = args[3];
+        }
+        else {
+            System.out.println("Insert IP of the server:");
+            try {
+                input = br.readLine();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
 
 
@@ -45,10 +50,14 @@ public class ClientMain {
         try {
             String ui;
             do {
-                System.out.println("Choose user interface:");
-                System.out.println("1) TUI");
-                System.out.println("2) GUI");
-                ui = br.readLine();
+                if(args.length>1){
+                    ui = args[1];
+                }else {
+                    System.out.println("Choose user interface:");
+                    System.out.println("1) TUI");
+                    System.out.println("2) GUI");
+                    ui = br.readLine();
+                }
 
                 //create ui
                 if (ui.equals("1")) {
@@ -60,11 +69,16 @@ public class ClientMain {
             updater = new UIUpdater(manager);
 
             do {
-                System.out.println("Choose how to connect to server:");
-                System.out.println("1) RMI");
-                System.out.println("2) Socket");
+                String scelta;
+                if(args.length>2) {
+                    scelta = args[2];
+                }else {
+                    System.out.println("Choose how to connect to server:");
+                    System.out.println("1) RMI");
+                    System.out.println("2) Socket");
 
-                String scelta = br.readLine();
+                    scelta = br.readLine();
+                }
 
                 //create client
                 if (scelta.equals("1")) {

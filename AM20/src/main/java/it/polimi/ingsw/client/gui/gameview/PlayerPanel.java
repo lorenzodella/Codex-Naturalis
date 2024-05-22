@@ -37,13 +37,12 @@ public class PlayerPanel extends JPanel {
         //panel delle info a dx
         JPanel eastPanel = new JPanel();
         eastPanel.setLayout(new BoxLayout(eastPanel, BoxLayout.PAGE_AXIS));
-        //eastPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         eastPanel.add(playerInfoPanel);
-        eastPanel.add(Box.createVerticalGlue());
         eastPanel.add(deckPanel);
         eastPanel.add(Box.createVerticalGlue());
-        eastPanel.add(logPanel);
-        //eastPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        if(logPanel!=null) {
+            eastPanel.add(logPanel);
+        }
 
         //panel di gioco centrale
         JPanel centerPanel = new JPanel();

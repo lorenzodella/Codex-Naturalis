@@ -21,18 +21,31 @@ public class YourCardsPanel extends JPanel {
         titledBorder.setTitleJustification(TitledBorder.CENTER);
         setBorder(titledBorder);
 
-        cardButtons = new CardButton[3];
+        createCards();
 
+        //setCardsClickable(true);
+    }
+
+    public YourCardsPanel(String nickname){
+        super();
+
+        TitledBorder titledBorder = BorderFactory.createTitledBorder(nickname + "'s cards");
+        titledBorder.setTitleJustification(TitledBorder.CENTER);
+        setBorder(titledBorder);
+
+        createCards();
+    }
+
+    private void createCards() {
+        cardButtons = new CardButton[3];
 
         cardButtons[0] = new CardButton();
         cardButtons[0].setName("0");
         cardButtons[0].setPreferredSize(GUIUtils.cardDim);
 
-
         cardButtons[1] = new CardButton();
         cardButtons[1].setName("1");
         cardButtons[1].setPreferredSize(GUIUtils.cardDim);
-
 
         cardButtons[2] = new CardButton();
         cardButtons[2].setName("2");
@@ -42,8 +55,6 @@ public class YourCardsPanel extends JPanel {
         add(cardButtons[0]);
         add(cardButtons[1]);
         add(cardButtons[2]);
-
-        setCardsClickable(true);
     }
 
     public void update(List<PlayableCard> cards){

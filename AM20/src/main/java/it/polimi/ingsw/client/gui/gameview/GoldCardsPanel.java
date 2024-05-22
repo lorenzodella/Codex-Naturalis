@@ -37,12 +37,13 @@ public class GoldCardsPanel extends JPanel {
 
     public GoldCardsPanel(GoldCardsPanel copy){
         super();
+        this.visible = copy.visible;
 
         o1 = new CardButton(copy.o1);
         o1.setPreferredSize(GUIUtils.cardDim);
         add(o1);
 
-        if(copy.visible) {
+        if(visible) {
             o2 = new CardButton(copy.o2);
             o2.setPreferredSize(GUIUtils.cardDim);
             add(o2);
@@ -74,6 +75,7 @@ public class GoldCardsPanel extends JPanel {
         if(top != null){
             top.setSide(PlayableCard.BACK);
             o1.update(top);
+            o1.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.DARK_GRAY));
         }
         else{
             o1.clear();
