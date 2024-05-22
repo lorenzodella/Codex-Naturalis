@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 //classe che implementa la ricezione delle azioni dalla classe RMI
-public class ServerRMI implements Loggable{
+public class ServerRMI extends UnicastRemoteObject implements Loggable{
 
     /**
      * this attribute stands as a reference to the serverManager
@@ -24,7 +24,8 @@ public class ServerRMI implements Loggable{
     //per ogni utente dice se è connesso con RMI o SOCKET
     private ServerManager manager;
 
-    public ServerRMI(ServerManager manager) {
+    public ServerRMI(ServerManager manager) throws RemoteException {
+        super();
         this.manager = manager;
     }
 

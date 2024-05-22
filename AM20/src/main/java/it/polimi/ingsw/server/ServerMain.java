@@ -4,11 +4,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.net.*;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Enumeration;
 
 // to test against console:
 //  /usr/bin/nc 127.0.0.1 1234
@@ -20,15 +20,23 @@ public class ServerMain
     //TODO: ELEONORA
     public static void main(String[] args) {
 
+        try {
+            System.setProperty("java.rmi.server.hostname", InetAddress.getLocalHost().getHostAddress());
+            System.out.println("Server address: "+InetAddress.getLocalHost().getHostAddress());
+        } catch (UnknownHostException e) {
+            throw new RuntimeException(e);
+        }
+
         ServerManager manager = new ServerManager();
-        ServerRMI obj = new ServerRMI(manager);
 
         try {
-            Loggable stub = (Loggable) UnicastRemoteObject.exportObject(obj, Integer.parseInt(args[0]));
+
+            ServerRMI obj = new ServerRMI(manager);
+            //Loggable stub = (Loggable) UnicastRemoteObject.exportObject(obj, Integer.parseInt(args[0]));
 
             Registry registry = LocateRegistry.createRegistry(Integer.parseInt(args[0]));
 
-            registry.bind("Loggable", stub);
+            registry.bind("Loggable", obj);
 
             System.err.println("Server RMI ready");
         } catch (Exception e) {
