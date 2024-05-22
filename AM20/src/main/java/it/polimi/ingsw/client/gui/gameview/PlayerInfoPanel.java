@@ -9,6 +9,7 @@ import javax.swing.border.*;
 import java.awt.*;
 
 public class PlayerInfoPanel extends JPanel {
+    JLabel playerNameLabel;
     JLabel scoreLabel;
 
     //stats delle resource
@@ -34,7 +35,7 @@ public class PlayerInfoPanel extends JPanel {
         Border compoundBorder = new CompoundBorder(lineBorder, marginBorder);
         setBorder(compoundBorder);
 
-        JLabel playerNameLabel = new JLabel(playerName);
+        playerNameLabel = new JLabel(playerName);
         playerNameLabel.setOpaque(false);
         playerNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
         playerNameLabel.setFont(new Font("Dialog", Font.BOLD, 20));
@@ -119,5 +120,9 @@ public class PlayerInfoPanel extends JPanel {
         inkwellLabel.setText("-Inkwell: "+ stats.getNumberOfObjects(SpecialObject.Inkwell));
         quillLabel.setText("-Quill: " + stats.getNumberOfObjects(SpecialObject.Quill));
         manuscriptLabel.setText("-Manuscript: " + stats.getNumberOfObjects(SpecialObject.Manuscript));
+    }
+
+    public void setNickname(String nickname){
+        playerNameLabel.setText(nickname);
     }
 }

@@ -94,7 +94,7 @@ public class Controller implements GameManager {
      * @throws InvalidPlayingException if the phase is not the NOGAME phase
      */
     @Override
-    public synchronized Message newGame(String playerNickname, int numPlayers) throws InvalidArgumentException, InvalidPlayingException {
+    public synchronized ConnectionAckMessage newGame(String playerNickname, int numPlayers) throws InvalidArgumentException, InvalidPlayingException {
         if(phase!=NOGAME)
             throw new InvalidPlayingException("A game already started");
         if(numPlayers<2 || numPlayers>4)
@@ -103,8 +103,9 @@ public class Controller implements GameManager {
         players = new ArrayList<>();
         players.add(playerNickname);
         this.numPlayers = numPlayers;
-        Message tmp = new Message();
+        ConnectionAckMessage tmp = new ConnectionAckMessage();
         tmp.setResult("You created a new game and waiting for all player to connect");
+        tmp.setNickname(playerNickname);
         phase = PRELIMINARY;
         return tmp;
     }
@@ -208,6 +209,8 @@ public class Controller implements GameManager {
                 tmp.put(nickname, new ConnectionAckMessage());
                 tmp.get(nickname).setResult("New player joined");
             }
+            tmp.get(playerNickname).setResult("You joined the game");
+            tmp.get(playerNickname).setNickname(playerNickname);
         }
         return tmp;
     }

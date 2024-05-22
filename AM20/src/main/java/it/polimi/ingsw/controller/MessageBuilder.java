@@ -83,6 +83,7 @@ public class MessageBuilder implements GameObserver {
         }
 
         connectionAckMessages.get(player.getNickname()).setResult("You reconnected to the game");
+        connectionAckMessages.get(player.getNickname()).setNickname(player.getNickname());
         connectionAckMessages.get(player.getNickname()).setGoldTop(goldCardDeck.getFirstCard());
         connectionAckMessages.get(player.getNickname()).setResourceTop(resourceCardDeck.getFirstCard());
         connectionAckMessages.get(player.getNickname()).setGoldVisible(goldCardDeck.getVisibleCards());
@@ -182,6 +183,7 @@ public class MessageBuilder implements GameObserver {
                 if (connectionAckMessages.get(p.getNickname()) == null)
                     connectionAckMessages.put(p.getNickname(), new StartGameMessage());
 
+                connectionAckMessages.get(p.getNickname()).setNickname(p.getNickname());
                 connectionAckMessages.get(p.getNickname()).setPlayerInfo(new PlayerInfo());
                 connectionAckMessages.get(p.getNickname()).setOthersPlayerInfo(
                         players.stream().filter(x -> !p.getNickname().equals(x.getNickname()))

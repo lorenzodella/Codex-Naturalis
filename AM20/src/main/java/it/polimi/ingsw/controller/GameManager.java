@@ -16,7 +16,7 @@ public interface GameManager {
 
     HashMap<String, AcknowledgeMessage> disconnectPlayer(String nickname) throws InvalidArgumentException, NoOneIsConnectedException, InvalidConnectionStateException, InvalidDisconnectionException;
 
-    Message newGame(String playerNickname, int numPlayers) throws InvalidArgumentException, InvalidPlayingException;
+    ConnectionAckMessage newGame(String playerNickname, int numPlayers) throws InvalidArgumentException, InvalidPlayingException;
     HashMap<String, ConnectionAckMessage> joinGame(String playerNickname) throws CannotJoinGameException;
 
     HashMap<String, StarterCardAckMessage> chooseStarterCardSide(String playerNickname, int side) throws InvalidArgumentException, InvalidPlayingException;

@@ -3,6 +3,10 @@ package it.polimi.ingsw.client.gui.gameview;
 import it.polimi.ingsw.client.gui.Chat;
 import it.polimi.ingsw.client.gui.GUI;
 import it.polimi.ingsw.client.gui.GUIController;
+import it.polimi.ingsw.client.gui.listeners.DeckCoveredListener;
+import it.polimi.ingsw.client.gui.listeners.DeckVisibleListener;
+import it.polimi.ingsw.client.gui.listeners.MapListener;
+import it.polimi.ingsw.client.gui.listeners.YourCardsListener;
 import it.polimi.ingsw.controller.PlayerInfo;
 import it.polimi.ingsw.model.PlayerStats;
 import it.polimi.ingsw.model.PlayerTable;
@@ -55,7 +59,7 @@ public class GameFrame extends JFrame {
 
         PlayerStats playerStats = new PlayerStats();
 
-        PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(3, playerStats, "nickname");
+        PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(3, playerStats, "You");
 
         //chat = new Chat("Chat", Color.BLUE, Arrays.asList("uno", "due"));
         LogPanel logPanel = new LogPanel(null);
@@ -64,27 +68,36 @@ public class GameFrame extends JFrame {
         this.playerPanel = new PlayerPanel(commonObjectivePanel, secretObjectivePanel, yourCardsPanel ,tablePanel, deckPanel, playerInfoPanel, logPanel);
 
         tabbedPane = new JTabbedPane();
-        tabbedPane.add("Me", playerPanel);
+        tabbedPane.add("You", playerPanel);
         add(tabbedPane);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    public void setMapListener(MapListener mapListener){
+        playerPanel.getTablePanel().setMapListener(mapListener);
+    }
+
+    public void setYourCardsListener(YourCardsListener yourCardsListener){
+        playerPanel.getYourCardsPanel().setYourCardsListener(yourCardsListener);
+    }
+
+    public void setDeckListener(DeckCoveredListener deckCoveredListener, DeckVisibleListener deckVisibleListener){
+        playerPanel.getDeckPanel().setDeckListener(deckVisibleListener, deckCoveredListener);
     }
 
     public LogPanel getLogPanel() {
         return playerPanel.getLogPanel();
     }
 
-    public TablePanel getTablePanel() {
-        return playerPanel.getTablePanel();
+    public void setNickname(String nickname){
+        playerPanel.getPlayerInfoPanel().setNickname(nickname);
     }
 
-    public YourCardsPanel getYourCardsPanel() {
-        return playerPanel.getYourCardsPanel();
+    public void updateYourCards(List<PlayableCard> cards){
+        playerPanel.getYourCardsPanel().update(cards);
     }
 
-    public DeckPanel getDeckPanel() {
-        return playerPanel.getDeckPanel();
-    }
 
     /*TODO ELE TIA i metodi che aggiornano i deck devono aggiornare tutti i deck di tutti i PlayerPanel
     fare metodo updateDecks() che cicla su tutti i deck dei playerPanel (anche quelli nella hashmap) e li aggiorna

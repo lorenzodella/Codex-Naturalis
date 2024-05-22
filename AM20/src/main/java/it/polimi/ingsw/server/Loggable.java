@@ -10,7 +10,7 @@ import java.rmi.RemoteException;
 public interface Loggable extends Remote {
     //metodi che vengono chiamati dal client sul server rmi
     ConnectionAckMessage login(String client, Connection callback) throws RemoteException, CannotJoinGameException;
-    Message startNewGame(String client, int numPlayers, Connection callback) throws RemoteException, InvalidArgumentException, InvalidPlayingException;
+    ConnectionAckMessage startNewGame(String client, int numPlayers, Connection callback) throws RemoteException, InvalidArgumentException, InvalidPlayingException;
     StarterCardAckMessage chooseStarterCardSide(String nickname, int side) throws RemoteException, InvalidArgumentException, InvalidPlayingException;
     ObjectiveAckMessage chooseObjective(String nickname, int index) throws RemoteException, InvalidArgumentException, InvalidPlayingException;
     AcknowledgeMessage playCard(String playerNickname, int cardIndex, int angle, String targetID, int side) throws InvalidArgumentException, RequirementsNotRespectedException, InvalidPlayingException, TargetNotPresentException, InvalidAngleCoveredException, InvalidPositionException, RemoteException;

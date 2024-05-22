@@ -43,13 +43,13 @@ public class TUIController extends ClientController implements Runnable{
 
                     myTUI.showCommand();
                 }else if(command[0].equals("/join")){
-                    if(command.length==2){
+                    if(myTUI.getNickname()!=null)
+                        myTUI.showError("You already joined the game");
+                    else if(command.length==2){
                         this.username = command[1];
                         this.clientSender.login(command[1]);
                     }else
                         myTUI.viewErrorCommand();
-
-                    myTUI.setNickname(username);
                 }else if(command[0].equals("/newGame")){
                     if(command.length == 3){
                         this.username = command[1];
@@ -61,8 +61,6 @@ public class TUIController extends ClientController implements Runnable{
                         myTUI.setNickname(username);
                     }else
                         myTUI.viewErrorCommand();
-
-                    myTUI.showCommand();
                 }else if(command[0].equals("/chooseObjective")){
                     if(command.length == 2){
                         try{

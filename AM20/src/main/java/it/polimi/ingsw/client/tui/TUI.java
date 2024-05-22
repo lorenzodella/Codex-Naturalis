@@ -62,6 +62,11 @@ public class TUI implements UIManager {
     }
 
     @Override
+    public String getNickname() {
+        return nickname;
+    }
+
+    @Override
     public void startGame() {
         System.out.println("The game is starting now");
     }

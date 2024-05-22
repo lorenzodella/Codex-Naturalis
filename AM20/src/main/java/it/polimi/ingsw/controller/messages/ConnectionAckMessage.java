@@ -9,6 +9,16 @@ import java.util.List;
 
 public class ConnectionAckMessage extends Message{
 
+    private String nickname;
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
     public boolean doesGameStarts() {
         return false;
     }

@@ -75,7 +75,7 @@ public class ClientHandler implements Runnable{
 
                 }else if(message.getAction().equals(ClientMessage.NEWGAME)){
                     NewGameMessage msg = (NewGameMessage) message;
-                    Message messageToSend;
+                    ConnectionAckMessage messageToSend;
                     try {
                         this.usernameClient = msg.getClient();
                         if(!manager.getConnections().containsKey(msg.getClient())){
@@ -83,7 +83,7 @@ public class ClientHandler implements Runnable{
                         }
                         messageToSend = this.manager.getController().newGame(msg.getClient(), msg.getNumPlayers());
                         HashMap<String, Connection> connectedPlayer = this.manager.getConnections();
-                        connectedPlayer.get(this.usernameClient).callMessage(messageToSend);
+                        connectedPlayer.get(this.usernameClient).callConnectionAckMessage(messageToSend);
                     } catch (InvalidArgumentException | InvalidPlayingException e) {
                         this.manager.getConnections().get(this.usernameClient).callErrorMessage(new ErrorMessage(e));
                     }

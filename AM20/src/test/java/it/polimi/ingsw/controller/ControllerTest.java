@@ -388,7 +388,7 @@ class ControllerTest {
         //normal playing
         StarterCard sc = c.getGameModel().getCurrPlayer().getStarterCard();
         acknowledgeMessages = c.playCard(playerOrder.get(0), 0, Corner.UR, sc.getID(), PlayableCard.FRONT);
-        assert acknowledgeMessages.values().stream().allMatch(m -> m.getNextPlayer()==null);
+        assert acknowledgeMessages.values().stream().allMatch(m -> m.getNextPlayer().equals(playerOrder.get(0)));
         assert acknowledgeMessages.entrySet().stream().allMatch(e ->
                 e.getKey().equals(playerOrder.get(0)) ?
                         //player who played
@@ -544,7 +544,7 @@ class ControllerTest {
         sc = c.getGameModel().getCurrPlayer().getStarterCard();
         acknowledgeMessages = c.playCard(playerOrder.get(1), 0, Corner.UR, sc.getID(), PlayableCard.FRONT);
         assertEquals(2, acknowledgeMessages.size());
-        assert acknowledgeMessages.values().stream().allMatch(m -> m.getNextPlayer()==null);
+        assert acknowledgeMessages.values().stream().allMatch(m -> m.getNextPlayer().equals(playerOrder.get(1)));
         assert acknowledgeMessages.entrySet().stream().allMatch(e ->
                 e.getKey().equals(playerOrder.get(1)) ?
                         //player who played

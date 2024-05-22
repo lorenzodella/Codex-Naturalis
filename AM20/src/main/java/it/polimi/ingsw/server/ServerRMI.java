@@ -73,7 +73,7 @@ public class ServerRMI implements Loggable{
      * @throws InvalidPlayingException
      */
     @Override
-    public Message startNewGame(String client, int numPlayers, Connection callback) throws RemoteException, InvalidArgumentException, InvalidPlayingException {
+    public ConnectionAckMessage startNewGame(String client, int numPlayers, Connection callback) throws RemoteException, InvalidArgumentException, InvalidPlayingException {
         if(!manager.getConnections().containsKey(client)){
             manager.addConnection(client, callback);
         }

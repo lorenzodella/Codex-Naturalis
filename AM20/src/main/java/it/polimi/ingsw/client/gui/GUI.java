@@ -17,6 +17,7 @@ import java.util.List;
 
 public class GUI implements UIManager {
 
+    String nickname;
     GameFrame gameFrame;
     StartScreenFrame startScreenFrame;
 
@@ -28,7 +29,13 @@ public class GUI implements UIManager {
 
     @Override
     public void setNickname(String nickname) {
+        this.nickname = nickname;
+        gameFrame.setNickname(nickname);
+    }
 
+    @Override
+    public String getNickname() {
+        return nickname;
     }
 
     @Override
@@ -41,7 +48,7 @@ public class GUI implements UIManager {
 
     @Override
     public void updateCards(List<PlayableCard> cards) {
-        gameFrame.getYourCardsPanel().update(cards);
+        gameFrame.updateYourCards(cards);
     }
 
     @Override
@@ -126,15 +133,15 @@ public class GUI implements UIManager {
     }
 
     public void addMapListener(MapListener mapListener){
-        gameFrame.getTablePanel().setMapListener(mapListener);
+        gameFrame.setMapListener(mapListener);
     }
 
     public void addYourCardsListener(YourCardsListener yourCardsListener){
-        gameFrame.getYourCardsPanel().setYourCardsListener(yourCardsListener);
+        gameFrame.setYourCardsListener(yourCardsListener);
     }
 
     public void addDeckListener(DeckCoveredListener deckCoveredListener, DeckVisibleListener deckVisibleListener){
-        gameFrame.getDeckPanel().setDeckListener(deckVisibleListener, deckCoveredListener);
+        gameFrame.setDeckListener(deckCoveredListener, deckVisibleListener);
     }
 
 

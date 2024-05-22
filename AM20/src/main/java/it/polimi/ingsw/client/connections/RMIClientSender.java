@@ -39,8 +39,8 @@ public class RMIClientSender extends ClientSender {
     @Override
     public void startNewGame(String client, int numPlayers) {
         try {
-            Message msg = stub.startNewGame(client, numPlayers, receiver);
-            receiver.callMessage(msg);
+            ConnectionAckMessage msg = stub.startNewGame(client, numPlayers, receiver);
+            receiver.callConnectionAckMessage(msg);
             //System.out.println("stub.startNewGame: \n"+ msg);
         } catch (RemoteException e) {
             receiver.callErrorMessage(new ErrorMessage("Server not reachable"));

@@ -12,11 +12,15 @@ public class UIUpdater  {
     }
 
     public void connectionAck(ConnectionAckMessage msg){
+        if(msg.getNickname()!=null)
+            manager.setNickname(msg.getNickname());
         manager.showResult(msg.getResult());
     }
 
     public void startGame(StartGameMessage msg){
         System.out.println();
+        if(msg.getNickname()!=null)
+            manager.setNickname(msg.getNickname());
         manager.showResult(msg.getResult());
         manager.updateYourPlayerInfo(msg.getPlayerInfo());
         manager.updateOtherPlayerInfo(msg.getOthersPlayerInfo());
