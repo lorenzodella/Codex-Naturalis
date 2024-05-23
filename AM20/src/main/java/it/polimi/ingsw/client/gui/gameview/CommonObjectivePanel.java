@@ -18,7 +18,6 @@ public class CommonObjectivePanel extends JPanel {
         titledBorder.setTitleJustification(TitledBorder.CENTER);
         setBorder(titledBorder);
 
-
         o1 = new CardButton();
         o1.setPreferredSize(GUIUtils.cardDim);
         o2 = new CardButton();

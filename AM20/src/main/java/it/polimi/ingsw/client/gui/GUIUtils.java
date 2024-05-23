@@ -21,5 +21,11 @@ public class GUIUtils {
         if(dialog!=null)
             dialog.dispose();
     }
+    public static void showError(String message){
+        JOptionPane jOptionPane = new JOptionPane(message, JOptionPane.ERROR_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
+        dialog = jOptionPane.createDialog("ERROR");
+        dialog.setLocationRelativeTo(null); // Center the dialog
+        dialog.setVisible(true);
+    }
 
 }

@@ -2,6 +2,8 @@ package it.polimi.ingsw.client.gui;
 
 import it.polimi.ingsw.client.UIManager;
 import it.polimi.ingsw.client.gui.gameview.GameFrame;
+import it.polimi.ingsw.client.gui.gameview.SecretObjectiveDialog;
+import it.polimi.ingsw.client.gui.gameview.StarterCardDialog;
 import it.polimi.ingsw.client.gui.listeners.*;
 import it.polimi.ingsw.client.gui.startscreen.StartScreenFrame;
 import it.polimi.ingsw.controller.PlayerInfo;
@@ -20,11 +22,15 @@ public class GUI implements UIManager {
     String nickname;
     public GameFrame gameFrame;
     StartScreenFrame startScreenFrame;
+    StarterCardDialog starterCardDialog;
+    SecretObjectiveDialog secretObjectiveDialog;
 
     public GUI() {
-        //crea schermata iniziale
+        //le schermate che ho bisogno di mostrare
         startScreenFrame = new StartScreenFrame();
         gameFrame = new GameFrame();
+        starterCardDialog = new StarterCardDialog(gameFrame);
+        secretObjectiveDialog = new SecretObjectiveDialog(gameFrame);
     }
 
     @Override
@@ -59,7 +65,10 @@ public class GUI implements UIManager {
 
     @Override
     public void updateSecretObjectives(ArrayList<ObjectiveCard> secretObjectives) {
-
+        if(secretObjectives.size()>1) {
+            secretObjectiveDialog.update(secretObjectives.get(0), secretObjectives.get(1));
+            secretObjectiveDialog.setVisible(true);
+        }
     }
 
     @Override
@@ -89,6 +98,8 @@ public class GUI implements UIManager {
 
     @Override
     public void updateStarterCard(StarterCard starterCard) {
+        starterCardDialog.update(starterCard);
+        starterCardDialog.setVisible(true);
 
     }
 
@@ -108,8 +119,8 @@ public class GUI implements UIManager {
     }
 
     @Override
-    public void showError(String error) {
-
+    public void showError(String error){
+        GUIUtils.showError(error);
     }
 
     @Override
@@ -149,5 +160,10 @@ public class GUI implements UIManager {
         gameFrame.getChat().setChatListener(chatListener);
     }
 
-
+    public void addStarterCardListener(StarterCardListener starterCardListener){
+        starterCardDialog.setStarterCardListener(starterCardListener);
+    }
+    public void addSecretObjectiveListener(SecretObjectiveListener secretObjectiveListener){
+        secretObjectiveDialog.setObjectiveListener(secretObjectiveListener);
+    }
 }

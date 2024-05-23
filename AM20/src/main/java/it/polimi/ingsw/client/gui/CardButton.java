@@ -1,7 +1,6 @@
 package it.polimi.ingsw.client.gui;
 
 import it.polimi.ingsw.model.cards.Card;
-import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
 
 import javax.imageio.ImageIO;
@@ -29,7 +28,7 @@ public class CardButton extends JButton {
         setContentAreaFilled(false);
         setBorder(BorderFactory.createDashedBorder(Color.GRAY));
         clickable = true;
-        setMouseListener();
+        enableMouseFlipping();
     }
 
     public CardButton(Card card) {
@@ -69,15 +68,18 @@ public class CardButton extends JButton {
         setIcon(icon);
         //per un bottone non cliccabile
         setDisabledIcon(icon);
+        //quando è cliccato
+        setPressedIcon(icon);
+        //quando è selezionato
+        setSelectedIcon(new CardIcon(image, true));
         //per sbiadire
         setRolloverIcon(new CardIcon(image, true));
 
         setClickable(clickable);
 
-        setMouseListener();
     }
 
-    private void setMouseListener(){
+    public void enableMouseFlipping(){
         addMouseListener(new MouseAdapter() {
 
             @Override
@@ -88,12 +90,7 @@ public class CardButton extends JButton {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if(e.getButton() == MouseEvent.BUTTON3 && clickable){
-                    card.flip();
-                    image = loadImage();
-                    CardIcon icon = new CardIcon(image, isSelected());
-                    setIcon(icon);
-                    setDisabledIcon(icon);
-                    setRolloverIcon(new CardIcon(image, true));
+                    flip();
                 }
             }
         });
@@ -114,7 +111,7 @@ public class CardButton extends JButton {
 
     public void setSelected(boolean selected){
         super.setSelected(selected);
-        setIcon(new CardIcon(image, selected));
+        //setIcon(new CardIcon(image, selected));
     }
 
     //    protected void paintComponent(Graphics g) {
@@ -162,6 +159,17 @@ public class CardButton extends JButton {
         setOpaque(true);
         setBackground(Color.LIGHT_GRAY);
         setEnabled(false);
+    }
+
+    public void flip(){
+        card.flip();
+        image = loadImage();
+        CardIcon icon = new CardIcon(image, isSelected());
+        setIcon(icon);
+        setPressedIcon(icon);
+        setSelectedIcon(new CardIcon(image, true));
+        setDisabledIcon(icon);
+        setRolloverIcon(new CardIcon(image, true));
     }
 
 }

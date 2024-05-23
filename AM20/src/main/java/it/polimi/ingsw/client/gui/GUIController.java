@@ -20,6 +20,9 @@ public class GUIController extends ClientController {
     }
 
     private void createListeners() {
+        gui.addStarterCardListener(new StarterCardListener(clientSender, this));
+        gui.addSecretObjectiveListener(new SecretObjectiveListener(clientSender, this));
+
         gui.addNewGameListener(new NewGameListener(clientSender));
         gui.addJoinGameListener(new JoinGameListener(clientSender));
         gui.addDeckListener(new DeckCoveredListener(clientSender, this), new DeckVisibleListener(clientSender, this));
@@ -28,6 +31,7 @@ public class GUIController extends ClientController {
         MapListener mapListener = new MapListener(clientSender, this);
         gui.addMapListener(mapListener);
         gui.addYourCardsListener(new YourCardsListener(clientSender, mapListener));
+
     }
 
     public void log(String log){
