@@ -65,9 +65,12 @@ public class GUI implements UIManager {
 
     @Override
     public void updateSecretObjectives(ArrayList<ObjectiveCard> secretObjectives) {
-        if(secretObjectives.size()>1) {
-            secretObjectiveDialog.update(secretObjectives.get(0), secretObjectives.get(1));
-            secretObjectiveDialog.setVisible(true);
+        if(secretObjectives!=null) {
+            if (secretObjectives.size() > 1) {
+                starterCardDialog.dispose();
+                secretObjectiveDialog.update(secretObjectives.get(0), secretObjectives.get(1));
+                secretObjectiveDialog.setVisible(true);
+            }
         }
     }
 
@@ -88,7 +91,8 @@ public class GUI implements UIManager {
 
     @Override
     public void updateOtherPlayerInfo(HashMap<String, PlayerInfo> otherPlayerInfo) {
-        gameFrame.updateOtherPlayers(otherPlayerInfo);
+        if(otherPlayerInfo!=null)
+            gameFrame.updateOtherPlayers(otherPlayerInfo);
     }
 
     @Override
@@ -98,8 +102,10 @@ public class GUI implements UIManager {
 
     @Override
     public void updateStarterCard(StarterCard starterCard) {
-        starterCardDialog.update(starterCard);
-        starterCardDialog.setVisible(true);
+        if(starterCard!=null) {
+            starterCardDialog.update(starterCard);
+            starterCardDialog.setVisible(true);
+        }
 
     }
 

@@ -129,7 +129,7 @@ public class CardButton extends JButton {
 //        g.drawImage(image, x, y, w, h, this);
 //    }
 
-    public Image loadImage() {
+    private Image loadImage() {
         String side = card.getSide() == PlayableCard.FRONT ? "front" : "back";
         String url = "src/main/resources/CODEX_cards_gold_"+side+"/"+card.getID()+".png";
         BufferedImage image = null;

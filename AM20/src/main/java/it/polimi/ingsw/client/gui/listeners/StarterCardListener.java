@@ -26,7 +26,7 @@ public class StarterCardListener extends ClientController implements ActionListe
 
         if(s!=null) {
             //mando messaggio al server
-            clientSender.chooseObjective(guiController.getUsername(), Integer.parseInt(s));
+            clientSender.chooseStarterCardSide(guiController.getUsername(), Integer.parseInt(s));
             if (Integer.parseInt(s) == PlayableCard.FRONT) {
                 guiController.log("You just chose the front side of your starter card");
             } else {

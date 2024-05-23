@@ -45,7 +45,7 @@ public class PlayerInfoPanel extends JPanel {
         centerPanel.setOpaque(false);
         centerPanel.setLayout(new BorderLayout(5,5));
 
-        JLabel scoreLabel = new JLabel("Score: 0");
+        scoreLabel = new JLabel("Score: 0");
         scoreLabel.setForeground(Color.BLUE);
         scoreLabel.setFont(new Font("Dialog", Font.BOLD, 15));
         scoreLabel.setBorder(new MatteBorder(0, 0, 1, 0, Color.BLACK));

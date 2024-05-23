@@ -11,7 +11,7 @@ import java.io.InputStreamReader;
 
 public class TUIController extends ClientController implements Runnable{
 
-    private String username;
+    //private String username;
 
     private BufferedReader br;
 
@@ -46,25 +46,25 @@ public class TUIController extends ClientController implements Runnable{
                     if(myTUI.getNickname()!=null)
                         myTUI.showError("You already joined the game");
                     else if(command.length==2){
-                        this.username = command[1];
+                        //this.username = command[1];
                         this.clientSender.login(command[1]);
                     }else
                         myTUI.viewErrorCommand();
                 }else if(command[0].equals("/newGame")){
                     if(command.length == 3){
-                        this.username = command[1];
+                        //this.username = command[1];
                         try{
                             this.clientSender.startNewGame(command[1], Integer.parseInt(command[2]));
                         }catch(NumberFormatException e){
                             this.myTUI.viewErrorCommand();
                         }
-                        myTUI.setNickname(username);
+                        //myTUI.setNickname(username);
                     }else
                         myTUI.viewErrorCommand();
                 }else if(command[0].equals("/chooseObjective")){
                     if(command.length == 2){
                         try{
-                            this.clientSender.chooseObjective(this.username, Integer.parseInt(command[1]));
+                            this.clientSender.chooseObjective(myTUI.getNickname(), Integer.parseInt(command[1]));
                         }catch (NumberFormatException e){
                             this.myTUI.viewErrorCommand();
                         }
@@ -75,7 +75,7 @@ public class TUIController extends ClientController implements Runnable{
                 }else if(command[0].equals("/chooseStarterSide")){
                     if(command.length == 2){
                         try{
-                            this.clientSender.chooseStarterCardSide(this.username, Integer.parseInt(command[1]));
+                            this.clientSender.chooseStarterCardSide(myTUI.getNickname(), Integer.parseInt(command[1]));
                         }catch (NumberFormatException e){
                             this.myTUI.viewErrorCommand();
                         }
@@ -86,7 +86,7 @@ public class TUIController extends ClientController implements Runnable{
                 }else if(command[0].equals("/pickCardDeck")){
                     if(command.length == 2){
                         try{
-                            this.clientSender.pickCard(this.username, Integer.parseInt(command[1]));
+                            this.clientSender.pickCard(myTUI.getNickname(), Integer.parseInt(command[1]));
                         }catch (NumberFormatException e){
                             this.myTUI.viewErrorCommand();
                         }
@@ -96,7 +96,7 @@ public class TUIController extends ClientController implements Runnable{
                 }else if(command[0].equals("/pickCardVisible")){
                     if(command.length == 3){
                         try{
-                            this.clientSender.pickCard(this.username, Integer.parseInt(command[1]), Integer.parseInt(command[2]));
+                            this.clientSender.pickCard(myTUI.getNickname(), Integer.parseInt(command[1]), Integer.parseInt(command[2]));
 
                         }catch (NumberFormatException e){
                             this.myTUI.viewErrorCommand();
@@ -107,7 +107,7 @@ public class TUIController extends ClientController implements Runnable{
                 }else if(command[0].equals("/playCard")){
                     if(command.length == 5){
                         try{
-                            this.clientSender.playCard(this.username, Integer.parseInt(command[1]), Integer.parseInt(command[2]), command[3], Integer.parseInt(command[4]));
+                            this.clientSender.playCard(myTUI.getNickname(), Integer.parseInt(command[1]), Integer.parseInt(command[2]), command[3], Integer.parseInt(command[4]));
                         }catch (NumberFormatException e){
                             this.myTUI.viewErrorCommand();
                         }
@@ -116,11 +116,11 @@ public class TUIController extends ClientController implements Runnable{
                 }else if(command[0].equals("/chat")){
                     if(command.length == 2 && msg.length == 2){
                         if(command[1].equals("broadcast")) {
-                            this.clientSender.sendBroadcastChatMessage(this.username, msg[1]);
-                            myTUI.updateChatMessage(new BroadcastChatMessage(this.username, msg[1]));
+                            this.clientSender.sendBroadcastChatMessage(myTUI.getNickname(), msg[1]);
+                            myTUI.updateChatMessage(new BroadcastChatMessage(myTUI.getNickname(), msg[1]));
                         }else {
-                            this.clientSender.sendChatMessage(this.username, command[1], msg[1]);
-                            myTUI.updateChatMessage(new ChatMessage(this.username, command[1], msg[1]));
+                            this.clientSender.sendChatMessage(myTUI.getNickname(), command[1], msg[1]);
+                            myTUI.updateChatMessage(new ChatMessage(myTUI.getNickname(), command[1], msg[1]));
                         }
                     }else
                         myTUI.viewErrorCommand();
