@@ -35,7 +35,8 @@ public class UIUpdater  {
         manager.updateYourPlayerInfo(msg.getPlayerInfo());
         manager.updateOtherPlayerInfo(msg.getOthersPlayerInfo());
         manager.showResult(msg.getResult());
-        manager.showStarterCard();
+        if(msg.getPlayerInfo()!=null)
+            manager.showStarterCard();
         manager.showCommand();
     }
 
@@ -59,8 +60,8 @@ public class UIUpdater  {
     public void startPlaying(StartPlayingMessage msg){
         manager.updateSecretObjectives(msg.getSecretObjectives());
         manager.showResult(msg.getResult());
-        manager.showNextTurn(msg.getFirstPlayer());
         manager.showStartPlaying();
+        manager.showNextTurn(msg.getFirstPlayer());
         manager.showCommand();
     }
 

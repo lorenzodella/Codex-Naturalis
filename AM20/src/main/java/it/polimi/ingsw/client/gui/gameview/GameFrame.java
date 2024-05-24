@@ -121,7 +121,8 @@ public class GameFrame extends JFrame {
 
 
     public void updateYourInfo(PlayerInfo playerInfo){
-        playerPanel.getTablePanel().update(playerInfo.getMap());
+        if(playerInfo.getMap()!=null)
+            playerPanel.getTablePanel().update(playerInfo.getMap());
         playerPanel.getPlayerInfoPanel().update(playerInfo.getScore(), playerInfo.getStats() );
 
     }
@@ -131,7 +132,8 @@ public class GameFrame extends JFrame {
             createOtherPlayerPanels(otherPlayerInfo);
         }else{
             for(String playerName : otherPlayerInfo.keySet()){
-                otherPlayerPanels.get(playerName).getTablePanel().update(otherPlayerInfo.get(playerName).getMap());
+                if(otherPlayerInfo.get(playerName).getMap()!=null)
+                    otherPlayerPanels.get(playerName).getTablePanel().update(otherPlayerInfo.get(playerName).getMap());
                 otherPlayerPanels.get(playerName).getPlayerInfoPanel().update(otherPlayerInfo.get(playerName).getScore(), otherPlayerInfo.get(playerName).getStats() );
             }
         }

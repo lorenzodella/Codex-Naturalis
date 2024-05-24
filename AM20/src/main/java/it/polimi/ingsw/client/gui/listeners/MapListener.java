@@ -21,13 +21,13 @@ public class MapListener extends ClientController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        JButton b = (JButton) e.getSource();
+        JButton b = (CardButton) e.getSource();
         String[] s = b.getName().split(";");
         if(selectedCardButton ==null) {
             guiController.log("You must select a card and a side before playing a card");
             return;
         }
-        //clientSender.playCard(guiController.getUsername(), Integer.parseInt(button.getName()), Integer.parseInt(s[1]), s[0], button.getCardSide());
+        clientSender.playCard(guiController.getUsername(), Integer.parseInt(selectedCardButton.getName()), Integer.parseInt(s[1]), s[0],  selectedCardButton.getCardSide());
         guiController.log("You played card " + Integer.parseInt(selectedCardButton.getName()) + " on card " + s[0] + " angle " + s[1] + " with side " + selectedCardButton.getCardSide());
         selectedCardButton.setSelected(false);
         reset();

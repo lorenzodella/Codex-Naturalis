@@ -82,6 +82,7 @@ public class ResourceCardsPanel extends JPanel {
 
     public void setCardsClickable(boolean clickable){
         o1.setClickable(clickable);
-        o2.setClickable(clickable);
+        if(o2!=null)
+            o2.setClickable(clickable);
     }
 }

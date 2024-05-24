@@ -102,7 +102,8 @@ public class GUI implements UIManager {
 
     @Override
     public void updateCards(List<PlayableCard> cards) {
-        gameFrame.getYourCardsPanel().update(cards);
+        if(cards!=null)
+            gameFrame.getYourCardsPanel().update(cards);
     }
 
     @Override
@@ -135,7 +136,8 @@ public class GUI implements UIManager {
 
     @Override
     public void updateYourPlayerInfo(PlayerInfo yourPlayerInfo) {
-        gameFrame.updateYourInfo(yourPlayerInfo);
+        if(yourPlayerInfo!=null)
+            gameFrame.updateYourInfo(yourPlayerInfo);
     }
 
     @Override
