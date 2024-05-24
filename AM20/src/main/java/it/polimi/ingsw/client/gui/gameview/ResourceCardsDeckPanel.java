@@ -52,8 +52,10 @@ public class ResourceCardsDeckPanel extends JPanel {
     public void setDeckListener(DeckCoveredListener deckCoveredListener, DeckVisibleListener deckVisibleListener){
         resourceCardsPanelCovered.setDeckCoveredListener(deckCoveredListener);
         resourceCardsPanelVisible.setDeckVisibleListener(deckVisibleListener);
-
     }
 
-
+    public void setCardsClickable(boolean clickable){
+        resourceCardsPanelCovered.setCardsClickable(clickable);
+        resourceCardsPanelVisible.setCardsClickable(clickable);
+    }
 }

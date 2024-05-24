@@ -5,7 +5,6 @@ import it.polimi.ingsw.client.gui.CardButton;
 import it.polimi.ingsw.client.gui.listeners.MapListener;
 import it.polimi.ingsw.model.cards.Corner;
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
-import it.polimi.ingsw.model.cards.playable.StarterCard;
 import it.polimi.ingsw.model.exceptions.InvalidPositionException;
 import it.polimi.ingsw.model.exceptions.TargetNotPresentException;
 import it.polimi.ingsw.model.util.DynamicMap;
@@ -116,13 +115,13 @@ public class TablePanel extends JScrollPane {
             layout.putConstraint(
                     corner <= Corner.UR ? SpringLayout.SOUTH : SpringLayout.NORTH,
                     b,
-                    corner <= Corner.UR ? 50 : -50,
+                    corner <= Corner.UR ? GUIUtils.cornerGap[0] : -GUIUtils.cornerGap[0],
                     corner <= Corner.UR ? SpringLayout.NORTH : SpringLayout.SOUTH,
                     old);
             layout.putConstraint(
                     corner % 2 == 0 ? SpringLayout.EAST : SpringLayout.WEST,
                     b,
-                    corner % 2 == 0 ? 40 : -40,
+                    corner % 2 == 0 ? GUIUtils.cornerGap[1] : -GUIUtils.cornerGap[1],
                     corner % 2 == 0 ? SpringLayout.WEST : SpringLayout.EAST,
                     old);
 

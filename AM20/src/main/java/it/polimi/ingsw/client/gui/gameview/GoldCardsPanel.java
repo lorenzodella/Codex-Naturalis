@@ -80,6 +80,10 @@ public class GoldCardsPanel extends JPanel {
         else{
             o1.clear();
         }
+    }
 
+    public void setCardsClickable(boolean clickable){
+        o1.setClickable(clickable);
+        o2.setClickable(clickable);
     }
 }

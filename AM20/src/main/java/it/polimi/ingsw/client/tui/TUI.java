@@ -67,9 +67,11 @@ public class TUI implements UIManager {
     }
 
     @Override
-    public void startGame() {
+    public void showStartGame() {
         System.out.println("The game is starting now");
     }
+
+    //TODO IRE qui
 
     @Override
     public void updateCards(List<PlayableCard> cards) {

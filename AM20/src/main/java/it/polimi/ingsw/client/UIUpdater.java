@@ -1,6 +1,5 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.client.tui.ConsoleColors;
 import it.polimi.ingsw.controller.messages.*;
 
 public class UIUpdater  {
@@ -28,53 +27,15 @@ public class UIUpdater  {
         manager.updateResource(msg.getResourceTop(),msg.getResourceVisible());
         manager.updateCards(msg.getInitialCards());
         manager.updateStarterCard(msg.getStarterCard());
-        manager.startGame();
+        manager.showStartGame(); //TODO IRE fare tutti i metodi cosi
         manager.showCommand();
-    }
-
-    public void acknowledge(AcknowledgeMessage msg){
-        manager.showNextTurn(msg.getNextPlayer());
-        manager.showResult(msg.getResult());
-        manager.showCommand();
-
-    }
-
-    public void pickAck(PickAckMessage msg){
-
-        manager.updateGold(msg.getGoldTop(), msg.getGoldVisible());
-        manager.updateResource(msg.getResourceTop(),msg.getResourceVisible());
-        manager.updateCards(msg.getCards());
-        manager.showNextTurn(msg.getNextPlayer());
-        manager.showResult(msg.getResult());
-        manager.showCommand();
-
-
-
-    }
-
-    public void playAck(PlayAckMessage msg){
-
-        manager.updateYourPlayerInfo(msg.getYourPlayerInfo());
-        manager.updateOtherPlayerInfo(msg.getOthersPlayerInfo());
-        manager.updateCards(msg.getCards());
-        if(msg.mustPick()){
-            manager.showMustPick();
-        }
-        manager.showNextTurn(msg.getNextPlayer());
-
-        manager.showResult(msg.getResult());
-        manager.showCommand();
-
     }
 
     public void starterCard(StarterCardAckMessage msg){
-
         manager.updateYourPlayerInfo(msg.getPlayerInfo());
         manager.updateOtherPlayerInfo(msg.getOthersPlayerInfo());
         manager.showResult(msg.getResult());
         manager.showCommand();
-
-
     }
 
     public void startChoosingObjective(StartChoosingObjectiveMessage msg){
@@ -84,17 +45,12 @@ public class UIUpdater  {
         manager.updateSecretObjectives(msg.getSecretObjectives());
         manager.showResult(msg.getResult());
         manager.showCommand();
-
-
-
     }
 
     public void objectiveMessage(ObjectiveAckMessage msg){
         manager.updateSecretObjectives(msg.getSecretObjectives());
         manager.showResult(msg.getResult());
         manager.showCommand();
-
-
     }
 
     public void startPlaying(StartPlayingMessage msg){
@@ -102,8 +58,33 @@ public class UIUpdater  {
         manager.showResult(msg.getResult());
         manager.showNextTurn(msg.getFirstPlayer());
         manager.showCommand();
+    }
 
+    public void acknowledge(AcknowledgeMessage msg){
+        manager.showNextTurn(msg.getNextPlayer());
+        manager.showResult(msg.getResult());
+        manager.showCommand();
+    }
 
+    public void pickAck(PickAckMessage msg){
+        manager.updateGold(msg.getGoldTop(), msg.getGoldVisible());
+        manager.updateResource(msg.getResourceTop(),msg.getResourceVisible());
+        manager.updateCards(msg.getCards());
+        manager.showNextTurn(msg.getNextPlayer());
+        manager.showResult(msg.getResult());
+        manager.showCommand();
+    }
+
+    public void playAck(PlayAckMessage msg){
+        manager.updateYourPlayerInfo(msg.getYourPlayerInfo());
+        manager.updateOtherPlayerInfo(msg.getOthersPlayerInfo());
+        manager.updateCards(msg.getCards());
+        if(msg.mustPick()){
+            manager.showMustPick();
+        }
+        manager.showNextTurn(msg.getNextPlayer());
+        manager.showResult(msg.getResult());
+        manager.showCommand();
     }
 
     public void chatMessage(ChatMessage msg){

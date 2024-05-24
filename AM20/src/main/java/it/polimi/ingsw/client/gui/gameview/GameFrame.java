@@ -9,17 +9,11 @@ import it.polimi.ingsw.client.gui.listeners.MapListener;
 import it.polimi.ingsw.client.gui.listeners.YourCardsListener;
 import it.polimi.ingsw.controller.PlayerInfo;
 import it.polimi.ingsw.model.PlayerStats;
-import it.polimi.ingsw.model.PlayerTable;
-import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
-import it.polimi.ingsw.model.cards.objective.PairOfObjectsObjectiveCard;
-import it.polimi.ingsw.model.cards.objective.TrioOfObjectsObjectiveCard;
 import it.polimi.ingsw.model.cards.playable.*;
 import it.polimi.ingsw.model.util.XMLparser;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -74,16 +68,16 @@ public class GameFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    public void setMapListener(MapListener mapListener){
-        playerPanel.getTablePanel().setMapListener(mapListener);
+    public TablePanel getTablePanel(){
+        return playerPanel.getTablePanel();
     }
 
-    public void setYourCardsListener(YourCardsListener yourCardsListener){
-        playerPanel.getYourCardsPanel().setYourCardsListener(yourCardsListener);
+    public YourCardsPanel getYourCardsPanel(){
+        return playerPanel.getYourCardsPanel();
     }
 
-    public void setDeckListener(DeckCoveredListener deckCoveredListener, DeckVisibleListener deckVisibleListener){
-        playerPanel.getDeckPanel().setDeckListener(deckVisibleListener, deckCoveredListener);
+    public DeckPanel getDeckPanel(){
+        return playerPanel.getDeckPanel();
     }
 
     public LogPanel getLogPanel() {
@@ -96,10 +90,6 @@ public class GameFrame extends JFrame {
     public void setNickname(String nickname){
         playerPanel.getPlayerInfoPanel().setNickname(nickname);
         chat.setNickname(nickname);
-    }
-
-    public void updateYourCards(List<PlayableCard> cards){
-        playerPanel.getYourCardsPanel().update(cards);
     }
 
 
@@ -149,7 +139,7 @@ public class GameFrame extends JFrame {
 
         //gui.gameFrame.playerPanel.getDeckPanel().updateResource(null, null, getExampleResourceCard("R18"));
 
-        gui.startGame();
+        gui.showStartGame();
     }
 
     static ResourceCard getExampleResourceCard(String id){

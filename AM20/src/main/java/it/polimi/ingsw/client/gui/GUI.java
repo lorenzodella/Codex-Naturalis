@@ -45,16 +45,18 @@ public class GUI implements UIManager {
     }
 
     @Override
-    public void startGame() {
+    public void showStartGame() {
         GUIUtils.disposeMessage();
         startScreenFrame.dispose();
         gameFrame.pack();
         gameFrame.setVisible(true);
     }
 
+    //TODO IRE qui
+
     @Override
     public void updateCards(List<PlayableCard> cards) {
-        gameFrame.updateYourCards(cards);
+        gameFrame.getYourCardsPanel().update(cards);
     }
 
     @Override
@@ -69,6 +71,7 @@ public class GUI implements UIManager {
             if (secretObjectives.size() > 1) {
                 starterCardDialog.dispose();
                 secretObjectiveDialog.update(secretObjectives.get(0), secretObjectives.get(1));
+                secretObjectiveDialog.setLocationRelativeTo(gameFrame);
                 secretObjectiveDialog.setVisible(true);
             }
         }
@@ -104,6 +107,7 @@ public class GUI implements UIManager {
     public void updateStarterCard(StarterCard starterCard) {
         if(starterCard!=null) {
             starterCardDialog.update(starterCard);
+            starterCardDialog.setLocationRelativeTo(gameFrame);
             starterCardDialog.setVisible(true);
         }
 
@@ -151,15 +155,15 @@ public class GUI implements UIManager {
     }
 
     public void addMapListener(MapListener mapListener){
-        gameFrame.setMapListener(mapListener);
+        gameFrame.getTablePanel().setMapListener(mapListener);
     }
 
     public void addYourCardsListener(YourCardsListener yourCardsListener){
-        gameFrame.setYourCardsListener(yourCardsListener);
+        gameFrame.getYourCardsPanel().setYourCardsListener(yourCardsListener);
     }
 
     public void addDeckListener(DeckCoveredListener deckCoveredListener, DeckVisibleListener deckVisibleListener){
-        gameFrame.setDeckListener(deckCoveredListener, deckVisibleListener);
+        gameFrame.getDeckPanel().setDeckListener(deckVisibleListener, deckCoveredListener);
     }
 
     public void addChatListener(ChatListener chatListener){

@@ -60,7 +60,6 @@ public class SecretObjectiveDialog extends JDialog implements ActionListener{
 
         //non chiudere
         setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-
         pack();
     }
 
@@ -73,7 +72,16 @@ public class SecretObjectiveDialog extends JDialog implements ActionListener{
         return (VerticalConfigurationObjectiveCard) VerticalConfigurationObjectiveCard.stream().filter(x->x.getID().equals("O94")).findAny().orElse(null);
     }
     public static void main(String[] args) {
-        new SecretObjectiveDialog(null).setVisible(true);
+        try {
+            UIManager.setLookAndFeel(
+                    UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
+                 UnsupportedLookAndFeelException e) {
+            throw new RuntimeException(e);
+        }
+        SecretObjectiveDialog d = new SecretObjectiveDialog(null);
+        d.update(getExampleVerticalConfigurationObjectiveCard(), getExampleTrioOfObjectsObjectiveCard());
+        d.setVisible(true);
     }
 
     @Override

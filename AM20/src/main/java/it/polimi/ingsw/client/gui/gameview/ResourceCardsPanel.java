@@ -79,4 +79,9 @@ public class ResourceCardsPanel extends JPanel {
         o1.addActionListener(deckVisibleListener);
         o2.addActionListener(deckVisibleListener);
     }
+
+    public void setCardsClickable(boolean clickable){
+        o1.setClickable(clickable);
+        o2.setClickable(clickable);
+    }
 }

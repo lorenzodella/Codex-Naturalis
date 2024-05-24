@@ -23,6 +23,7 @@ public class StarterCardDialog extends JDialog implements ActionListener{
         super(owner, "SIDE OF YOUR STARTER CARD");
 
         JPanel confirmPanel = new JPanel();
+        JPanel cardPanel = new JPanel();
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout(10,10));
         panel.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
@@ -41,11 +42,14 @@ public class StarterCardDialog extends JDialog implements ActionListener{
         starterCard.setPreferredSize(GUIUtils.cardDim);
 
         panel.add(message, BorderLayout.NORTH);
-        panel.add(starterCard, BorderLayout.CENTER);
-        add(panel);
+
+        cardPanel.add(starterCard);
+        panel.add(cardPanel, BorderLayout.CENTER);
 
         confirmPanel.add(confirm);
         panel.add(confirmPanel, BorderLayout.SOUTH);
+
+        add(panel);
 
         //non chiudere
         setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
@@ -58,7 +62,16 @@ public class StarterCardDialog extends JDialog implements ActionListener{
     }
 
     public static void main(String[] args) {
-        new StarterCardDialog(null).setVisible(true);
+        try {
+            UIManager.setLookAndFeel(
+                    UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
+                 UnsupportedLookAndFeelException e) {
+            throw new RuntimeException(e);
+        }
+        StarterCardDialog d = new StarterCardDialog(null);
+        d.update(getExampleStarterCard());
+        d.setVisible(true);
     }
 
     @Override

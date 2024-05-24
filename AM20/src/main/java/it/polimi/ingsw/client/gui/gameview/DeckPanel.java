@@ -54,4 +54,9 @@ public class DeckPanel extends JPanel {
     public void updateResource(ResourceCard visibleCard1, ResourceCard visibleCard2, ResourceCard top){
         resourceCardsDeckPanel.update(visibleCard1, visibleCard2, top);
     }
+
+    public void setCardsClickable(boolean clickable){
+        goldCardsDeckPanel.setCardsClickable(clickable);
+        resourceCardsDeckPanel.setCardsClickable(clickable);
+    }
 }

@@ -48,12 +48,15 @@ public class GoldCardsDeckPanel extends JPanel {
     public void update(GoldCard visibleCard1, GoldCard visibleCard2, GoldCard top){
         goldCardsPanelVisible.updateVisible(visibleCard1, visibleCard2);
         goldCardsPanelCovered.updateTop(top);
-
     }
 
     public void setDeckListener(DeckCoveredListener deckCoveredListener, DeckVisibleListener deckVisibleListener){
         goldCardsPanelCovered.setDeckCoveredListener(deckCoveredListener);
         goldCardsPanelVisible.setDeckVisibleListener(deckVisibleListener);
+    }
 
+    public void setCardsClickable(boolean clickable){
+        goldCardsPanelCovered.setCardsClickable(clickable);
+        goldCardsPanelVisible.setCardsClickable(clickable);
     }
 }

@@ -42,14 +42,17 @@ public class YourCardsPanel extends JPanel {
         cardButtons[0] = new CardButton();
         cardButtons[0].setName("0");
         cardButtons[0].setPreferredSize(GUIUtils.cardDim);
+        cardButtons[0].enableMouseFlipping();
 
         cardButtons[1] = new CardButton();
         cardButtons[1].setName("1");
         cardButtons[1].setPreferredSize(GUIUtils.cardDim);
+        cardButtons[1].enableMouseFlipping();
 
         cardButtons[2] = new CardButton();
         cardButtons[2].setName("2");
         cardButtons[2].setPreferredSize(GUIUtils.cardDim);
+        cardButtons[2].enableMouseFlipping();
 
         //aggiungo fisicamente i bottoni
         add(cardButtons[0]);

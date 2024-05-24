@@ -8,6 +8,7 @@ public class GUIUtils {
     private static JDialog dialog;
 
     public static Dimension cardDim = new Dimension(150, 100);
+    public static int[] cornerGap = new int[]{38, 32};
     public static void showMessage(String message){
         JOptionPane jOptionPane = new JOptionPane(message, JOptionPane.PLAIN_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
         dialog = jOptionPane.createDialog("Info");
@@ -22,10 +23,7 @@ public class GUIUtils {
             dialog.dispose();
     }
     public static void showError(String message){
-        JOptionPane jOptionPane = new JOptionPane(message, JOptionPane.ERROR_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
-        dialog = jOptionPane.createDialog("ERROR");
-        dialog.setLocationRelativeTo(null); // Center the dialog
-        dialog.setVisible(true);
+        JOptionPane.showMessageDialog(null, message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
 }
