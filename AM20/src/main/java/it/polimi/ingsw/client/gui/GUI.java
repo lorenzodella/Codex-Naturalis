@@ -50,9 +50,55 @@ public class GUI implements UIManager {
         startScreenFrame.dispose();
         gameFrame.pack();
         gameFrame.setVisible(true);
+        starterCardDialog.setLocationRelativeTo(gameFrame);
+        starterCardDialog.setVisible(true);
+
     }
 
-    //TODO IRE qui
+    @Override
+    public void showStarterCard() {
+        starterCardDialog.dispose();
+        GUIUtils.showMessage("You have chosen your starter card. Wait for the others");
+    }
+
+    @Override
+    public void showStartChoosingObjective() {
+        starterCardDialog.dispose();
+        GUIUtils.disposeMessage();
+        secretObjectiveDialog.setLocationRelativeTo(gameFrame);
+        secretObjectiveDialog.setVisible(true);
+
+    }
+
+    @Override
+    public void showObjectiveMessage() {
+        secretObjectiveDialog.dispose();
+        GUIUtils.showMessage("You have chosen your secret objective. Wait for the others");
+
+    }
+
+    @Override
+    public void showStartPlaying() {
+        secretObjectiveDialog.dispose();
+        GUIUtils.disposeMessage();
+
+
+
+    }
+
+    @Override
+    public void showPlayAck() {
+        gameFrame.getYourCardsPanel().setCardsClickable(false);
+
+
+    }
+
+    @Override
+    public void showPickAck() {
+        gameFrame.getDeckPanel().setCardsClickable(false);
+    }
+
+
 
     @Override
     public void updateCards(List<PlayableCard> cards) {
@@ -69,27 +115,27 @@ public class GUI implements UIManager {
     public void updateSecretObjectives(ArrayList<ObjectiveCard> secretObjectives) {
         if(secretObjectives!=null) {
             if (secretObjectives.size() > 1) {
-                starterCardDialog.dispose();
                 secretObjectiveDialog.update(secretObjectives.get(0), secretObjectives.get(1));
-                secretObjectiveDialog.setLocationRelativeTo(gameFrame);
-                secretObjectiveDialog.setVisible(true);
+            }
+            else{
+                gameFrame.getSecretObjectivePanel().update(secretObjectives.get(0));
             }
         }
     }
 
     @Override
     public void updateGold(PlayableCard goldTop, PlayableCard[] goldVisible) {
-
+        gameFrame.updateGoldDeckPanels(goldTop, goldVisible);
     }
 
     @Override
     public void updateResource(PlayableCard resourceTop, PlayableCard[] resourceVisible) {
-
+        gameFrame.updateResourceCardsPanels(resourceTop, resourceVisible);
     }
 
     @Override
     public void updateYourPlayerInfo(PlayerInfo yourPlayerInfo) {
-
+        gameFrame.updateYourInfo(yourPlayerInfo);
     }
 
     @Override
@@ -100,31 +146,40 @@ public class GUI implements UIManager {
 
     @Override
     public void updateCommonObjectives(ObjectiveCard[] commonObjectives) {
-
+        gameFrame.updateCommonObjectivePanels(commonObjectives);
     }
 
     @Override
     public void updateStarterCard(StarterCard starterCard) {
         if(starterCard!=null) {
             starterCardDialog.update(starterCard);
-            starterCardDialog.setLocationRelativeTo(gameFrame);
-            starterCardDialog.setVisible(true);
         }
 
     }
 
     @Override
     public void showResult(String result) {
-
+        log(result);
     }
 
     @Override
     public void showNextTurn(String nextPlayer) {
+        if(nextPlayer!=null) {
+            if (nextPlayer.equals(nickname)) {
+                GUIUtils.showInfo("It's your turn");
+                gameFrame.getYourCardsPanel().setCardsClickable(true);
+
+            } else {
+                log("It's "+ nextPlayer+"'s turn");
+            }
+        }
 
     }
 
     @Override
     public void showMustPick() {
+        gameFrame.getDeckPanel().setCardsClickable(true);
+        GUIUtils.showInfo("You have to pick a card");
 
     }
 

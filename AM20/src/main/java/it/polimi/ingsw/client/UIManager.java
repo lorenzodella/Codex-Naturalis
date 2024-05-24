@@ -16,7 +16,12 @@ public interface UIManager {
     public void setNickname(String nickname);
     public String getNickname();
     public void showStartGame();
-    //TODO IRE qui
+    public void showStarterCard();
+    public void showStartChoosingObjective();
+    public void showObjectiveMessage();
+    public void showStartPlaying();
+    public void showPickAck();
+    public void showPlayAck();
     public void updateCards(List<PlayableCard> cards);
     public void updateChatMessage(ChatMessage msg);
     public void updateSecretObjectives(ArrayList<ObjectiveCard> secretObjectives);

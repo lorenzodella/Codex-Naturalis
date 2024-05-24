@@ -27,7 +27,7 @@ public class UIUpdater  {
         manager.updateResource(msg.getResourceTop(),msg.getResourceVisible());
         manager.updateCards(msg.getInitialCards());
         manager.updateStarterCard(msg.getStarterCard());
-        manager.showStartGame(); //TODO IRE fare tutti i metodi cosi
+        manager.showStartGame();
         manager.showCommand();
     }
 
@@ -35,6 +35,7 @@ public class UIUpdater  {
         manager.updateYourPlayerInfo(msg.getPlayerInfo());
         manager.updateOtherPlayerInfo(msg.getOthersPlayerInfo());
         manager.showResult(msg.getResult());
+        manager.showStarterCard();
         manager.showCommand();
     }
 
@@ -44,12 +45,14 @@ public class UIUpdater  {
         manager.updateCommonObjectives(msg.getCommonObjectives());
         manager.updateSecretObjectives(msg.getSecretObjectives());
         manager.showResult(msg.getResult());
+        manager.showStartChoosingObjective();
         manager.showCommand();
     }
 
     public void objectiveMessage(ObjectiveAckMessage msg){
         manager.updateSecretObjectives(msg.getSecretObjectives());
         manager.showResult(msg.getResult());
+        manager.showObjectiveMessage();
         manager.showCommand();
     }
 
@@ -57,6 +60,7 @@ public class UIUpdater  {
         manager.updateSecretObjectives(msg.getSecretObjectives());
         manager.showResult(msg.getResult());
         manager.showNextTurn(msg.getFirstPlayer());
+        manager.showStartPlaying();
         manager.showCommand();
     }
 
@@ -72,6 +76,7 @@ public class UIUpdater  {
         manager.updateCards(msg.getCards());
         manager.showNextTurn(msg.getNextPlayer());
         manager.showResult(msg.getResult());
+        manager.showPickAck();
         manager.showCommand();
     }
 
@@ -84,6 +89,7 @@ public class UIUpdater  {
         }
         manager.showNextTurn(msg.getNextPlayer());
         manager.showResult(msg.getResult());
+        manager.showPlayAck();
         manager.showCommand();
     }
 

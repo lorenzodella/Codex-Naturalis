@@ -9,6 +9,7 @@ import it.polimi.ingsw.client.gui.listeners.MapListener;
 import it.polimi.ingsw.client.gui.listeners.YourCardsListener;
 import it.polimi.ingsw.controller.PlayerInfo;
 import it.polimi.ingsw.model.PlayerStats;
+import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.model.cards.playable.*;
 import it.polimi.ingsw.model.util.XMLparser;
 
@@ -53,7 +54,7 @@ public class GameFrame extends JFrame {
 
         PlayerStats playerStats = new PlayerStats();
 
-        PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(3, playerStats, "You");
+        PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(0, playerStats, "You");
 
         chat = new Chat();
         LogPanel logPanel = new LogPanel(chat);
@@ -83,6 +84,10 @@ public class GameFrame extends JFrame {
     public LogPanel getLogPanel() {
         return playerPanel.getLogPanel();
     }
+
+    public SecretObjectivePanel getSecretObjectivePanel(){
+        return playerPanel.getSecretObjectivePanel();
+    }
     public Chat getChat(){
         return chat;
     }
@@ -93,10 +98,33 @@ public class GameFrame extends JFrame {
     }
 
 
-    /*TODO ELE TIA i metodi che aggiornano i deck devono aggiornare tutti i deck di tutti i PlayerPanel
-    fare metodo updateDecks() che cicla su tutti i deck dei playerPanel (anche quelli nella hashmap) e li aggiorna
-    */
-    //TODO ELE TIA uguale per i commonObjectives
+    public void updateGoldDeckPanels(PlayableCard goldTop, PlayableCard[] goldVisible){
+        playerPanel.getDeckPanel().updateGold((GoldCard) goldVisible[0], (GoldCard) goldVisible[1], (GoldCard) goldTop);
+        for(PlayerPanel otherPlayerPanel: otherPlayerPanels.values()){
+            otherPlayerPanel.getDeckPanel().updateGold((GoldCard) goldVisible[0], (GoldCard) goldVisible[1], (GoldCard) goldTop);
+        }
+    }
+
+    public void updateResourceCardsPanels(PlayableCard resourceTop, PlayableCard[] resourceVisible){
+        playerPanel.getDeckPanel().updateResource((ResourceCard) resourceVisible[0], (ResourceCard) resourceVisible[1], (ResourceCard) resourceTop);
+        for(PlayerPanel otherPlayerPanel: otherPlayerPanels.values()){
+            otherPlayerPanel.getDeckPanel().updateResource((ResourceCard) resourceVisible[0], (ResourceCard) resourceVisible[1], (ResourceCard) resourceTop);
+        }
+    }
+
+    public void updateCommonObjectivePanels(ObjectiveCard[] commonObjectives){
+        playerPanel.getCommonObjectivePanel().update(commonObjectives);
+        for(PlayerPanel otherPlayerPanel: otherPlayerPanels.values()){
+            otherPlayerPanel.getCommonObjectivePanel().update(commonObjectives);
+        }
+    }
+
+
+    public void updateYourInfo(PlayerInfo playerInfo){
+        playerPanel.getTablePanel().update(playerInfo.getMap());
+        playerPanel.getPlayerInfoPanel().update(playerInfo.getScore(), playerInfo.getStats() );
+
+    }
 
     public void updateOtherPlayers(HashMap<String, PlayerInfo> otherPlayerInfo){
         if(otherPlayerPanels == null){

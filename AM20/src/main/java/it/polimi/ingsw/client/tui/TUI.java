@@ -71,7 +71,36 @@ public class TUI implements UIManager {
         System.out.println("The game is starting now");
     }
 
-    //TODO IRE qui
+    @Override
+    public void showStarterCard() {
+
+    }
+
+    @Override
+    public void showStartChoosingObjective() {
+
+    }
+
+    @Override
+    public void showObjectiveMessage() {
+
+    }
+
+    @Override
+    public void showStartPlaying() {
+
+    }
+
+    @Override
+    public void showPickAck() {
+
+    }
+
+    @Override
+    public void showPlayAck() {
+
+    }
+
 
     @Override
     public void updateCards(List<PlayableCard> cards) {
