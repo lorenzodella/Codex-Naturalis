@@ -112,6 +112,7 @@ public class GUI implements UIManager {
             gameFrame.getChat().receiveMessage(msg.getMessage(), msg.getSender());
     }
 
+    //TODO : errore potrebbe essere qua
     @Override
     public void updateSecretObjectives(ArrayList<ObjectiveCard> secretObjectives) {
         if(secretObjectives!=null) {
