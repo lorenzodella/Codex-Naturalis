@@ -49,7 +49,7 @@ public class ClientMain {
 //        if(args[2].equals("2"))
 //            GUIUtils.location = new Point(0, -1050);
 //        else
-//            GUIUtils.location = new Point(0, 0);
+            GUIUtils.location = new Point(0, 0);
 
 
         try {
