@@ -17,7 +17,6 @@ import java.io.IOException;
  * It's used for displaying card images
  */
 public class CardButton extends JButton {
-    private Image image;
     private boolean clickable = false;
     private Card card;
 
@@ -29,12 +28,14 @@ public class CardButton extends JButton {
         setBorder(BorderFactory.createDashedBorder(Color.GRAY));
         clickable = true;
         enableMouseFlipping();
+        setFocusPainted(false);
     }
 
     public CardButton(Card card) {
         super();
         this.card = card;
         set();
+        setFocusPainted(false);
     }
 
     public CardButton(Card card, boolean clickable){
@@ -42,11 +43,13 @@ public class CardButton extends JButton {
         this.card = card;
         this.clickable = clickable;
         set();
+        setFocusPainted(false);
     }
 
     public CardButton(){
         super();
         clear();
+        setFocusPainted(false);
     }
 
     public CardButton(CardButton copy){
@@ -58,12 +61,24 @@ public class CardButton extends JButton {
         } else {
             set();
         }
+        setFocusPainted(false);
     }
 
     private void set(){
-        image = loadImage();
         setBorder(BorderFactory.createEmptyBorder());
-        CardIcon icon = new CardIcon(image);
+        setIcons(loadImage());
+
+        setClickable(clickable);
+
+    }
+
+    private void setIcons(Image image){
+        CardIcon icon = null, translucentIcon = null;
+        if(image!=null) {
+            icon = new CardIcon(image);
+            translucentIcon = new CardIcon(image, true);
+        }
+
         //per un bottone cliccabile
         setIcon(icon);
         //per un bottone non cliccabile
@@ -71,12 +86,9 @@ public class CardButton extends JButton {
         //quando è cliccato
         setPressedIcon(icon);
         //quando è selezionato
-        setSelectedIcon(new CardIcon(image, true));
+        setSelectedIcon(translucentIcon);
         //per sbiadire
-        setRolloverIcon(new CardIcon(image, true));
-
-        setClickable(clickable);
-
+        setRolloverIcon(translucentIcon);
     }
 
     public void enableMouseFlipping(){
@@ -109,8 +121,11 @@ public class CardButton extends JButton {
         return clickable;
     }
 
+    @Override
     public void setSelected(boolean selected){
         super.setSelected(selected);
+        setBorder(selected ? BorderFactory.createLineBorder(Color.BLACK, 1) : BorderFactory.createEmptyBorder());
+        //setPreferredSize(selected ? GUIUtils.cardDimSelected : GUIUtils.cardDim);
         //setIcon(new CardIcon(image, selected));
     }
 
@@ -153,6 +168,7 @@ public class CardButton extends JButton {
         setContentAreaFilled(false);
         setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
         setClickable(false);
+        setIcons(null);
     }
 
     public void hid(){
@@ -162,14 +178,10 @@ public class CardButton extends JButton {
     }
 
     public void flip(){
-        card.flip();
-        image = loadImage();
-        CardIcon icon = new CardIcon(image, isSelected());
-        setIcon(icon);
-        setPressedIcon(icon);
-        setSelectedIcon(new CardIcon(image, true));
-        setDisabledIcon(icon);
-        setRolloverIcon(new CardIcon(image, true));
+        if(card!=null) {
+            card.flip();
+            setIcons(loadImage());
+        }
     }
 
 }

@@ -20,6 +20,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -142,6 +143,13 @@ class ControllerTest {
         assert connectionAckMessages.values().stream().map(ConnectionAckMessage::getResourceVisible).allMatch(Objects::nonNull);
         assert connectionAckMessages.values().stream().map(ConnectionAckMessage::getInitialCards).allMatch(Objects::nonNull);
         assert connectionAckMessages.values().stream().map(ConnectionAckMessage::getStarterCard).allMatch(Objects::nonNull);
+        assert Stream.of(
+                Stream.of(connectionAckMessages.values().stream().findFirst().map(ConnectionAckMessage::getGoldTop).get()),
+                Stream.of(connectionAckMessages.values().stream().findFirst().map(ConnectionAckMessage::getResourceTop).get()),
+                Stream.of(connectionAckMessages.values().stream().findFirst().map(ConnectionAckMessage::getGoldVisible).get()),
+                Stream.of(connectionAckMessages.values().stream().findFirst().map(ConnectionAckMessage::getResourceVisible).get()),
+                connectionAckMessages.values().stream().map(ConnectionAckMessage::getInitialCards)
+        ).flatMap(Function.identity()).allMatch(new HashSet<>()::add);
 
         //provo a collegarmi con una partita già piena
         assertThrows(CannotJoinGameException.class, ()->{

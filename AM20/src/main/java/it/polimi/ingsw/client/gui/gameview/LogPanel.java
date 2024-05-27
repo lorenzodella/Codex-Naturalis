@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.gui.gameview;
 import it.polimi.ingsw.client.gui.Chat;
 
 import javax.swing.*;
+import javax.swing.text.DefaultCaret;
 import java.awt.*;
 
 public class LogPanel extends JPanel {
@@ -22,11 +23,15 @@ public class LogPanel extends JPanel {
         add(chatButton, BorderLayout.SOUTH);
 
         logTextArea = new JTextArea();
+        DefaultCaret caret = (DefaultCaret)logTextArea.getCaret();
+        caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+        logTextArea.setAutoscrolls(true);
         logTextArea.setEditable(false);
         logTextArea.setLineWrap(true);
         logTextArea.setWrapStyleWord(true);
         logTextArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 10));
         JScrollPane logScrollPane = new JScrollPane(logTextArea);
+        logScrollPane.setAutoscrolls(true);
         logScrollPane.setPreferredSize(new Dimension(100,100));
         add(logScrollPane, BorderLayout.CENTER);
 

@@ -5,9 +5,11 @@ import it.polimi.ingsw.client.connections.ClientSKT;
 import it.polimi.ingsw.client.connections.ClientSender;
 import it.polimi.ingsw.client.gui.GUI;
 import it.polimi.ingsw.client.gui.GUIController;
+import it.polimi.ingsw.client.gui.GUIUtils;
 import it.polimi.ingsw.client.tui.TUI;
 import it.polimi.ingsw.client.tui.TUIController;
 
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -43,8 +45,11 @@ public class ClientMain {
         ClientSender sender = null;
         ClientController clientController;
 
-
-
+        //--------TEST SU DUE SCHERMI UNO SOPRA L'ALTRO--------
+//        if(args[2].equals("2"))
+//            GUIUtils.location = new Point(0, -1050);
+//        else
+//            GUIUtils.location = new Point(0, 0);
 
 
         try {

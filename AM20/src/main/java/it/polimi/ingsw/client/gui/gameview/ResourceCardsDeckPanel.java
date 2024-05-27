@@ -45,7 +45,7 @@ public class ResourceCardsDeckPanel extends JPanel {
     }
 
     public void update(ResourceCard visibleCard1, ResourceCard visibleCard2, ResourceCard top){
-        resourceCardsPanelVisible.updateVisible(visibleCard1, visibleCard1);
+        resourceCardsPanelVisible.updateVisible(visibleCard1, visibleCard2);
         resourceCardsPanelCovered.updateTop(top);
     }
 

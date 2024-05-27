@@ -71,26 +71,26 @@ public class UIUpdater  {
         manager.showCommand();
     }
 
-    public void pickAck(PickAckMessage msg){
-        manager.updateGold(msg.getGoldTop(), msg.getGoldVisible());
-        manager.updateResource(msg.getResourceTop(),msg.getResourceVisible());
-        manager.updateCards(msg.getCards());
-        manager.showNextTurn(msg.getNextPlayer());
-        manager.showResult(msg.getResult());
-        manager.showPickAck();
-        manager.showCommand();
-    }
-
     public void playAck(PlayAckMessage msg){
         manager.updateYourPlayerInfo(msg.getYourPlayerInfo());
         manager.updateOtherPlayerInfo(msg.getOthersPlayerInfo());
         manager.updateCards(msg.getCards());
-        if(msg.mustPick()){
-            manager.showMustPick();
-        }
-        manager.showNextTurn(msg.getNextPlayer());
         manager.showResult(msg.getResult());
+        if(msg.mustPick())
+            manager.showMustPick();
+        else
+            manager.showNextTurn(msg.getNextPlayer());
         manager.showPlayAck();
+        manager.showCommand();
+    }
+
+    public void pickAck(PickAckMessage msg){
+        manager.updateGold(msg.getGoldTop(), msg.getGoldVisible());
+        manager.updateResource(msg.getResourceTop(),msg.getResourceVisible());
+        manager.updateCards(msg.getCards());
+        manager.showResult(msg.getResult());
+        manager.showNextTurn(msg.getNextPlayer());
+        manager.showPickAck();
         manager.showCommand();
     }
 

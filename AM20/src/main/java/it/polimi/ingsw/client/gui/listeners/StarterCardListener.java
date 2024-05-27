@@ -33,7 +33,7 @@ public class StarterCardListener extends ClientController implements ActionListe
                 guiController.log("You just chose the back side of your starter card");
             }
         }else
-            GUIUtils.showError("Choose the side of your starter card and confirm");
+            GUIUtils.showError(b.getRootPane(), "Choose the side of your starter card and confirm");
 
     }
 }

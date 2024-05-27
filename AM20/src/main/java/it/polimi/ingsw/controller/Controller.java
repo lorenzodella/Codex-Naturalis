@@ -229,12 +229,12 @@ public class Controller implements GameManager {
         //CREO NUOVO MESSAGE BUILDER PASSANDOGLI LA NUOVA LISTA DEI CONNECTED PLAYERS
         this.messageBuilder = new MessageBuilder(gameModel.getConnectedPlayers());
 
-        Deck[] tmp = gameModel.initDecks();
-        messageBuilder.notifyDecksCreated(tmp[Deck.RESOURCE_CARDS], tmp[Deck.GOLD_CARDS]);
+        gameModel.initDecks();
         List<Player> playerList = gameModel.giveStarterCards();
         messageBuilder.notifyStarterCards(playerList);
         List<Player> playerList2 =  gameModel.giveInitialCards();
         messageBuilder.notifyInitialCards(playerList2);
+        messageBuilder.notifyDecksCreated(gameModel.getResourceCardDeck(), gameModel.getGoldCardDeck());
 
         //QUESTO RITORNA DEGLI STARTGAMEMESSAGE
         HashMap<String, ConnectionAckMessage> msg = messageBuilder.notifyDefaultPlayerInfo(playerList2);

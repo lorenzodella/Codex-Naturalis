@@ -20,7 +20,8 @@ import java.util.List;
 public class GUI implements UIManager {
 
     String nickname;
-    public GameFrame gameFrame;
+    String currPlayer;
+    GameFrame gameFrame;
     StartScreenFrame startScreenFrame;
     StarterCardDialog starterCardDialog;
     SecretObjectiveDialog secretObjectiveDialog;
@@ -58,7 +59,7 @@ public class GUI implements UIManager {
     @Override
     public void showStarterCard() {
         starterCardDialog.dispose();
-        GUIUtils.showMessage("You have chosen your starter card. Wait for the others");
+        GUIUtils.showMessage(gameFrame, "You have chosen your starter card. Wait for the others");
     }
 
     @Override
@@ -73,7 +74,7 @@ public class GUI implements UIManager {
     @Override
     public void showObjectiveMessage() {
         secretObjectiveDialog.dispose();
-        GUIUtils.showMessage("You have chosen your secret objective. Wait for the others");
+        GUIUtils.showMessage(gameFrame, "You have chosen your secret objective. Wait for the others");
 
     }
 
@@ -102,17 +103,20 @@ public class GUI implements UIManager {
 
     @Override
     public void updateCards(List<PlayableCard> cards) {
-        if(cards!=null)
+        if(cards!=null){
             gameFrame.getYourCardsPanel().update(cards);
+        }
     }
 
     @Override
     public void updateChatMessage(ChatMessage msg) {
-        if(msg.getRecipient()==null || msg.getRecipient().equals(nickname))
+        if(msg.getRecipient()==null || msg.getRecipient().equals(nickname)) {
             gameFrame.getChat().receiveMessage(msg.getMessage(), msg.getSender());
+            if(!gameFrame.getChat().isVisible())
+                GUIUtils.showChatMessage(gameFrame, gameFrame.getChat());
+        }
     }
 
-    //TODO : errore potrebbe essere qua
     @Override
     public void updateSecretObjectives(ArrayList<ObjectiveCard> secretObjectives) {
         if(secretObjectives!=null) {
@@ -169,11 +173,15 @@ public class GUI implements UIManager {
     public void showNextTurn(String nextPlayer) {
         if(nextPlayer!=null) {
             if (nextPlayer.equals(nickname)) {
-                GUIUtils.showInfo("It's your turn");
+                GUIUtils.showInfo(gameFrame, "It's your turn");
+                log("It's your turn");
                 gameFrame.getYourCardsPanel().setCardsClickable(true);
-
+                currPlayer = nextPlayer;
             } else {
+                if(currPlayer==null || !currPlayer.equals(nextPlayer))
+                    GUIUtils.showInfo(gameFrame, "It's "+ nextPlayer+"'s turn");
                 log("It's "+ nextPlayer+"'s turn");
+                currPlayer = nextPlayer;
             }
         }
 
@@ -182,13 +190,13 @@ public class GUI implements UIManager {
     @Override
     public void showMustPick() {
         gameFrame.getDeckPanel().setCardsClickable(true);
-        GUIUtils.showInfo("You have to pick a card");
+        GUIUtils.showInfo(gameFrame, "You have to pick a card");
 
     }
 
     @Override
     public void showError(String error){
-        GUIUtils.showError(error);
+        GUIUtils.showError(gameFrame, error);
     }
 
     @Override

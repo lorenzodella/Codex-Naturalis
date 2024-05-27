@@ -16,6 +16,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.*;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -57,12 +59,22 @@ class GameTest {
         //no duplicate card
         assertEquals(3L*playersList.size(), playersList.stream().flatMap(p -> p.getCards().stream()).distinct().count());
         assertEquals(playersList.size(), playersList.stream().map(Player::getStarterCard).distinct().count());
+        assertEquals(2L*playersList.size(), playersList.stream().flatMap(p -> p.getSecretObjective().stream()).distinct().count());
         //two common objectives
         assertEquals(2, Arrays.stream(game.getCommonObjectives()).filter(Objects::nonNull).distinct().count());
         //40-2-4 gold
         assertEquals(34, game.getGoldCardDeck().getCards().size());
         //40-2-8 res
         assertEquals(30, game.getResourceCardDeck().getCards().size());
+
+
+        assert Stream.of(
+                playersList.stream().flatMap(p -> p.getCards().stream()),
+                game.getGoldCardDeck().getCards().stream(),
+                game.getResourceCardDeck().getCards().stream()
+        ).flatMap(Function.identity()).allMatch(new HashSet<>()::add);
+
+        assert playersList.stream().flatMap(p -> p.getCards().stream()).allMatch(c -> c.getSide()==PlayableCard.FRONT);
     }
 
     @Test

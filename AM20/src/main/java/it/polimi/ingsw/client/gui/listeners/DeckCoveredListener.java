@@ -20,15 +20,12 @@ public class DeckCoveredListener extends ClientController implements ActionListe
     public void actionPerformed(ActionEvent e) {
         JButton b = (JButton) e.getSource();
         String s = b.getName();
-        try{
-            clientSender.pickCard(guiController.getUsername(), Integer.parseInt(s));
-            if(Integer.parseInt(s)==1) {
-                guiController.log("You have picked a card from Resource Deck");
-            }else{
-                guiController.log("You have picked a card from Gold Deck");
-            }
-        }catch (NumberFormatException exception){
-            
+
+        clientSender.pickCard(guiController.getUsername(), Integer.parseInt(s));
+        if(Integer.parseInt(s)==1) {
+            guiController.log("You have picked a card from Resource Deck");
+        }else{
+            guiController.log("You have picked a card from Gold Deck");
         }
 
 

@@ -83,8 +83,6 @@ public class TableView extends JFrame implements ActionListener{
 
         TableView f = new TableView(playerTable);
 
-        //JOptionPane.showMessageDialog(f, "Caca", "Errore", JOptionPane.PLAIN_MESSAGE);
-        //JOptionPane.showInputDialog(f, "inserisci il numero di giocatori", "info", JOptionPane.PLAIN_MESSAGE);
         showInputDialog();
 
         JDialog d = new JDialog();

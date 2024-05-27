@@ -32,6 +32,6 @@ public class SecretObjectiveListener extends ClientController implements ActionL
                 guiController.log("You just chose the objective number 0");
             }
         }else
-            GUIUtils.showError("Choose one secret objective and click confirm");
+            GUIUtils.showError(b.getRootPane(),"Choose one secret objective and click confirm");
     }
 }

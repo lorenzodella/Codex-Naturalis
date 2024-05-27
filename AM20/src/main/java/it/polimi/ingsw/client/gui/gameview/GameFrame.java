@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.gui.gameview;
 import it.polimi.ingsw.client.gui.Chat;
 import it.polimi.ingsw.client.gui.GUI;
 import it.polimi.ingsw.client.gui.GUIController;
+import it.polimi.ingsw.client.gui.GUIUtils;
 import it.polimi.ingsw.client.gui.listeners.DeckCoveredListener;
 import it.polimi.ingsw.client.gui.listeners.DeckVisibleListener;
 import it.polimi.ingsw.client.gui.listeners.MapListener;
@@ -33,6 +34,7 @@ public class GameFrame extends JFrame {
                  UnsupportedLookAndFeelException e) {
             throw new RuntimeException(e);
         }
+        setIconImage(new ImageIcon("src/main/resources/Icon.png").getImage());
 
 
         CommonObjectivePanel commonObjectivePanel = new CommonObjectivePanel();
@@ -56,7 +58,7 @@ public class GameFrame extends JFrame {
 
         PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(0, playerStats, "You");
 
-        chat = new Chat();
+        chat = new Chat(this);
         LogPanel logPanel = new LogPanel(chat);
 
 
@@ -67,6 +69,7 @@ public class GameFrame extends JFrame {
         add(tabbedPane);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocation(GUIUtils.location);
     }
 
     public TablePanel getTablePanel(){

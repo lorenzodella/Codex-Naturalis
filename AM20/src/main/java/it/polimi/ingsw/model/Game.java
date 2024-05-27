@@ -184,11 +184,11 @@ public class Game implements GameObservable{
         commonObjectives[0] = tmp.get(0);
         commonObjectives[1] = tmp.get(1);
 
-        for(int i=0; i<players.size();i++){
+        for(int i=1; i<=players.size();i++){
             ArrayList<ObjectiveCard> obj = new ArrayList<>();
-            obj.add(tmp.get(i+2));
-            obj.add(tmp.get(i+3));
-            players.get(i).setSecretObjective(obj);
+            obj.add(tmp.get(2*i));
+            obj.add(tmp.get(2*i+1));
+            players.get(i-1).setSecretObjective(obj);
         }
 
         return players;

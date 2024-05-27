@@ -180,6 +180,12 @@ public class TablePanel extends JScrollPane {
         revalidate();
         repaint();
 
+        Rectangle bounds = getViewport().getViewRect();
+        Dimension size = getViewport().getViewSize();
+        int x = (size.width - bounds.width) / 2;
+        int y = (size.height - bounds.height) / 2;
+        getViewport().setViewPosition(new Point(x, y));
+
         //System.out.println(map);
     }
 

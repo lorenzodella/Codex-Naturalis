@@ -16,7 +16,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 
-public class Chat extends JFrame implements ActionListener{
+public class Chat extends JDialog implements ActionListener{
     private JLabel senderLabel;
 	private JScrollPane centerP;
 	private JPanel visorP;
@@ -30,14 +30,14 @@ public class Chat extends JFrame implements ActionListener{
 	private ChatListener chatListener;
 
 	public static void main(String[] args) {
-		Chat c = new Chat();
+		Chat c = new Chat(null);
 		c.setPlayers(Arrays.asList("Player1", "Player2", "Player3"));
 		c.setNickname("Nickname");
 		c.setVisible(true);
 	}
 
-	public Chat() {
-		super();
+	public Chat(Frame parent) {
+		super(parent);
 		try {
 			UIManager.setLookAndFeel(
 					UIManager.getSystemLookAndFeelClassName());
@@ -50,7 +50,7 @@ public class Chat extends JFrame implements ActionListener{
 		
 		setSize(350,465);
 		setResizable(false);
-		setLocationRelativeTo(null);
+		setLocationRelativeTo(parent);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		
 		f = new Font(Font.DIALOG, Font.PLAIN, 15);
@@ -179,12 +179,14 @@ public class Chat extends JFrame implements ActionListener{
 		checkDate(now);
 		
 		JTextArea time = new JTextArea(date.format(DateTimeFormatter.ofPattern("HH:mm")));
+		time.setFocusable(false);
 		time.setEditable(false);
 		time.setFont(new Font("Dialog", Font.PLAIN, 12));
 		time.setOpaque(false);
 		time.setMargin(new Insets(10,0,0,0));
 		
 		JTextArea message = new JTextArea(text);
+		message.setFocusable(false);
 		if(message.getText().length()>20) {
 			message.setColumns(14);
 			message.setWrapStyleWord(true);
@@ -217,12 +219,14 @@ public class Chat extends JFrame implements ActionListener{
 		
 		JTextArea time = new JTextArea(date.format(DateTimeFormatter.ofPattern("HH:mm")));
 		time.setName("time");
+		time.setFocusable(false);
 		time.setEditable(false);
 		time.setFont(new Font("Dialog", Font.PLAIN, 12));
 		time.setOpaque(false);
 		time.setMargin(new Insets(10,0,0,0));
 		
 		JTextArea message = new JTextArea(text);
+		message.setFocusable(false);
 		message.setName("message");
 		if(message.getText().length()>20) {
 			message.setColumns(14);
