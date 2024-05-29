@@ -35,18 +35,20 @@ public class SKTClientReceiver implements Runnable {
                     ConnectionAckMessage msg = (ConnectionAckMessage) message;
                     if(!msg.doesGameStarts()){ //false è ConnectionAckMessage
                         this.uiUpdater.connectionAck(msg);
+                    }else if(msg.isReconnection()){ //true è ReconnectionMessage
+                        this.uiUpdater.reconnection((ReconnectionMessage) message);
                     }else if(msg.doesGameStarts()){ //true è StartGameMessage
                         this.uiUpdater.startGame((StartGameMessage) message);
                     }
 
                 }else if(message.getType().equals(Message.ACKNOWLEDGE)){
                     AcknowledgeMessage msg = (AcknowledgeMessage) message;
-                    if(msg.getAction().equals("Disconnection"))
-                        this.uiUpdater.acknowledge(msg);
-                    if(msg.getAction().equals("Play"))
-                        this.uiUpdater.playAck((PlayAckMessage) message);
-                    if(msg.getAction().equals("Pick"))
-                        this.uiUpdater.pickAck((PickAckMessage) message);
+                    if(msg.getAction().equals(AcknowledgeMessage.IMPORTANT))
+                        this.uiUpdater.importantAck(msg);
+                    if(msg.getAction().equals(AcknowledgeMessage.PLAY))
+                        this.uiUpdater.playAck((PlayAckMessage) msg);
+                    if(msg.getAction().equals(AcknowledgeMessage.PICK))
+                        this.uiUpdater.pickAck((PickAckMessage) msg);
 
                 }else if(message.getType().equals(Message.STARTERCARDACK)){
                     StarterCardAckMessage msg = (StarterCardAckMessage) message;
@@ -68,7 +70,7 @@ public class SKTClientReceiver implements Runnable {
 
                 }else if(message.getType().equals(Message.STOPGAME)){
                     StopGameMessage msg = (StopGameMessage) message;
-                    this.uiUpdater.message(msg);
+                    this.uiUpdater.stopGame(msg);
 
                 }else if(message.getType().equals(Message.ERROR)){
                     ErrorMessage msg = (ErrorMessage) message;

@@ -67,8 +67,18 @@ public class TUI implements UIManager {
     }
 
     @Override
+    public void showConnection() {
+        System.out.println("Waiting for other players");
+    }
+
+    @Override
     public void showStartGame() {
         System.out.println("The game is starting now");
+    }
+
+    @Override
+    public void showReconnection(String result, boolean isJoining) {
+        System.out.println(result);
     }
 
     @Override
@@ -193,6 +203,14 @@ public class TUI implements UIManager {
     }
 
     @Override
+    public void showImportantMessage(String result, String importantMessage) {
+        if(importantMessage!=null) {
+            System.out.println(ConsoleColors.TEXT_BG_GREEN+result);
+            System.out.println(importantMessage+ConsoleColors.TEXT_RESET);
+        }
+    }
+
+    @Override
     public void showNextTurn(String nextPlayer){
         if(nextPlayer!=null) {
             currPlayer = nextPlayer;
@@ -206,7 +224,7 @@ public class TUI implements UIManager {
             }
         }
         else{
-            System.out.println(ConsoleColors.TEXT_BG_GREEN+"Game is over!");
+            System.out.println(ConsoleColors.TEXT_BG_GREEN+"Game is over!"+ConsoleColors.TEXT_RESET);
         }
     }
 

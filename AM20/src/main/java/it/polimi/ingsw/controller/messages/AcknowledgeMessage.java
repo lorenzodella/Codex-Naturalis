@@ -15,32 +15,51 @@ public class AcknowledgeMessage extends Message {
      * Cards' list of the player that just picked or played a card
      */
     private List<PlayableCard> cards;
+    /**
+     * This attribute stands for the player's info after they played a card
+     */
+    private PlayerInfo yourPlayerInfo;
+    /**
+     * This attribute is a map that, per each player, says the player info of all other players
+     */
+    private HashMap<String, PlayerInfo> othersPlayerInfo;
+    private String importantMessage;
 
 
-    public static final String DISCONNECTION = "Disconnection";
+    public static final String IMPORTANT = "Important";
     public static final String PLAY = "Play";
     public static final String PICK = "Pick";
 
     public String getAction(){
-        return AcknowledgeMessage.DISCONNECTION;
+        return AcknowledgeMessage.IMPORTANT;
     }
 
 
+    public String getImportantMessage() {
+        return importantMessage;
+    }
+
+    public void appendImportantMessage(String importantMessage) {
+        if(this.importantMessage==null)
+            this.importantMessage = importantMessage;
+        else
+            this.importantMessage += "\n" + importantMessage;
+    }
 
     public PlayerInfo getYourPlayerInfo() {
-        return null;
+        return yourPlayerInfo;
     }
 
     public void setYourPlayerInfo(PlayerInfo yourPlayerInfo) {
-
+        this.yourPlayerInfo = yourPlayerInfo;
     }
 
     public HashMap<String, PlayerInfo> getOthersPlayerInfo() {
-        return null;
+        return othersPlayerInfo;
     }
 
     public void setOthersPlayerInfo(HashMap<String, PlayerInfo> othersPlayerInfo) {
-
+        this.othersPlayerInfo = othersPlayerInfo;
     }
 
     public PlayableCard getGoldTop() {

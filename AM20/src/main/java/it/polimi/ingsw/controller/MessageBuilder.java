@@ -53,8 +53,8 @@ public class MessageBuilder implements GameObserver {
             if (acknowledgeMessages.get(nickname) == null)
                 acknowledgeMessages.put(nickname, new AcknowledgeMessage());
 
-            acknowledgeMessages.get(nickname).setNumOfConnectedPlayers(connectedPlayerNicknames.size());
-            acknowledgeMessages.get(nickname).setResult(playerNickname+" disconnected from the game");
+            acknowledgeMessages.get(nickname).setResult("Disconnection!");
+            acknowledgeMessages.get(nickname).appendImportantMessage(playerNickname+" disconnected from the game");
             acknowledgeMessages.get(nickname).setNumOfConnectedPlayers(connectedPlayerNicknames.size());
         }
         return acknowledgeMessages;
@@ -68,7 +68,8 @@ public class MessageBuilder implements GameObserver {
      * @return a map containing the messages to be sent to the connected players
      */
     @Override
-    public HashMap<String, ConnectionAckMessage> notifyPlayerReconnected(List<Player> players, Deck resourceCardDeck, Deck goldCardDeck) {
+    public HashMap<String, ConnectionAckMessage> notifyPlayerReconnected(
+            List<Player> players, Deck resourceCardDeck, Deck goldCardDeck, ObjectiveCard[] commonObjectives) {
         if (connectionAckMessages == null)
             connectionAckMessages = new HashMap<>();
 
@@ -76,20 +77,24 @@ public class MessageBuilder implements GameObserver {
 
         for (String nickname : connectedPlayerNicknames) {
             if (connectionAckMessages.get(nickname) == null)
-                connectionAckMessages.put(nickname, new StartGameMessage());
+                connectionAckMessages.put(nickname, new ReconnectionMessage());
 
             connectionAckMessages.get(nickname).setNumOfConnectedPlayers(connectedPlayerNicknames.size());
             connectionAckMessages.get(nickname).setResult(player.getNickname()+" reconnected to the game");
+
+            connectionAckMessages.get(nickname).setGoldTop(goldCardDeck.getFirstCard());
+            connectionAckMessages.get(nickname).setResourceTop(resourceCardDeck.getFirstCard());
+            connectionAckMessages.get(nickname).setGoldVisible(goldCardDeck.getVisibleCards());
+            connectionAckMessages.get(nickname).setResourceVisible(resourceCardDeck.getVisibleCards());
         }
 
         connectionAckMessages.get(player.getNickname()).setResult("You reconnected to the game");
         connectionAckMessages.get(player.getNickname()).setNickname(player.getNickname());
-        connectionAckMessages.get(player.getNickname()).setGoldTop(goldCardDeck.getFirstCard());
-        connectionAckMessages.get(player.getNickname()).setResourceTop(resourceCardDeck.getFirstCard());
-        connectionAckMessages.get(player.getNickname()).setGoldVisible(goldCardDeck.getVisibleCards());
-        connectionAckMessages.get(player.getNickname()).setResourceVisible(resourceCardDeck.getVisibleCards());
         connectionAckMessages.get(player.getNickname()).setStarterCard(player.getStarterCard());
         connectionAckMessages.get(player.getNickname()).setInitialCards(player.getCards());
+        connectionAckMessages.get(player.getNickname()).setSecretObjective(player.getSecretObjective());
+        connectionAckMessages.get(player.getNickname()).setCommonObjectives(commonObjectives);
+
         PlayerInfo playerInfo = new PlayerInfo();
         playerInfo.setMap(player.getTable().getMap());
         playerInfo.setStats(player.getTable().getStats());
@@ -393,7 +398,7 @@ public class MessageBuilder implements GameObserver {
      * @return a map containing the messages that needs to be sent to all connected players
      */
     @Override
-    public HashMap<String, AcknowledgeMessage> notifyLastTurn() {
+    public HashMap<String, AcknowledgeMessage> notifyGameEnding(Player player) {
         if(acknowledgeMessages == null)
             acknowledgeMessages = new HashMap<>();
 
@@ -402,11 +407,32 @@ public class MessageBuilder implements GameObserver {
                 acknowledgeMessages.put(nickname, new AcknowledgeMessage());
 
             acknowledgeMessages.get(nickname).setNumOfConnectedPlayers(connectedPlayerNicknames.size());
-            acknowledgeMessages.get(nickname).setResult("The game's almost done... The last turn starts now!");
+            acknowledgeMessages.get(nickname).setResult("The game's almost done...");
+            if(player!=null) {
+                String winner = player.getNickname().equals(nickname) ? "You" : player.getNickname();
+                acknowledgeMessages.get(nickname).appendImportantMessage(winner + " reached 20 points!");
+            }else
+                acknowledgeMessages.get(nickname).appendImportantMessage("Decks are finished!");
         }
         return acknowledgeMessages;
     }
-//TODO
+
+    @Override
+    public HashMap<String, AcknowledgeMessage> notifyLastRound() {
+        if(acknowledgeMessages == null)
+            acknowledgeMessages = new HashMap<>();
+
+        for(String nickname : connectedPlayerNicknames){
+            if(acknowledgeMessages.get(nickname) == null)
+                acknowledgeMessages.put(nickname, new AcknowledgeMessage());
+
+            acknowledgeMessages.get(nickname).setNumOfConnectedPlayers(connectedPlayerNicknames.size());
+            acknowledgeMessages.get(nickname).setResult("The game's almost done...");
+            acknowledgeMessages.get(nickname).appendImportantMessage("Last round!");
+        }
+        return acknowledgeMessages;
+    }
+
     @Override
     public HashMap<String, AcknowledgeMessage> notifyPlayerObjectives(List<Player> players) {
         if(acknowledgeMessages == null)
@@ -448,11 +474,12 @@ public class MessageBuilder implements GameObserver {
             if(acknowledgeMessages.get(nickname) == null)
                 acknowledgeMessages.put(nickname, new AcknowledgeMessage());
             if(!winner.getNickname().equals(nickname))
-                acknowledgeMessages.get(nickname).setResult(winner.getNickname() + " wins the game!");
+                acknowledgeMessages.get(nickname).appendImportantMessage(winner.getNickname() + " wins the game!");
 
+            acknowledgeMessages.get(nickname).setResult("Game is over!");
             acknowledgeMessages.get(nickname).setNumOfConnectedPlayers(connectedPlayerNicknames.size());
         }
-        acknowledgeMessages.get(winner.getNickname()).setResult("You're the winner!");
+        acknowledgeMessages.get(winner.getNickname()).appendImportantMessage("You're the winner!");
         return acknowledgeMessages;
     }
 }

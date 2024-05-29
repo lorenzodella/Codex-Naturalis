@@ -9,7 +9,6 @@ import it.polimi.ingsw.client.gui.startscreen.StartScreenFrame;
 import it.polimi.ingsw.controller.PlayerInfo;
 import it.polimi.ingsw.controller.messages.ChatMessage;
 import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
-import it.polimi.ingsw.model.cards.playable.GoldCard;
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.model.cards.playable.StarterCard;
 
@@ -46,14 +45,30 @@ public class GUI implements UIManager {
     }
 
     @Override
+    public void showConnection() {
+        GUIUtils.showMessage(gameFrame,"Waiting for other players");
+    }
+
+    @Override
     public void showStartGame() {
-        GUIUtils.disposeMessage();
+        GUIUtils.disposeDialog();
         startScreenFrame.dispose();
         gameFrame.pack();
         gameFrame.setVisible(true);
         starterCardDialog.setLocationRelativeTo(gameFrame);
         starterCardDialog.setVisible(true);
 
+    }
+
+    @Override
+    public void showReconnection(String result, boolean isJoining) {
+        if(isJoining) {
+            GUIUtils.disposeDialog();
+            startScreenFrame.dispose();
+            gameFrame.pack();
+            gameFrame.setVisible(true);
+        }
+        GUIUtils.showInfo(gameFrame, result);
     }
 
     @Override
@@ -65,7 +80,7 @@ public class GUI implements UIManager {
     @Override
     public void showStartChoosingObjective() {
         starterCardDialog.dispose();
-        GUIUtils.disposeMessage();
+        GUIUtils.disposeDialog();
         secretObjectiveDialog.setLocationRelativeTo(gameFrame);
         secretObjectiveDialog.setVisible(true);
 
@@ -81,7 +96,7 @@ public class GUI implements UIManager {
     @Override
     public void showStartPlaying() {
         secretObjectiveDialog.dispose();
-        GUIUtils.disposeMessage();
+        GUIUtils.disposeDialog();
 
 
 
@@ -170,6 +185,14 @@ public class GUI implements UIManager {
     }
 
     @Override
+    public void showImportantMessage(String result, String importantMessage) {
+        if(importantMessage!=null) {
+            log(importantMessage);
+            GUIUtils.showImportantInfo(gameFrame, result+"\n"+importantMessage);
+        }
+    }
+
+    @Override
     public void showNextTurn(String nextPlayer) {
         if(nextPlayer!=null) {
             if (nextPlayer.equals(nickname)) {
@@ -183,6 +206,9 @@ public class GUI implements UIManager {
                 log("It's "+ nextPlayer+"'s turn");
                 currPlayer = nextPlayer;
             }
+        }
+        else{
+            log("Game is over!");
         }
 
     }

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.client.connections.Client;
 import it.polimi.ingsw.client.connections.ClientRMI;
 import it.polimi.ingsw.client.connections.ClientSKT;
 import it.polimi.ingsw.client.connections.ClientSender;
@@ -21,23 +22,7 @@ public class ClientMain {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        String input;
-        if(args.length>3) {
-            input = args[3];
-        }
-        else {
-            System.out.println("Insert IP of the server:");
-            try {
-                input = br.readLine();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-
-
-        ClientRMI clientRMI;
-        ClientSKT clientSKT;
+        Client client = null;
 
         UIManager manager = null;
         UIUpdater updater;
@@ -46,17 +31,16 @@ public class ClientMain {
         ClientController clientController;
 
         //--------TEST SU DUE SCHERMI UNO SOPRA L'ALTRO--------
-//        if(args[2].equals("2"))
+//        if(args[1].equals("2"))
 //            GUIUtils.location = new Point(0, -1050);
 //        else
             GUIUtils.location = new Point(0, 0);
 
-
         try {
             String ui;
             do {
-                if(args.length>1){
-                    ui = args[1];
+                if(args.length>0){
+                    ui = args[0];
                 }else {
                     System.out.println("Choose user interface:");
                     System.out.println("1) TUI");
@@ -73,31 +57,45 @@ public class ClientMain {
             }while(manager==null);
             updater = new UIUpdater(manager);
 
+            String con;
             do {
-                String scelta;
-                if(args.length>2) {
-                    scelta = args[2];
+                if(args.length>1) {
+                    con = args[1];
                 }else {
                     System.out.println("Choose how to connect to server:");
                     System.out.println("1) RMI");
                     System.out.println("2) Socket");
 
-                    scelta = br.readLine();
+                    con = br.readLine();
                 }
 
                 //create client
-                if (scelta.equals("1")) {
-                    System.out.println("Ha scelto RMI");
-                    clientRMI = new ClientRMI(updater);
-                    clientRMI.connect(input.trim(), Integer.parseInt(args[0]));
-                    sender = clientRMI.getSender();
-                } else if (scelta.equals("2")) {
-                    System.out.println("Ha scelto Socket");
-                    clientSKT = new ClientSKT(updater);
-                    clientSKT.connect(input.trim(), Integer.parseInt(args[0]));
-                    sender = clientSKT.getSender();
+                if (con.equals("1")) {
+                    client = new ClientRMI(updater);
+                } else if (con.equals("2")) {
+                    client = new ClientSKT(updater);
                 }
-            }while(sender==null);
+            }while(client==null);
+
+            String host;
+            if(args.length>2) {
+                host = args[2];
+            }
+            else {
+                System.out.println("Insert IP of the server:");
+                host = br.readLine();
+            }
+            String port;
+            if(args.length>3) {
+                port = args[3];
+            }
+            else {
+                System.out.println("Insert PORT of the server (" + (con.equals("1")?"RMI":"Socket") + "):");
+                port = br.readLine();
+            }
+
+            client.connect(host.trim(), Integer.parseInt(port));
+            sender = client.getSender();
 
             //create controller
             if(ui.equals("1")){

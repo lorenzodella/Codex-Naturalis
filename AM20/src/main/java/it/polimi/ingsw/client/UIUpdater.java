@@ -14,9 +14,25 @@ public class UIUpdater  {
         if(msg.getNickname()!=null)
             manager.setNickname(msg.getNickname());
         manager.showResult(msg.getResult());
+        manager.showConnection();
     }
 
     public void startGame(StartGameMessage msg){
+        initGame(msg);
+        manager.showStartGame();
+        manager.showCommand();
+    }
+
+    public void reconnection(ReconnectionMessage msg){
+        initGame(msg);
+        if(msg.getNickname()!=null) {
+            manager.updateCommonObjectives(msg.getCommonObjectives());
+            manager.updateSecretObjectives(msg.getSecretObjective());
+        }
+        manager.showReconnection(msg.getResult(), msg.getNickname()!=null);
+    }
+
+    private void initGame(StartGameMessage msg){
         System.out.println();
         if(msg.getNickname()!=null)
             manager.setNickname(msg.getNickname());
@@ -27,8 +43,6 @@ public class UIUpdater  {
         manager.updateResource(msg.getResourceTop(),msg.getResourceVisible());
         manager.updateCards(msg.getInitialCards());
         manager.updateStarterCard(msg.getStarterCard());
-        manager.showStartGame();
-        manager.showCommand();
     }
 
     public void starterCard(StarterCardAckMessage msg){
@@ -65,9 +79,10 @@ public class UIUpdater  {
         manager.showCommand();
     }
 
-    public void acknowledge(AcknowledgeMessage msg){
+    public void importantAck(AcknowledgeMessage msg){
         manager.showNextTurn(msg.getNextPlayer());
         manager.showResult(msg.getResult());
+        manager.showImportantMessage(msg.getResult(), msg.getImportantMessage());
         manager.showCommand();
     }
 
@@ -81,17 +96,25 @@ public class UIUpdater  {
         else
             manager.showNextTurn(msg.getNextPlayer());
         manager.showPlayAck();
+        manager.showImportantMessage(msg.getResult(), msg.getImportantMessage());
         manager.showCommand();
     }
 
     public void pickAck(PickAckMessage msg){
         manager.updateGold(msg.getGoldTop(), msg.getGoldVisible());
         manager.updateResource(msg.getResourceTop(),msg.getResourceVisible());
+        manager.updateYourPlayerInfo(msg.getYourPlayerInfo());
+        manager.updateOtherPlayerInfo(msg.getOthersPlayerInfo());
         manager.updateCards(msg.getCards());
         manager.showResult(msg.getResult());
         manager.showNextTurn(msg.getNextPlayer());
         manager.showPickAck();
+        manager.showImportantMessage(msg.getResult(), msg.getImportantMessage());
         manager.showCommand();
+    }
+
+    public void stopGame(StopGameMessage msg){
+        manager.showImportantMessage("Game stopped!", msg.getResult());
     }
 
     public void chatMessage(ChatMessage msg){

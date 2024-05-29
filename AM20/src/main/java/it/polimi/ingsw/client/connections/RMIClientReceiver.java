@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.connections;
 
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
@@ -22,13 +23,15 @@ public class RMIClientReceiver extends UnicastRemoteObject implements Connection
 
     @Override
     public void callStopGame(StopGameMessage message) throws RemoteException {
-        this.uiUpdater.message(message);
+        this.uiUpdater.stopGame(message);
     }
 
     @Override
     public void callConnectionAckMessage(ConnectionAckMessage message) throws RemoteException {
         if(!message.doesGameStarts()){ //false è ConnectionAckMessage
             this.uiUpdater.connectionAck(message);
+        }else if(message.isReconnection()){ //true è ReconnectionMessage
+            this.uiUpdater.reconnection((ReconnectionMessage) message);
         }else if(message.doesGameStarts()){ //true è StartGameMessage
             this.uiUpdater.startGame((StartGameMessage) message);
         }
@@ -37,11 +40,11 @@ public class RMIClientReceiver extends UnicastRemoteObject implements Connection
     @Override
     public void callAcknowledgeMessage(AcknowledgeMessage message) throws RemoteException {
 
-        if(message.getAction().equals("Disconnection"))
-            this.uiUpdater.acknowledge(message);
-        if(message.getAction().equals("Play"))
+        if(message.getAction().equals(AcknowledgeMessage.IMPORTANT))
+            this.uiUpdater.importantAck(message);
+        if(message.getAction().equals(AcknowledgeMessage.PLAY))
             this.uiUpdater.playAck((PlayAckMessage) message);
-        if(message.getAction().equals("Pick"))
+        if(message.getAction().equals(AcknowledgeMessage.PICK))
             this.uiUpdater.pickAck((PickAckMessage) message);
 
     }

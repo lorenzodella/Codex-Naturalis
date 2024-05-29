@@ -1,9 +1,11 @@
 package it.polimi.ingsw.controller.messages;
 
 import it.polimi.ingsw.controller.PlayerInfo;
+import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.model.cards.playable.StarterCard;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -21,6 +23,26 @@ public class ConnectionAckMessage extends Message{
 
     public boolean doesGameStarts() {
         return false;
+    }
+
+
+    public boolean isReconnection() {
+        return false;
+    }
+
+
+    public ArrayList<ObjectiveCard> getSecretObjective() {
+        return null;
+    }
+
+    public void setSecretObjective(ArrayList<ObjectiveCard> secretObjective) {
+    }
+
+    public ObjectiveCard[] getCommonObjectives() {
+        return null;
+    }
+
+    public void setCommonObjectives(ObjectiveCard[] commonObjectives) {
     }
 
 

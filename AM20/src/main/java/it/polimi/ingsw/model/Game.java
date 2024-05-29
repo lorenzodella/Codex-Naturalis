@@ -392,6 +392,7 @@ public class Game implements GameObservable{
         Player winner = players.get(0);
         for(Player p :players){
             int point = p.getScore();
+            System.out.println(p.getNickname() + " " + point);
             if(point > winner.getScore())
                 winner = p;
         }

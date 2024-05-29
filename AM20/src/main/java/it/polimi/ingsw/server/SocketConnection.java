@@ -17,7 +17,6 @@ public class SocketConnection implements Connection  {
 
     }
 
-
     @Override
     public synchronized void callChatMessage(ChatMessage message) throws IOException {
         outputStream.reset();

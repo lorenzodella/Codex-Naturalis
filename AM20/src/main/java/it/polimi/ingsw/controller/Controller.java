@@ -4,7 +4,6 @@ import it.polimi.ingsw.controller.exceptions.InvalidDisconnectionException;
 import it.polimi.ingsw.model.exceptions.InvalidPlayingException;
 import it.polimi.ingsw.controller.messages.*;
 import it.polimi.ingsw.controller.exceptions.NoOneIsConnectedException;
-import it.polimi.ingsw.model.Deck;
 import it.polimi.ingsw.model.GameObservable;
 import it.polimi.ingsw.model.exceptions.InvalidArgumentException;
 import it.polimi.ingsw.controller.exceptions.CannotJoinGameException;
@@ -160,8 +159,11 @@ public class Controller implements GameManager {
     private synchronized HashMap<String, ConnectionAckMessage> reconnectPlayer(String nickname) throws CannotJoinGameException {
         try {
             List<Player> p = gameModel.setPlayerConnection(nickname, true);
+
             messageBuilder = new MessageBuilder(gameModel.getConnectedPlayers());
-            return messageBuilder.notifyPlayerReconnected(p, gameModel.getResourceCardDeck(), gameModel.getGoldCardDeck());
+            return messageBuilder.notifyPlayerReconnected(
+                    p, gameModel.getResourceCardDeck(), gameModel.getGoldCardDeck(), gameModel.getCommonObjectives()
+            );
         } catch (InvalidConnectionStateException e) {
             //if you are reconnecting but you were already connected
             throw new CannotJoinGameException("A player with that nickname is already playing");
@@ -474,7 +476,10 @@ public class Controller implements GameManager {
         //if game ended but last turn not started yet
         if(gameModel.checkTheEnd() && missingRounds ==-1) {
             missingRounds = 2;
-            msg = messageBuilder.notifyLastTurn();
+            if(gameModel.areDeckFinished())
+                msg = messageBuilder.notifyGameEnding(null);
+            else
+                msg = messageBuilder.notifyGameEnding(gameModel.getCurrPlayer());
         }
 
         boolean isNewTurn = false;
@@ -487,6 +492,8 @@ public class Controller implements GameManager {
         //check if last turn is starting now
         if(missingRounds >0 && isNewTurn){
             missingRounds--;
+            if(missingRounds==1)
+                msg = messageBuilder.notifyLastRound();
         }
         if(missingRounds ==0 && isNewTurn){
             //if last turn is started and ended
@@ -498,7 +505,8 @@ public class Controller implements GameManager {
                 msg = messageBuilder.notifyWin(winner);
             } catch (DrawMatchException e) {
                 for(AcknowledgeMessage m : msg.values()){
-                    m.setResult(e.toString());
+                    m.setResult("Game is over!");
+                    m.appendImportantMessage(e.toString());
                 }
             }
             phase = END;

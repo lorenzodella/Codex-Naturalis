@@ -21,14 +21,14 @@ public class GUIUtils {
         } );
     }
 
-    public static void disposeMessage(){
+    public static void disposeDialog(){
         if(dialog!=null) {
             dialog.dispose();
             dialog = null;
         }
     }
     public static void showError(Component parent, String message){
-        disposeMessage();
+        disposeDialog();
         SwingUtilities.invokeLater( () ->{
             //JOptionPane.showMessageDialog(parent, message, "Error", JOptionPane.ERROR_MESSAGE);
             JOptionPane jOptionPane = new JOptionPane(message, JOptionPane.ERROR_MESSAGE, JOptionPane.DEFAULT_OPTION);
@@ -39,7 +39,7 @@ public class GUIUtils {
     }
 
     public static void showInfo(Component parent, String message){
-        disposeMessage();
+        disposeDialog();
         SwingUtilities.invokeLater( () ->{
             //JOptionPane.showMessageDialog(parent, message, "Info", JOptionPane.INFORMATION_MESSAGE));
             JOptionPane jOptionPane = new JOptionPane(message, JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION);
@@ -50,22 +50,28 @@ public class GUIUtils {
     }
 
     public static void showChatMessage(Component parent, Chat chat){
-        disposeMessage();
+        disposeDialog();
         SwingUtilities.invokeLater( () ->{
             //JOptionPane.showMessageDialog(parent, message, "Info", JOptionPane.INFORMATION_MESSAGE));
             JButton[] buttons = new JButton[2];
             buttons[0] = new JButton("Ok");
-            buttons[0].addActionListener(e -> disposeMessage());
+            buttons[0].addActionListener(e -> disposeDialog());
             buttons[1] = new JButton("Open chat");
             buttons[1].addActionListener(e -> {
                 chat.setLocationRelativeTo(parent);
                 chat.setVisible(true);
-                disposeMessage();
+                disposeDialog();
             });
             JOptionPane jOptionPane = new JOptionPane("You received a message", JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, buttons, null);
             dialog = jOptionPane.createDialog("New chat message");
             dialog.setLocationRelativeTo(parent); // Center the dialog
             dialog.setVisible(true);
+        } );
+    }
+
+    public static void showImportantInfo(Component parent, String message){
+        SwingUtilities.invokeLater( () ->{
+            JOptionPane.showMessageDialog(parent, message, "Important", JOptionPane.INFORMATION_MESSAGE);
         } );
     }
 

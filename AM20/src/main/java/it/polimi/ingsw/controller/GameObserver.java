@@ -12,7 +12,7 @@ import java.util.List;
 public interface GameObserver {
 
     HashMap<String, AcknowledgeMessage> notifyPlayerDisconnected(String playerNickname);
-    HashMap<String, ConnectionAckMessage> notifyPlayerReconnected(List<Player> players, Deck resourceCardDeck, Deck goldCardDeck);
+    HashMap<String, ConnectionAckMessage> notifyPlayerReconnected(List<Player> players, Deck resourceCardDeck, Deck goldCardDeck, ObjectiveCard[] commonObjectives);
     HashMap<String, ConnectionAckMessage> notifyDecksCreated(Deck resourceCardDeck, Deck goldCardDeck);
     HashMap<String, ConnectionAckMessage> notifyStarterCards(List<Player> players);
     HashMap<String, ConnectionAckMessage> notifyInitialCards(List<Player> players);
@@ -25,7 +25,8 @@ public interface GameObserver {
     HashMap<String, AcknowledgeMessage> notifyPlayerPick(Player player);
     HashMap<String, AcknowledgeMessage> notifyDecksModified(Deck resourceCardDeck, Deck goldCardDeck);
     HashMap<String, AcknowledgeMessage> notifyNextTurn(Player player);
-    HashMap<String, AcknowledgeMessage> notifyLastTurn();
+    HashMap<String, AcknowledgeMessage> notifyGameEnding(Player player);
+    HashMap<String, AcknowledgeMessage> notifyLastRound();
     HashMap<String, AcknowledgeMessage> notifyPlayerObjectives(List<Player> players);
     HashMap<String, AcknowledgeMessage> notifyWin(Player winner);
 
