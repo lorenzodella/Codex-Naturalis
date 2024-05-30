@@ -26,7 +26,7 @@ public class EndGameTimer {
                 StopGameMessage m = new StopGameMessage();
                 m.setResult("You won because everyone left the game");
                 callback.callStopGame(m);
-                manager.reset();
+                //manager.reset();
             } catch (InterruptedException ignored) {}
             catch (IOException e) {
                 throw new RuntimeException(e);

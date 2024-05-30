@@ -217,6 +217,10 @@ public class GUI implements UIManager {
     @Override
     public void updateStopGame() {
         nickname = null;
+        GUIUtils.disposeDialog();
+        starterCardDialog.dispose();
+        secretObjectiveDialog.dispose();
+        gameFrame.getLogPanel().disableChat();
         gameFrame.getDeckPanel().setCardsClickable(false);
         gameFrame.getYourCardsPanel().setCardsClickable(false);
     }

@@ -113,7 +113,7 @@ public class ServerManager {
 
                 }
             }
-            reset();
+            //reset();
         }
     }
 }

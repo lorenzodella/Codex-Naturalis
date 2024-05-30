@@ -43,8 +43,8 @@ public class SKTClientReceiver implements Runnable {
 
                 }else if(message.getType().equals(Message.ACKNOWLEDGE)){
                     AcknowledgeMessage msg = (AcknowledgeMessage) message;
-                    if(msg.getAction().equals(AcknowledgeMessage.IMPORTANT))
-                        this.uiUpdater.importantAck(msg);
+                    if(msg.getAction().equals(AcknowledgeMessage.DISCONNECTION))
+                        this.uiUpdater.disconnectionAck((DisconnectionMessage) msg);
                     if(msg.getAction().equals(AcknowledgeMessage.PLAY))
                         this.uiUpdater.playAck((PlayAckMessage) msg);
                     if(msg.getAction().equals(AcknowledgeMessage.PICK))

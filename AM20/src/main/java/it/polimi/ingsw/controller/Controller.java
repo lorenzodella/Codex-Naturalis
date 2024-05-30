@@ -1,6 +1,7 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.controller.exceptions.InvalidDisconnectionException;
+import it.polimi.ingsw.model.Deck;
 import it.polimi.ingsw.model.exceptions.InvalidPlayingException;
 import it.polimi.ingsw.controller.messages.*;
 import it.polimi.ingsw.controller.exceptions.NoOneIsConnectedException;
@@ -94,6 +95,8 @@ public class Controller implements GameManager {
      */
     @Override
     public synchronized ConnectionAckMessage newGame(String playerNickname, int numPlayers) throws InvalidArgumentException, InvalidPlayingException {
+        if(phase==END)
+            throw new InvalidPlayingException("A game just ended. Wait for other players to disconnect before creating a new game");
         if(phase!=NOGAME)
             throw new InvalidPlayingException("A game already started");
         if(numPlayers<2 || numPlayers>4)
@@ -124,14 +127,15 @@ public class Controller implements GameManager {
         //if you are not a player of current game
         if(!players.contains(nickname))
             throw new InvalidArgumentException("nickname", nickname);
+
+        gameModel.setPlayerConnection(nickname, false);
         //if actual game not yet started
         //SE UN PLAYER SI DISCONNETTE DURING PRELIMINARY --> CHIUDO TUTTO
         if(phase<PLAY) {
-            phase = NOGAME;
+            phase = END;
             throw new InvalidDisconnectionException();
         }
 
-        gameModel.setPlayerConnection(nickname, false);
         Set<String> connectedPlayers = gameModel.getConnectedPlayers();
         if(connectedPlayers.isEmpty()) {
             phase = NOGAME;
@@ -139,12 +143,19 @@ public class Controller implements GameManager {
         }
 
         messageBuilder = new MessageBuilder(connectedPlayers);
-        HashMap<String, AcknowledgeMessage> msg = messageBuilder.notifyPlayerDisconnected(nickname);
+        HashMap<String, AcknowledgeMessage> msg;
+        msg = messageBuilder.notifyPlayerDisconnected(nickname);
 
         //if you are the current player, pass turn to next player
         if(gameModel.getCurrPlayer().getNickname().equals(nickname)) {
-            if(phase==PICK)
-                phase=PLAY;
+            //if you are current player, and you were about to pick a card, pick it
+            if(phase==PICK) {
+                try {
+                    gameModel.pickCard(Deck.RESOURCE_CARDS);
+                    msg = messageBuilder.notifyDecksModified(gameModel.getResourceCardDeck(), gameModel.getGoldCardDeck());
+                } catch (FinishedCardStackException ignored) {}
+                phase = PLAY;
+            }
             msg = checkEndGame();
         }
         return msg;
@@ -185,6 +196,8 @@ public class Controller implements GameManager {
     public synchronized HashMap<String, ConnectionAckMessage> joinGame(String playerNickname) throws CannotJoinGameException {
         if(phase==NOGAME)
             throw new CannotJoinGameException("No active game");
+        else if(phase==END)
+            throw new CannotJoinGameException("A game just ended. Wait for other players to disconnect before joining a new game");
         //if you are connecting with an already used nickname
         else if(players.contains(playerNickname)){
             //if game started and you are reconnecting

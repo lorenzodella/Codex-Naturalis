@@ -139,6 +139,7 @@ public class TUI implements UIManager {
         }
     }
 
+    //TODO tia vedi notion
     @Override
     public void updateGold(PlayableCard goldTop, PlayableCard[] goldVisible) {
         if(goldTop!=null && goldVisible !=null){
@@ -151,6 +152,7 @@ public class TUI implements UIManager {
 
     }
 
+    //TODO tia vedi notion
     @Override
     public void updateResource(PlayableCard resourceTop, PlayableCard[] resourceVisible) {
         if(resourceTop != null && resourceVisible != null){
@@ -205,8 +207,8 @@ public class TUI implements UIManager {
     @Override
     public void showImportantMessage(String result, String importantMessage) {
         if(importantMessage!=null) {
-            System.out.println(ConsoleColors.TEXT_BG_GREEN+result);
-            System.out.println(importantMessage+ConsoleColors.TEXT_RESET);
+            System.out.println(ConsoleColors.TEXT_BG_GREEN+result+ConsoleColors.TEXT_RESET);
+            System.out.println(ConsoleColors.TEXT_BG_GREEN+importantMessage+ConsoleColors.TEXT_RESET);
         }
     }
 

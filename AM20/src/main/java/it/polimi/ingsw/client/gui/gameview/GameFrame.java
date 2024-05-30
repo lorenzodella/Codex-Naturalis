@@ -56,7 +56,7 @@ public class GameFrame extends JFrame {
 
         PlayerStats playerStats = new PlayerStats();
 
-        PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(0, playerStats, "You");
+        PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel("You");
 
         chat = new Chat(this);
         LogPanel logPanel = new LogPanel(chat);
@@ -133,12 +133,11 @@ public class GameFrame extends JFrame {
     public void updateOtherPlayers(HashMap<String, PlayerInfo> otherPlayerInfo){
         if(otherPlayerPanels == null){
             createOtherPlayerPanels(otherPlayerInfo);
-        }else{
-            for(String playerName : otherPlayerInfo.keySet()){
-                if(otherPlayerInfo.get(playerName).getMap()!=null)
-                    otherPlayerPanels.get(playerName).getTablePanel().update(otherPlayerInfo.get(playerName).getMap());
-                otherPlayerPanels.get(playerName).getPlayerInfoPanel().update(otherPlayerInfo.get(playerName).getScore(), otherPlayerInfo.get(playerName).getStats() );
-            }
+        }
+        for(String playerName : otherPlayerInfo.keySet()){
+            if(otherPlayerInfo.get(playerName).getMap()!=null)
+                otherPlayerPanels.get(playerName).getTablePanel().update(otherPlayerInfo.get(playerName).getMap());
+            otherPlayerPanels.get(playerName).getPlayerInfoPanel().update(otherPlayerInfo.get(playerName).getScore(), otherPlayerInfo.get(playerName).getStats() );
         }
     }
 
@@ -151,7 +150,7 @@ public class GameFrame extends JFrame {
             YourCardsPanel yourCardsPanel = new YourCardsPanel(playerName);
             yourCardsPanel.setHidden();
             TablePanel tablePanel = new TablePanel();
-            PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(otherPlayerInfo.get(playerName).getScore(), otherPlayerInfo.get(playerName).getStats(), playerName);
+            PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(playerName);
 
             CommonObjectivePanel commonObjectivePanel = new CommonObjectivePanel(playerPanel.getCommonObjectivePanel());
             DeckPanel deckPanel = new DeckPanel(playerPanel.getDeckPanel());

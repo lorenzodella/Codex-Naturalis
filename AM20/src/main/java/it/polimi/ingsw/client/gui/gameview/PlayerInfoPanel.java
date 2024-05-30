@@ -28,12 +28,10 @@ public class PlayerInfoPanel extends JPanel {
      * the player name.
      * Ps: the player stats are the most important thing in this panel because it shows you the occurrences of every specific
      * resource and every object that a player has in their player table.
-     * @param score the player's score
-     * @param stats the player's stats
      * @param playerName teh player's name
      */
 
-    public PlayerInfoPanel(int score, PlayerStats stats, String playerName) {
+    public PlayerInfoPanel(String playerName) {
         super();
 
         setLayout(new BorderLayout());

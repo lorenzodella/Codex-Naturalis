@@ -9,6 +9,7 @@ import java.awt.*;
 public class LogPanel extends JPanel {
     private JTextArea logTextArea;
     private Chat chat;
+    private JButton chatButton;
 
     /**
      * Panel that contains all the texts that describe every single move of every single player
@@ -22,7 +23,7 @@ public class LogPanel extends JPanel {
         //setPreferredSize(new Dimension(300, 300));
         setMaximumSize(new Dimension(300, 300));
 
-        JButton chatButton = new JButton("Apri chat");
+        chatButton = new JButton("Apri chat");
         chatButton.addActionListener(e -> chat.setVisible(true));
         add(chatButton, BorderLayout.SOUTH);
 
@@ -43,6 +44,10 @@ public class LogPanel extends JPanel {
 
     public void log(String log){
         logTextArea.append(log + "\n");
+    }
+
+    public void disableChat(){
+        chatButton.removeActionListener(chatButton.getActionListeners()[0]);
     }
 
 }

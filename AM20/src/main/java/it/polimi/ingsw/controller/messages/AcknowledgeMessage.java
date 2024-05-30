@@ -26,14 +26,21 @@ public class AcknowledgeMessage extends Message {
     private String importantMessage;
 
 
-    public static final String IMPORTANT = "Important";
+    public static final String SIMPLE = "Simple";
     public static final String PLAY = "Play";
     public static final String PICK = "Pick";
+    public static final String DISCONNECTION = "Disconnection";
 
     public String getAction(){
-        return AcknowledgeMessage.IMPORTANT;
+        return AcknowledgeMessage.SIMPLE;
     }
 
+    public void setDecksModified(boolean decksModified) {
+    }
+
+    public boolean areDecksModified() {
+        return false;
+    }
 
     public String getImportantMessage() {
         return importantMessage;

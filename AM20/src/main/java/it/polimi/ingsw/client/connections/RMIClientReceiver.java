@@ -1,6 +1,5 @@
 package it.polimi.ingsw.client.connections;
 
-import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
@@ -40,8 +39,8 @@ public class RMIClientReceiver extends UnicastRemoteObject implements Connection
     @Override
     public void callAcknowledgeMessage(AcknowledgeMessage message) throws RemoteException {
 
-        if(message.getAction().equals(AcknowledgeMessage.IMPORTANT))
-            this.uiUpdater.importantAck(message);
+        if(message.getAction().equals(AcknowledgeMessage.DISCONNECTION))
+            this.uiUpdater.disconnectionAck((DisconnectionMessage) message);
         if(message.getAction().equals(AcknowledgeMessage.PLAY))
             this.uiUpdater.playAck((PlayAckMessage) message);
         if(message.getAction().equals(AcknowledgeMessage.PICK))

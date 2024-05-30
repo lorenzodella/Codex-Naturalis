@@ -51,7 +51,7 @@ public class MessageBuilder implements GameObserver {
 
         for (String nickname : connectedPlayerNicknames) {
             if (acknowledgeMessages.get(nickname) == null)
-                acknowledgeMessages.put(nickname, new AcknowledgeMessage());
+                acknowledgeMessages.put(nickname, new DisconnectionMessage());
 
             acknowledgeMessages.get(nickname).setResult("Disconnection!");
             acknowledgeMessages.get(nickname).appendImportantMessage(playerNickname+" disconnected from the game");
@@ -96,13 +96,17 @@ public class MessageBuilder implements GameObserver {
         connectionAckMessages.get(player.getNickname()).setCommonObjectives(commonObjectives);
 
         PlayerInfo playerInfo = new PlayerInfo();
+        playerInfo.setScore(player.getScore());
         playerInfo.setMap(player.getTable().getMap());
         playerInfo.setStats(player.getTable().getStats());
         connectionAckMessages.get(player.getNickname()).setPlayerInfo(playerInfo);
+
         HashMap <String, PlayerInfo> otherPlayerUpdates = new HashMap<>();
         for(Player p: players.stream().filter(x->!x.equals(player)).collect(Collectors.toList())){
             PlayerInfo playerUpdates = new PlayerInfo();
             playerUpdates.setScore(p.getScore());
+            playerUpdates.setMap(p.getTable().getMap());
+            playerUpdates.setStats(p.getTable().getStats());
             otherPlayerUpdates.put(p.getNickname(), playerUpdates);
         }
         connectionAckMessages.get(player.getNickname()).setOthersPlayerInfo(otherPlayerUpdates);
@@ -368,6 +372,7 @@ public class MessageBuilder implements GameObserver {
             acknowledgeMessages.get(nickname).setResourceTop(resourceCardDeck.getFirstCard());
             acknowledgeMessages.get(nickname).setGoldVisible(goldCardDeck.getVisibleCards());
             acknowledgeMessages.get(nickname).setResourceVisible(resourceCardDeck.getVisibleCards());
+            acknowledgeMessages.get(nickname).setDecksModified(true);
         }
         return acknowledgeMessages;
     }

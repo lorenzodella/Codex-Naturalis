@@ -79,8 +79,14 @@ public class UIUpdater  {
         manager.showCommand();
     }
 
-    public void importantAck(AcknowledgeMessage msg){
-        manager.showNextTurn(msg.getNextPlayer());
+    public void disconnectionAck(DisconnectionMessage msg){
+        if(msg.areDecksModified()){
+            manager.updateGold(msg.getGoldTop(), msg.getGoldVisible());
+            manager.updateResource(msg.getResourceTop(),msg.getResourceVisible());
+        }
+        if(msg.getNextPlayer()!=null) {
+            manager.showNextTurn(msg.getNextPlayer());
+        }
         manager.showResult(msg.getResult());
         manager.showImportantMessage(msg.getResult(), msg.getImportantMessage());
         manager.showCommand();
