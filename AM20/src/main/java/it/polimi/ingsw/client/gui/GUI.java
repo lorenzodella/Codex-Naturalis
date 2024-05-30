@@ -209,8 +209,16 @@ public class GUI implements UIManager {
         }
         else{
             log("Game is over!");
+            updateStopGame();
         }
 
+    }
+
+    @Override
+    public void updateStopGame() {
+        nickname = null;
+        gameFrame.getDeckPanel().setCardsClickable(false);
+        gameFrame.getYourCardsPanel().setCardsClickable(false);
     }
 
     @Override

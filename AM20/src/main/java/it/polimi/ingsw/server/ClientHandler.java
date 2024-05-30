@@ -42,6 +42,13 @@ public class ClientHandler implements Runnable{
     public void run() {
 
         ClientMessage message;
+        SocketConnection connection;
+        try {
+            connection = new SocketConnection(this.socket);
+        } catch (IOException e) {
+            System.err.println("Client disconnected, client handler will be closed");
+            return;
+        }
         while(true){
             System.out.println("Waiting for message...");
             try {
@@ -51,7 +58,7 @@ public class ClientHandler implements Runnable{
 
                     LoginMessage msg = (LoginMessage) message;
                     if(!manager.getConnections().containsKey(msg.getClient())){
-                        this.manager.addConnection(msg.getClient(),new SocketConnection(this.socket));
+                        this.manager.addConnection(msg.getClient(),connection);
                     }
                     HashMap<String, ConnectionAckMessage> res;
                     this.usernameClient = msg.getClient();
@@ -70,6 +77,7 @@ public class ClientHandler implements Runnable{
                         }
                     } catch (CannotJoinGameException e) {
                         this.manager.getConnections().get(this.usernameClient).callErrorMessage(new ErrorMessage(e));
+                        this.manager.getConnections().remove(this.usernameClient);
                     }
 
 
@@ -79,13 +87,14 @@ public class ClientHandler implements Runnable{
                     try {
                         this.usernameClient = msg.getClient();
                         if(!manager.getConnections().containsKey(msg.getClient())){
-                            this.manager.addConnection(msg.getClient(),new SocketConnection(this.socket));
+                            this.manager.addConnection(msg.getClient(),connection);
                         }
                         messageToSend = this.manager.getController().newGame(msg.getClient(), msg.getNumPlayers());
                         HashMap<String, Connection> connectedPlayer = this.manager.getConnections();
                         connectedPlayer.get(this.usernameClient).callConnectionAckMessage(messageToSend);
                     } catch (InvalidArgumentException | InvalidPlayingException e) {
                         this.manager.getConnections().get(this.usernameClient).callErrorMessage(new ErrorMessage(e));
+                        this.manager.getConnections().remove(this.usernameClient);
                     }
 
 
@@ -193,14 +202,14 @@ public class ClientHandler implements Runnable{
                     SendChatMessage msg = (SendChatMessage) message;
 
                     //non devo chiamare il controller, ma devo semplicemente madnare i dati
-                    HashMap<String, Connection> connection = this.manager.getConnections();
+                    HashMap<String, Connection> connections = this.manager.getConnections();
                     ChatMessage msgToSend = new ChatMessage(msg.getSender(), msg.getRecipient(), msg.getMessage());
                     try {
-                        connection.get(msg.getRecipient()).callChatMessage(msgToSend);
+                        connections.get(msg.getRecipient()).callChatMessage(msgToSend);
                     } catch (IOException | NullPointerException e) {
                         Message m = new Message();
                         m.setResult("Recipient is not online");
-                        connection.get(msg.getSender()).callMessage(m);
+                        connections.get(msg.getSender()).callMessage(m);
                     }
 
 

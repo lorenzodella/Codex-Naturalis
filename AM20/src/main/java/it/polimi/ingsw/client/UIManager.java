@@ -39,4 +39,5 @@ public interface UIManager {
     void showError(String error);
     void showCommand();
     void showConnection();
+    void updateStopGame();
 }

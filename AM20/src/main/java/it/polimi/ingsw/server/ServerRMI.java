@@ -44,7 +44,12 @@ public class ServerRMI extends UnicastRemoteObject implements Loggable{
         if(!manager.getConnections().containsKey(client)){
             manager.addConnection(client, callback);
         }
-        res = this.manager.getController().joinGame(client);
+        try {
+            res = this.manager.getController().joinGame(client);
+        }catch (CannotJoinGameException e){
+            manager.getConnections().remove(client);
+            throw e;
+        }
 
         //stop countdown if someone joined
         this.manager.resetTimer();
@@ -78,7 +83,12 @@ public class ServerRMI extends UnicastRemoteObject implements Loggable{
         if(!manager.getConnections().containsKey(client)){
             manager.addConnection(client, callback);
         }
-        return this.manager.getController().newGame(client,numPlayers);
+        try {
+            return this.manager.getController().newGame(client, numPlayers);
+        } catch (InvalidArgumentException | InvalidPlayingException e) {
+            manager.getConnections().remove(client);
+            throw e;
+        }
     }
 
     //TODO: RIGUARDARE

@@ -114,6 +114,7 @@ public class UIUpdater  {
     }
 
     public void stopGame(StopGameMessage msg){
+        manager.updateStopGame();
         manager.showImportantMessage("Game stopped!", msg.getResult());
     }
 

@@ -126,7 +126,7 @@ public class TUI implements UIManager {
     @Override
     public void updateChatMessage(ChatMessage msg) {
         this.messages.add(msg);
-        if(msg.getRecipient()==null || msg.getRecipient().equals(nickname))
+        if(!msg.getSender().equals(nickname) && (msg.getRecipient()==null || msg.getRecipient().equals(nickname)))
             System.out.println("\nYou received a message");
         viewChat();
     }
@@ -225,7 +225,13 @@ public class TUI implements UIManager {
         }
         else{
             System.out.println(ConsoleColors.TEXT_BG_GREEN+"Game is over!"+ConsoleColors.TEXT_RESET);
+            updateStopGame();
         }
+    }
+
+    @Override
+    public void updateStopGame() {
+        nickname = null;
     }
 
     @Override
@@ -507,14 +513,13 @@ public class TUI implements UIManager {
     public void viewChat(){
         System.out.println("\nCHAT");
         for(ChatMessage m : messages){
-            if(m.getSender().equals(nickname))
-                System.out.println("[to: "+m.getRecipient()+"] " + m.getMessage());
-            else if(m.getRecipient()==null)
-                if(m.getSender().equals(nickname))
+            if(m.getSender().equals(nickname)){
+                if(m.getRecipient()==null)
                     System.out.println("[to: everyone] " + m.getMessage());
                 else
-                    System.out.println("[from: "+m.getSender()+"] " + m.getMessage());
-            else if(m.getRecipient().equals(nickname))
+                    System.out.println("[to: "+m.getRecipient()+"] " + m.getMessage());
+            }
+            else if(m.getRecipient()==null || m.getRecipient().equals(nickname))
                 System.out.println("[from: "+m.getSender()+"] " + m.getMessage());
         }
 

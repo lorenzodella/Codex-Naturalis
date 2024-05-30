@@ -62,7 +62,9 @@ public class TUIController extends ClientController implements Runnable{
                     }else
                         myTUI.viewErrorCommand();
                 }else if(command[0].equals("/chooseObjective")){
-                    if(command.length == 2){
+                    if(myTUI.getNickname()==null)
+                        myTUI.showError("You must join a game");
+                    else if(command.length == 2){
                         try{
                             this.clientSender.chooseObjective(myTUI.getNickname(), Integer.parseInt(command[1]));
                         }catch (NumberFormatException e){
@@ -73,7 +75,9 @@ public class TUIController extends ClientController implements Runnable{
 
 
                 }else if(command[0].equals("/chooseStarterSide")){
-                    if(command.length == 2){
+                    if(myTUI.getNickname()==null)
+                        myTUI.showError("You must join a game");
+                    else if(command.length == 2){
                         try{
                             this.clientSender.chooseStarterCardSide(myTUI.getNickname(), Integer.parseInt(command[1]));
                         }catch (NumberFormatException e){
@@ -84,7 +88,9 @@ public class TUIController extends ClientController implements Runnable{
 
 
                 }else if(command[0].equals("/pickCardDeck")){
-                    if(command.length == 2){
+                    if(myTUI.getNickname()==null)
+                        myTUI.showError("You must join a game");
+                    else if(command.length == 2){
                         try{
                             this.clientSender.pickCard(myTUI.getNickname(), Integer.parseInt(command[1]));
                         }catch (NumberFormatException e){
@@ -94,7 +100,9 @@ public class TUIController extends ClientController implements Runnable{
                         myTUI.viewErrorCommand();
 
                 }else if(command[0].equals("/pickCardVisible")){
-                    if(command.length == 3){
+                    if(myTUI.getNickname()==null)
+                        myTUI.showError("You must join a game");
+                    else if(command.length == 3){
                         try{
                             this.clientSender.pickCard(myTUI.getNickname(), Integer.parseInt(command[1]), Integer.parseInt(command[2]));
 
@@ -105,7 +113,9 @@ public class TUIController extends ClientController implements Runnable{
                         myTUI.viewErrorCommand();
 
                 }else if(command[0].equals("/playCard")){
-                    if(command.length == 5){
+                    if(myTUI.getNickname()==null)
+                        myTUI.showError("You must join a game");
+                    else if(command.length == 5){
                         try{
                             this.clientSender.playCard(myTUI.getNickname(), Integer.parseInt(command[1]), Integer.parseInt(command[2]), command[3], Integer.parseInt(command[4]));
                         }catch (NumberFormatException e){
@@ -114,7 +124,9 @@ public class TUIController extends ClientController implements Runnable{
                     }else
                         myTUI.viewErrorCommand();
                 }else if(command[0].equals("/chat")){
-                    if(command.length == 2 && msg.length == 2){
+                    if(myTUI.getNickname()==null)
+                        myTUI.showError("You must join a game");
+                    else if(command.length == 2 && msg.length == 2){
                         if(command[1].equals("broadcast")) {
                             this.clientSender.sendBroadcastChatMessage(myTUI.getNickname(), msg[1]);
                             myTUI.updateChatMessage(new BroadcastChatMessage(myTUI.getNickname(), msg[1]));
