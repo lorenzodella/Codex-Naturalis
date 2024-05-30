@@ -80,6 +80,10 @@ public class StarterCardDialog extends JDialog implements ActionListener{
         confirm.setName(String.valueOf(starterCard.getCardSide()));
     }
 
+    /**
+     * This method allows to update teh starter card every time that there's an update
+     * @param card teh specific starter card
+     */
     public void update(StarterCard card){
         starterCard.update(card);
     }

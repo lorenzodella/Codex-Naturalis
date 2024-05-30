@@ -23,6 +23,16 @@ public class PlayerInfoPanel extends JPanel {
     JLabel quillLabel;
     JLabel manuscriptLabel;
 
+    /**
+     * The player info panel is a panel that's found inside the player panel and it says the player's score, stats and
+     * the player name.
+     * Ps: the player stats are the most important thing in this panel because it shows you the occurrences of every specific
+     * resource and every object that a player has in their player table.
+     * @param score the player's score
+     * @param stats the player's stats
+     * @param playerName teh player's name
+     */
+
     public PlayerInfoPanel(int score, PlayerStats stats, String playerName) {
         super();
 
@@ -109,6 +119,12 @@ public class PlayerInfoPanel extends JPanel {
 
         add(centerPanel, BorderLayout.CENTER);
     }
+
+    /**
+     * This method allows to update the player stats and the player score every time that something happens
+     * @param score the player new score
+     * @param stats the player new stats
+     */
     public void update(int score, PlayerStats stats){
         scoreLabel.setText("Score: "+score);
 

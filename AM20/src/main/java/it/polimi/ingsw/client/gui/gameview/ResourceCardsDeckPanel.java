@@ -14,6 +14,14 @@ public class ResourceCardsDeckPanel extends JPanel {
     ResourceCardsPanel resourceCardsPanelCovered;
     ResourceCardsPanel resourceCardsPanelVisible;
 
+    /**
+     * The panel that contains two other panels:
+     * 1. the two resource visible cards
+     * 2. the top of the resource deck
+     * @param resourceCardsPanelCovered panel of the top of the resource deck
+     * @param resourceCardsPanelVisible panel of the two visible cards
+     */
+
     public ResourceCardsDeckPanel(ResourceCardsPanel resourceCardsPanelCovered, ResourceCardsPanel resourceCardsPanelVisible) {
         super();
         this.resourceCardsPanelCovered = resourceCardsPanelCovered;
@@ -44,6 +52,12 @@ public class ResourceCardsDeckPanel extends JPanel {
         add(resourceCardsPanelVisible, BorderLayout.SOUTH);
     }
 
+    /**
+     * This method allows to update the cards every time that a player picks a card
+     * @param visibleCard1 the new resource visible card 1
+     * @param visibleCard2 the new resource visible card 2
+     * @param top the new top of the resource deck
+     */
     public void update(ResourceCard visibleCard1, ResourceCard visibleCard2, ResourceCard top){
         resourceCardsPanelVisible.updateVisible(visibleCard1, visibleCard2);
         resourceCardsPanelCovered.updateTop(top);

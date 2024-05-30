@@ -10,6 +10,10 @@ public class LogPanel extends JPanel {
     private JTextArea logTextArea;
     private Chat chat;
 
+    /**
+     * Panel that contains all the texts that describe every single move of every single player
+     * @param chat message to everyone
+     */
     public LogPanel(Chat chat){
         super();
         this.chat = chat;

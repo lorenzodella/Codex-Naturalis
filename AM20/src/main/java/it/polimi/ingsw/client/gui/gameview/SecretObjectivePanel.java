@@ -23,6 +23,10 @@ public class SecretObjectivePanel extends JPanel {
         add(o1);
     }
 
+    /**
+     * This method allows to update the secret objective cards every time there's a change
+     * @param objectiveCard the secret objective card
+     */
     public void update(ObjectiveCard objectiveCard){
         if(objectiveCard!=null)
             o1.update(objectiveCard);

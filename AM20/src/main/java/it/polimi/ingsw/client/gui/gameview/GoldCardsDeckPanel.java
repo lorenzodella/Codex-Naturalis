@@ -13,6 +13,14 @@ import java.awt.*;
 public class GoldCardsDeckPanel extends JPanel {
     GoldCardsPanel goldCardsPanelCovered;
     GoldCardsPanel goldCardsPanelVisible;
+
+    /**
+     * The panel that contains two other panels:
+     * 1. the two gold visible cards
+     * 2. the top of the gold deck
+     * @param goldCardsPanelCovered panel that contains the top of the gold card deck
+     * @param goldCardsPanelVisible panel that contains the two gold visible cards
+     */
     public GoldCardsDeckPanel(GoldCardsPanel goldCardsPanelCovered, GoldCardsPanel goldCardsPanelVisible) {
         super();
         this.goldCardsPanelCovered = goldCardsPanelCovered;
@@ -43,8 +51,12 @@ public class GoldCardsDeckPanel extends JPanel {
         add(goldCardsPanelVisible, BorderLayout.SOUTH);
     }
 
-    //metodo che prende sempre 3 carte e che chiama i due update diversi (quando ho due parametri chiamo quello di due
-    //mentre quello di uno per quello di uno
+    /**
+     * This method allows to update the cards every time that a player picks a card
+     * @param visibleCard1 the new gold visible card 1
+     * @param visibleCard2 the new gold visible card 2
+     * @param top the new top of the gold deck
+     */
     public void update(GoldCard visibleCard1, GoldCard visibleCard2, GoldCard top){
         goldCardsPanelVisible.updateVisible(visibleCard1, visibleCard2);
         goldCardsPanelCovered.updateTop(top);

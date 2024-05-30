@@ -44,6 +44,10 @@ public class CommonObjectivePanel extends JPanel {
         add(o2);
     }
 
+    /**
+     * This method allows to update the objective cards every time there's a change
+     * @param objectiveCards array of the two objective cards
+     */
     public void update(ObjectiveCard[] objectiveCards){
         if(objectiveCards[0]!= null)
             o1.update(objectiveCards[0]);

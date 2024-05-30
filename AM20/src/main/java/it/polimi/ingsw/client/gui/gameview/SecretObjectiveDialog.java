@@ -98,6 +98,7 @@ public class SecretObjectiveDialog extends JDialog implements ActionListener{
         //confirm deve avere lo stesso nome dell'objective scelto
         confirm.setName(button.getName());
     }
+
     public void update(ObjectiveCard card0, ObjectiveCard card1){
         objective0.update(card0);
         objective1.update(card1);
