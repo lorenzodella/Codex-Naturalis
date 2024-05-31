@@ -3,8 +3,17 @@ package it.polimi.ingsw.clientmessage;
 import it.polimi.ingsw.controller.messages.AcknowledgeMessage;
 
 public class SendChatMessage extends ClientMessage{
+    /**
+     * the nickname of the sender
+     */
     String sender;
+    /**
+     * the nickname of the player that is going to receive the message
+     */
     String recipient;
+    /**
+     * the actual message that the sender wants to send
+     */
     String message;
 
     public SendChatMessage(String sender, String recipient, String message) {

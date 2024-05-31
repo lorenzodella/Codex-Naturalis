@@ -3,7 +3,15 @@ package it.polimi.ingsw.clientmessage;
 import it.polimi.ingsw.controller.messages.AcknowledgeMessage;
 
 public class ChooseStarterCardSideMessage extends ClientMessage{
+    /**
+     * nickname of the player
+     */
     String nickname;
+    /**
+     * Side of the starter card that the player just chose.
+     * front 1
+     * back 0
+     */
     int side;
 
     public ChooseStarterCardSideMessage(String nickname, int side) {

@@ -3,7 +3,14 @@ package it.polimi.ingsw.clientmessage;
 import it.polimi.ingsw.controller.messages.AcknowledgeMessage;
 
 public class ChooseObjectiveMessage extends ClientMessage{
+    /**
+     * nickname of the player
+     */
     String nickname;
+    /**
+     * index of the chosen secret objective that the player just chose (could be 0 or 1 since
+     * the player needs to decide between two different objectives which are found in a 2 item array)
+     */
     int index;
 
     public ChooseObjectiveMessage(String nickname, int index) {

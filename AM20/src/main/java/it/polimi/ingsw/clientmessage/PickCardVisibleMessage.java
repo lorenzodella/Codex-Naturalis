@@ -3,8 +3,20 @@ package it.polimi.ingsw.clientmessage;
 import it.polimi.ingsw.controller.messages.AcknowledgeMessage;
 
 public class PickCardVisibleMessage extends ClientMessage{
+    /**
+     * the nickname of the player that wants to pick one of the two visible cards
+     */
     String playerNickname;
+    /**
+     * deck of the visible card that the player wants to pick from.
+     * could be 1 or 0
+     * resource card deck : 0
+     * gold card deck: 1
+     */
     int deck;
+    /**
+     * index of one of the two visible cards that player wants to pick
+     */
     int index;
 
     public PickCardVisibleMessage(String playerNickname, int deck, int index) {

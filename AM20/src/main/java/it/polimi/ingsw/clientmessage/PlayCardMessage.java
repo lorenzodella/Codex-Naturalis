@@ -3,10 +3,26 @@ package it.polimi.ingsw.clientmessage;
 import it.polimi.ingsw.controller.messages.AcknowledgeMessage;
 
 public class PlayCardMessage extends ClientMessage{
+    /**
+     * the nickname of the player that wants to play a card
+     */
     String playerNickname;
+    /**
+     * index of the card that the player wants to play.
+     * could be 0,1, or 2 based on which card, of the 3 item array, teh player wants to play
+     */
     int cardIndex;
+    /**
+     * angle that the player wants to cover by playing the card
+     */
     int angle;
+    /**
+     * id of the card that the player wants to cover by playing the card
+     */
     String targetID;
+    /**
+     * the side of teh card that the player wants to play with
+     */
     int side;
 
     public PlayCardMessage(String playerNickname, int cardIndex, int angle, String targetID, int side) {
