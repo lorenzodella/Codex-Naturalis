@@ -46,6 +46,7 @@ public class GUI implements UIManager {
 
     @Override
     public void showConnection() {
+        GUIUtils.disposeDialog();
         GUIUtils.showMessage(gameFrame,"Waiting for other players");
     }
 
