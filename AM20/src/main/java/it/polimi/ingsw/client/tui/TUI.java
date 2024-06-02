@@ -13,6 +13,7 @@ import it.polimi.ingsw.model.exceptions.InvalidAngleCoveredException;
 import it.polimi.ingsw.model.exceptions.InvalidPositionException;
 import it.polimi.ingsw.model.exceptions.RequirementsNotRespectedException;
 import it.polimi.ingsw.model.exceptions.TargetNotPresentException;
+import it.polimi.ingsw.model.util.XMLparser;
 
 import java.util.*;
 
@@ -142,25 +143,19 @@ public class TUI implements UIManager {
     //TODO tia vedi notion
     @Override
     public void updateGold(PlayableCard goldTop, PlayableCard[] goldVisible) {
-        if(goldTop!=null && goldVisible !=null){
-            this.goldTop = goldTop;
-            this.goldVisible = goldVisible;
-            viewGold();
-        }
 
-
+        this.goldTop = goldTop;
+        this.goldVisible = goldVisible;
+        viewGold();
 
     }
 
     //TODO tia vedi notion
     @Override
     public void updateResource(PlayableCard resourceTop, PlayableCard[] resourceVisible) {
-        if(resourceTop != null && resourceVisible != null){
-            this.resourceTop = resourceTop;
-            this.resourceVisible = resourceVisible;
-            viewResource();
-        }
-
+        this.resourceTop = resourceTop;
+        this.resourceVisible = resourceVisible;
+        viewResource();
     }
 
 
@@ -355,83 +350,108 @@ public class TUI implements UIManager {
     //TODO
     public void viewGold(){
 
+
         System.out.println(ConsoleColors.TEXT_BLUE+"GOLD DECK:"+ConsoleColors.TEXT_RESET);
-        System.out.print("The card that's now on top of the gold deck is a ");
-        //KINGDOM
-        if(this.goldTop.getCardKingdom().equals(Kingdom.Fungi))
-            System.out.print(ConsoleColors.TEXT_RED + "FUNGI"+ ConsoleColors.TEXT_RESET);
-        else if(this.goldTop.getCardKingdom().equals(Kingdom.Insect))
-            System.out.print(ConsoleColors.TEXT_PURPLE + "INSECT"+ConsoleColors.TEXT_RESET);
-        else if(this.goldTop.getCardKingdom().equals(Kingdom.Plant))
-            System.out.print(ConsoleColors.TEXT_GREEN + "PLANT"+ConsoleColors.TEXT_RESET);
-        else
-            System.out.print(ConsoleColors.TEXT_CYAN + "ANIMAL"+ConsoleColors.TEXT_RESET);
-        System.out.println(ConsoleColors.TEXT_RESET + " card \n");
+        if(goldTop == null && goldVisible == null){
+            System.out.println("There aren't any gold card available\n");
+        }else {
+            if(goldTop!=null){
+                System.out.print("The card that's now on top of the gold deck is a ");
+                //KINGDOM
+                if(this.goldTop.getCardKingdom().equals(Kingdom.Fungi))
+                    System.out.print(ConsoleColors.TEXT_RED + "FUNGI"+ ConsoleColors.TEXT_RESET);
+                else if(this.goldTop.getCardKingdom().equals(Kingdom.Insect))
+                    System.out.print(ConsoleColors.TEXT_PURPLE + "INSECT"+ConsoleColors.TEXT_RESET);
+                else if(this.goldTop.getCardKingdom().equals(Kingdom.Plant))
+                    System.out.print(ConsoleColors.TEXT_GREEN + "PLANT"+ConsoleColors.TEXT_RESET);
+                else
+                    System.out.print(ConsoleColors.TEXT_CYAN + "ANIMAL"+ConsoleColors.TEXT_RESET);
+                System.out.println(ConsoleColors.TEXT_RESET + " card \n");
 
-
-        System.out.println("The gold cards that are now visible on the table are the following: \n");
-        if(this.goldVisible !=null){
-            for(int i=0; i < this.goldVisible.length; i++) {
-
-                if (i == 0) {
-                    System.out.print("The first card");
-                } else
-                    System.out.print("The second card");
-
-                if(this.goldVisible[i] instanceof CornerGoldCard){
-                    CornerGoldCardClient cornerGoldCardClient = new CornerGoldCardClient((CornerGoldCard) this.goldVisible[i]);
-                    cornerGoldCardClient.draw();
-                }else if(this.goldVisible[i] instanceof ObjectGoldCard){
-                    ObjectGoldCardClient objectGoldCardClient = new ObjectGoldCardClient((ObjectGoldCard) this.goldVisible[i]);
-                    objectGoldCardClient.draw();
-                }else if(this.goldVisible[i] instanceof PointsGoldCard){
-                    PointsGoldCardClient pointsGoldCardClient = new PointsGoldCardClient((PointsGoldCard) this.goldVisible[i]);
-                    pointsGoldCardClient.draw();
-                }
+            }else {
+                System.out.println("The gold deck is empty\n");
             }
 
+
+            if(this.goldVisible !=null){
+                System.out.println("The gold cards that are now visible on the table are the following: \n");
+                for(int i=0; i < this.goldVisible.length; i++) {
+                    if(this.goldVisible[i]!=null){
+                        if (i == 0) {
+                            System.out.print("The first card");
+                        } else
+                            System.out.print("The second card");
+
+                        if(this.goldVisible[i] instanceof CornerGoldCard){
+                            CornerGoldCardClient cornerGoldCardClient = new CornerGoldCardClient((CornerGoldCard) this.goldVisible[i]);
+                            cornerGoldCardClient.draw();
+                        }else if(this.goldVisible[i] instanceof ObjectGoldCard){
+                            ObjectGoldCardClient objectGoldCardClient = new ObjectGoldCardClient((ObjectGoldCard) this.goldVisible[i]);
+                            objectGoldCardClient.draw();
+                        }else if(this.goldVisible[i] instanceof PointsGoldCard){
+                            PointsGoldCardClient pointsGoldCardClient = new PointsGoldCardClient((PointsGoldCard) this.goldVisible[i]);
+                            pointsGoldCardClient.draw();
+                        }
+                    }else{
+                        if(i == 0)
+                            System.out.println("The first card is empty\n");
+                        else
+                            System.out.println("The second card is empty\n");
+                    }
+                }
+
+            }else
+                System.out.println("There are no visible gold cards \n");
+            System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------\n");
         }
-
-        System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------\n");
-
-
     }
 
     //TODO
     public void viewResource(){
         System.out.println(ConsoleColors.TEXT_BLUE+"RESORUCE DECK" + ConsoleColors.TEXT_RESET);
+        if(resourceTop == null && resourceVisible == null){
+            System.out.println("There aren't any resource card available");
+        }else {
+            if(resourceTop != null){
+                System.out.print("The card that's now on top of the resource deck is a ");
+                if(this.resourceTop.getCardKingdom().equals(Kingdom.Fungi))
+                    System.out.print(ConsoleColors.TEXT_RED + "FUNGI"+ ConsoleColors.TEXT_RESET);
+                else if(this.resourceTop.getCardKingdom().equals(Kingdom.Insect))
+                    System.out.print(ConsoleColors.TEXT_PURPLE + "INSECT"+ConsoleColors.TEXT_RESET);
+                else if(this.resourceTop.getCardKingdom().equals(Kingdom.Plant))
+                    System.out.print(ConsoleColors.TEXT_GREEN + "PLANT"+ConsoleColors.TEXT_RESET);
+                else
+                    System.out.print(ConsoleColors.TEXT_CYAN + "ANIMAL"+ConsoleColors.TEXT_RESET);
+                System.out.println(ConsoleColors.TEXT_RESET + " card \n");
+            }else
+                System.out.println("The recource deck is empty\n");
 
-        System.out.print("The card that's now on top of the resource deck is a ");
-        if(this.resourceTop.getCardKingdom().equals(Kingdom.Fungi))
-            System.out.print(ConsoleColors.TEXT_RED + "FUNGI"+ ConsoleColors.TEXT_RESET);
-        else if(this.resourceTop.getCardKingdom().equals(Kingdom.Insect))
-            System.out.print(ConsoleColors.TEXT_PURPLE + "INSECT"+ConsoleColors.TEXT_RESET);
-        else if(this.resourceTop.getCardKingdom().equals(Kingdom.Plant))
-            System.out.print(ConsoleColors.TEXT_GREEN + "PLANT"+ConsoleColors.TEXT_RESET);
-        else
-            System.out.print(ConsoleColors.TEXT_CYAN + "ANIMAL"+ConsoleColors.TEXT_RESET);
-        System.out.println(ConsoleColors.TEXT_RESET + " card \n");
 
 
-        System.out.println("The resource cards that are now visible on the table are the following: \n");
-        for(int i=0; i < this.resourceVisible.length; i++) {
-            //KINGDOM GENERICO
-            if (i == 0) {
-                System.out.print("The first card");
-            } else
-                System.out.print("The second card");
+            if(this.resourceVisible!=null){
+                System.out.println("The resource cards that are now visible on the table are the following: \n");
 
-            ResourceCardClient resourceCardClient = new ResourceCardClient((ResourceCard) this.resourceVisible[i]);
-            resourceCardClient.draw();
+                for(int i=0; i < this.resourceVisible.length; i++) {
+                    if(this.resourceVisible[i]!=null){
+                        if (i == 0) {
+                            System.out.print("The first card");
+                        } else
+                            System.out.print("The second card");
+
+                        ResourceCardClient resourceCardClient = new ResourceCardClient((ResourceCard) this.resourceVisible[i]);
+                        resourceCardClient.draw();
+                    }else{
+                        if(i == 0)
+                            System.out.println("The first card is empty");
+                        else
+                            System.out.println("The second card is empty");
+                    }
+
+                }
+            }else
+                System.out.println("There are no visible resource cards \n");
+            System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------\n");
         }
-
-
-
-        System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------\n");
-
-
-
-
     }
 
 
@@ -636,35 +656,14 @@ public class TUI implements UIManager {
                 System.out.println("---------------------------------------------------------------------------------------------------");
 
         }
-        /*
-        System.out.println("/join + username");
-        System.out.println("/newGame + username +  numPlayers");
-        System.out.println("/chooseObjective +  index  ");
-        System.out.println("/chooseStarterSide + side (0 for back / 1 for front)");
-        System.out.println("/pickCardDeck +  deck (0 for gold deck / 1 for resource deck)");
-        System.out.println("/pickCardVisible +  deck (0 for gold deck / 1 for resource deck) +  index  (0 for the left card and 1 for the right one)");
-        System.out.println("/playCard + index (index of the card you want to play) +  angle (angel of the card you want to cover: 0 for UL / 1 for UR / 2 for DL /3  for DR)+  targetIDcard (ID of the card you want to cover) + side (0 for back / 1 for front)");
-        System.out.println("/chat + broadCast + message ");
-        System.out.println("/chat + username (username of the receiver) + message");
-        System.out.println("/myPlayerInfo (to visualize your info)");
-        System.out.println("/playerInfo + username (username of the player you want to view)");
-        System.out.println("/placement (view the placement of the game)");
-        System.out.println("/viewDeck + index (0 for the gold deck and 1 for resource deck)");
-        System.out.println("/viewCommonObjective");
-        System.out.println("/viewSecretObjective");
-        System.out.println("/viewStarterCard");
-        System.out.println("/viewResourceVisibile");
-        System.out.println("/viewGoldVisible");
-        System.out.println("/viewChat");
-        System.out.println("/currPlayer");
-        System.out.println("/viewHand \n");
-        System.out.println("---------------------------------------------------------------------------------------------------");*/
-
     }
 
     public static void main(String[] args) throws InterruptedException, TargetNotPresentException, InvalidPositionException, RequirementsNotRespectedException, InvalidAngleCoveredException {
-        TUI myTui = new TUI();
-        //myTui.printTitle();
+//        TUI myTui = new TUI();
+////        goldTop = getExampleCornerGoldCard();
+//        myTui.viewGold();
+//        myTui.viewResource();
+//        //myTui.printTitle();
 
         //myTui.viewCommand();
         //myTui.waitSeconds(5);
