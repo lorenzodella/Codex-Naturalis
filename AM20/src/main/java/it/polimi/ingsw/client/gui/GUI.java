@@ -224,6 +224,7 @@ public class GUI implements UIManager {
         gameFrame.getLogPanel().disableChat();
         gameFrame.getDeckPanel().setCardsClickable(false);
         gameFrame.getYourCardsPanel().setCardsClickable(false);
+        GUIUtils.showInfo(gameFrame, "Game is over. You have to relaunch application to play again");
     }
 
     @Override

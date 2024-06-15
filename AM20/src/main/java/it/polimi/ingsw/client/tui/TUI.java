@@ -221,7 +221,6 @@ public class TUI implements UIManager {
             }
         }
         else{
-            System.out.println(ConsoleColors.TEXT_BG_GREEN+"Game is over!"+ConsoleColors.TEXT_RESET);
             updateStopGame();
         }
     }
@@ -229,6 +228,8 @@ public class TUI implements UIManager {
     @Override
     public void updateStopGame() {
         nickname = null;
+        System.out.println(ConsoleColors.TEXT_BG_GREEN+"Game is over."+ConsoleColors.TEXT_RESET);
+        System.out.println(ConsoleColors.TEXT_BG_GREEN+"You have to relaunch application to play again"+ConsoleColors.TEXT_RESET);
     }
 
     @Override

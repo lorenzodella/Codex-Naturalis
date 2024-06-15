@@ -46,6 +46,8 @@ public class PingThread implements Runnable{
                     //chiamo metodo per capire se il player (nickname) è ancora connesso
                     if(connection!=null)
                         connection.callPingMessage(new PingMessage());
+                    else
+                        System.err.println("Connection not found for " + nickname);
                 } catch (IOException e) {
                     //se il player non è più connesso
                     serverManager.detectDisconnection(nickname);
