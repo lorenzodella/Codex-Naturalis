@@ -1,15 +1,12 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.controller.exceptions.InvalidDisconnectionException;
-import it.polimi.ingsw.model.Deck;
+import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.exceptions.InvalidPlayingException;
 import it.polimi.ingsw.controller.messages.*;
 import it.polimi.ingsw.controller.exceptions.NoOneIsConnectedException;
-import it.polimi.ingsw.model.GameObservable;
 import it.polimi.ingsw.model.exceptions.InvalidArgumentException;
 import it.polimi.ingsw.controller.exceptions.CannotJoinGameException;
-import it.polimi.ingsw.model.Game;
-import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.exceptions.*;
 
 import java.util.*;
@@ -44,7 +41,7 @@ public class Controller implements GameManager {
     /**
      * This attribute stays for the list of all players that are playing the game at the moment
      */
-    private List<String> players;
+    private LinkedHashMap<PawnColor, String> players;
     /**
      * This attribute stays for the number of player that are playing the game at the moment
      */
@@ -57,7 +54,7 @@ public class Controller implements GameManager {
     private int missingRounds = -1;
 
     public Controller(){
-        players = new ArrayList<>();
+        players = new LinkedHashMap<>();
         phase = NOGAME;
     }
 
@@ -70,7 +67,7 @@ public class Controller implements GameManager {
     }
 
     protected List<String> getPlayers() {
-        return players;
+        return new ArrayList<>(players.values());
     }
 
     protected int getNumPlayers() {
@@ -81,7 +78,7 @@ public class Controller implements GameManager {
         if(gameModel!=null)
             return gameModel.getConnectedPlayers();
         else
-            return new HashSet<>(players);
+            return new HashSet<>(players.values());
     }
 
     /**
@@ -94,7 +91,7 @@ public class Controller implements GameManager {
      * @throws InvalidPlayingException if the phase is not the NOGAME phase
      */
     @Override
-    public synchronized ConnectionAckMessage newGame(String playerNickname, int numPlayers) throws InvalidArgumentException, InvalidPlayingException {
+    public synchronized ConnectionAckMessage newGame(String playerNickname, PawnColor color, int numPlayers) throws InvalidArgumentException, InvalidPlayingException {
         if(phase==END)
             throw new InvalidPlayingException("A game just ended. Wait for other players to disconnect before creating a new game");
         if(phase!=NOGAME)
@@ -102,8 +99,8 @@ public class Controller implements GameManager {
         if(numPlayers<2 || numPlayers>4)
             throw new InvalidArgumentException("numPlayers", numPlayers);
         gameModel = null;
-        players = new ArrayList<>();
-        players.add(playerNickname);
+        players = new LinkedHashMap<>();
+        players.put(color, playerNickname);
         this.numPlayers = numPlayers;
         ConnectionAckMessage tmp = new ConnectionAckMessage();
         tmp.setResult("You created a new game and waiting for all player to connect");
@@ -125,7 +122,7 @@ public class Controller implements GameManager {
     public synchronized HashMap<String, AcknowledgeMessage> disconnectPlayer(String nickname)
             throws InvalidConnectionStateException, InvalidArgumentException, NoOneIsConnectedException, InvalidDisconnectionException {
         //if you are not a player of current game
-        if(!players.contains(nickname))
+        if(!players.containsValue(nickname))
             throw new InvalidArgumentException("nickname", nickname);
 
         gameModel.setPlayerConnection(nickname, false);
@@ -193,16 +190,20 @@ public class Controller implements GameManager {
      * @throws CannotJoinGameException if there is no active game, if nickname is already used, if game is full, if he was already connected
      */
     @Override
-    public synchronized HashMap<String, ConnectionAckMessage> joinGame(String playerNickname) throws CannotJoinGameException {
+    public synchronized HashMap<String, ConnectionAckMessage> joinGame(String playerNickname, PawnColor color) throws CannotJoinGameException {
         if(phase==NOGAME)
             throw new CannotJoinGameException("No active game");
         else if(phase==END)
             throw new CannotJoinGameException("A game just ended. Wait for other players to disconnect before joining a new game");
         //if you are connecting with an already used nickname
-        else if(players.contains(playerNickname)){
+        else if(players.containsValue(playerNickname)){
             //if game started and you are reconnecting
-            if(phase>PRELIMINARY)
-                return reconnectPlayer(playerNickname);
+            if(phase>PRELIMINARY) {
+                if(playerNickname.equals(players.get(color)))
+                    return reconnectPlayer(playerNickname);
+                else
+                    throw new CannotJoinGameException("You can't join with another pawn color");
+            }
             //if you are a new player
             else
                 throw new CannotJoinGameException("Nickname's already been used");
@@ -210,9 +211,11 @@ public class Controller implements GameManager {
         //if you are connecting to a game already started
         else if(phase>PRELIMINARY)
             throw new CannotJoinGameException("Game is full");
+        else if(players.containsKey(color))
+            throw new CannotJoinGameException("That pawn is already taken");
 
         //if you are a new player with a new nickname
-        players.add(playerNickname);
+        players.put(color, playerNickname);
         HashMap<String, ConnectionAckMessage> tmp = null;
         //positivo
         if(players.size()==numPlayers)
@@ -220,7 +223,7 @@ public class Controller implements GameManager {
         //negativo
         if(tmp==null) {
             tmp = new HashMap<>();
-            for(String nickname: players){
+            for(String nickname: players.values()){
                 tmp.put(nickname, new ConnectionAckMessage());
                 tmp.get(nickname).setResult("New player joined");
             }
@@ -239,7 +242,7 @@ public class Controller implements GameManager {
      */
     private synchronized HashMap<String, ConnectionAckMessage> startGame(){
         phase = STARTER;
-        gameModel = new Game(players.stream().map(Player::new).collect(Collectors.toList()));
+        gameModel = new Game(players.entrySet().stream().map(e -> new Player(e.getValue(), e.getKey())).collect(Collectors.toList()));
 
         //CREO NUOVO MESSAGE BUILDER PASSANDOGLI LA NUOVA LISTA DEI CONNECTED PLAYERS
         this.messageBuilder = new MessageBuilder(gameModel.getConnectedPlayers());

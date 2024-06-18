@@ -1,5 +1,6 @@
 package it.polimi.ingsw.clientmessage;
 
+import it.polimi.ingsw.model.PawnColor;
 import it.polimi.ingsw.server.Connection;
 
 public class NewGameMessage extends ClientMessage {
@@ -12,9 +13,13 @@ public class NewGameMessage extends ClientMessage {
      */
     int numPlayers;
 
-    public NewGameMessage(String client, int numPlayers) {
+    PawnColor color;
+
+
+    public NewGameMessage(String client, PawnColor color, int numPlayers) {
         this.client = client;
         this.numPlayers = numPlayers;
+        this.color = color;
     }
 
     public String getClient() {
@@ -31,5 +36,13 @@ public class NewGameMessage extends ClientMessage {
 
     public String getAction(){
         return NewGameMessage.NEWGAME;
+    }
+
+    public PawnColor getColor() {
+        return color;
+    }
+
+    public void setColor(PawnColor color) {
+        this.color = color;
     }
 }

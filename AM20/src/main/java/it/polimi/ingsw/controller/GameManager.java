@@ -2,6 +2,7 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.controller.exceptions.CannotJoinGameException;
 import it.polimi.ingsw.controller.exceptions.InvalidDisconnectionException;
+import it.polimi.ingsw.model.PawnColor;
 import it.polimi.ingsw.model.exceptions.InvalidPlayingException;
 import it.polimi.ingsw.controller.messages.*;
 import it.polimi.ingsw.controller.exceptions.NoOneIsConnectedException;
@@ -16,8 +17,8 @@ public interface GameManager {
 
     HashMap<String, AcknowledgeMessage> disconnectPlayer(String nickname) throws InvalidArgumentException, NoOneIsConnectedException, InvalidConnectionStateException, InvalidDisconnectionException;
 
-    ConnectionAckMessage newGame(String playerNickname, int numPlayers) throws InvalidArgumentException, InvalidPlayingException;
-    HashMap<String, ConnectionAckMessage> joinGame(String playerNickname) throws CannotJoinGameException;
+    ConnectionAckMessage newGame(String playerNickname, PawnColor color, int numPlayers) throws InvalidArgumentException, InvalidPlayingException;
+    HashMap<String, ConnectionAckMessage> joinGame(String playerNickname, PawnColor color) throws CannotJoinGameException;
 
     HashMap<String, StarterCardAckMessage> chooseStarterCardSide(String playerNickname, int side) throws InvalidArgumentException, InvalidPlayingException;
 

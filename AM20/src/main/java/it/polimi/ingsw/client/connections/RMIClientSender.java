@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.connections;
 
 import it.polimi.ingsw.controller.exceptions.CannotJoinGameException;
 import it.polimi.ingsw.controller.messages.*;
+import it.polimi.ingsw.model.PawnColor;
 import it.polimi.ingsw.model.exceptions.*;
 import it.polimi.ingsw.server.Loggable;
 
@@ -24,9 +25,9 @@ public class RMIClientSender extends ClientSender {
     }
 
     @Override
-    public void login(String client) {
+    public void login(String client, PawnColor color) {
         try {
-            ConnectionAckMessage msg = stub.login(client, receiver);
+            ConnectionAckMessage msg = stub.login(client, color, receiver);
             receiver.callConnectionAckMessage(msg);
             //System.out.println("stub.login: \n"+ msg);
         } catch (RemoteException e) {
@@ -37,9 +38,9 @@ public class RMIClientSender extends ClientSender {
     }
 
     @Override
-    public void startNewGame(String client, int numPlayers) {
+    public void startNewGame(String client, PawnColor color, int numPlayers) {
         try {
-            ConnectionAckMessage msg = stub.startNewGame(client, numPlayers, receiver);
+            ConnectionAckMessage msg = stub.startNewGame(client, color, numPlayers, receiver);
             receiver.callConnectionAckMessage(msg);
             //System.out.println("stub.startNewGame: \n"+ msg);
         } catch (RemoteException e) {

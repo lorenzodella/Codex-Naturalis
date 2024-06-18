@@ -40,10 +40,15 @@ public class Player {
      * This attribute tells whether the player is online or disconnected
      */
     private boolean online;
+    /**
+     * This attribute stands for the color of the pawn of this specific player
+     */
+    private PawnColor pawnColor;
 
-    public Player(String nickname){
+    public Player(String nickname, PawnColor color){
         this.nickname = nickname;
-        this.score = 19;
+        this.pawnColor = color;
+        this.score = 0;
         this.online = true;
         this.table = new PlayerTable();
     }
@@ -87,6 +92,10 @@ public class Player {
 
     public String getNickname() {
         return nickname;
+    }
+
+    public PawnColor getPawnColor() {
+        return pawnColor;
     }
 
     /**
@@ -171,6 +180,5 @@ public class Player {
     public void computeCommonObjective(ObjectiveCard objectiveCard){
         addPoints(objectiveCard);
     }
-
 
 }

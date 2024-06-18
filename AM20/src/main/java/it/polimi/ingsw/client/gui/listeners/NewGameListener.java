@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.gui.listeners;
 import it.polimi.ingsw.client.ClientController;
 import it.polimi.ingsw.client.connections.ClientSender;
 import it.polimi.ingsw.client.gui.GUIUtils;
+import it.polimi.ingsw.model.PawnColor;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,11 +24,14 @@ public class NewGameListener extends ClientController implements ActionListener 
 
     //metodo che permette di username e numPlayers
     public void showInputDialog(Component c) {
+        JComboBox<ImageIcon> colorComboBox = GUIUtils.getImageIconJComboBox();
+
         JTextField nickname = new JTextField();
         JSpinner number = new JSpinner(new SpinnerNumberModel(2, 2, 4, 1));
         ((JSpinner.DefaultEditor) number.getEditor()).getTextField().setEditable(false);
         Object[] message = {
                 "Nickname:", nickname,
+                "Color:", colorComboBox,
                 "Number of players:", number
         };
 
@@ -35,7 +39,8 @@ public class NewGameListener extends ClientController implements ActionListener 
         //quando utente schiaccia ok
         if (option == JOptionPane.OK_OPTION) {
             if (!nickname.getText().isEmpty()) {
-                clientSender.startNewGame(nickname.getText(), (Integer) number.getValue());
+                ImageIcon selectedIcon = (ImageIcon) colorComboBox.getSelectedItem();
+                clientSender.startNewGame(nickname.getText(), PawnColor.parsePawnColor(selectedIcon.getDescription()), (Integer) number.getValue());
             } else {
                 GUIUtils.showError(null, "Nickname cannot be empty");
             }
@@ -43,4 +48,6 @@ public class NewGameListener extends ClientController implements ActionListener 
             System.out.println("Game creation canceled");
         }
     }
+
+
 }

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.model.PawnColor;
 import it.polimi.ingsw.model.PlayerStats;
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.model.util.DynamicMap;
@@ -23,10 +24,21 @@ public class PlayerInfo implements Serializable {
      */
     private PlayerStats stats;
 
-    public PlayerInfo() {
+    private PawnColor color;
+
+    public PlayerInfo(PawnColor color) {
         this.score = 0;
         this.map = null;
         this.stats = new PlayerStats();
+        this.color = color;
+    }
+
+    public void setColor(PawnColor color) {
+        this.color = color;
+    }
+
+    public PawnColor getColor() {
+        return color;
     }
 
     public int getScore() {

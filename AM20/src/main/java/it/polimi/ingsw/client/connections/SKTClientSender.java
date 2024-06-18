@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.connections;
 import it.polimi.ingsw.client.UIUpdater;
 import it.polimi.ingsw.clientmessage.*;
 import it.polimi.ingsw.controller.messages.ErrorMessage;
+import it.polimi.ingsw.model.PawnColor;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -21,10 +22,10 @@ public class SKTClientSender extends ClientSender {
     }
 
     @Override
-    public void login(String client) {
+    public void login(String client, PawnColor color) {
 
         try {
-            LoginMessage msg = new LoginMessage(client);
+            LoginMessage msg = new LoginMessage(client, color);
             outputStream.writeObject(msg);
         } catch (IOException e) {
             uiUpdater.errorMessage(new ErrorMessage("Server not reachable"));
@@ -32,9 +33,9 @@ public class SKTClientSender extends ClientSender {
     }
 
     @Override
-    public void startNewGame(String client, int numPlayers) {
+    public void startNewGame(String client, PawnColor color, int numPlayers) {
         try{
-            NewGameMessage msg = new NewGameMessage(client, numPlayers);
+            NewGameMessage msg = new NewGameMessage(client, color, numPlayers);
             outputStream.writeObject(msg);
         } catch (IOException e) {
             uiUpdater.errorMessage(new ErrorMessage("Server not reachable"));

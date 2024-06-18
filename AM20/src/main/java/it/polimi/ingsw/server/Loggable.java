@@ -2,6 +2,7 @@ package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.controller.exceptions.CannotJoinGameException;
 import it.polimi.ingsw.controller.messages.*;
+import it.polimi.ingsw.model.PawnColor;
 import it.polimi.ingsw.model.exceptions.*;
 
 import java.rmi.Remote;
@@ -9,8 +10,8 @@ import java.rmi.RemoteException;
 //TODO: ELEONORA
 public interface Loggable extends Remote {
     //metodi che vengono chiamati dal client sul server rmi
-    ConnectionAckMessage login(String client, Connection callback) throws RemoteException, CannotJoinGameException;
-    ConnectionAckMessage startNewGame(String client, int numPlayers, Connection callback) throws RemoteException, InvalidArgumentException, InvalidPlayingException;
+    ConnectionAckMessage login(String client, PawnColor color, Connection callback) throws RemoteException, CannotJoinGameException;
+    ConnectionAckMessage startNewGame(String client, PawnColor color, int numPlayers, Connection callback) throws RemoteException, InvalidArgumentException, InvalidPlayingException;
     StarterCardAckMessage chooseStarterCardSide(String nickname, int side) throws RemoteException, InvalidArgumentException, InvalidPlayingException;
     ObjectiveAckMessage chooseObjective(String nickname, int index) throws RemoteException, InvalidArgumentException, InvalidPlayingException;
     AcknowledgeMessage playCard(String playerNickname, int cardIndex, int angle, String targetID, int side) throws InvalidArgumentException, RequirementsNotRespectedException, InvalidPlayingException, TargetNotPresentException, InvalidAngleCoveredException, InvalidPositionException, RemoteException;

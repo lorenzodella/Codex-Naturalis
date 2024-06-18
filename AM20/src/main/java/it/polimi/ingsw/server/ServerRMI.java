@@ -5,6 +5,7 @@ import it.polimi.ingsw.controller.exceptions.CannotJoinGameException;
 import it.polimi.ingsw.controller.exceptions.InvalidDisconnectionException;
 import it.polimi.ingsw.controller.exceptions.NoOneIsConnectedException;
 import it.polimi.ingsw.controller.messages.*;
+import it.polimi.ingsw.model.PawnColor;
 import it.polimi.ingsw.model.exceptions.*;
 
 import java.io.IOException;
@@ -39,13 +40,13 @@ public class ServerRMI extends UnicastRemoteObject implements Loggable{
      * @throws CannotJoinGameException
      */
     @Override
-    public  ConnectionAckMessage login(String client, Connection callback) throws RemoteException, CannotJoinGameException {
+    public  ConnectionAckMessage login(String client, PawnColor color, Connection callback) throws RemoteException, CannotJoinGameException {
         HashMap<String, ConnectionAckMessage> res;
         if(!manager.getConnections().containsKey(client)){
             manager.addConnection(client, callback);
         }
         try {
-            res = this.manager.getController().joinGame(client);
+            res = this.manager.getController().joinGame(client, color);
         }catch (CannotJoinGameException e){
             manager.getConnections().remove(client);
             throw e;
@@ -79,12 +80,12 @@ public class ServerRMI extends UnicastRemoteObject implements Loggable{
      * @throws InvalidPlayingException
      */
     @Override
-    public ConnectionAckMessage startNewGame(String client, int numPlayers, Connection callback) throws RemoteException, InvalidArgumentException, InvalidPlayingException {
+    public ConnectionAckMessage startNewGame(String client, PawnColor color, int numPlayers, Connection callback) throws RemoteException, InvalidArgumentException, InvalidPlayingException {
         if(!manager.getConnections().containsKey(client)){
             manager.addConnection(client, callback);
         }
         try {
-            return this.manager.getController().newGame(client, numPlayers);
+            return this.manager.getController().newGame(client, color, numPlayers);
         } catch (InvalidArgumentException | InvalidPlayingException e) {
             manager.getConnections().remove(client);
             throw e;

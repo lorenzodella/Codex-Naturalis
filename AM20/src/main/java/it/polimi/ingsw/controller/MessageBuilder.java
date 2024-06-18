@@ -95,7 +95,7 @@ public class MessageBuilder implements GameObserver {
         connectionAckMessages.get(player.getNickname()).setSecretObjective(player.getSecretObjective());
         connectionAckMessages.get(player.getNickname()).setCommonObjectives(commonObjectives);
 
-        PlayerInfo playerInfo = new PlayerInfo();
+        PlayerInfo playerInfo = new PlayerInfo(player.getPawnColor());
         playerInfo.setScore(player.getScore());
         playerInfo.setMap(player.getTable().getMap());
         playerInfo.setStats(player.getTable().getStats());
@@ -103,7 +103,7 @@ public class MessageBuilder implements GameObserver {
 
         HashMap <String, PlayerInfo> otherPlayerUpdates = new HashMap<>();
         for(Player p: players.stream().filter(x->!x.equals(player)).collect(Collectors.toList())){
-            PlayerInfo playerUpdates = new PlayerInfo();
+            PlayerInfo playerUpdates = new PlayerInfo(p.getPawnColor());
             playerUpdates.setScore(p.getScore());
             playerUpdates.setMap(p.getTable().getMap());
             playerUpdates.setStats(p.getTable().getStats());
@@ -193,12 +193,12 @@ public class MessageBuilder implements GameObserver {
                     connectionAckMessages.put(p.getNickname(), new StartGameMessage());
 
                 connectionAckMessages.get(p.getNickname()).setNickname(p.getNickname());
-                connectionAckMessages.get(p.getNickname()).setPlayerInfo(new PlayerInfo());
+                connectionAckMessages.get(p.getNickname()).setPlayerInfo(new PlayerInfo(p.getPawnColor()));
                 connectionAckMessages.get(p.getNickname()).setOthersPlayerInfo(
                         players.stream().filter(x -> !p.getNickname().equals(x.getNickname()))
                                         .collect(Collectors.toMap(
                                             Player::getNickname,
-                                            x -> new PlayerInfo(),
+                                            x -> new PlayerInfo(x.getPawnColor()),
                                             (x, y) -> y,
                                             HashMap::new))
                 );
@@ -216,7 +216,7 @@ public class MessageBuilder implements GameObserver {
         if(starterCardAckMessages == null)
             starterCardAckMessages = new HashMap<>();
 
-        PlayerInfo playerUpdates = new PlayerInfo();
+        PlayerInfo playerUpdates = new PlayerInfo(player.getPawnColor());
         playerUpdates.setMap(player.getTable().getMap());
         playerUpdates.setStats(player.getTable().getStats());
 
@@ -302,7 +302,7 @@ public class MessageBuilder implements GameObserver {
         if(acknowledgeMessages == null)
             acknowledgeMessages = new HashMap<>();
 
-        PlayerInfo playerUpdates = new PlayerInfo();
+        PlayerInfo playerUpdates = new PlayerInfo(player.getPawnColor());
         playerUpdates.setScore(player.getScore());
         playerUpdates.setMap(player.getTable().getMap());
         playerUpdates.setStats(player.getTable().getStats());
@@ -445,7 +445,7 @@ public class MessageBuilder implements GameObserver {
 
         HashMap <String, PlayerInfo> otherPlayerUpdates = new HashMap<>();
         for(Player player: players){
-            PlayerInfo playerUpdates = new PlayerInfo();
+            PlayerInfo playerUpdates = new PlayerInfo(player.getPawnColor());
             playerUpdates.setScore(player.getScore());
             otherPlayerUpdates.put(player.getNickname(), playerUpdates);
         }

@@ -1,5 +1,7 @@
 package it.polimi.ingsw.client.tui;
 
+import it.polimi.ingsw.model.PawnColor;
+
 public class ConsoleColors {
 
     public static final String TEXT_RESET  = "\u001B[0m";
@@ -39,4 +41,19 @@ public class ConsoleColors {
     public static final String TEXT_BRIGHT_BG_PURPLE = "\u001B[105m";
     public static final String TEXT_BRIGHT_BG_CYAN   = "\u001B[106m";
     public static final String TEXT_BRIGHT_BG_WHITE  = "\u001B[107m";
+
+    public static String colorFromPawnColor(PawnColor pawnColor) {
+        switch (pawnColor) {
+            case ROUGE:
+                return TEXT_BG_RED;
+            case BLEU:
+                return TEXT_BG_BLUE;
+            case VERT:
+                return TEXT_BG_GREEN;
+            case JAUNE:
+                return TEXT_BG_YELLOW;
+            default:
+                return TEXT_RESET;
+        }
+    }
 }

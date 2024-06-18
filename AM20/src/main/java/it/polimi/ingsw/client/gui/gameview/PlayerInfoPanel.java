@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.gui.gameview;
 
+import it.polimi.ingsw.model.PawnColor;
 import it.polimi.ingsw.model.PlayerStats;
 import it.polimi.ingsw.model.cards.Kingdom;
 import it.polimi.ingsw.model.cards.SpecialObject;
@@ -123,7 +124,26 @@ public class PlayerInfoPanel extends JPanel {
      * @param score the player new score
      * @param stats the player new stats
      */
-    public void update(int score, PlayerStats stats){
+    public void update(int score, PlayerStats stats, PawnColor color){
+        switch (color){
+            case BLEU:
+                playerNameLabel.setForeground(Color.BLUE);
+                scoreLabel.setForeground(Color.BLUE);
+                break;
+            case VERT:
+                playerNameLabel.setForeground(Color.GREEN);
+                scoreLabel.setForeground(Color.GREEN);
+                break;
+            case ROUGE:
+                playerNameLabel.setForeground(Color.RED);
+                scoreLabel.setForeground(Color.RED);
+                break;
+            case JAUNE:
+                playerNameLabel.setForeground(Color.YELLOW);
+                scoreLabel.setForeground(Color.YELLOW);
+                break;
+        }
+
         scoreLabel.setText("Score: "+score);
 
         animalLabel.setText("-Animals: " + stats.getNumberOfResources(Kingdom.Animal));

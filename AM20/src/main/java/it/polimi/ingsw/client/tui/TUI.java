@@ -524,9 +524,13 @@ public class TUI implements UIManager {
 
     public void viewPlacement(){
         System.out.println("The placement has the following order: ");
-        System.out.println("- " + this.nickname + " has " + this.yourPlayerInfo.getScore() + " points");
+        System.out.print(ConsoleColors.colorFromPawnColor(yourPlayerInfo.getColor()));
+        System.out.print("- " + this.nickname + " has " + this.yourPlayerInfo.getScore() + " points");
+        System.out.println(ConsoleColors.TEXT_RESET);
         for(String s : othersPlayerInfo.keySet()){
-            System.out.println("- " + s + " has " + this.othersPlayerInfo.get(s).getScore() + " points");
+            System.out.print(ConsoleColors.colorFromPawnColor(othersPlayerInfo.get(s).getColor()));
+            System.out.print("- " + s + " has " + this.othersPlayerInfo.get(s).getScore() + " points");
+            System.out.println(ConsoleColors.TEXT_RESET);
         }
 
         System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------");
@@ -540,10 +544,18 @@ public class TUI implements UIManager {
                 if(m.getRecipient()==null)
                     System.out.println("[to: everyone] " + m.getMessage());
                 else
-                    System.out.println("[to: "+m.getRecipient()+"] " + m.getMessage());
+                    System.out.println("[to: "+
+                            ConsoleColors.colorFromPawnColor(othersPlayerInfo.get(m.getRecipient()).getColor())+
+                            m.getRecipient()+
+                            ConsoleColors.TEXT_RESET+
+                            "] " + m.getMessage());
             }
             else if(m.getRecipient()==null || m.getRecipient().equals(nickname))
-                System.out.println("[from: "+m.getSender()+"] " + m.getMessage());
+                System.out.println("[from: "+
+                        ConsoleColors.colorFromPawnColor(othersPlayerInfo.get(m.getSender()).getColor())+
+                        m.getSender()+
+                        ConsoleColors.TEXT_RESET+
+                        "] " + m.getMessage());
         }
 
         System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------");
@@ -621,10 +633,10 @@ public class TUI implements UIManager {
         System.out.println("\nThe " + str + " command has the parameters:");
         switch (str){
             case "join":
-                System.out.println("/join + username");
+                System.out.println("/join + username + color (rouge / bleu / vert / jaune)");
                 break;
             case "newGame":
-                System.out.println("/newGame + username + numPlayers");
+                System.out.println("/newGame + username + color (rouge / bleu / vert / jaune) + numPlayers");
                 break;
             case "chooseObjective":
                 System.out.println("/chooseObjective + index");

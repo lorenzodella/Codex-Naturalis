@@ -9,6 +9,7 @@ import it.polimi.ingsw.client.gui.listeners.DeckVisibleListener;
 import it.polimi.ingsw.client.gui.listeners.MapListener;
 import it.polimi.ingsw.client.gui.listeners.YourCardsListener;
 import it.polimi.ingsw.controller.PlayerInfo;
+import it.polimi.ingsw.model.PawnColor;
 import it.polimi.ingsw.model.PlayerStats;
 import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.model.cards.playable.*;
@@ -126,7 +127,7 @@ public class GameFrame extends JFrame {
     public void updateYourInfo(PlayerInfo playerInfo){
         if(playerInfo.getMap()!=null)
             playerPanel.getTablePanel().update(playerInfo.getMap());
-        playerPanel.getPlayerInfoPanel().update(playerInfo.getScore(), playerInfo.getStats() );
+        playerPanel.getPlayerInfoPanel().update(playerInfo.getScore(), playerInfo.getStats(), playerInfo.getColor() );
 
     }
 
@@ -137,7 +138,7 @@ public class GameFrame extends JFrame {
         for(String playerName : otherPlayerInfo.keySet()){
             if(otherPlayerInfo.get(playerName).getMap()!=null)
                 otherPlayerPanels.get(playerName).getTablePanel().update(otherPlayerInfo.get(playerName).getMap());
-            otherPlayerPanels.get(playerName).getPlayerInfoPanel().update(otherPlayerInfo.get(playerName).getScore(), otherPlayerInfo.get(playerName).getStats() );
+            otherPlayerPanels.get(playerName).getPlayerInfoPanel().update(otherPlayerInfo.get(playerName).getScore(), otherPlayerInfo.get(playerName).getStats(), otherPlayerInfo.get(playerName).getColor() );
         }
     }
 
@@ -166,7 +167,7 @@ public class GameFrame extends JFrame {
         GUIController guiController = new GUIController(null, gui);
 
         HashMap<String, PlayerInfo> map = new HashMap<>();
-        map.put("Player1", new PlayerInfo());
+        map.put("Player1", new PlayerInfo(PawnColor.ROUGE));
         gui.updateOtherPlayerInfo(map);
 
         //gui.gameFrame.playerPanel.getDeckPanel().updateResource(null, null, getExampleResourceCard("R18"));

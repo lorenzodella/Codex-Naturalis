@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.gui.listeners;
 import it.polimi.ingsw.client.ClientController;
 import it.polimi.ingsw.client.connections.ClientSender;
 import it.polimi.ingsw.client.gui.GUIUtils;
+import it.polimi.ingsw.model.PawnColor;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,16 +23,20 @@ public class JoinGameListener extends ClientController implements ActionListener
     }
 
     public void showInputDialog(Component c){
+        JComboBox<ImageIcon> colorComboBox = GUIUtils.getImageIconJComboBox();
+
         JTextField nickname = new JTextField();
         Object[] message = {
                 "Nickname:", nickname,
+                "Color:", colorComboBox
         };
 
         int option = JOptionPane.showConfirmDialog(c, message, "Join game", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
         //quando utente schiaccia ok
         if (option == JOptionPane.OK_OPTION) {
             if (!nickname.getText().isEmpty()) {
-                clientSender.login(nickname.getText());
+                ImageIcon selectedIcon = (ImageIcon) colorComboBox.getSelectedItem();
+                clientSender.login(nickname.getText(), PawnColor.parsePawnColor(selectedIcon.getDescription()));
                 System.out.println("nickname: " + nickname.getText());
             } else {
                 GUIUtils.showError(null, "Nickname cannot be empty");
@@ -40,4 +45,6 @@ public class JoinGameListener extends ClientController implements ActionListener
             System.out.println("Login cancelled ");
         }
     }
+
+
 }

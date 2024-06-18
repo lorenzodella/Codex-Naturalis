@@ -3,6 +3,7 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.controller.exceptions.CannotJoinGameException;
 import it.polimi.ingsw.controller.exceptions.InvalidDisconnectionException;
 import it.polimi.ingsw.model.Deck;
+import it.polimi.ingsw.model.PawnColor;
 import it.polimi.ingsw.model.PlayerTable;
 import it.polimi.ingsw.model.cards.Corner;
 import it.polimi.ingsw.model.cards.Kingdom;
@@ -34,6 +35,7 @@ class ControllerTest {
     private HashMap<String, ObjectiveAckMessage> objectiveAckMessages;
     private HashMap<String, AcknowledgeMessage> acknowledgeMessages;
     private List<String> playerOrder;
+    private List<PawnColor> pawns;
 
     void printMessages(HashMap<String, ? extends Message> msg){
         System.out.println(msg.toString().replace("},", "}\n"));
@@ -52,9 +54,9 @@ class ControllerTest {
     }
 
     void _simulateNewGame() throws InvalidArgumentException, CannotJoinGameException, InvalidPlayingException {
-        c.newGame("Giuseppe", 3);
-        c.joinGame("Pippo");
-        c.joinGame("Pietro");
+        c.newGame("Giuseppe", PawnColor.ROUGE, 3);
+        c.joinGame("Pippo", PawnColor.BLEU);
+        c.joinGame("Pietro", PawnColor.VERT);
     }
 
     void _simulateStarterCards() throws InvalidArgumentException, InvalidPlayingException {
@@ -69,6 +71,7 @@ class ControllerTest {
         c.chooseObjective("Pietro", 1);
 
         playerOrder = c.getGameModel().getPlayers().stream().map(Player::getNickname).collect(Collectors.toList());
+        pawns = c.getGameModel().getPlayers().stream().map(Player::getPawnColor).collect(Collectors.toList());
         System.out.println("order: "+playerOrder);
     }
 
@@ -93,19 +96,19 @@ class ControllerTest {
     @Test
     void newGame() throws InvalidArgumentException, InvalidPlayingException {
         assertThrows(InvalidArgumentException.class, ()->{
-            c.newGame("Pippo", 1);
+            c.newGame("Pippo", PawnColor.ROUGE, 1);
         });
 
         assertThrows(InvalidArgumentException.class, ()->{
-            c.newGame("Pippo", 5);
+            c.newGame("Pippo", PawnColor.ROUGE, 5);
         });
 
-        Message m = c.newGame("Pippo", 3);
+        Message m = c.newGame("Pippo", PawnColor.ROUGE, 3);
         assertEquals(3 ,c.getNumPlayers() );
         assertEquals("Pippo", c.getPlayers().get(0));
 
         assertThrows(InvalidPlayingException.class, ()->{
-            c.newGame("Pippo", 4);
+            c.newGame("Pippo", PawnColor.ROUGE, 4);
         });
 
         System.out.println(m.getResult());
@@ -115,22 +118,22 @@ class ControllerTest {
     void joinGame() throws CannotJoinGameException, InvalidArgumentException, InvalidPlayingException {
         //non è ancora stato iniziato un game
         assertThrows(CannotJoinGameException.class, ()->{
-            c.joinGame("Giuseppe");
+            c.joinGame("Giuseppe", PawnColor.ROUGE);
         });
 
-        Message m = c.newGame("Giuseppe", 3);
+        Message m = c.newGame("Giuseppe", PawnColor.ROUGE, 3);
         System.out.println(m);
         //provo a collegarmi con lo stesso nome già usato
         assertThrows(CannotJoinGameException.class, ()->{
-            c.joinGame("Giuseppe");
+            c.joinGame("Giuseppe", PawnColor.BLEU);
         });
 
-        connectionAckMessages = c.joinGame("Pippo");
+        connectionAckMessages = c.joinGame("Pippo", PawnColor.BLEU);
         assertEquals(2, connectionAckMessages.size());
         assertFalse(connectionAckMessages.get("Pippo").doesGameStarts());
         printMessages(connectionAckMessages);
 
-        connectionAckMessages = c.joinGame("Pietro");
+        connectionAckMessages = c.joinGame("Pietro", PawnColor.VERT);
         assertEquals(3, connectionAckMessages.size());
         printMessages(connectionAckMessages);
 
@@ -153,7 +156,7 @@ class ControllerTest {
 
         //provo a collegarmi con una partita già piena
         assertThrows(CannotJoinGameException.class, ()->{
-            c.joinGame("Mattia");
+            c.joinGame("Mattia", PawnColor.JAUNE);
         });
 
         assertEquals(3, c.getNumPlayers());
@@ -175,7 +178,7 @@ class ControllerTest {
 
         //someone tries to connect with a nickname of a player already online
         CannotJoinGameException e = assertThrows(CannotJoinGameException.class, ()->{
-            c.joinGame("Giuseppe");
+            c.joinGame("Giuseppe", PawnColor.ROUGE);
         });
         assert e.toString().contains("already playing");
 
@@ -183,7 +186,7 @@ class ControllerTest {
 
         //someone tries to connect with a nickname of a player already online
         CannotJoinGameException e1 = assertThrows(CannotJoinGameException.class, ()->{
-            c.joinGame("Giuseppe");
+            c.joinGame("Giuseppe", PawnColor.ROUGE);
         });
         assert e1.toString().contains("already playing");
 
@@ -191,7 +194,7 @@ class ControllerTest {
 
         //someone tries to connect with a nickname of a player already online
         CannotJoinGameException e2 = assertThrows(CannotJoinGameException.class, ()->{
-            c.joinGame("Giuseppe");
+            c.joinGame("Giuseppe", PawnColor.ROUGE);
         });
         assert e2.toString().contains("already playing");
     }
@@ -214,6 +217,10 @@ class ControllerTest {
         });
         assert e1.toString().contains("preliminary");
 
+        //everyone disconnects
+        c.disconnectPlayer("Pippo");
+        assertThrows(NoOneIsConnectedException.class, ()-> c.disconnectPlayer("Pietro"));
+
         _simulateNewGame();
         _simulateStarterCards();
         _simulateObjectives();
@@ -229,11 +236,15 @@ class ControllerTest {
         });
         //someone tries to connect
         CannotJoinGameException e2 = assertThrows(CannotJoinGameException.class, ()->{
-            c.joinGame("Gianni");
+            c.joinGame("Gianni", PawnColor.JAUNE);
         });
         assert e2.toString().contains("full");
+        //the player reconnects with another pawn
+        assertThrows(CannotJoinGameException.class, ()->{
+            c.joinGame(playerOrder.get(1), PawnColor.JAUNE);
+        });
         //the player reconnects
-        connectionAckMessages = c.joinGame(playerOrder.get(1));
+        connectionAckMessages = c.joinGame(playerOrder.get(1), pawns.get(1));
         //everything is set
         assertEquals(3, c.getGameModel().getConnectedPlayers().size());
         assertEquals(3, connectionAckMessages.values().iterator().next().getNumOfConnectedPlayers());
@@ -255,8 +266,8 @@ class ControllerTest {
         assertEquals(1, acknowledgeMessages.size());
         assertEquals(1, acknowledgeMessages.get(playerOrder.get(0)).getNumOfConnectedPlayers());
         printMessages(acknowledgeMessages);
-        c.joinGame(playerOrder.get(1));
-        c.joinGame(playerOrder.get(2));
+        c.joinGame(playerOrder.get(1), pawns.get(1));
+        c.joinGame(playerOrder.get(2), pawns.get(2));
         assertEquals(3, c.getGameModel().getConnectedPlayers().size());
 
         //everyone disconnects
@@ -591,7 +602,7 @@ class ControllerTest {
         assert e.toString().contains("wait");
 
         //player reconnect
-        c.joinGame(playerOrder.get(0));
+        c.joinGame(playerOrder.get(0), pawns.get(0));
         //now you can play
         StarterCard s = c.getGameModel().getCurrPlayer().getStarterCard();
         c.playCard(playerOrder.get(2), 0, Corner.UR, s.getID(), PlayableCard.FRONT);
@@ -602,7 +613,7 @@ class ControllerTest {
         });
         assert e1.toString().contains("wait");
         //player reconnect
-        c.joinGame(playerOrder.get(0));
+        c.joinGame(playerOrder.get(0), pawns.get(0));
         //now you can pick
         c.pickCard(playerOrder.get(2), Deck.RESOURCE_CARDS);
         assertEquals(playerOrder.get(0), c.getGameModel().getCurrPlayer().getNickname());
@@ -715,7 +726,7 @@ class ControllerTest {
         acknowledgeMessages = c.pickCard(playerOrder.get(2), Deck.RESOURCE_CARDS);
         //result message should contain nickname of the winner
         assert acknowledgeMessages.get(playerOrder.get((winner+1)%playerOrder.size()))
-                .getResult().contains(playerOrder.get(winner));
+                .getImportantMessage().contains(playerOrder.get(winner));
         printMessages(acknowledgeMessages);
     }
 
@@ -731,9 +742,9 @@ class ControllerTest {
     void afterEndGame() throws InvalidArgumentException, RequirementsNotRespectedException, InvalidPlayingException, NoOneIsConnectedException, FinishedCardStackException, TargetNotPresentException, CannotJoinGameException, InvalidAngleCoveredException, InvalidPositionException {
         endGameWinner(1);
 
-        assertThrows(CannotJoinGameException.class, ()->c.joinGame("Ugo"));
+        assertThrows(CannotJoinGameException.class, ()->c.joinGame("Ugo", PawnColor.ROUGE));
         //i must wait that all players disconnected
-        assertThrows(InvalidPlayingException.class, ()->c.newGame("Ugo", 2));
+        assertThrows(InvalidPlayingException.class, ()->c.newGame("Ugo", PawnColor.ROUGE, 2));
     }
 
     @Test
@@ -743,9 +754,15 @@ class ControllerTest {
         //if some disconnects during preliminary phase
         assertThrows(InvalidDisconnectionException.class, ()->c.disconnectPlayer("Giuseppe"));
 
-        assertThrows(CannotJoinGameException.class, ()->c.joinGame("Ugo"));
-        c.newGame("Ugo", 2);
-        c.joinGame("Uga");
+        assertThrows(CannotJoinGameException.class, ()->c.joinGame("Ugo", PawnColor.ROUGE));
+        assertThrows(InvalidPlayingException.class, ()->c.newGame("Ugo", PawnColor.ROUGE, 2));
+
+        //everyone disconnects
+        c.disconnectPlayer("Pietro");
+        assertThrows(NoOneIsConnectedException.class, ()->c.disconnectPlayer("Pippo"));
+
+        c.newGame("Ugo", PawnColor.ROUGE, 2);
+        c.joinGame("Uga", PawnColor.BLEU);
         c.chooseStarterCardSide("Ugo", PlayableCard.FRONT);
         c.chooseStarterCardSide("Uga", PlayableCard.FRONT);
         c.chooseObjective("Ugo", 1);
@@ -753,8 +770,8 @@ class ControllerTest {
         c.disconnectPlayer("Ugo");
         assertThrows(NoOneIsConnectedException.class, ()->c.disconnectPlayer("Uga"));
         //if everyone disconnect
-        assertThrows(CannotJoinGameException.class, ()->c.joinGame("Ugo"));
-        c.newGame("Ugo", 2);
+        assertThrows(CannotJoinGameException.class, ()->c.joinGame("Ugo", PawnColor.ROUGE));
+        c.newGame("Ugo", PawnColor.ROUGE, 2);
     }
 
 }

@@ -4,6 +4,7 @@ import it.polimi.ingsw.client.ClientController;
 import it.polimi.ingsw.client.connections.ClientSender;
 import it.polimi.ingsw.controller.messages.BroadcastChatMessage;
 import it.polimi.ingsw.controller.messages.ChatMessage;
+import it.polimi.ingsw.model.PawnColor;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -45,20 +46,27 @@ public class TUIController extends ClientController implements Runnable{
                 }else if(command[0].equals("/join")){
                     if(myTUI.getNickname()!=null)
                         myTUI.showError("You already joined the game");
-                    else if(command.length==2){
+                    else if(command.length==3){
                         //this.username = command[1];
-                        this.clientSender.login(command[1]);
+                        PawnColor color = PawnColor.parsePawnColor(command[2]);
+                        if(color!=null)
+                            this.clientSender.login(command[1], color);
+                        else
+                            myTUI.viewErrorCommand();
                     }else
                         myTUI.viewErrorCommand();
                 }else if(command[0].equals("/newGame")){
-                    if(command.length == 3){
+                    if(command.length == 4){
                         //this.username = command[1];
-                        try{
-                            this.clientSender.startNewGame(command[1], Integer.parseInt(command[2]));
-                        }catch(NumberFormatException e){
-                            this.myTUI.viewErrorCommand();
-                        }
-                        //myTUI.setNickname(username);
+                        PawnColor color = PawnColor.parsePawnColor(command[2]);
+                        if(color!=null)
+                            try{
+                                this.clientSender.startNewGame(command[1], color, Integer.parseInt(command[3]));
+                            }catch(NumberFormatException e){
+                                this.myTUI.viewErrorCommand();
+                            }
+                        else
+                            myTUI.viewErrorCommand();
                     }else
                         myTUI.viewErrorCommand();
                 }else if(command[0].equals("/chooseObjective")){

@@ -1,7 +1,11 @@
 package it.polimi.ingsw.client.gui;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class GUIUtils {
 
@@ -11,6 +15,24 @@ public class GUIUtils {
     //public static Dimension cardDimSelected = new Dimension(cardDim.width+10, cardDim.height+10);
     public static int[] cornerGap = new int[]{38, 32};
     public static Point location;
+
+    public static JComboBox<ImageIcon> getImageIconJComboBox() {
+        ImageIcon rougeIcon = new ImageIcon("src/main/resources/rouge.png");
+        rougeIcon.setDescription("rouge");
+        ImageIcon bleuIcon = new ImageIcon("src/main/resources/bleu.png");
+        bleuIcon.setDescription("bleu");
+        ImageIcon vertIcon = new ImageIcon("src/main/resources/vert.png");
+        vertIcon.setDescription("vert");
+        ImageIcon jauneIcon = new ImageIcon("src/main/resources/jaune.png");
+        jauneIcon.setDescription("jaune");
+
+        ImageIcon[] icons = {rougeIcon, bleuIcon, vertIcon, jauneIcon};
+        JComboBox<ImageIcon> colorComboBox = new JComboBox<>(icons);
+        colorComboBox.setMaximumSize(new Dimension(100, 25));
+        colorComboBox.setSelectedIndex(0);
+        return colorComboBox;
+    }
+
     public static void showMessage(Component parent, String message){
         SwingUtilities.invokeLater( () -> {
             JOptionPane jOptionPane = new JOptionPane(message, JOptionPane.PLAIN_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
