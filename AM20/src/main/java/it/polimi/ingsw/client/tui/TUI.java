@@ -170,10 +170,12 @@ public class TUI implements UIManager {
     @Override
     public void updateOtherPlayerInfo(HashMap<String, PlayerInfo> otherPlayerInfo) {
         if(otherPlayerInfo!=null) {
-            for(String nickname : otherPlayerInfo.keySet())
-                othersPlayerInfo.put(nickname, otherPlayerInfo.get(nickname));
-            /*for (String nickname : otherPlayerInfo.keySet())
-                viewOtherPlayerInfo(nickname);*/
+            if(othersPlayerInfo==null)
+                othersPlayerInfo = otherPlayerInfo;
+            else {
+                for (String nickname : otherPlayerInfo.keySet())
+                    othersPlayerInfo.put(nickname, otherPlayerInfo.get(nickname));
+            }
         }
     }
 
@@ -568,7 +570,7 @@ public class TUI implements UIManager {
     }
     public void viewErrorCommand(){
         System.out.println("The command executed is wrong");
-        viewCommand();
+        showCommand();
     }
 
     public void printTitle(){
