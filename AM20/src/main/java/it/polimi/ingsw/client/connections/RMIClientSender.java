@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.PawnColor;
 import it.polimi.ingsw.model.exceptions.*;
 import it.polimi.ingsw.server.Loggable;
 
+import java.io.IOException;
 import java.rmi.RemoteException;
 
 public class RMIClientSender extends ClientSender {
@@ -145,5 +146,10 @@ public class RMIClientSender extends ClientSender {
             receiver.callErrorMessage(new ErrorMessage("Server not reachable"));
         }
 
+    }
+
+    @Override
+    public void sendPingMessage() throws IOException {
+        stub.ping();
     }
 }

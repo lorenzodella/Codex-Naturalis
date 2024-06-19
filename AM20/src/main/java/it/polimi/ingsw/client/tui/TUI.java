@@ -495,6 +495,7 @@ public class TUI implements UIManager {
     public void viewOtherPlayerInfo(String username){
         this.printTitle();
         try {
+            username = username.substring(0,1).toUpperCase() + username.substring(1);
             System.out.println("The following information are the one of " + username + " game");
             System.out.println(username + " has done " + this.othersPlayerInfo.get(username).getScore() + " points");
 

@@ -318,4 +318,9 @@ public class ServerRMI extends UnicastRemoteObject implements Loggable{
         }
         return m;
     }
+
+    @Override
+    public void ping() {
+        //do nothing
+    }
 }

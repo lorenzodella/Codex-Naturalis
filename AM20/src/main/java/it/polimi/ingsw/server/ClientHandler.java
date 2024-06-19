@@ -50,7 +50,6 @@ public class ClientHandler implements Runnable{
             return;
         }
         while(true){
-            System.out.println("Waiting for message...");
             try {
                 message = (ClientMessage) objectInputStream.readObject();
 

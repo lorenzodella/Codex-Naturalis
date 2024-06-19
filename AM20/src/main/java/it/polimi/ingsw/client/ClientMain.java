@@ -1,9 +1,6 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.client.connections.Client;
-import it.polimi.ingsw.client.connections.ClientRMI;
-import it.polimi.ingsw.client.connections.ClientSKT;
-import it.polimi.ingsw.client.connections.ClientSender;
+import it.polimi.ingsw.client.connections.*;
 import it.polimi.ingsw.client.gui.GUI;
 import it.polimi.ingsw.client.gui.GUIController;
 import it.polimi.ingsw.client.gui.GUIUtils;
@@ -105,6 +102,7 @@ public class ClientMain {
                 clientController = new GUIController(sender, (GUI) manager);
                 ((GUI) manager).showStartScreen();
             }
+            new PingThread(sender, manager).run();
 
 
         } catch (IOException e) {

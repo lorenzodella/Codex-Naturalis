@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.connections;
 import it.polimi.ingsw.client.UIUpdater;
 import it.polimi.ingsw.clientmessage.*;
 import it.polimi.ingsw.controller.messages.ErrorMessage;
+import it.polimi.ingsw.controller.messages.PingMessage;
 import it.polimi.ingsw.model.PawnColor;
 
 import java.io.IOException;
@@ -116,5 +117,11 @@ public class SKTClientSender extends ClientSender {
             uiUpdater.errorMessage(new ErrorMessage("Server not reachable"));
         }
 
+    }
+
+    @Override
+    public void sendPingMessage() throws IOException {
+        PingMessage msg = new PingMessage();
+        outputStream.writeObject(msg);
     }
 }

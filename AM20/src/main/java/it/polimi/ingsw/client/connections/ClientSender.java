@@ -2,6 +2,8 @@ package it.polimi.ingsw.client.connections;
 
 import it.polimi.ingsw.model.PawnColor;
 
+import java.io.IOException;
+
 public abstract class ClientSender {
     public abstract void login(String client, PawnColor color);
     public abstract void startNewGame(String client, PawnColor color, int numPlayers);
@@ -12,4 +14,5 @@ public abstract class ClientSender {
     public abstract void pickCard(String playerNickname, int deck, int index);
     public abstract void sendChatMessage(String sender, String recipient, String message);
     public abstract void sendBroadcastChatMessage(String sender, String message);
+    public abstract void sendPingMessage() throws IOException;
 }

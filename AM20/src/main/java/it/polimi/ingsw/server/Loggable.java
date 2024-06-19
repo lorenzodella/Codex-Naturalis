@@ -19,4 +19,6 @@ public interface Loggable extends Remote {
     AcknowledgeMessage pickCard(String playerNickname, int deck, int index) throws RemoteException, InvalidArgumentException, InvalidPlayingException, FinishedCardStackException;
     Message sendChatMessage(String sender, String recipient, String message) throws RemoteException;
     Message sendBroadcastChatMessage(String sender, String message) throws RemoteException;
+
+    void ping() throws RemoteException;
 }

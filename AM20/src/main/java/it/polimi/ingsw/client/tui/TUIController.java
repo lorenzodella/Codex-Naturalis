@@ -141,8 +141,9 @@ public class TUIController extends ClientController implements Runnable{
                             this.clientSender.sendBroadcastChatMessage(myTUI.getNickname(), msg[1]);
                             myTUI.updateChatMessage(new BroadcastChatMessage(myTUI.getNickname(), msg[1]));
                         }else {
-                            this.clientSender.sendChatMessage(myTUI.getNickname(), command[1], msg[1]);
-                            myTUI.updateChatMessage(new ChatMessage(myTUI.getNickname(), command[1], msg[1]));
+                            String dest = command[1].substring(0,1).toUpperCase() + command[1].substring(1);
+                            this.clientSender.sendChatMessage(myTUI.getNickname(), dest, msg[1]);
+                            myTUI.updateChatMessage(new ChatMessage(myTUI.getNickname(), dest, msg[1]));
                         }
                     }else
                         myTUI.viewErrorCommand();
