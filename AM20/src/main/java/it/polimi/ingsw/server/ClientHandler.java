@@ -76,8 +76,11 @@ public class ClientHandler implements Runnable{
                             }
                         }
                     } catch (CannotJoinGameException e) {
-                        this.manager.getConnections().get(this.usernameClient).callErrorMessage(new ErrorMessage(e));
-                        this.manager.getConnections().remove(this.usernameClient);
+                        connection.callErrorMessage(new ErrorMessage(e));
+                        //if the saved connection is the one of the client who can't join the game, remove it
+                        if(manager.getConnections().get(usernameClient).equals(connection)){
+                            manager.getConnections().remove(usernameClient);
+                        }
                     }
 
 
@@ -93,8 +96,11 @@ public class ClientHandler implements Runnable{
                         HashMap<String, Connection> connectedPlayer = this.manager.getConnections();
                         connectedPlayer.get(this.usernameClient).callConnectionAckMessage(messageToSend);
                     } catch (InvalidArgumentException | InvalidPlayingException e) {
-                        this.manager.getConnections().get(this.usernameClient).callErrorMessage(new ErrorMessage(e));
-                        this.manager.getConnections().remove(this.usernameClient);
+                        connection.callErrorMessage(new ErrorMessage(e));
+                        //if the saved connection is the one of the client who can't join the game, remove it
+                        if(manager.getConnections().get(usernameClient).equals(connection)){
+                            manager.getConnections().remove(usernameClient);
+                        }
                     }
 
 

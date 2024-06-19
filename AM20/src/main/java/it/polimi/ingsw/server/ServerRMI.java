@@ -48,7 +48,10 @@ public class ServerRMI extends UnicastRemoteObject implements Loggable{
         try {
             res = this.manager.getController().joinGame(client, color);
         }catch (CannotJoinGameException e){
-            manager.getConnections().remove(client);
+            //if the saved connection is the one of the client who can't join the game, remove it
+            if(manager.getConnections().get(client).equals(callback)){
+                manager.getConnections().remove(client);
+            }
             throw e;
         }
 
@@ -87,7 +90,10 @@ public class ServerRMI extends UnicastRemoteObject implements Loggable{
         try {
             return this.manager.getController().newGame(client, color, numPlayers);
         } catch (InvalidArgumentException | InvalidPlayingException e) {
-            manager.getConnections().remove(client);
+            //if the saved connection is the one of the client who can't join the game, remove it
+            if(manager.getConnections().get(client).equals(callback)){
+                manager.getConnections().remove(client);
+            }
             throw e;
         }
     }
