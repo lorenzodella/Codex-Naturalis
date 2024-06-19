@@ -48,7 +48,7 @@ class PlayerTest {
 
     @BeforeEach
     void setUp() throws InvalidPlayingException {
-        p = new Player("ireneer", PawnColor.ROUGE);
+        p = new Player("ireneer", PawnColor.RED);
 
         StarterCard starterCard = getExampleStarterCard();
         p.setStarterCard(starterCard);

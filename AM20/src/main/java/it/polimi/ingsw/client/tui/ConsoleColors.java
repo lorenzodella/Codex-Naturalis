@@ -44,14 +44,14 @@ public class ConsoleColors {
 
     public static String colorFromPawnColor(PawnColor pawnColor) {
         switch (pawnColor) {
-            case ROUGE:
-                return TEXT_BG_RED;
-            case BLEU:
-                return TEXT_BG_BLUE;
-            case VERT:
-                return TEXT_BG_GREEN;
-            case JAUNE:
-                return TEXT_BG_YELLOW;
+            case RED:
+                return TEXT_RED;
+            case BLUE:
+                return TEXT_BLUE;
+            case GREEN:
+                return TEXT_GREEN;
+            case YELLOW:
+                return TEXT_YELLOW;
             default:
                 return TEXT_RESET;
         }

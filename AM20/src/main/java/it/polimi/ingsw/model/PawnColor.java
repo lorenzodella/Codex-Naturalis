@@ -1,23 +1,21 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.cards.SpecialObject;
-
 public enum PawnColor {
-    ROUGE,
-    BLEU,
-    VERT,
-    JAUNE;
+    RED,
+    BLUE,
+    GREEN,
+    YELLOW;
 
     public static PawnColor parsePawnColor(String s){
         switch(s){
-            case "rouge":
-                return ROUGE;
-            case "bleu":
-                return BLEU;
-            case "vert":
-                return VERT;
-            case "jaune":
-                return JAUNE;
+            case "red":
+                return RED;
+            case "blue":
+                return BLUE;
+            case "green":
+                return GREEN;
+            case "yellow":
+                return YELLOW;
             default:
                 return null;
         }

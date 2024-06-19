@@ -33,10 +33,10 @@ class GameTest {
     @BeforeEach
     void setUp() {
         game = new Game(Arrays.asList(
-                new Player("p1", PawnColor.ROUGE),
-                new Player("p2", PawnColor.BLEU),
-                new Player("p3", PawnColor.VERT),
-                new Player("p4", PawnColor.JAUNE)
+                new Player("p1", PawnColor.RED),
+                new Player("p2", PawnColor.BLUE),
+                new Player("p3", PawnColor.GREEN),
+                new Player("p4", PawnColor.YELLOW)
         ));
         game.initDecks();
         game.giveStarterCards();

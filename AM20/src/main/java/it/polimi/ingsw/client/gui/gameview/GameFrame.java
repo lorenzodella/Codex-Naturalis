@@ -4,10 +4,6 @@ import it.polimi.ingsw.client.gui.Chat;
 import it.polimi.ingsw.client.gui.GUI;
 import it.polimi.ingsw.client.gui.GUIController;
 import it.polimi.ingsw.client.gui.GUIUtils;
-import it.polimi.ingsw.client.gui.listeners.DeckCoveredListener;
-import it.polimi.ingsw.client.gui.listeners.DeckVisibleListener;
-import it.polimi.ingsw.client.gui.listeners.MapListener;
-import it.polimi.ingsw.client.gui.listeners.YourCardsListener;
 import it.polimi.ingsw.controller.PlayerInfo;
 import it.polimi.ingsw.model.PawnColor;
 import it.polimi.ingsw.model.PlayerStats;
@@ -18,7 +14,6 @@ import it.polimi.ingsw.model.util.XMLparser;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class GameFrame extends JFrame {
     private PlayerPanel playerPanel;
@@ -166,10 +161,10 @@ public class GameFrame extends JFrame {
         GUI gui = new GUI();
         GUIController guiController = new GUIController(null, gui);
 
-        gui.updateYourPlayerInfo(new PlayerInfo(PawnColor.VERT));
+        gui.updateYourPlayerInfo(new PlayerInfo(PawnColor.GREEN));
 
         HashMap<String, PlayerInfo> map = new HashMap<>();
-        map.put("Player1", new PlayerInfo(PawnColor.ROUGE));
+        map.put("Player1", new PlayerInfo(PawnColor.RED));
         gui.updateOtherPlayerInfo(map);
 
         //gui.gameFrame.playerPanel.getDeckPanel().updateResource(null, null, getExampleResourceCard("R18"));

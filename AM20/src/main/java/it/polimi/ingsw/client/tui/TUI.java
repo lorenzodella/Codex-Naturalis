@@ -633,10 +633,10 @@ public class TUI implements UIManager {
         System.out.println("\nThe " + str + " command has the parameters:");
         switch (str){
             case "join":
-                System.out.println("/join + username + color (rouge / bleu / vert / jaune)");
+                System.out.println("/join + username + color (red / blue / green / yellow)");
                 break;
             case "newGame":
-                System.out.println("/newGame + username + color (rouge / bleu / vert / jaune) + numPlayers");
+                System.out.println("/newGame + username + color (red / blue / green / yellow) + numPlayers");
                 break;
             case "chooseObjective":
                 System.out.println("/chooseObjective + index");
