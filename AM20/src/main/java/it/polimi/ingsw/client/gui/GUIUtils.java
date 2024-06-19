@@ -17,13 +17,13 @@ public class GUIUtils {
     public static Point location = new Point(0,0);
 
     public static JComboBox<ImageIcon> getImageIconJComboBox() {
-        ImageIcon rougeIcon = new ImageIcon("src/main/resources/rouge.png");
+        ImageIcon rougeIcon = new ImageIcon("src/main/resources/red.png");
         rougeIcon.setDescription("rouge");
-        ImageIcon bleuIcon = new ImageIcon("src/main/resources/bleu.png");
+        ImageIcon bleuIcon = new ImageIcon("src/main/resources/blue.png");
         bleuIcon.setDescription("bleu");
-        ImageIcon vertIcon = new ImageIcon("src/main/resources/vert.png");
+        ImageIcon vertIcon = new ImageIcon("src/main/resources/green.png");
         vertIcon.setDescription("vert");
-        ImageIcon jauneIcon = new ImageIcon("src/main/resources/jaune.png");
+        ImageIcon jauneIcon = new ImageIcon("src/main/resources/yellow.png");
         jauneIcon.setDescription("jaune");
 
         ImageIcon[] icons = {rougeIcon, bleuIcon, vertIcon, jauneIcon};

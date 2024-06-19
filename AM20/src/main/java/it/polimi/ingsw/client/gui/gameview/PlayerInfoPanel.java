@@ -161,22 +161,22 @@ public class PlayerInfoPanel extends JPanel {
     public void update(int score, PlayerStats stats, PawnColor color){
         switch (color){
             case BLEU:
-                iconLabel.setIcon(new ImageIcon("src/main/resources/bleu.png"));
+                iconLabel.setIcon(new ImageIcon("src/main/resources/blue.png"));
                 playerNameLabel.setForeground(Color.BLUE);
                 scoreLabel.setForeground(Color.BLUE);
                 break;
             case VERT:
-                iconLabel.setIcon(new ImageIcon("src/main/resources/vert.png"));
+                iconLabel.setIcon(new ImageIcon("src/main/resources/green.png"));
                 playerNameLabel.setForeground(Color.GREEN.darker());
                 scoreLabel.setForeground(Color.GREEN.darker());
                 break;
             case ROUGE:
-                iconLabel.setIcon(new ImageIcon("src/main/resources/rouge.png"));
+                iconLabel.setIcon(new ImageIcon("src/main/resources/red.png"));
                 playerNameLabel.setForeground(Color.RED);
                 scoreLabel.setForeground(Color.RED);
                 break;
             case JAUNE:
-                iconLabel.setIcon(new ImageIcon("src/main/resources/jaune.png"));
+                iconLabel.setIcon(new ImageIcon("src/main/resources/yellow.png"));
                 playerNameLabel.setForeground(Color.YELLOW.darker());
                 scoreLabel.setForeground(Color.YELLOW.darker());
                 break;
