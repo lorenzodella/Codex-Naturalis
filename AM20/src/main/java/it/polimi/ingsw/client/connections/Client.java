@@ -2,6 +2,9 @@ package it.polimi.ingsw.client.connections;
 
 import it.polimi.ingsw.client.UIUpdater;
 
+import java.io.IOException;
+import java.rmi.NotBoundException;
+
 public abstract class Client {
 
     protected ClientSender sender;
@@ -15,5 +18,5 @@ public abstract class Client {
         return sender;
     }
 
-    public abstract void connect(String host, int port);
+    public abstract void connect(String host, int port) throws IOException, NotBoundException;
 }

@@ -121,7 +121,6 @@ public class SKTClientSender extends ClientSender {
 
     @Override
     public void sendPingMessage() throws IOException {
-        PingMessage msg = new PingMessage();
-        outputStream.writeObject(msg);
+        outputStream.writeObject(new ClientMessage());
     }
 }

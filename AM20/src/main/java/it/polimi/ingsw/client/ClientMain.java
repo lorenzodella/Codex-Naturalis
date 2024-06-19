@@ -6,11 +6,13 @@ import it.polimi.ingsw.client.gui.GUIController;
 import it.polimi.ingsw.client.gui.GUIUtils;
 import it.polimi.ingsw.client.tui.TUI;
 import it.polimi.ingsw.client.tui.TUIController;
+import it.polimi.ingsw.controller.messages.ErrorMessage;
 
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.rmi.NotBoundException;
 
 public class ClientMain {
 
@@ -22,7 +24,7 @@ public class ClientMain {
         Client client = null;
 
         UIManager manager = null;
-        UIUpdater updater;
+        UIUpdater updater = null;
 
         ClientSender sender = null;
         ClientController clientController;
@@ -105,8 +107,11 @@ public class ClientMain {
             new PingThread(sender, manager).run();
 
 
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (IOException | NotBoundException e) {
+            if(updater!=null)
+                updater.errorMessage(new ErrorMessage("Server not reachable"));
+            else
+                System.err.println("Server not reachable");
         }
 
 

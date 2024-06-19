@@ -17,16 +17,11 @@ public class ClientRMI extends Client {
         super(updater);
     }
 
-    public void connect(String host, int port) {
-        try {
-            Registry registry = LocateRegistry.getRegistry(host, port);
-            Loggable stub = (Loggable) registry.lookup("Loggable");
-            receiver = new RMIClientReceiver(updater);
-            sender = new RMIClientSender(stub, receiver);
-
-        } catch (IOException | NotBoundException e) {
-            updater.errorMessage(new ErrorMessage("Server not reachable"));
-        }
+    public void connect(String host, int port) throws IOException, NotBoundException {
+        Registry registry = LocateRegistry.getRegistry(host, port);
+        Loggable stub = (Loggable) registry.lookup("Loggable");
+        receiver = new RMIClientReceiver(updater);
+        sender = new RMIClientSender(stub, receiver);
     }
 
 }

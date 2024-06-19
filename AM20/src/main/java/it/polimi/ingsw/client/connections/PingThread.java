@@ -29,7 +29,7 @@ public class PingThread implements Runnable{
                 }
             } while (true);
         }catch (IOException e){
-            manager.showError("Server down!");
+            manager.showError("Server down! You have to relaunch application to play again");
         }
     }
 }

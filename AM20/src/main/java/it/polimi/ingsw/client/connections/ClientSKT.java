@@ -14,16 +14,12 @@ public class ClientSKT extends Client {
         super(updater);
     }
 
-    public void connect(String host, int port) {
-        try {
-            Socket socket = new Socket(host, port);
-            System.out.println("Connection established");
-            receiver = new SKTClientReceiver(socket, updater);
-            new Thread(receiver).start();
-            sender = new SKTClientSender(socket, updater);
-        } catch (IOException e) {
-            updater.errorMessage(new ErrorMessage("Server not reachable"));
-        }
+    public void connect(String host, int port) throws IOException {
+        Socket socket = new Socket(host, port);
+        System.out.println("Connection established");
+        receiver = new SKTClientReceiver(socket, updater);
+        new Thread(receiver).start();
+        sender = new SKTClientSender(socket, updater);
     }
 
     public ClientSender getSender() {
