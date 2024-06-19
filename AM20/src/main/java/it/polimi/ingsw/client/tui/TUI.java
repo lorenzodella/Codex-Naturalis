@@ -205,7 +205,7 @@ public class TUI implements UIManager {
     @Override
     public void showImportantMessage(String result, String importantMessage) {
         if(importantMessage!=null) {
-            System.out.println(ConsoleColors.TEXT_BG_GREEN+result+ConsoleColors.TEXT_RESET);
+            //System.out.println(ConsoleColors.TEXT_BG_GREEN+result+ConsoleColors.TEXT_RESET);
             System.out.println(ConsoleColors.TEXT_BG_GREEN+importantMessage+ConsoleColors.TEXT_RESET);
         }
     }

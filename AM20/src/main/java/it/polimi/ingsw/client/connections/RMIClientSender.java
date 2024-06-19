@@ -104,7 +104,7 @@ public class RMIClientSender extends ClientSender {
         } catch (RemoteException e) {
             receiver.callErrorMessage(new ErrorMessage("Server not reachable"));
         } catch (InvalidArgumentException | InvalidPlayingException | FinishedCardStackException e) {
-            throw new RuntimeException(e);
+            receiver.callErrorMessage(new ErrorMessage(e));
         }
 
     }
@@ -118,7 +118,7 @@ public class RMIClientSender extends ClientSender {
         } catch (RemoteException e) {
             receiver.callErrorMessage(new ErrorMessage("Server not reachable"));
         } catch (InvalidArgumentException | InvalidPlayingException | FinishedCardStackException e) {
-            throw new RuntimeException(e);
+            receiver.callErrorMessage(new ErrorMessage(e));
         }
 
     }
