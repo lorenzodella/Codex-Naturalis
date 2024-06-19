@@ -10,7 +10,7 @@ public class EndGameTimer {
 
     private Thread t;
     private ServerManager manager;
-    private static final int SEC = 30;
+    private static final int SEC = 60;
 
     public EndGameTimer(ServerManager manager){
         this.manager = manager;

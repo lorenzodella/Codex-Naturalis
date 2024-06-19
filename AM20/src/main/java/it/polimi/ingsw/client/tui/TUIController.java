@@ -49,8 +49,9 @@ public class TUIController extends ClientController implements Runnable{
                     else if(command.length==3){
                         //this.username = command[1];
                         PawnColor color = PawnColor.parsePawnColor(command[2]);
+                        String nick = command[1].substring(0,1).toUpperCase() + command[1].substring(1);
                         if(color!=null)
-                            this.clientSender.login(command[1], color);
+                            this.clientSender.login(nick, color);
                         else
                             myTUI.viewErrorCommand();
                     }else
@@ -59,9 +60,10 @@ public class TUIController extends ClientController implements Runnable{
                     if(command.length == 4){
                         //this.username = command[1];
                         PawnColor color = PawnColor.parsePawnColor(command[2]);
+                        String nick = command[1].substring(0,1).toUpperCase() + command[1].substring(1);
                         if(color!=null)
                             try{
-                                this.clientSender.startNewGame(command[1], color, Integer.parseInt(command[3]));
+                                this.clientSender.startNewGame(nick, color, Integer.parseInt(command[3]));
                             }catch(NumberFormatException e){
                                 this.myTUI.viewErrorCommand();
                             }

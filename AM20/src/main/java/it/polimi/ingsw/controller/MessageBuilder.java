@@ -446,6 +446,7 @@ public class MessageBuilder implements GameObserver {
         HashMap <String, PlayerInfo> otherPlayerUpdates = new HashMap<>();
         for(Player player: players){
             PlayerInfo playerUpdates = new PlayerInfo(player.getPawnColor());
+            playerUpdates.setStats(player.getTable().getStats());
             playerUpdates.setScore(player.getScore());
             otherPlayerUpdates.put(player.getNickname(), playerUpdates);
         }

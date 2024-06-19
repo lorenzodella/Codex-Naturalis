@@ -40,7 +40,8 @@ public class NewGameListener extends ClientController implements ActionListener 
         if (option == JOptionPane.OK_OPTION) {
             if (!nickname.getText().isEmpty()) {
                 ImageIcon selectedIcon = (ImageIcon) colorComboBox.getSelectedItem();
-                clientSender.startNewGame(nickname.getText(), PawnColor.parsePawnColor(selectedIcon.getDescription()), (Integer) number.getValue());
+                String nick = nickname.getText().substring(0,1).toUpperCase() + nickname.getText().substring(1);
+                clientSender.startNewGame(nick, PawnColor.parsePawnColor(selectedIcon.getDescription()), (Integer) number.getValue());
             } else {
                 GUIUtils.showError(null, "Nickname cannot be empty");
             }

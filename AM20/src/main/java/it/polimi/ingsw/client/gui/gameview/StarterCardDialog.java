@@ -20,7 +20,7 @@ public class StarterCardDialog extends JDialog implements ActionListener{
     JTextArea message;
 
     public StarterCardDialog(Frame owner){
-        super(owner, "SIDE OF YOUR STARTER CARD");
+        super(owner, "Starter Card side");
 
         JPanel confirmPanel = new JPanel();
         JPanel cardPanel = new JPanel();
@@ -28,7 +28,7 @@ public class StarterCardDialog extends JDialog implements ActionListener{
         panel.setLayout(new BorderLayout(10,10));
         panel.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
 
-        confirm = new JButton("confirm");
+        confirm = new JButton("Confirm");
         starterCard = new CardButton();
         starterCard.setClickable(true);
         starterCard.addActionListener(this);

@@ -21,7 +21,7 @@ public class SecretObjectiveDialog extends JDialog implements ActionListener{
     JTextArea message;
 
     public SecretObjectiveDialog(Frame owner){
-        super(owner, "SECRET OBJECTIVE");
+        super(owner, "Secret Objective");
 
         JPanel confirmPanel = new JPanel();
         JPanel panel = new JPanel();
@@ -29,7 +29,7 @@ public class SecretObjectiveDialog extends JDialog implements ActionListener{
         panel.setLayout(new BorderLayout(10,10));
         panel.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
 
-        confirm = new JButton("confirm");
+        confirm = new JButton("Confirm");
         objective0 = new CardButton();
         objective0.setClickable(true);
         objective0.addActionListener(this);
