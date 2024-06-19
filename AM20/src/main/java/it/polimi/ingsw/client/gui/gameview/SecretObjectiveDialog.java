@@ -65,11 +65,11 @@ public class SecretObjectiveDialog extends JDialog implements ActionListener{
     }
 
     static TrioOfObjectsObjectiveCard getExampleTrioOfObjectsObjectiveCard(){
-        ArrayList<ObjectiveCard> TrioOfObjectsObjectiveCard = XMLparser.parseObjectiveCards("objectiveCards.xml");
+        ArrayList<ObjectiveCard> TrioOfObjectsObjectiveCard = XMLparser.parseObjectiveCards("src/main/resources/xml/objectiveCards.xml");
         return (TrioOfObjectsObjectiveCard) TrioOfObjectsObjectiveCard.stream().filter(x->x.getID().equals("O99")).findAny().orElse(null);
     }
     static VerticalConfigurationObjectiveCard getExampleVerticalConfigurationObjectiveCard(){
-        ArrayList<ObjectiveCard> VerticalConfigurationObjectiveCard = XMLparser.parseObjectiveCards("objectiveCards.xml");
+        ArrayList<ObjectiveCard> VerticalConfigurationObjectiveCard = XMLparser.parseObjectiveCards("src/main/resources/xml/objectiveCards.xml");
         return (VerticalConfigurationObjectiveCard) VerticalConfigurationObjectiveCard.stream().filter(x->x.getID().equals("O94")).findAny().orElse(null);
     }
     public static void main(String[] args) {

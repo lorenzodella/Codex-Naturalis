@@ -16,7 +16,7 @@ class PlayerStatsTest {
     PlayerStats p;
 
     PointsGoldCard getExamplePointsGoldCard(String id){
-        ArrayList<PlayableCard> PointsGoldCard = XMLparser.parseGoldCards("goldCards.xml");
+        ArrayList<PlayableCard> PointsGoldCard = XMLparser.parseGoldCards("src/main/resources/xml/goldCards.xml");
         return (PointsGoldCard) PointsGoldCard.stream().filter(x->x.getID().equals(id)).findAny().orElse(null);
     }
 

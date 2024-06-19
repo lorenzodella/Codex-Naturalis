@@ -93,11 +93,11 @@ public class Game implements GameObservable{
      */
     @Override
     public Deck[] initDecks(){
-        resourceCardDeck = new Deck(XMLparser.parseResourceCards("resourceCards.xml"));
+        resourceCardDeck = new Deck(XMLparser.parseResourceCards("src/main/resources/xml/resourceCards.xml"));
         resourceCardDeck.shuffle();
         resourceCardDeck.initVisibleCards();
 
-        goldCardDeck = new Deck(XMLparser.parseGoldCards("goldCards.xml"));
+        goldCardDeck = new Deck(XMLparser.parseGoldCards("src/main/resources/xml/goldCards.xml"));
         goldCardDeck.shuffle();
         goldCardDeck.initVisibleCards();
 
@@ -116,7 +116,7 @@ public class Game implements GameObservable{
      */
     @Override
     public List<Player> giveStarterCards(){
-        ArrayList<PlayableCard> starterCards = XMLparser.parseStarterCards("starterCards.xml");
+        ArrayList<PlayableCard> starterCards = XMLparser.parseStarterCards("src/main/resources/xml/starterCards.xml");
         Collections.shuffle(starterCards);
         //this.giveInitialCards(starterCards);
         //metodo del controller che dice al gicoatore scegli quale deelle due starterCard HP: metodo chiamto PlayableCard selStarterCard(PlayableCard c1, PlayableCard c2, Player p)
@@ -178,7 +178,7 @@ public class Game implements GameObservable{
      */
     @Override
     public List<Player> initObjectiveCards(){
-        ArrayList<ObjectiveCard> tmp = new ArrayList<>(XMLparser.parseObjectiveCards("objectiveCards.xml"));
+        ArrayList<ObjectiveCard> tmp = new ArrayList<>(XMLparser.parseObjectiveCards("src/main/resources/xml/objectiveCards.xml"));
         Collections.shuffle(tmp);
         commonObjectives = new ObjectiveCard[2];
         commonObjectives[0] = tmp.get(0);

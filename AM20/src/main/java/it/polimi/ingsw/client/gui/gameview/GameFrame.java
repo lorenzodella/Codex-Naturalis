@@ -176,7 +176,7 @@ public class GameFrame extends JFrame {
     }
 
     static ResourceCard getExampleResourceCard(String id){
-        ArrayList<PlayableCard> ResourceCard = XMLparser.parseResourceCards("resourceCards.xml");
+        ArrayList<PlayableCard> ResourceCard = XMLparser.parseResourceCards("src/main/resources/xml/resourceCards.xml");
         return (ResourceCard) ResourceCard.stream().filter(x->x.getID().equals(id)).findAny().orElse(null);
     }
 

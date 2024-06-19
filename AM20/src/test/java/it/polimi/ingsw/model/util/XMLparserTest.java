@@ -16,7 +16,7 @@ class XMLparserTest {
 
     @Test
     void parseStarterCards() {
-        ArrayList<PlayableCard> starterCards = XMLparser.parseStarterCards("starterCards.xml");
+        ArrayList<PlayableCard> starterCards = XMLparser.parseStarterCards("src/main/resources/xml/starterCards.xml");
         Corner[] backCorners = new Corner[4];
         backCorners[0] = new Corner();
         backCorners[1] = new Corner();
@@ -36,7 +36,7 @@ class XMLparserTest {
 
     @Test
     void parseResourceCards() {
-        ArrayList<PlayableCard> resourceCards = XMLparser.parseResourceCards("resourceCards.xml");
+        ArrayList<PlayableCard> resourceCards = XMLparser.parseResourceCards("src/main/resources/xml/resourceCards.xml");
         Corner[] frontCorners = new Corner[4];
         frontCorners[0] = new Corner();
         frontCorners[1] = new Corner();
@@ -58,7 +58,7 @@ class XMLparserTest {
     void parseGoldCards() {
 
         //object
-        ArrayList<PlayableCard> goldCards = XMLparser.parseGoldCards("goldCards.xml");
+        ArrayList<PlayableCard> goldCards = XMLparser.parseGoldCards("src/main/resources/xml/goldCards.xml");
         Corner[] objectFrontCorners = new Corner[4];
         objectFrontCorners[0] = new Corner();
         objectFrontCorners[2] = new Corner(SpecialObject.Inkwell);
@@ -119,7 +119,7 @@ class XMLparserTest {
     @Test
     void parseObjectiveCards() {
         //Diagonal
-        ArrayList<ObjectiveCard> objectiveCards = XMLparser.parseObjectiveCards("objectiveCards.xml");
+        ArrayList<ObjectiveCard> objectiveCards = XMLparser.parseObjectiveCards("src/main/resources/xml/objectiveCards.xml");
         Kingdom k1 = Kingdom.Insect;
         int cc1 = 3;
         int p1 = 2;

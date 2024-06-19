@@ -24,17 +24,17 @@ class PlayerTest {
     Player p;
 
     StarterCard getExampleStarterCard(){
-        ArrayList<PlayableCard> starterCards = XMLparser.parseStarterCards("starterCards.xml");
+        ArrayList<PlayableCard> starterCards = XMLparser.parseStarterCards("src/main/resources/xml/starterCards.xml");
         return (StarterCard) starterCards.stream().filter(x->x.getID().equals("S85")).findAny().orElse(null);
     }
 
     PointsGoldCard getExamplePointsGoldCard(String id){
-        ArrayList<PlayableCard> PointsGoldCard = XMLparser.parseGoldCards("goldCards.xml");
+        ArrayList<PlayableCard> PointsGoldCard = XMLparser.parseGoldCards("src/main/resources/xml/goldCards.xml");
         return (PointsGoldCard) PointsGoldCard.stream().filter(x->x.getID().equals(id)).findAny().orElse(null);
     }
 
     DiagonalConfigurationObjectiveCard getExampleDiagonalConfigurationObjectiveCard(String id){
-        ArrayList<ObjectiveCard> DiagonalConfigurationObjectiveCard = XMLparser.parseObjectiveCards("objectiveCards.xml");
+        ArrayList<ObjectiveCard> DiagonalConfigurationObjectiveCard = XMLparser.parseObjectiveCards("src/main/resources/xml/objectiveCards.xml");
         return (DiagonalConfigurationObjectiveCard) DiagonalConfigurationObjectiveCard.stream().filter(x->x.getID().equals(id)).findAny().orElse(null);
     }
 

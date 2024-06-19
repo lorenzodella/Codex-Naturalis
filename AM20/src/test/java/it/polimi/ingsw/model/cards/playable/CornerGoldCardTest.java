@@ -19,12 +19,12 @@ class CornerGoldCardTest {
     CornerGoldCard s;
 
     CornerGoldCard getExampleCornerGoldCard(String id){
-        ArrayList<PlayableCard> CornerGoldCard = XMLparser.parseGoldCards("goldCards.xml");
+        ArrayList<PlayableCard> CornerGoldCard = XMLparser.parseGoldCards("src/main/resources/xml/goldCards.xml");
         return (CornerGoldCard) CornerGoldCard.stream().filter(x->x.getID().equals(id)).findAny().orElse(null);
     }
 
     StarterCard getExampleStarterCard(){
-        ArrayList<PlayableCard> starterCards = XMLparser.parseStarterCards("starterCards.xml");
+        ArrayList<PlayableCard> starterCards = XMLparser.parseStarterCards("src/main/resources/xml/starterCards.xml");
         return (StarterCard) starterCards.stream().filter(x->x.getID().equals("S85")).findAny().orElse(null);
     }
 

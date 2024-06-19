@@ -18,17 +18,17 @@ class ObjectGoldCardTest {
     ObjectGoldCard s;
 
     ObjectGoldCard getExampleObjectGoldCard(){
-        ArrayList<PlayableCard> ObjectGoldCard = XMLparser.parseGoldCards("goldCards.xml");
+        ArrayList<PlayableCard> ObjectGoldCard = XMLparser.parseGoldCards("src/main/resources/xml/goldCards.xml");
         return (ObjectGoldCard) ObjectGoldCard.stream().filter(x->x.getID().equals("G42")).findAny().orElse(null);
     }
 
     ResourceCard getExampleResourceCard(String id){
-        ArrayList<PlayableCard> ResourceCard = XMLparser.parseResourceCards("resourceCards.xml");
+        ArrayList<PlayableCard> ResourceCard = XMLparser.parseResourceCards("src/main/resources/xml/resourceCards.xml");
         return (ResourceCard) ResourceCard.stream().filter(x->x.getID().equals(id)).findAny().orElse(null);
     }
 
     StarterCard getExampleStarterCard(){
-        ArrayList<PlayableCard> starterCards = XMLparser.parseStarterCards("starterCards.xml");
+        ArrayList<PlayableCard> starterCards = XMLparser.parseStarterCards("src/main/resources/xml/starterCards.xml");
         return (StarterCard) starterCards.stream().filter(x->x.getID().equals("S85")).findAny().orElse(null);
     }
 
