@@ -90,7 +90,7 @@ public class ServerManager {
                 if(res.get(s) != null && !s.equals(nickname)) {
                     try {
                         this.getConnections().get(s).callAcknowledgeMessage(res.get(s));
-                    } catch (IOException e) {
+                    } catch (IOException | NullPointerException e) {
                         detectDisconnection(s);
                     }
                 }

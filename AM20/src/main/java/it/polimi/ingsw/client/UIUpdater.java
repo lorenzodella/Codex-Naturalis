@@ -99,11 +99,11 @@ public class UIUpdater  {
         manager.updateOtherPlayerInfo(msg.getOthersPlayerInfo());
         manager.updateCards(msg.getCards());
         manager.showResult(msg.getResult());
+        manager.showPlayAck();
         if(msg.mustPick())
             manager.showMustPick();
         else
             manager.showNextTurn(msg.getNextPlayer());
-        manager.showPlayAck();
         manager.showImportantMessage(msg.getResult(), msg.getImportantMessage());
         manager.showCommand();
     }
