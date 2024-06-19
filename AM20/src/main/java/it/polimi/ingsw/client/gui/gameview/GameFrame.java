@@ -12,6 +12,7 @@ import it.polimi.ingsw.model.cards.playable.*;
 import it.polimi.ingsw.model.util.XMLparser;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -66,6 +67,8 @@ public class GameFrame extends JFrame {
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocation(GUIUtils.location);
+
+        setResizable(false);
     }
 
     public TablePanel getTablePanel(){

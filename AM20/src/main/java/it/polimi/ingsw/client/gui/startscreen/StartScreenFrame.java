@@ -25,6 +25,7 @@ public class StartScreenFrame extends JFrame {
         add(startPanel);
 
         setSize(1000, 750);
+        setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocation(GUIUtils.location);
     }

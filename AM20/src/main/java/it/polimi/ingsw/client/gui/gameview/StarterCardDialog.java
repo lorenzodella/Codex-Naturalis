@@ -54,6 +54,7 @@ public class StarterCardDialog extends JDialog implements ActionListener{
         //non chiudere
         setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 
+        setResizable(false);
         pack();
     }
     static StarterCard getExampleStarterCard(){
