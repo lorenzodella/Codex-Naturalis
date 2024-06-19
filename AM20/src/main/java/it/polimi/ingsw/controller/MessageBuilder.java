@@ -479,6 +479,10 @@ public class MessageBuilder implements GameObserver {
         for(String nickname : connectedPlayerNicknames){
             if(acknowledgeMessages.get(nickname) == null)
                 acknowledgeMessages.put(nickname, new AcknowledgeMessage());
+
+            acknowledgeMessages.get(nickname).setNextPlayer(null);
+            acknowledgeMessages.get(nickname).setMustPick(false);
+
             if(winner==null)
                 acknowledgeMessages.get(nickname).appendImportantMessage("Match ended in a draw!");
             else if(!winner.getNickname().equals(nickname))
