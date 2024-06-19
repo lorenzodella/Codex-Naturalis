@@ -146,7 +146,7 @@ public class TUI implements UIManager {
 
         this.goldTop = goldTop;
         this.goldVisible = goldVisible;
-        viewGold();
+        //viewGold();
 
     }
 
@@ -155,7 +155,7 @@ public class TUI implements UIManager {
     public void updateResource(PlayableCard resourceTop, PlayableCard[] resourceVisible) {
         this.resourceTop = resourceTop;
         this.resourceVisible = resourceVisible;
-        viewResource();
+        //viewResource();
     }
 
 
@@ -243,6 +243,7 @@ public class TUI implements UIManager {
     @Override
     public void showError(String error){
         System.err.println(error);
+        showCommand();
     }
 
     public void viewCurrPlayer(){

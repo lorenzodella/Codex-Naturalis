@@ -523,10 +523,7 @@ public class Controller implements GameManager {
                 Player winner = gameModel.checkWinner();
                 msg = messageBuilder.notifyWin(winner);
             } catch (DrawMatchException e) {
-                for(AcknowledgeMessage m : msg.values()){
-                    m.setResult("Game is over!");
-                    m.appendImportantMessage(e.toString());
-                }
+                msg = messageBuilder.notifyWin(null);
             }
             phase = END;
         }

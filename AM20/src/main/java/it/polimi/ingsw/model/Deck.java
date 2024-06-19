@@ -24,6 +24,9 @@ public class Deck {
         cards.add(cardList.get(3));
         cards.add(cardList.get(4));
         cards.add(cardList.get(5));
+        cards.add(cardList.get(6));
+        cards.add(cardList.get(7));
+        cards.add(cardList.get(8));
         visibleCards = new PlayableCard[2];
 
     }
