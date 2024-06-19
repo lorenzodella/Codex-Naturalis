@@ -121,6 +121,9 @@ public class Controller implements GameManager {
     @Override
     public synchronized HashMap<String, AcknowledgeMessage> disconnectPlayer(String nickname)
             throws InvalidConnectionStateException, InvalidArgumentException, NoOneIsConnectedException, InvalidDisconnectionException {
+        if(gameModel==null)
+            return new HashMap<>();
+
         //if you are not a player of current game
         if(!players.containsValue(nickname))
             throw new InvalidArgumentException("nickname", nickname);
