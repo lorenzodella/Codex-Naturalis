@@ -166,6 +166,8 @@ public class GameFrame extends JFrame {
         GUI gui = new GUI();
         GUIController guiController = new GUIController(null, gui);
 
+        gui.updateYourPlayerInfo(new PlayerInfo(PawnColor.VERT));
+
         HashMap<String, PlayerInfo> map = new HashMap<>();
         map.put("Player1", new PlayerInfo(PawnColor.ROUGE));
         gui.updateOtherPlayerInfo(map);

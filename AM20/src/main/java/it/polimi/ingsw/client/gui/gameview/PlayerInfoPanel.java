@@ -12,6 +12,8 @@ import java.awt.*;
 public class PlayerInfoPanel extends JPanel {
     JLabel playerNameLabel;
     JLabel scoreLabel;
+    JLabel iconLabel;
+
 
     //stats delle resource
     JLabel animalLabel;
@@ -35,31 +37,63 @@ public class PlayerInfoPanel extends JPanel {
     public PlayerInfoPanel(String playerName) {
         super();
 
-        setLayout(new BorderLayout());
-        setBackground(Color.WHITE);
         setMaximumSize(new Dimension(300, 300));
+
+        setBackground(Color.WHITE);
+        setLayout(new BorderLayout());
 
         Border lineBorder = new LineBorder(Color.BLACK);
         Border marginBorder = new EmptyBorder(0,7,0,7);
         Border compoundBorder = new CompoundBorder(lineBorder, marginBorder);
         setBorder(compoundBorder);
 
+        add(topPanel(playerName), BorderLayout.NORTH);
+
+        add(centerPanel(), BorderLayout.CENTER);
+
+    }
+
+    private JPanel topPanel(String playerName){
+        JPanel topPanel = new JPanel(new GridBagLayout());
+        topPanel.setOpaque(false);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weightx = 1;
+
         playerNameLabel = new JLabel(playerName);
         playerNameLabel.setOpaque(false);
         playerNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
         playerNameLabel.setFont(new Font("Dialog", Font.BOLD, 20));
-        add(playerNameLabel, BorderLayout.NORTH);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        topPanel.add(playerNameLabel, gbc);
 
+        scoreLabel = new JLabel("Score: 0");
+        scoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        scoreLabel.setFont(new Font("Dialog", Font.BOLD, 15));
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        topPanel.add(scoreLabel, gbc);
+
+        iconLabel = new JLabel();
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.gridheight = 2;
+        gbc.anchor = GridBagConstraints.EAST;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 0.5;
+        topPanel.add(iconLabel, gbc);
+
+        topPanel.setBorder(new MatteBorder(0, 0, 1, 0, Color.BLACK));
+
+        return topPanel;
+    }
+
+    private JPanel centerPanel(){
         JPanel centerPanel = new JPanel();
         centerPanel.setOpaque(false);
         centerPanel.setLayout(new BorderLayout(5,5));
-
-        scoreLabel = new JLabel("Score: 0");
-        scoreLabel.setForeground(Color.BLUE);
-        scoreLabel.setFont(new Font("Dialog", Font.BOLD, 15));
-        scoreLabel.setBorder(new MatteBorder(0, 0, 1, 0, Color.BLACK));
-        centerPanel.add(scoreLabel, BorderLayout.NORTH);
-
 
         JPanel resourcesPanel = new JPanel();
         resourcesPanel.setOpaque(false);
@@ -69,25 +103,25 @@ public class PlayerInfoPanel extends JPanel {
         resourcesPanel.add(resourcesLabel);
 
         //plants
-        plantsLabel = new JLabel("-Plants: 0");
+        plantsLabel = new JLabel("- Plants: 0");
         plantsLabel.setFont(new Font("Dialog", Font.PLAIN, 15));
         plantsLabel.setForeground(Color.GREEN);
         resourcesPanel.add(plantsLabel);
 
         //animals
-        animalLabel = new JLabel("-Animals: 0");
+        animalLabel = new JLabel("- Animals: 0");
         animalLabel.setFont(new Font("Dialog", Font.PLAIN, 15));
         animalLabel.setForeground(Color.CYAN);
         resourcesPanel.add(animalLabel);
 
         //fungi
-        fungiLabel = new JLabel("-Fungi: 0");
+        fungiLabel = new JLabel("- Fungi: 0");
         fungiLabel.setFont(new Font("TimesNewRomans", Font.PLAIN, 15));
         fungiLabel.setForeground(Color.RED);
         resourcesPanel.add(fungiLabel);
 
         //insect
-        insectLabel = new JLabel("-Insect: 0");
+        insectLabel = new JLabel("- Insect: 0");
         insectLabel.setFont(new Font("TimesNewRomans", Font.PLAIN, 15));
         insectLabel.setForeground(Color.MAGENTA);
         resourcesPanel.add(insectLabel);
@@ -102,21 +136,21 @@ public class PlayerInfoPanel extends JPanel {
         objectsPanel.add(objectsLabel);
 
         //inkwell
-        inkwellLabel = new JLabel("-Inkwell: 0");
+        inkwellLabel = new JLabel("- Inkwell: 0");
         inkwellLabel.setFont(new Font("Dialog", Font.PLAIN, 15));
         objectsPanel.add(inkwellLabel);
         //quilllabel
-        quillLabel = new JLabel("-Quill: 0");
+        quillLabel = new JLabel("- Quill: 0");
         quillLabel.setFont(new Font("Dialog", Font.PLAIN, 15));
         objectsPanel.add(quillLabel);
         //manuscript
-        manuscriptLabel = new JLabel("-Manuscript: 0");
+        manuscriptLabel = new JLabel("- Manuscript: 0");
         manuscriptLabel.setFont(new Font("Dialog", Font.PLAIN, 15));
         objectsPanel.add(manuscriptLabel);
 
         centerPanel.add(objectsPanel, BorderLayout.EAST);
 
-        add(centerPanel, BorderLayout.CENTER);
+        return centerPanel;
     }
 
     /**
@@ -127,36 +161,53 @@ public class PlayerInfoPanel extends JPanel {
     public void update(int score, PlayerStats stats, PawnColor color){
         switch (color){
             case BLEU:
+                iconLabel.setIcon(new ImageIcon("src/main/resources/bleu.png"));
                 playerNameLabel.setForeground(Color.BLUE);
                 scoreLabel.setForeground(Color.BLUE);
                 break;
             case VERT:
-                playerNameLabel.setForeground(Color.GREEN);
-                scoreLabel.setForeground(Color.GREEN);
+                iconLabel.setIcon(new ImageIcon("src/main/resources/vert.png"));
+                playerNameLabel.setForeground(Color.GREEN.darker());
+                scoreLabel.setForeground(Color.GREEN.darker());
                 break;
             case ROUGE:
+                iconLabel.setIcon(new ImageIcon("src/main/resources/rouge.png"));
                 playerNameLabel.setForeground(Color.RED);
                 scoreLabel.setForeground(Color.RED);
                 break;
             case JAUNE:
-                playerNameLabel.setForeground(Color.YELLOW);
-                scoreLabel.setForeground(Color.YELLOW);
+                iconLabel.setIcon(new ImageIcon("src/main/resources/jaune.png"));
+                playerNameLabel.setForeground(Color.YELLOW.darker());
+                scoreLabel.setForeground(Color.YELLOW.darker());
                 break;
         }
 
         scoreLabel.setText("Score: "+score);
 
-        animalLabel.setText("-Animals: " + stats.getNumberOfResources(Kingdom.Animal));
-        plantsLabel.setText("-Plants: " + stats.getNumberOfResources(Kingdom.Plant));
-        insectLabel.setText("-Insect: " + stats.getNumberOfResources(Kingdom.Insect));
-        fungiLabel.setText("-Fungi: " + stats.getNumberOfResources(Kingdom.Fungi));
+        animalLabel.setText("- Animals: " + stats.getNumberOfResources(Kingdom.Animal));
+        plantsLabel.setText("- Plants: " + stats.getNumberOfResources(Kingdom.Plant));
+        insectLabel.setText("- Insect: " + stats.getNumberOfResources(Kingdom.Insect));
+        fungiLabel.setText("- Fungi: " + stats.getNumberOfResources(Kingdom.Fungi));
 
-        inkwellLabel.setText("-Inkwell: "+ stats.getNumberOfObjects(SpecialObject.Inkwell));
-        quillLabel.setText("-Quill: " + stats.getNumberOfObjects(SpecialObject.Quill));
-        manuscriptLabel.setText("-Manuscript: " + stats.getNumberOfObjects(SpecialObject.Manuscript));
+        inkwellLabel.setText("- Inkwell: "+ stats.getNumberOfObjects(SpecialObject.Inkwell));
+        quillLabel.setText("- Quill: " + stats.getNumberOfObjects(SpecialObject.Quill));
+        manuscriptLabel.setText("- Manuscript: " + stats.getNumberOfObjects(SpecialObject.Manuscript));
     }
 
     public void setNickname(String nickname){
         playerNameLabel.setText(nickname);
     }
+
+
+    public static void main(String[] args) {
+        JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(250, 300);
+        PlayerInfoPanel panel = new PlayerInfoPanel("You");
+        frame.add(panel);
+        frame.setVisible(true);
+
+        panel.update(1, new PlayerStats(), PawnColor.BLEU);
+    }
+
 }

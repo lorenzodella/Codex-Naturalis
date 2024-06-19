@@ -14,7 +14,7 @@ public class GUIUtils {
     public static Dimension cardDim = new Dimension(150, 100);
     //public static Dimension cardDimSelected = new Dimension(cardDim.width+10, cardDim.height+10);
     public static int[] cornerGap = new int[]{38, 32};
-    public static Point location;
+    public static Point location = new Point(0,0);
 
     public static JComboBox<ImageIcon> getImageIconJComboBox() {
         ImageIcon rougeIcon = new ImageIcon("src/main/resources/rouge.png");
