@@ -30,6 +30,7 @@ public class UIUpdater  {
             manager.updateSecretObjectives(msg.getSecretObjective());
         }
         manager.showReconnection(msg.getResult(), msg.getNickname()!=null);
+        manager.showCommand();
     }
 
     private void initGame(StartGameMessage msg){
@@ -43,6 +44,7 @@ public class UIUpdater  {
         manager.updateResource(msg.getResourceTop(),msg.getResourceVisible());
         manager.updateCards(msg.getInitialCards());
         manager.updateStarterCard(msg.getStarterCard());
+        manager.showCommand();
     }
 
     public void starterCard(StarterCardAckMessage msg){

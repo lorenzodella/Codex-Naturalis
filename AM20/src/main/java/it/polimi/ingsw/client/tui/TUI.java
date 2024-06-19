@@ -170,7 +170,8 @@ public class TUI implements UIManager {
     @Override
     public void updateOtherPlayerInfo(HashMap<String, PlayerInfo> otherPlayerInfo) {
         if(otherPlayerInfo!=null) {
-            this.othersPlayerInfo = otherPlayerInfo;
+            for(String nickname : otherPlayerInfo.keySet())
+                othersPlayerInfo.put(nickname, otherPlayerInfo.get(nickname));
             /*for (String nickname : otherPlayerInfo.keySet())
                 viewOtherPlayerInfo(nickname);*/
         }
@@ -491,31 +492,35 @@ public class TUI implements UIManager {
 
     public void viewOtherPlayerInfo(String username){
         this.printTitle();
-        System.out.println("The following information are the one of " + username+" game");
-        System.out.println(username + " has done "+ this.othersPlayerInfo.get(username).getScore() + " points");
+        try {
+            System.out.println("The following information are the one of " + username + " game");
+            System.out.println(username + " has done " + this.othersPlayerInfo.get(username).getScore() + " points");
 
-        //TODO
-        //System.out.println("The common objective "); oppure chiamata al metodo viewCommonObjective
-        System.out.println(username + " has:");
-        System.out.print("- ");
-        System.out.print(ConsoleColors.TEXT_GREEN +"PLANT: "+ConsoleColors.TEXT_RESET);
-        System.out.println(ConsoleColors.TEXT_RESET + this.othersPlayerInfo.get(username).getStats().getNumberOfResources(Kingdom.Plant));
-        System.out.print(ConsoleColors.TEXT_RESET + "- ");
-        System.out.print(ConsoleColors.TEXT_PURPLE +"INSECT: "+ConsoleColors.TEXT_RESET);
-        System.out.println(ConsoleColors.TEXT_RESET + this.othersPlayerInfo.get(username).getStats().getNumberOfResources(Kingdom.Insect));
-        System.out.print(ConsoleColors.TEXT_RESET + "- ");
-        System.out.print(ConsoleColors.TEXT_RED +"FUNGI: "+ ConsoleColors.TEXT_RESET);
-        System.out.println(ConsoleColors.TEXT_RESET + this.othersPlayerInfo.get(username).getStats().getNumberOfResources(Kingdom.Fungi));
-        System.out.print(ConsoleColors.TEXT_RESET + "- ");
-        System.out.print(ConsoleColors.TEXT_CYAN +"ANIMAL: "+ConsoleColors.TEXT_RESET);
-        System.out.println(ConsoleColors.TEXT_RESET + this.othersPlayerInfo.get(username).getStats().getNumberOfResources(Kingdom.Animal));
-        System.out.println("- QUILL: "+ this.othersPlayerInfo.get(username).getStats().getNumberOfObjects(SpecialObject.Quill));
-        System.out.println("- INKWELL: "+ this.othersPlayerInfo.get(username).getStats().getNumberOfObjects(SpecialObject.Inkwell));
-        System.out.println("- MANUSCRIPT: "+ this.othersPlayerInfo.get(username).getStats().getNumberOfObjects(SpecialObject.Manuscript));
+            //TODO
+            //System.out.println("The common objective "); oppure chiamata al metodo viewCommonObjective
+            System.out.println(username + " has:");
+            System.out.print("- ");
+            System.out.print(ConsoleColors.TEXT_GREEN + "PLANT: " + ConsoleColors.TEXT_RESET);
+            System.out.println(ConsoleColors.TEXT_RESET + this.othersPlayerInfo.get(username).getStats().getNumberOfResources(Kingdom.Plant));
+            System.out.print(ConsoleColors.TEXT_RESET + "- ");
+            System.out.print(ConsoleColors.TEXT_PURPLE + "INSECT: " + ConsoleColors.TEXT_RESET);
+            System.out.println(ConsoleColors.TEXT_RESET + this.othersPlayerInfo.get(username).getStats().getNumberOfResources(Kingdom.Insect));
+            System.out.print(ConsoleColors.TEXT_RESET + "- ");
+            System.out.print(ConsoleColors.TEXT_RED + "FUNGI: " + ConsoleColors.TEXT_RESET);
+            System.out.println(ConsoleColors.TEXT_RESET + this.othersPlayerInfo.get(username).getStats().getNumberOfResources(Kingdom.Fungi));
+            System.out.print(ConsoleColors.TEXT_RESET + "- ");
+            System.out.print(ConsoleColors.TEXT_CYAN + "ANIMAL: " + ConsoleColors.TEXT_RESET);
+            System.out.println(ConsoleColors.TEXT_RESET + this.othersPlayerInfo.get(username).getStats().getNumberOfResources(Kingdom.Animal));
+            System.out.println("- QUILL: " + this.othersPlayerInfo.get(username).getStats().getNumberOfObjects(SpecialObject.Quill));
+            System.out.println("- INKWELL: " + this.othersPlayerInfo.get(username).getStats().getNumberOfObjects(SpecialObject.Inkwell));
+            System.out.println("- MANUSCRIPT: " + this.othersPlayerInfo.get(username).getStats().getNumberOfObjects(SpecialObject.Manuscript));
 
-        if(this.othersPlayerInfo.get(username).getMap()!=null) {
-            System.out.println("The player has the follwoing board:");
-            CardPrinter.printMap(this.othersPlayerInfo.get(username).getMap());
+            if (this.othersPlayerInfo.get(username).getMap() != null) {
+                System.out.println("The player has the follwoing board:");
+                CardPrinter.printMap(this.othersPlayerInfo.get(username).getMap());
+            }
+        }catch (NullPointerException e){
+            System.out.println("The player is not in the game");
         }
 
         System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------");
@@ -563,7 +568,7 @@ public class TUI implements UIManager {
     }
     public void viewErrorCommand(){
         System.out.println("The command executed is wrong");
-        //this.viewCommand();
+        viewCommand();
     }
 
     public void printTitle(){
