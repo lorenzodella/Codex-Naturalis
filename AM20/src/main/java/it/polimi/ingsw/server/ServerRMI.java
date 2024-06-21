@@ -36,8 +36,8 @@ public class ServerRMI extends UnicastRemoteObject implements Loggable{
      * @param client the client that's joining the game
      * @param callback client's reference that allows the server to contact the client when something significant happens
      * @return a connectionAckMessage
-     * @throws RemoteException
-     * @throws CannotJoinGameException
+     * @throws RemoteException exception that may occur during the execution of a remote method call
+     * @throws CannotJoinGameException exception thrown by the controller's joinGame method
      */
     @Override
     public  ConnectionAckMessage login(String client, PawnColor color, Connection callback) throws RemoteException, CannotJoinGameException {
@@ -78,9 +78,9 @@ public class ServerRMI extends UnicastRemoteObject implements Loggable{
      * @param numPlayers the number of players that the client "client" want to play with
      * @param callback client's reference that allows the server to contact the client when something significant happens
      * @return a message to the client "client"
-     * @throws RemoteException
-     * @throws InvalidArgumentException
-     * @throws InvalidPlayingException
+     * @throws RemoteException exception that may occur during the execution of a remote method call
+     * @throws InvalidArgumentException exception thrown by the controller's newGame method
+     * @throws InvalidPlayingException exception thrown by the controller's newGame method
      */
     @Override
     public ConnectionAckMessage startNewGame(String client, PawnColor color, int numPlayers, Connection callback) throws RemoteException, InvalidArgumentException, InvalidPlayingException {
@@ -104,9 +104,9 @@ public class ServerRMI extends UnicastRemoteObject implements Loggable{
      * @param nickname the nickname of the player that's choosing the side of the card
      * @param side the side of the card that the player's just chosen (could only be front or back)
      * @return a starterCardAckMessage to the player that's just chosen the side
-     * @throws RemoteException
-     * @throws InvalidArgumentException
-     * @throws InvalidPlayingException
+     * @throws RemoteException exception that may occur during the execution of a remote method call
+     * @throws InvalidArgumentException exception thrown by the controller's chooseStarterCardSide method
+     * @throws InvalidPlayingException exception thrown by the controller's chooseStarterCardSide method
      */
     @Override
     public StarterCardAckMessage chooseStarterCardSide(String nickname, int side) throws RemoteException, InvalidArgumentException, InvalidPlayingException {
@@ -131,11 +131,11 @@ public class ServerRMI extends UnicastRemoteObject implements Loggable{
      * between the 2 possible objectives.
      * @param nickname the nickname of the player that's choosing the side of the card
      * @param index the index, of the 2 items' array that contains the two possible secret objectives, of the specific
-     *              secret objective that's been choosen.
+     *              secret objective that's been chosen.
      * @return an objectiveAckMessage to the player that's just chosen the objective
-     * @throws RemoteException
-     * @throws InvalidArgumentException
-     * @throws InvalidPlayingException
+     * @throws RemoteException exception that may occur during the execution of a remote method call
+     * @throws InvalidArgumentException exception thrown by the controller's chooseObjective method
+     * @throws InvalidPlayingException exception thrown by the controller's chooseObjective method
      */
     @Override
     public ObjectiveAckMessage chooseObjective(String nickname, int index) throws RemoteException, InvalidArgumentException, InvalidPlayingException {
@@ -164,13 +164,13 @@ public class ServerRMI extends UnicastRemoteObject implements Loggable{
      * @param targetID the ID of the card that the player wants to cover by playing their card
      * @param side this attribute stands for the side of the card that's just been played (it could be front or back only)
      * @return an AcknowledgeMessage to the player that's just played the card
-     * @throws RemoteException
-     * @throws InvalidArgumentException
-     * @throws RequirementsNotRespectedException
-     * @throws InvalidPlayingException
-     * @throws TargetNotPresentException
-     * @throws InvalidAngleCoveredException
-     * @throws InvalidPositionException
+     * @throws RemoteException exception that may occur during the execution of a remote method call
+     * @throws InvalidArgumentException exception thrown by the controller's playCard method
+     * @throws RequirementsNotRespectedException exception thrown by the controller's playCard method
+     * @throws InvalidPlayingException exception thrown by the controller's playCard method
+     * @throws TargetNotPresentException exception thrown by the controller's playCard method
+     * @throws InvalidAngleCoveredException exception thrown by the controller's playCard method
+     * @throws InvalidPositionException exception thrown by the controller's playCard method
      */
     @Override
     public AcknowledgeMessage playCard(String playerNickname, int cardIndex, int angle, String targetID, int side)
@@ -206,10 +206,10 @@ public class ServerRMI extends UnicastRemoteObject implements Loggable{
      * @param playerNickname the nickname of the player that needs to pick a card
      * @param deck the specific deck where the player is picking up the card from (could only be gold or resource)
      * @return an AcknowledgeMessage to the player that's just picked the card
-     * @throws RemoteException
-     * @throws InvalidArgumentException
-     * @throws InvalidPlayingException
-     * @throws FinishedCardStackException
+     * @throws RemoteException exception that may occur during the execution of a remote method call
+     * @throws InvalidArgumentException exception thrown by the controller's pickCard method
+     * @throws InvalidPlayingException exception thrown by the controller's pickCard method
+     * @throws FinishedCardStackException exception thrown by the controller's pickCard method
      */
     @Override
     public AcknowledgeMessage pickCard(String playerNickname, int deck)
@@ -242,10 +242,10 @@ public class ServerRMI extends UnicastRemoteObject implements Loggable{
      * @param deck the specific deck where the player is picking up the card from (could only be gold or resource)
      * @param index the index, of the 2 items' array, of the card that the player's chosen to pick up
      * @return an AcknowledgeMessage to the player that's just picked the card
-     * @throws RemoteException
-     * @throws InvalidArgumentException
-     * @throws InvalidPlayingException
-     * @throws FinishedCardStackException
+     * @throws RemoteException exception that may occur during the execution of a remote method call
+     * @throws InvalidArgumentException exception thrown by the controller's pickCard method
+     * @throws InvalidPlayingException exception thrown by the controller's pickCard method
+     * @throws FinishedCardStackException exception thrown by the controller's pickCard method
      */
     @Override
     public AcknowledgeMessage pickCard(String playerNickname, int deck, int index)
@@ -276,7 +276,7 @@ public class ServerRMI extends UnicastRemoteObject implements Loggable{
      * @param recipient the nickname of the player that's receiving the message
      * @param message the actual message
      * @return a Message to the "recipient" player
-     * @throws RemoteException
+     * @throws RemoteException exception that may occur during the execution of a remote method call
      */
     @Override
     public Message sendChatMessage(String sender, String recipient, String message) throws RemoteException {
@@ -296,7 +296,7 @@ public class ServerRMI extends UnicastRemoteObject implements Loggable{
      * This method allows the sender player to send a message to all other players.
      * @param sender the nickname of the player that's sending the message
      * @param message the actual message
-     * @return  ...
+     * @return the result of this action to the sender's client
      */
     @Override
     public Message sendBroadcastChatMessage(String sender, String message) {

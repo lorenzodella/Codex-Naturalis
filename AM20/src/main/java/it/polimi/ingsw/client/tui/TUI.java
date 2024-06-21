@@ -111,6 +111,10 @@ public class TUI implements UIManager {
     }
 
 
+    /**
+     * This method updates the cards in your hand and it calls a method to display the information about them
+     * @param cards list of the card that the player can play
+     */
     @Override
     public void updateCards(List<PlayableCard> cards) {
         if(cards!=null){
@@ -118,10 +122,12 @@ public class TUI implements UIManager {
             viewHandCards();
         }
 
-
-
     }
 
+    /**
+     * This method prints to the terminal the receipt of a message. In addition, it calls a method to display the history of the chat with others players
+     * @param msg message received by the server
+     */
     @Override
     public void updateChatMessage(ChatMessage msg) {
         this.messages.add(msg);
@@ -130,6 +136,11 @@ public class TUI implements UIManager {
         viewChat();
     }
 
+    /**
+     * The first time this method receive an arrayList of two elements, then the player decide which one he prefers and the second time
+     * the arrayList is made of a secretObjective (the one he had chosen). In addition, it calls a method to display to the user the information of the secretObjective
+     * @param secretObjectives of the player
+     */
     @Override
     public void updateSecretObjectives(ArrayList<ObjectiveCard> secretObjectives) {
         if(secretObjectives!=null) {
@@ -139,6 +150,11 @@ public class TUI implements UIManager {
     }
 
 
+    /**
+     * This method updates the information about the gold deck
+     * @param goldTop gold card on the top of the deck
+     * @param goldVisible array of the two visible gold cards
+     */
     @Override
     public void updateGold(PlayableCard goldTop, PlayableCard[] goldVisible) {
 
@@ -149,6 +165,11 @@ public class TUI implements UIManager {
     }
 
 
+    /**
+     * This method updates the information about the resource deck
+     * @param resourceTop resource card on the top of the deck
+     * @param resourceVisible array of the two visible resource cards
+     */
     @Override
     public void updateResource(PlayableCard resourceTop, PlayableCard[] resourceVisible) {
         this.resourceTop = resourceTop;
@@ -157,6 +178,11 @@ public class TUI implements UIManager {
     }
 
 
+    /**
+     * This method updates the info of the player (color chosen, score, map of the player table and occurrences of every kingdom and objects)
+     * and it prints on the terminal this info
+     * @param yourPlayerInfo info of the player
+     */
     @Override
     public void updateYourPlayerInfo(PlayerInfo yourPlayerInfo) {
         if(yourPlayerInfo!=null) {
@@ -165,6 +191,11 @@ public class TUI implements UIManager {
         }
     }
 
+    /**
+     * This method allows to update the info of the players
+     * @param otherPlayerInfo map where for each username of the other players, you can obtain the player's info
+     *                        (color chosen, score, map of the player table and occurrences of every kingdom and objects)
+     */
     @Override
     public void updateOtherPlayerInfo(HashMap<String, PlayerInfo> otherPlayerInfo) {
         if(otherPlayerInfo!=null) {
@@ -177,6 +208,10 @@ public class TUI implements UIManager {
         }
     }
 
+    /**
+     * This method allows to update the commonObjectives and to display them
+     * @param commonObjectives array of the two common objective
+     */
     @Override
     public void updateCommonObjectives(ObjectiveCard[] commonObjectives) {
         if(commonObjectives!=null){
@@ -186,6 +221,10 @@ public class TUI implements UIManager {
 
     }
 
+    /**
+     * This method allows to update and to display the starter card of the player
+     * @param starterCard starter card of the player
+     */
     @Override
     public void updateStarterCard(StarterCard starterCard) {
         if(starterCard!=null){
@@ -208,6 +247,11 @@ public class TUI implements UIManager {
         }
     }
 
+    /**
+     * This method allows to control if it's player turn or not. If it is so, the method show the actual information of the gold and resource deck
+     * (both the top card and the two visible cards).
+     * @param nextPlayer username of the next player that has to play
+     */
     @Override
     public void showNextTurn(String nextPlayer){
         if(nextPlayer!=null) {
@@ -226,6 +270,10 @@ public class TUI implements UIManager {
         }
     }
 
+    /**
+     * This method allows the client to inform the user that the game is ended and that if he wants to play again,
+     * he has to relaunch the application
+     */
     @Override
     public void updateStopGame() {
         nickname = null;
@@ -233,17 +281,27 @@ public class TUI implements UIManager {
         System.out.println(ConsoleColors.TEXT_BG_GREEN+"You have to relaunch application to play again"+ConsoleColors.TEXT_RESET);
     }
 
+    /**
+     * This method says to the user that he has to pick a card
+     */
     @Override
     public void showMustPick(){
         System.out.println("You have to pick a card");
     }
 
+    /**
+     * This method allows to print the content of the error message
+     * @param error string that inform about the error
+     */
     @Override
     public void showError(String error){
         System.err.println(error);
         showCommand();
     }
 
+    /**
+     * This method prints the current player that has to play/is playing
+     */
     public void viewCurrPlayer(){
         if(currPlayer!=null){
             if(currPlayer.equals(nickname))
@@ -257,6 +315,10 @@ public class TUI implements UIManager {
     }
 
 
+    /**
+     * This method allows to print the specific information of the player's starter card through the draw() method present in the
+     * "copy" card (starterCardClient) of the "real" starterCard that is created in the server and received through the SKT/RMI
+     */
     public void viewStarterCard(){
         StarterCardClient starterCardClient = new StarterCardClient(starterCard);
         starterCardClient.draw();
@@ -265,6 +327,10 @@ public class TUI implements UIManager {
 
     }
 
+    /**
+     * This method allows to print the specific information of the player's hand card calling the draw() method present
+     * in the "copy" card (...Client) of the "real" card created in the server and received through the SKT/RMI
+     */
     public void viewHandCards(){
         System.out.println(ConsoleColors.TEXT_BLUE + "HAND CARD: \n" + ConsoleColors.TEXT_RESET);
         for(int i=0;i<this.cards.size();i++){
@@ -285,6 +351,10 @@ public class TUI implements UIManager {
 
     }
 
+    /**
+     * This method allows to print the specific information of the common objectives calling the draw() method present
+     * in the "copy" card (...Client) of the "real" card created in the server and received through the SKT/RMI
+     */
     public void viewCommonObjective(){
 
         System.out.println(ConsoleColors.TEXT_BLUE + "COMMON OBJECTIVE: \n" + ConsoleColors.TEXT_RESET);
@@ -309,9 +379,13 @@ public class TUI implements UIManager {
             }
         }
         System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------\n");
-        //this.viewCommand();
+
     }
 
+    /**
+     * This method allows to print the specific information of the player's secret objective calling the draw() method present
+     * in the "copy" card (...Client) of the "real" card created in the server and received through the SKT/RMI
+     */
     public void viewSecretObjective(){
         System.out.println(ConsoleColors.TEXT_BLUE + "SECRET OBJECTIVE: \n"+ConsoleColors.TEXT_RESET);
         //scorro array dei common objectives
@@ -342,9 +416,13 @@ public class TUI implements UIManager {
 
         }
         System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------\n");
-        //this.viewCommand();
+
     }
 
+    /**
+     * This method allows to print the specific information of the gold deck (both the top card and the visible cards)
+     * using the draw() method as before
+     */
     //TODO
     public void viewGold(){
 
@@ -404,6 +482,10 @@ public class TUI implements UIManager {
         }
     }
 
+    /**
+     * This method allows to print the specific information of the resource deck (both the top card and the visible cards)
+     * using the draw() method as before
+     */
     //TODO
     public void viewResource(){
         System.out.println(ConsoleColors.TEXT_BLUE+"RESORUCE DECK" + ConsoleColors.TEXT_RESET);
@@ -453,6 +535,10 @@ public class TUI implements UIManager {
     }
 
 
+    /**
+     * This method refreshes the terminal, prints the title of the game and the information of the user (score, number of resources and objects
+     * and the board)
+     */
     public void viewPlayerInfo(){
         this.clearTerminal(0);
         this.printTitle();
@@ -487,6 +573,10 @@ public class TUI implements UIManager {
         //this.viewCommand();
     }
 
+    /**
+     * This method prints the information of the other player as for the user's player
+     * @param username this is the username of the player that the user of the client wants to see the info
+     */
     public void viewOtherPlayerInfo(String username){
 //        this.printTitle();
         try {
@@ -525,6 +615,9 @@ public class TUI implements UIManager {
         //this.viewCommand();
     }
 
+    /**
+     * This method prints the score of each player
+     */
     public void viewPlacement(){
         System.out.println("The placement has the following order: ");
         System.out.print(ConsoleColors.colorFromPawnColor(yourPlayerInfo.getColor()));
@@ -540,6 +633,9 @@ public class TUI implements UIManager {
         //this.viewCommand();
     }
 
+    /**
+     * This method allows the user to see all the chronology of the chat (it says the sender and the message itself)
+     */
     public void viewChat(){
         System.out.println("\nCHAT");
         for(ChatMessage m : messages){
@@ -564,6 +660,10 @@ public class TUI implements UIManager {
         System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------");
         //this.viewCommand();
     }
+
+    /**
+     * This method permits the user to understand that the command wrote is wrong (the type of the command or/and the parameters)
+     */
     public void viewErrorCommand(){
         System.out.println("The command executed is wrong");
         showCommand();
@@ -606,6 +706,9 @@ public class TUI implements UIManager {
         System.out.println("Decide which command you want to do:");
     }
 
+    /**
+     * This method lists all the different action the user can do
+     */
     public void viewCommand( ){
         System.out.println("---------------------------------------------------------------------------------------------------");
         System.out.println("The following lines explain the actions you can do: \n");
@@ -632,6 +735,10 @@ public class TUI implements UIManager {
         System.out.println("---------------------------------------------------------------------------------------------------");
     }
 
+    /**
+     * This method shows the user the parameters of the str command
+     * @param str command that the user wants to know the parameters
+     */
     public void viewCommandParam(String str){
         System.out.println("\nThe " + str + " command has the parameters:");
         switch (str){
