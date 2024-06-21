@@ -12,7 +12,9 @@ public class TrioOfResourcesObjectiveCardClient implements  ObjectiveCardClient 
         this.trioOfResourcesObjectiveCard = trioOfResourcesObjectiveCard;
     }
 
-
+    /**
+     * This method allows to print the information of the card
+     */
     public void draw(){
         System.out.println("- TRIO OF RESOURCES OBJECTIVE: ");
         System.out.print("You get 2 points every time you collect three ");

@@ -82,7 +82,7 @@ public class Controller implements GameManager {
     }
 
     /**
-     * This method is one of the NOGAME pahse methods and it allows to have a list that contains all the players'
+     * This method is one of the NOGAME phase methods and it allows to have a list that contains all the players'
      * nicknames.
      * @param playerNickname : the first player nickname
      * @param numPlayers : the number of player that the first player wants to play with
@@ -239,7 +239,7 @@ public class Controller implements GameManager {
     /**
      * This method allows the players to actually start a game and it's a PRELIMINARY phase method.
      * This method is called directly by the joinGame method and, given the list of the connected players, it allows to
-     * initialize the resource and gold decks, it gives the starter cards and the 3 intial cards to all players.
+     * initialize the resource and gold decks, it gives the starter cards and the 3 initial cards to all players.
      * @return a StartGameMessage that says that all players have just joined and it also gives all the cards and decks
      * that every player now needs to be able to actually start playing
      */
@@ -316,11 +316,11 @@ public class Controller implements GameManager {
      * This method is called in the OBJECTIVE phase and it allows, to the connected players, to choose between the two
      * secret objectives.
      * It returns anObjectiveAckMessage or it specifically returns a StartPlayingMessage depending on
-     * if all players've already chosen their objective or if someone hasn't done it yet.
+     * if all players have already chosen their objective or if someone hasn't done it yet.
      * @param playerNickname the player that is choosing the secret objective
      * @param index the index (could only be 0 or 1) of the secret objective that they've chosen (in the array of two items).
      * @return
-     * if all players've chosen their objective the method returns a StarPlayingMessage which
+     * if all players have chosen their objective the method returns a StarPlayingMessage which
      * gives the just chosen secret objective, the nickname of the first player that needs to start playing and
      * so that the PLAY phase can start.
      * Otherwise, the method returns an ObjectiveAckMessage in order to signalize that the player's chosen the objective

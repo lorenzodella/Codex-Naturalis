@@ -18,6 +18,10 @@ public class PingThread implements Runnable{
         this.manager = manager;
     }
 
+
+    /**
+     * This method allows the client to understand if the server is not reachable
+     */
     @Override
     public void run() {
         try {

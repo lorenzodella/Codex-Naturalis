@@ -13,8 +13,10 @@ public class StarterCardClient implements Drawer {
         this.starterCard = starterCard;
     }
 
+    /**
+     * This method allows to print the information of the card
+     */
     public void draw(){
-        System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------");
         System.out.println(ConsoleColors.TEXT_BLUE + "STARTER CARD\n" + ConsoleColors.TEXT_RESET);
 
         //FRONT

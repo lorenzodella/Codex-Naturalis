@@ -18,9 +18,7 @@ import it.polimi.ingsw.model.util.XMLparser;
 import java.util.*;
 
 public class TUI implements UIManager {
-    /*TODO:
-      - ATTRIBUTO PER CAPIRE DI CHE ANGOLO SI TRATTA --> PER ITERARE SU ANGOLI
-    */
+
     private List<PlayableCard> cards;
     private List<ChatMessage> messages;
     private ArrayList<ObjectiveCard> secretObjectives;
@@ -140,7 +138,7 @@ public class TUI implements UIManager {
         }
     }
 
-    //TODO tia vedi notion
+
     @Override
     public void updateGold(PlayableCard goldTop, PlayableCard[] goldVisible) {
 
@@ -150,7 +148,7 @@ public class TUI implements UIManager {
 
     }
 
-    //TODO tia vedi notion
+
     @Override
     public void updateResource(PlayableCard resourceTop, PlayableCard[] resourceVisible) {
         this.resourceTop = resourceTop;
@@ -260,15 +258,10 @@ public class TUI implements UIManager {
 
 
     public void viewStarterCard(){
-        //this.printTitle();
-        //this.viewCommand();
-
         StarterCardClient starterCardClient = new StarterCardClient(starterCard);
         starterCardClient.draw();
         System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------\n");
         System.out.println("You have received the starter card and now you should choose the side");
-
-        //this.viewCommand();
 
     }
 
@@ -461,6 +454,7 @@ public class TUI implements UIManager {
 
 
     public void viewPlayerInfo(){
+        this.clearTerminal(0);
         this.printTitle();
         System.out.println("These are your information");
         System.out.println("You have done "+ this.yourPlayerInfo.getScore() + " points");
@@ -485,7 +479,7 @@ public class TUI implements UIManager {
         System.out.println("- MANUSCRIPT: "+ this.yourPlayerInfo.getStats().getNumberOfObjects(SpecialObject.Manuscript));
 
         if(yourPlayerInfo.getMap()!=null) {
-            System.out.println("The player has the follwoing board:");
+            System.out.println("The player has the following board:");
             CardPrinter.printMap(this.yourPlayerInfo.getMap());
         }
 
@@ -494,7 +488,7 @@ public class TUI implements UIManager {
     }
 
     public void viewOtherPlayerInfo(String username){
-        this.printTitle();
+//        this.printTitle();
         try {
             username = username.substring(0,1).toUpperCase() + username.substring(1);
             System.out.println("The following information are the one of " + username + " game");
@@ -681,33 +675,6 @@ public class TUI implements UIManager {
     }
 
     public static void main(String[] args) throws InterruptedException, TargetNotPresentException, InvalidPositionException, RequirementsNotRespectedException, InvalidAngleCoveredException {
-//        TUI myTui = new TUI();
-////        goldTop = getExampleCornerGoldCard();
-//        myTui.viewGold();
-//        myTui.viewResource();
-//        //myTui.printTitle();
 
-        //myTui.viewCommand();
-        //myTui.waitSeconds(5);
-        //myTui.clearTerminal(10);
-        //myTui.viewStarterCard();
-
-        //TESTATE DI SICURO:
-        //myTui.viewHandCards();
-        //myTui.viewStarterCard();
-        //myTui.viewCommonObjective();
-        //myTui.viewSecretObjective();
-        //myTui.viewGoldTop();
-        //myTui.viewResourceTop();
-        //myTui.viewGoldVisibleCards();
-        //myTui.viewResourceVisibleCards();
-        ;
-        //myTui.viewStarterCard();
-
-//        PlayerTable table = new PlayerTable();
-//        table.insertStarterCard(PlayableCard.FRONT, myTui.getExampleStarterCard());
-//        table.insertCard(myTui.getExampleResourceCard("R15"), Corner.UL, "S85", PlayableCard.BACK);
-//
-//        CardPrinter.printMap(table.getMap());
     }
 }

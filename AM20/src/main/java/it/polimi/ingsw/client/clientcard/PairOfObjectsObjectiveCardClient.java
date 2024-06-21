@@ -10,7 +10,9 @@ public class PairOfObjectsObjectiveCardClient implements ObjectiveCardClient {
         this.pairOfObjectsObjectiveCard = pairOfObjectsObjectiveCard;
     }
 
-
+    /**
+     * This method allows to print the information of the card
+     */
     public void draw(){
         System.out.println("- PAIR OF OBJECTS OBJECTIVES: ");
         System.out.println("You get 2 points every time you collect two " +

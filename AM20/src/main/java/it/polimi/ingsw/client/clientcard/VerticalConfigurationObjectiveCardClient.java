@@ -12,7 +12,9 @@ public class VerticalConfigurationObjectiveCardClient implements  ObjectiveCardC
         this.verticalConfigurationObjectiveCard = verticalConfigurationObjectiveCard;
     }
 
-
+    /**
+     * This method allows to print the information of the card
+     */
     public void draw(){
         System.out.println("- VERTICAL CONFIGURATION OBJECTIVE: ");
         System.out.print("You need to create a vertical configuration, with a vertical occurrence of a ");

@@ -20,6 +20,9 @@ public class PointsGoldCardClient implements GoldCardClient{
         this.position = 8;
     }
 
+    /**
+     * This method allows to print the information of the card
+     */
     public void draw(){
 
         if(this.position != 8){

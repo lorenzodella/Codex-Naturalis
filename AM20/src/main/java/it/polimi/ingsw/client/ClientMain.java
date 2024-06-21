@@ -29,10 +29,7 @@ public class ClientMain {
         ClientSender sender = null;
         ClientController clientController;
 
-        //--------TEST SU DUE SCHERMI UNO SOPRA L'ALTRO--------
-//        if(args[1].equals("2"))
-//            GUIUtils.location = new Point(0, -1050);
-//        else
+
             GUIUtils.location = new Point(0, 0);
 
         try {

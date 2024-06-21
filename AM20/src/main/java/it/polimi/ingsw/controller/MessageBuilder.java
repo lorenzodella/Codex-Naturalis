@@ -14,19 +14,19 @@ import java.util.stream.Collectors;
 public class MessageBuilder implements GameObserver {
 
     /**
-     * this attribute stands for a map that, per each nickname (string), associates thier specific ConnectionAckMessage
+     * this attribute stands for a map that, per each nickname (string), associates their specific ConnectionAckMessage
      */
     private HashMap<String, ConnectionAckMessage> connectionAckMessages;
     /**
-     * this attribute stands for a map that, per each nickname (string), associates thier specific starterCardAckMessage
+     * this attribute stands for a map that, per each nickname (string), associates their specific starterCardAckMessage
      */
     private HashMap<String, StarterCardAckMessage> starterCardAckMessages;
     /**
-     * this attribute stands for a map that, per each nickname (string), associates thier specific objectiveAckMessage
+     * this attribute stands for a map that, per each nickname (string), associates their specific objectiveAckMessage
      */
     private HashMap<String, ObjectiveAckMessage> objectiveAckMessages;
     /**
-     * this attribute stands for a map that, per each nickname (string), associates thier specific AcknowledgeMessage
+     * this attribute stands for a map that, per each nickname (string), associates their specific AcknowledgeMessage
      */
     private HashMap<String, AcknowledgeMessage> acknowledgeMessages;
     /**

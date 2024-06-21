@@ -7,11 +7,10 @@ import it.polimi.ingsw.model.util.DynamicMap;
 
 import java.io.Serializable;
 
-//TODO: ELEONORA
 
 public class PlayerInfo implements Serializable {
     /**
-     * This attribute stands for the score .....
+     * This attribute stands for the score of the player
      */
     private int score;
     /**

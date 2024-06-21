@@ -22,7 +22,7 @@ public class StartGameMessage extends ConnectionAckMessage {
      */
     private PlayableCard[] goldVisible;
     /**
-     * This attribute stands for the two resoruce visible cards
+     * This attribute stands for the two resource visible cards
      */
     private PlayableCard[] resourceVisible;
     /**
@@ -34,7 +34,7 @@ public class StartGameMessage extends ConnectionAckMessage {
      */
     private List<PlayableCard> initialCards;
     /**
-     * The player's playerinfo
+     * The players' info
      */
     private PlayerInfo playerInfo;
     /**

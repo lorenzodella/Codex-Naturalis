@@ -13,8 +13,8 @@ import java.util.stream.Collectors;
 
 public class Game implements GameObservable{
     /**
-     * Dinamic arrayList of players:
-     * Before starting the game, the first player choses the number of players they want to play with.
+     * Dynamic arrayList of players:
+     * Before starting the game, the first player chooses the number of players they want to play with.
      * The number of players needs to be between 2 and 4.
      */
     private List<Player>  players;
@@ -285,8 +285,8 @@ public class Game implements GameObservable{
      * @param deck : the deck where the player wants to pick up the card from (which could be gold or resource)
      * @param visibleCardIndex : the index position of the card that's been chosen by the player
      * @return : the player that's just picked the card
-     * @throws FinishedCardStackException
-     * @throws InvalidArgumentException
+     * @throws FinishedCardStackException if there aren't any visible cards available
+     * @throws InvalidArgumentException if the index chosen by the user is incorrect
      */
     @Override
     public Player pickCard(int deck, int visibleCardIndex ) throws FinishedCardStackException, InvalidArgumentException {

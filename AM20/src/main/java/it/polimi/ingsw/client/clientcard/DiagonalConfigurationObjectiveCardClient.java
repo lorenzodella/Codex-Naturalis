@@ -11,6 +11,9 @@ public class DiagonalConfigurationObjectiveCardClient implements ObjectiveCardCl
         this.diagonalConfigurationObjectiveCard = diagonalConfigurationObjectiveCard;
     }
 
+    /**
+     * This method allows to print the information of the card
+     */
     public void draw(){
         System.out.println("- DIAGONAL CONFIGURATION OBJECTIVE: ");
         System.out.print("You need to create a diagonal configuration, with ");

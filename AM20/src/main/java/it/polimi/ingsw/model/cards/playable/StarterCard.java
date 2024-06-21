@@ -48,10 +48,6 @@ public class StarterCard extends PlayableCard{
                 "}";
     }
 
-    /*public String getID(){
-        return
-    }*/
-
     /**
      * This method calls the upper class method to get kingdoms that are drawn in the corner
      * of this specific card.

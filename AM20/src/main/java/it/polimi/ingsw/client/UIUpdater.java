@@ -44,7 +44,7 @@ public class UIUpdater  {
         manager.updateResource(msg.getResourceTop(),msg.getResourceVisible());
         manager.updateCards(msg.getInitialCards());
         manager.updateStarterCard(msg.getStarterCard());
-        manager.showCommand();
+        //manager.showCommand();
     }
 
     public void starterCard(StarterCardAckMessage msg){

@@ -72,9 +72,6 @@ public abstract class PlayableCard extends Card {
         return order;
     }
 
-
-    //public abstract String getID();
-
     /**
      * This method returns a map that tells you, per each kingdom, how many
      * occurrences of that kingdom there are in that specific card.
