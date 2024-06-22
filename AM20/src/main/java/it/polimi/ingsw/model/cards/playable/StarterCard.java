@@ -6,7 +6,6 @@ import it.polimi.ingsw.model.cards.Kingdom;
 import java.util.*;
 
 public class StarterCard extends PlayableCard{
-
     /**
      * List of all the kingdoms that are shown in the center of the FRONT SIDE of the card.
      * PS: the rulebook says that these resources are shown on the BACK SIDE of the card but, we decided
@@ -19,12 +18,9 @@ public class StarterCard extends PlayableCard{
         this.resources = resources;
     }
 
-
     public ArrayList<Kingdom> getResources() {
         return resources;
     }
-
-
 
     @Override
     public boolean equals(Object o) {

@@ -2,6 +2,9 @@ package it.polimi.ingsw.model.cards;
 
 import java.util.HashMap;
 
+/**
+ * enum of all the 3 different types of special objects
+ */
 public enum SpecialObject {
     Quill,
     Inkwell,

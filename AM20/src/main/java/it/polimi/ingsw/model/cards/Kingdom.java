@@ -2,6 +2,9 @@ package it.polimi.ingsw.model.cards;
 
 import java.util.HashMap;
 
+/**
+ * enum of the 4 different types of kingdoms
+ */
 public enum Kingdom {
     Fungi,
     Animal,

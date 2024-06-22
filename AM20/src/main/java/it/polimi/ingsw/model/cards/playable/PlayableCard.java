@@ -12,8 +12,20 @@ public abstract class PlayableCard extends Card {
     public static final int FRONT = 1;
     public static final int BACK = 0;
     // playableCard è abstract Class
+
+    /**
+     * array of the front corners
+     */
     private Corner[] frontCorners;
+    /**
+     * array of the back corners
+     */
     private Corner[] backCorners;
+    /**
+     * this attribute stands for the side of the card
+     * 0 --> back
+     * 1 --> front
+     */
     private int side;
     /**
      * Integer representing the order in which the cards were played

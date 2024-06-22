@@ -1,6 +1,11 @@
 package it.polimi.ingsw.controller.messages;
 
 public class DisconnectionMessage extends PickAckMessage {
+    /**
+     * this attribute is true every time that a player disconnected right after playing a card (without picking
+     * another card from the deck) so that the game picks the first card of the resource deck.
+     * otherwise this attribute is always false.
+     */
     private boolean decksModified;
 
     @Override

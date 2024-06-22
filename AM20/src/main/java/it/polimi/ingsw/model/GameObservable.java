@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Set;
 
 public interface GameObservable {
+
+
     //getters
     Set<String> getConnectedPlayers();
     List<Player> getPlayers();

@@ -12,7 +12,13 @@ public class Deck {
     public static final int RESOURCE_CARDS = 1;
     public static final int GOLD_CARDS = 0;
 
+    /**
+     * this attribute stands for the stack that contains all the cards
+     */
     private Stack<PlayableCard> cards;
+    /**
+     * this attribute is a 2 items array that contains the 2 visible cards
+     */
     private PlayableCard[] visibleCards;
 
     public Deck(ArrayList<PlayableCard> cardList){

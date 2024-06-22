@@ -4,7 +4,13 @@ import it.polimi.ingsw.model.PawnColor;
 import it.polimi.ingsw.server.Connection;
 
 public class LoginMessage extends ClientMessage{
+    /**
+     * this string represents the client that wants to join the game
+     */
     String client;
+    /**
+     * this attribute stands for the color of the pawn of this specific player
+     */
     PawnColor color;
 
     public LoginMessage(String client, PawnColor color){

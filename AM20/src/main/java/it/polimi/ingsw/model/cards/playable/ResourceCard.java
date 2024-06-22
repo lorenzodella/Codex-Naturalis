@@ -10,6 +10,9 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class ResourceCard extends PlayableCard implements PointsProvider {
+    /**
+     * this attribute stands for the specific kingdom of the card
+     */
     private Kingdom kingdom;
     /**
      * in this case point could be 0 or 1

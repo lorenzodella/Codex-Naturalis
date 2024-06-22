@@ -6,8 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReconnectionMessage extends StartGameMessage{
-
+    /**
+     * list of the secret objectives of the player that's rejoining the game now.
+     */
     private ArrayList<ObjectiveCard> secretObjective;
+    /**
+     * Array of the two common objectives of the player that's rejoining the game now.
+     */
     private ObjectiveCard[] commonObjectives;
 
     public ArrayList<ObjectiveCard> getSecretObjective() {

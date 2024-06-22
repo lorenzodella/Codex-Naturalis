@@ -1,7 +1,9 @@
 package it.polimi.ingsw.controller.messages;
 
 public class ErrorMessage extends Message{
-
+    /**
+     * this attribute stands for the type of error
+     */
     private String error;
 
     public ErrorMessage(Exception e){

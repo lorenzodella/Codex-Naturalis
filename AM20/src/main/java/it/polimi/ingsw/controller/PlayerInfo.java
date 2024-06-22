@@ -22,7 +22,9 @@ public class PlayerInfo implements Serializable {
      * It says the occurrences of every kingdom and the occurrences of every objects
      */
     private PlayerStats stats;
-
+    /**
+     * specific color of the pawn of this player
+     */
     private PawnColor color;
 
     public PlayerInfo(PawnColor color) {

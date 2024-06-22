@@ -36,6 +36,10 @@ public class Corner implements Serializable {
         this.contentKingdom = contentKingdom;
     }
 
+    /**
+     * this method creates 4 empty corners that are eventually going to be "filled" with objects and resources
+     * @return the array of 4 empty corners
+     */
     public static Corner[] getDummyArray(){
         Corner[] corners = new Corner[4];
         Arrays.fill(corners, new Corner());

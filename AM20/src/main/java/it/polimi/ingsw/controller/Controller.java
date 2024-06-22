@@ -35,7 +35,13 @@ public class Controller implements GameManager {
     private static final int END = 5;
     private int phase;
 
+    /**
+     * this attribute stands as a reference of the model
+     */
     private GameObservable gameModel;
+    /**
+     * this attribute stands as a reference of the message builder
+     */
     private GameObserver messageBuilder;
 
     /**

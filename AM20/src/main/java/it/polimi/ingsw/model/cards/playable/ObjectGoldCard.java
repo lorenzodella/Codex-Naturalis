@@ -16,7 +16,6 @@ public class ObjectGoldCard extends GoldCard{
      * set the amount of points that the user deserves
      */
     private SpecialObject specialObject;
-    private int points;
 
     public ObjectGoldCard(String ID, Corner[] frontCorners, Corner[] backCorners,
                           Kingdom kingdom, HashMap<Kingdom, Integer> requirements,

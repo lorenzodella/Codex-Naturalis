@@ -6,6 +6,9 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public abstract class Card implements Serializable {
+    /**
+     * this attribute stands for the id of this specific card and allows to uniquely identify it
+     */
     private String ID;
 
     public Card(String ID) {

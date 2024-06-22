@@ -8,8 +8,10 @@ import it.polimi.ingsw.model.cards.SpecialObject;
 import java.util.*;
 
 public abstract class GoldCard extends PlayableCard implements PointsProvider {
+    /**
+     * specific kingdom of this card
+     */
     private Kingdom kingdom;
-
     /**
      * map that shows the kingdoms and the number of occurrences of that specific kingdoms that
      * are needed in order to play the card.

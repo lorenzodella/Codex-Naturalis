@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class PointsGoldCard extends GoldCard{
-
     /**
      * # of points that you owe if you play this card (with the needed requirements)
      */
