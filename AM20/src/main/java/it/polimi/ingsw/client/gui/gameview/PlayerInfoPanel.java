@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.gui.gameview;
 
+import it.polimi.ingsw.client.gui.GUIUtils;
 import it.polimi.ingsw.model.PawnColor;
 import it.polimi.ingsw.model.PlayerStats;
 import it.polimi.ingsw.model.cards.Kingdom;
@@ -159,27 +160,29 @@ public class PlayerInfoPanel extends JPanel {
      * @param stats the player new stats
      */
     public void update(int score, PlayerStats stats, PawnColor color){
-        switch (color){
-            case BLUE:
-                iconLabel.setIcon(new ImageIcon("src/main/resources/blue.png"));
-                playerNameLabel.setForeground(Color.BLUE);
-                scoreLabel.setForeground(Color.BLUE);
-                break;
-            case GREEN:
-                iconLabel.setIcon(new ImageIcon("src/main/resources/green.png"));
-                playerNameLabel.setForeground(Color.GREEN.darker());
-                scoreLabel.setForeground(Color.GREEN.darker());
-                break;
-            case RED:
-                iconLabel.setIcon(new ImageIcon("src/main/resources/red.png"));
-                playerNameLabel.setForeground(Color.RED);
-                scoreLabel.setForeground(Color.RED);
-                break;
-            case YELLOW:
-                iconLabel.setIcon(new ImageIcon("src/main/resources/yellow.png"));
-                playerNameLabel.setForeground(Color.YELLOW.darker());
-                scoreLabel.setForeground(Color.YELLOW.darker());
-                break;
+        if(iconLabel.getIcon()==null) {
+            switch (color) {
+                case BLUE:
+                    iconLabel.setIcon(new ImageIcon(GUIUtils.loadImage("/pawns/blue.png")));
+                    playerNameLabel.setForeground(Color.BLUE);
+                    scoreLabel.setForeground(Color.BLUE);
+                    break;
+                case GREEN:
+                    iconLabel.setIcon(new ImageIcon(GUIUtils.loadImage("/pawns/green.png")));
+                    playerNameLabel.setForeground(Color.GREEN.darker());
+                    scoreLabel.setForeground(Color.GREEN.darker());
+                    break;
+                case RED:
+                    iconLabel.setIcon(new ImageIcon(GUIUtils.loadImage("/pawns/red.png")));
+                    playerNameLabel.setForeground(Color.RED);
+                    scoreLabel.setForeground(Color.RED);
+                    break;
+                case YELLOW:
+                    iconLabel.setIcon(new ImageIcon(GUIUtils.loadImage("/pawns/yellow.png")));
+                    playerNameLabel.setForeground(Color.YELLOW.darker());
+                    scoreLabel.setForeground(Color.YELLOW.darker());
+                    break;
+            }
         }
 
         scoreLabel.setText("Score: "+score);

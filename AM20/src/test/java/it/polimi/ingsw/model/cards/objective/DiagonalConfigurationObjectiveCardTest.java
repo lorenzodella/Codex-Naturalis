@@ -27,24 +27,24 @@ class DiagonalConfigurationObjectiveCardTest {
     DiagonalConfigurationObjectiveCard s;
 
     DiagonalConfigurationObjectiveCard getExampleDiagonalConfigurationObjectiveCard(){
-        ArrayList<ObjectiveCard> DiagonalConfigurationObjectiveCard = XMLparser.parseObjectiveCards("src/main/resources/xml/objectiveCards.xml");
+        ArrayList<ObjectiveCard> DiagonalConfigurationObjectiveCard = XMLparser.parseObjectiveCards("/xml/objectiveCards.xml");
         return (DiagonalConfigurationObjectiveCard) DiagonalConfigurationObjectiveCard.stream().filter(x->x.getID().equals("O90")).findAny().orElse(null);
     }
 
     CornerGoldCard getExampleCornerGoldCard(String id){
-        ArrayList<PlayableCard> CornerGoldCard = XMLparser.parseGoldCards("src/main/resources/xml/goldCards.xml");
+        ArrayList<PlayableCard> CornerGoldCard = XMLparser.parseGoldCards("/xml/goldCards.xml");
         return (CornerGoldCard) CornerGoldCard.stream().filter(x->x.getID().equals(id)).findAny().orElse(null);
     }
 
     List<PlayableCard> getKingdomGoldCard(Kingdom k){
-        ArrayList<PlayableCard> CornerGoldCard = XMLparser.parseGoldCards("src/main/resources/xml/goldCards.xml");
+        ArrayList<PlayableCard> CornerGoldCard = XMLparser.parseGoldCards("/xml/goldCards.xml");
         return  CornerGoldCard.stream()
                 .filter(x->x.getCardKingdom().equals(k))
                 .collect(Collectors.toList());
     }
 
     StarterCard getExampleStarterCard(){
-        ArrayList<PlayableCard> starterCards = XMLparser.parseStarterCards("src/main/resources/xml/starterCards.xml");
+        ArrayList<PlayableCard> starterCards = XMLparser.parseStarterCards("/xml/starterCards.xml");
         return (StarterCard) starterCards.stream().filter(x->x.getID().equals("S85")).findAny().orElse(null);
     }
 

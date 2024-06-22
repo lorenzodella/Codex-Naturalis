@@ -1,11 +1,15 @@
 package it.polimi.ingsw.model.util;
 
+import it.polimi.ingsw.client.clientcard.CardPrinter;
+import it.polimi.ingsw.model.cards.playable.PlayableCard;
+import it.polimi.ingsw.model.cards.playable.ResourceCard;
 import it.polimi.ingsw.model.exceptions.InvalidPositionException;
 import it.polimi.ingsw.model.exceptions.TargetNotPresentException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -123,5 +127,27 @@ class DynamicMapTest {
         assertNull(m.getElementAt('A', DynamicMap.UR));
         assertNull(m.getElementAt('A', DynamicMap.DL));
         assertNull(m.getElementAt('A', DynamicMap.DR));
+    }
+
+    @Test
+    void testCards() throws TargetNotPresentException, InvalidPositionException {
+        DynamicMap<String, PlayableCard> map = new DynamicMap<>("R12", getExampleResourceCard("R12"));
+        map.insert("R22", getExampleResourceCard("R22"), "R12", DynamicMap.UL);
+        map.insert("R32", getExampleResourceCard("R32"), "R12", DynamicMap.UR);
+        map.insert("R1", getExampleResourceCard("R1"), "R32", DynamicMap.UR);
+        CardPrinter.printMap(map);
+
+        map = new DynamicMap<>("R12", getExampleResourceCard("R12"));
+        map.insert("R22", getExampleResourceCard("R22"), "R12", DynamicMap.UR);
+        map.insert("R32", getExampleResourceCard("R32"), "R22", DynamicMap.UR);
+        map.insert("R2", getExampleResourceCard("R2"), "R32", DynamicMap.DR);
+        map.insert("R1", getExampleResourceCard("R1"), "R2", DynamicMap.DR);
+        map.insert("R13", getExampleResourceCard("R13"), "R1", DynamicMap.DL);
+        CardPrinter.printMap(map);
+    }
+
+    ResourceCard getExampleResourceCard(String id){
+        ArrayList<PlayableCard> ResourceCard = XMLparser.parseResourceCards("/xml/resourceCards.xml");
+        return (ResourceCard) ResourceCard.stream().filter(x->x.getID().equals(id)).findAny().orElse(null);
     }
 }

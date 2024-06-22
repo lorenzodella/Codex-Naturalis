@@ -58,7 +58,7 @@ public class StarterCardDialog extends JDialog implements ActionListener{
         pack();
     }
     static StarterCard getExampleStarterCard(){
-        ArrayList<PlayableCard> starterCards = XMLparser.parseStarterCards("src/main/resources/xml/starterCards.xml");
+        ArrayList<PlayableCard> starterCards = XMLparser.parseStarterCards("/xml/starterCards.xml");
         return (StarterCard) starterCards.stream().filter(x->x.getID().equals("S85")).findAny().orElse(null);
     }
 

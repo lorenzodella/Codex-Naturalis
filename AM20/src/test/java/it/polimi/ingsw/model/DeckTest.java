@@ -14,7 +14,7 @@ class DeckTest {
 
     @BeforeEach
     void setUp() {
-        d = new Deck(XMLparser.parseResourceCards("src/main/resources/xml/resourceCards.xml"));
+        d = new Deck(XMLparser.parseResourceCards("/xml/resourceCards.xml"));
         d.shuffle();
         d.initVisibleCards();
         assertEquals(38, d.getCards().size());

@@ -20,6 +20,11 @@ public class ServerMain
     //TODO: ELEONORA
     public static void main(String[] args) {
 
+        if(args.length != 2){
+            System.err.println("Usage: java -jar AM20-server.jar <portRMI> <portSKT>");
+            System.exit(1);
+        }
+
         try {
             System.setProperty("java.rmi.server.hostname", InetAddress.getLocalHost().getHostAddress());
             System.out.println("Server address: "+InetAddress.getLocalHost().getHostAddress());

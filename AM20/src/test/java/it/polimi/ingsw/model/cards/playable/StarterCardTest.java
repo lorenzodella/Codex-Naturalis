@@ -16,7 +16,7 @@ class StarterCardTest {
     StarterCard s;
 
     StarterCard getExampleStarterCard(){
-        ArrayList<PlayableCard> starterCards = XMLparser.parseStarterCards("src/main/resources/xml/starterCards.xml");
+        ArrayList<PlayableCard> starterCards = XMLparser.parseStarterCards("/xml/starterCards.xml");
         return (StarterCard) starterCards.stream().filter(x->x.getID().equals("S85")).findAny().orElse(null);
     }
 

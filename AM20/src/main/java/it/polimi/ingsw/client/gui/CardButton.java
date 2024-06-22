@@ -3,14 +3,10 @@ package it.polimi.ingsw.client.gui;
 import it.polimi.ingsw.model.cards.Card;
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 /**
  * Simple JPanel with an image as background.
@@ -66,7 +62,7 @@ public class CardButton extends JButton {
 
     private void set(){
         setBorder(BorderFactory.createEmptyBorder());
-        setIcons(loadImage());
+        setIcons(loadCardImage());
 
         setClickable(clickable);
 
@@ -144,16 +140,9 @@ public class CardButton extends JButton {
 //        g.drawImage(image, x, y, w, h, this);
 //    }
 
-    private Image loadImage() {
+    private Image loadCardImage() {
         String side = card.getSide() == PlayableCard.FRONT ? "front" : "back";
-        String url = "src/main/resources/CODEX_cards_gold_"+side+"/"+card.getID()+".png";
-        BufferedImage image = null;
-        try {
-            image = ImageIO.read(new File(url));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return image;
+        return GUIUtils.loadImage("/CODEX_cards_gold_"+side+"/"+card.getID()+".png");
     }
 
     public void update(Card card){
@@ -180,7 +169,7 @@ public class CardButton extends JButton {
     public void flip(){
         if(card!=null) {
             card.flip();
-            setIcons(loadImage());
+            setIcons(loadCardImage());
         }
     }
 

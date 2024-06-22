@@ -95,10 +95,11 @@ public class CardPrinter {
                     for (int i = tmp; i < t.getKey().x; i++) {
                         s.append("    ");
                     }
-                    tmp = t.getKey().x + 1;
+                    tmp = t.getKey().x+2;
                     s.append(decodeCardCorner(t.getValue(), Corner.UL));
                     s.append("───");
                     s.append(decodeCardCorner(t.getValue(), Corner.UR));
+                    s.append(" ");
                 }
             }
             s.append("\n");
@@ -108,11 +109,12 @@ public class CardPrinter {
                     for (int i = tmp; i < t.getKey().x; i++) {
                         s.append("    ");
                     }
-                    tmp = t.getKey().x + 1;
+                    tmp = t.getKey().x+2;
                     String id = t.getValue().getID();
                     if(id.length()==2)
                         id += " ";
                     s.append("│ " + id + " │");
+                    s.append(" ");
                 }
             }
             s.append("\n");
@@ -122,10 +124,11 @@ public class CardPrinter {
                     for (int i = tmp; i < t.getKey().x; i++) {
                         s.append("    ");
                     }
-                    tmp = t.getKey().x + 1;
+                    tmp = t.getKey().x+2;
                     s.append(decodeCardCorner(t.getValue(), Corner.DL));
                     s.append("───");
                     s.append(decodeCardCorner(t.getValue(), Corner.DR));
+                    s.append(" ");
                 }
             }
             s.append("\n");

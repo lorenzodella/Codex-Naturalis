@@ -18,17 +18,17 @@ class TrioOfResourcesObjectiveCardTest {
 
     TrioOfResourcesObjectiveCard s;
     TrioOfResourcesObjectiveCard getExampleTrioOfResourcesObjectiveCard(){
-        ArrayList<ObjectiveCard> TrioOfResourcesObjectiveCard = XMLparser.parseObjectiveCards("src/main/resources/xml/objectiveCards.xml");
+        ArrayList<ObjectiveCard> TrioOfResourcesObjectiveCard = XMLparser.parseObjectiveCards("/xml/objectiveCards.xml");
         return (TrioOfResourcesObjectiveCard) TrioOfResourcesObjectiveCard.stream().filter(x->x.getID().equals("O97")).findAny().orElse(null);
     }
 
     StarterCard getExampleStarterCard(){
-        ArrayList<PlayableCard> starterCards = XMLparser.parseStarterCards("src/main/resources/xml/starterCards.xml");
+        ArrayList<PlayableCard> starterCards = XMLparser.parseStarterCards("/xml/starterCards.xml");
         return (StarterCard) starterCards.stream().filter(x->x.getID().equals("S85")).findAny().orElse(null);
     }
 
     ResourceCard getExampleResourceCard(String id){
-        ArrayList<PlayableCard> ResourceCard = XMLparser.parseResourceCards("src/main/resources/xml/resourceCards.xml");
+        ArrayList<PlayableCard> ResourceCard = XMLparser.parseResourceCards("/xml/resourceCards.xml");
         return (ResourceCard) ResourceCard.stream().filter(x->x.getID().equals(id)).findAny().orElse(null);
     }
 

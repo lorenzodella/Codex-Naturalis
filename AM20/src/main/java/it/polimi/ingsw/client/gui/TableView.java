@@ -51,12 +51,12 @@ public class TableView extends JFrame implements ActionListener{
     }
 
     static StarterCard getExampleStarterCard(){
-        ArrayList<PlayableCard> starterCards = XMLparser.parseStarterCards("src/main/resources/xml/starterCards.xml");
+        ArrayList<PlayableCard> starterCards = XMLparser.parseStarterCards("/xml/starterCards.xml");
         return (StarterCard) starterCards.stream().filter(x->x.getID().equals("S85")).findAny().orElse(null);
     }
 
     static List<PlayableCard> getGoldCards(){
-        return XMLparser.parseResourceCards("src/main/resources/xml/resourceCards.xml");
+        return XMLparser.parseResourceCards("/xml/resourceCards.xml");
     }
 
     public static void main(String[] args) throws TargetNotPresentException, InvalidAngleCoveredException, InvalidPositionException {

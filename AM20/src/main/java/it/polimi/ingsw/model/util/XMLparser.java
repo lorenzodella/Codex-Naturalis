@@ -13,6 +13,7 @@ import org.w3c.dom.NodeList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -23,7 +24,7 @@ public class XMLparser {
         //lista da ritornare
         ArrayList<PlayableCard> starterCards = new ArrayList<>();
         try {
-            File file = new File(filePath);
+            InputStream file = XMLparser.class.getResourceAsStream(filePath);
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
             Document doc = db.parse(file); //documento che interessa
@@ -69,7 +70,8 @@ public class XMLparser {
                 }
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            System.err.println("Cannot read file: "+filePath);
+            return null;
         }
         return starterCards;
     }
@@ -79,7 +81,7 @@ public class XMLparser {
         ArrayList<PlayableCard> goldCards = new ArrayList<>();
 
         try {
-            File file = new File(filePath);
+            InputStream file = XMLparser.class.getResourceAsStream(filePath);
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
             Document doc = db.parse(file);
@@ -191,7 +193,8 @@ public class XMLparser {
                 }
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            System.err.println("Cannot read file: "+filePath);
+            return null;
         }
         return goldCards;
     }
@@ -200,7 +203,7 @@ public class XMLparser {
     public static ArrayList<PlayableCard> parseResourceCards(String filePath) {
         ArrayList<PlayableCard> resourceCard = new ArrayList<>();
         try {
-            File file = new File(filePath);
+            InputStream file = XMLparser.class.getResourceAsStream(filePath);
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
             Document doc = db.parse(file);
@@ -237,7 +240,8 @@ public class XMLparser {
                 }
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            System.err.println("Cannot read file: "+filePath);
+            return null;
         }
         return resourceCard;
     }
@@ -246,7 +250,7 @@ public class XMLparser {
     public static ArrayList<ObjectiveCard> parseObjectiveCards(String filePath) {
         ArrayList<ObjectiveCard> objectiveCards = new ArrayList<>();
         try {
-            File file = new File(filePath);
+            InputStream file = XMLparser.class.getResourceAsStream(filePath);
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
             Document doc = db.parse(file);
@@ -399,7 +403,8 @@ public class XMLparser {
                 }
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            System.err.println("Cannot read file: "+filePath);
+            return null;
         }
         return objectiveCards;
     }

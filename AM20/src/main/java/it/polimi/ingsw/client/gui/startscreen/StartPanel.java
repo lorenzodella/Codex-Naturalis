@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.gui.startscreen;
 
+import it.polimi.ingsw.client.gui.GUIUtils;
 import it.polimi.ingsw.client.gui.listeners.JoinGameListener;
 import it.polimi.ingsw.client.gui.listeners.NewGameListener;
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
@@ -10,6 +11,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.util.Objects;
 
 public class StartPanel extends JPanel {
     //una scritta e due bottoni
@@ -62,7 +65,7 @@ public class StartPanel extends JPanel {
         joinGamePanel.add(Box.createVerticalGlue());
         add(joinGamePanel, BorderLayout.EAST);
 
-        image = loadImage();
+        image = GUIUtils.loadImage("/background.png");
 
     }
 
@@ -80,22 +83,11 @@ public class StartPanel extends JPanel {
         Insets insets = getInsets(); //draw within border
         int w = getWidth();
         int h = getHeight();
-        renderImage(g2, loadImage(), 0,0, w, h);
+        renderImage(g2, image, 0,0, w, h);
         g2.dispose();
     }
 
     protected void renderImage(Graphics g, Image image, int x, int y, int w, int h){
         g.drawImage(image, x, y, w, h, this);
-    }
-
-    private Image loadImage() {
-        String url = "src/main/resources/Background.png";
-        BufferedImage image = null;
-        try {
-            image = ImageIO.read(new File(url));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return image;
     }
 }

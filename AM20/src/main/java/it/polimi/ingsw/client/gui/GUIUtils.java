@@ -6,6 +6,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.util.Objects;
 
 public class GUIUtils {
 
@@ -16,17 +18,31 @@ public class GUIUtils {
     public static int[] cornerGap = new int[]{38, 32};
     public static Point location = new Point(0,0);
 
-    public static JComboBox<ImageIcon> getImageIconJComboBox() {
-        ImageIcon redIcon = new ImageIcon("src/main/resources/red.png");
-        redIcon.setDescription("red");
-        ImageIcon blueIcon = new ImageIcon("src/main/resources/blue.png");
-        blueIcon.setDescription("blue");
-        ImageIcon greenIcon = new ImageIcon("src/main/resources/green.png");
-        greenIcon.setDescription("green");
-        ImageIcon yellowIcon = new ImageIcon("src/main/resources/yellow.png");
-        yellowIcon.setDescription("yellow");
+    public static Image loadImage(String path) {
+        URL url = GUIUtils.class.getResource(path);
+        BufferedImage image = null;
+        try {
+            image = ImageIO.read(Objects.requireNonNull(url));
+        } catch (IOException | NullPointerException e) {
+            System.err.println("Error loading image: "+url);
+        }
+        return image;
+    }
 
-        ImageIcon[] icons = {redIcon, blueIcon, greenIcon, yellowIcon};
+    public static JComboBox<ImageIcon> getImageIconJComboBox() {
+        String[] colors = {"red", "blue", "green", "yellow"};
+        ImageIcon[] icons = new ImageIcon[colors.length];
+        URL url = null;
+        for (int i = 0; i < colors.length; i++) {
+            try {
+                url = GUIUtils.class.getResource("/pawns/" + colors[i] + ".png");
+                icons[i] = new ImageIcon(Objects.requireNonNull(url));
+                icons[i].setDescription(colors[i]);
+            } catch (NullPointerException e) {
+                System.err.println("Error loading image: " + url);
+            }
+        }
+
         JComboBox<ImageIcon> colorComboBox = new JComboBox<>(icons);
         colorComboBox.setMaximumSize(new Dimension(100, 25));
         colorComboBox.setSelectedIndex(0);

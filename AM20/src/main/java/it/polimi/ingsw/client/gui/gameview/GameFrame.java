@@ -11,10 +11,13 @@ import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.model.cards.playable.*;
 import it.polimi.ingsw.model.util.XMLparser;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class GameFrame extends JFrame {
     private PlayerPanel playerPanel;
@@ -31,7 +34,11 @@ public class GameFrame extends JFrame {
                  UnsupportedLookAndFeelException e) {
             throw new RuntimeException(e);
         }
-        setIconImage(new ImageIcon("src/main/resources/Icon.png").getImage());
+        try{
+            setIconImage(ImageIO.read(Objects.requireNonNull(getClass().getResource("/icon.png"))));
+        } catch (IOException | NullPointerException e){
+            System.err.println("Error loading icon");
+        }
 
 
         CommonObjectivePanel commonObjectivePanel = new CommonObjectivePanel();
@@ -176,7 +183,7 @@ public class GameFrame extends JFrame {
     }
 
     static ResourceCard getExampleResourceCard(String id){
-        ArrayList<PlayableCard> ResourceCard = XMLparser.parseResourceCards("src/main/resources/xml/resourceCards.xml");
+        ArrayList<PlayableCard> ResourceCard = XMLparser.parseResourceCards("/xml/resourceCards.xml");
         return (ResourceCard) ResourceCard.stream().filter(x->x.getID().equals(id)).findAny().orElse(null);
     }
 
