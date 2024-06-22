@@ -12,6 +12,7 @@ import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.model.cards.playable.StarterCard;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +27,14 @@ public class GUI implements UIManager {
     SecretObjectiveDialog secretObjectiveDialog;
 
     public GUI() {
+        try {
+            javax.swing.UIManager.setLookAndFeel(
+                    javax.swing.UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
+                 UnsupportedLookAndFeelException e) {
+            throw new RuntimeException(e);
+        }
+
         //le schermate che ho bisogno di mostrare
         startScreenFrame = new StartScreenFrame();
         gameFrame = new GameFrame();

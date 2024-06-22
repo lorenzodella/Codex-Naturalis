@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.*;
+import java.rmi.AlreadyBoundException;
+import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
@@ -29,7 +31,7 @@ public class ServerMain
             System.setProperty("java.rmi.server.hostname", InetAddress.getLocalHost().getHostAddress());
             System.out.println("Server address: "+InetAddress.getLocalHost().getHostAddress());
         } catch (UnknownHostException e) {
-            throw new RuntimeException(e);
+            System.err.println("Error getting local address");
         }
 
         ServerManager manager = new ServerManager();
@@ -44,8 +46,8 @@ public class ServerMain
             registry.bind("Loggable", obj);
 
             System.err.println("Server RMI ready");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (RemoteException | AlreadyBoundException e) {
+            System.err.println("Error creating RMI server");
         }
 
         //---------------

@@ -29,7 +29,7 @@ public class EndGameTimer {
                 //manager.reset();
             } catch (InterruptedException ignored) {}
             catch (IOException e) {
-                throw new RuntimeException(e);
+                manager.reset();
             }
         });
         t.start();

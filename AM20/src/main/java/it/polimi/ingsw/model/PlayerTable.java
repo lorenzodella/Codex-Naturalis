@@ -51,7 +51,7 @@ public class PlayerTable {
         try {
             insertDummyCards(card);
         } catch (TargetNotPresentException | InvalidPositionException e) {
-            throw new RuntimeException(e);
+            System.err.println("Error in inserting dummy cards: "+e.getMessage());
         }
         this.updateStats(card);
     }

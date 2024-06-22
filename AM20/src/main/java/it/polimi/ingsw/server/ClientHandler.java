@@ -251,11 +251,10 @@ public class ClientHandler implements Runnable{
             }catch(NullPointerException e){
                 try {
                     socket.close();
-                    System.err.println("Client disconnected, client handler will be closed");
-                    break;
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
+                } catch (IOException ignored) {
                 }
+                System.err.println("Client disconnected, client handler will be closed");
+                break;
             }
 
         }

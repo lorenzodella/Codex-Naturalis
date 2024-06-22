@@ -27,13 +27,7 @@ public class GameFrame extends JFrame {
 
     public GameFrame(){
         super("Codex Naturalis");
-        try {
-            UIManager.setLookAndFeel(
-                    UIManager.getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
-                 UnsupportedLookAndFeelException e) {
-            throw new RuntimeException(e);
-        }
+
         try{
             setIconImage(ImageIO.read(Objects.requireNonNull(getClass().getResource("/icon.png"))));
         } catch (IOException | NullPointerException e){

@@ -85,7 +85,7 @@ public class TablePanel extends JScrollPane {
             try {
                 addCardsRecursive(alreadyPrinted, b, card, c);
             } catch (TargetNotPresentException | InvalidPositionException e) {
-                throw new RuntimeException(e);
+                System.err.println("Error in displaying cards: "+e.getMessage());
             }
         }
     }

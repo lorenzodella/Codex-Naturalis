@@ -38,13 +38,6 @@ public class Chat extends JDialog implements ActionListener{
 
 	public Chat(Frame parent) {
 		super(parent);
-		try {
-			UIManager.setLookAndFeel(
-					UIManager.getSystemLookAndFeelClassName());
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
-				 UnsupportedLookAndFeelException e) {
-			throw new RuntimeException(e);
-		}
 
 		setTitle("Chat");
 		

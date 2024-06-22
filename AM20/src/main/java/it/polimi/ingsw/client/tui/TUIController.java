@@ -186,7 +186,7 @@ public class TUIController extends ClientController implements Runnable{
 
                 }
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                System.err.println("Error reading from console");
             }
 
         }

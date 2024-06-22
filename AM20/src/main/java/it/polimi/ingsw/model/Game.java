@@ -143,7 +143,7 @@ public class Game implements GameObservable{
 
                 p.drawInitialPlayableCard(carte);
             } catch (FinishedCardStackException e) {
-                throw new RuntimeException(e);
+                break;
             }
         }
 

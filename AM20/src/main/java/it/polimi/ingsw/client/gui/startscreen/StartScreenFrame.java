@@ -15,13 +15,7 @@ public class StartScreenFrame extends JFrame {
 
     public StartScreenFrame(){
         super("Codex Naturalis");
-        try {
-            UIManager.setLookAndFeel(
-                    UIManager.getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
-                 UnsupportedLookAndFeelException e) {
-            throw new RuntimeException(e);
-        }
+
         try{
             setIconImage(ImageIO.read(Objects.requireNonNull(getClass().getResource("/icon.png"))));
         } catch (IOException | NullPointerException e){
