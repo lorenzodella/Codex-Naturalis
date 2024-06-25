@@ -312,6 +312,7 @@ public class MessageBuilder implements GameObserver {
 
         for(String nickname : connectedPlayerNicknames){
             if(acknowledgeMessages.get(nickname) == null)
+                //riempimento dell'hashmap di acknowledge message generica con un sottomessaggio
                 acknowledgeMessages.put(nickname, new PlayAckMessage());
             if(!nickname.equals(player.getNickname())) {
                 acknowledgeMessages.get(nickname).setOthersPlayerInfo(otherPlayerUpdates);

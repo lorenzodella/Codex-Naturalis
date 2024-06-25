@@ -40,6 +40,7 @@ public class ServerRMI extends UnicastRemoteObject implements Loggable{
     @Override
     public  ConnectionAckMessage login(String client, PawnColor color, Connection callback) throws RemoteException, CannotJoinGameException {
         HashMap<String, ConnectionAckMessage> res;
+        //COME VIENE SALVATO IL TIPO DI CONNESSIONE NELL'HASHMAP
         if(!manager.getConnections().containsKey(client)){
             manager.addConnection(client, callback);
         }
@@ -138,6 +139,7 @@ public class ServerRMI extends UnicastRemoteObject implements Loggable{
     @Override
     public ObjectiveAckMessage chooseObjective(String nickname, int index) throws RemoteException, InvalidArgumentException, InvalidPlayingException {
         HashMap<String, ObjectiveAckMessage> res;
+        //ottiene controller
         res = this.manager.getController().chooseObjective(nickname, index);
         for(String s : res.keySet()){
             if(res.get(s) != null && !s.equals(nickname)) {

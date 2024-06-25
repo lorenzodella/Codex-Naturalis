@@ -25,6 +25,7 @@ public class Controller implements GameManager {
      * PLAY: stays for the game's phase where a player plays a card down to the player table
      * PICK: stays for the game's phase where, the same player that has just played a card, now draws a card from
      *       the deck or draws one of the two visible cards (gold or resource)
+     * END: when the game is done
      */
     private static final int NOGAME = -1;
     private static final int PRELIMINARY = 0;
@@ -45,7 +46,8 @@ public class Controller implements GameManager {
     private GameObserver messageBuilder;
 
     /**
-     * This attribute stays for the list of the players that are waiting for the game to start
+     * This attribute stays for the list of all players that are playing the game at the moment
+     * Into the preliminary phase, this
      */
     private LinkedHashMap<PawnColor, String> players;
     /**
@@ -536,7 +538,7 @@ public class Controller implements GameManager {
         }
         else{
             //otherwise simply notify next player to play
-            msg = messageBuilder.notifyNextTurn(gameModel.getCurrPlayer());   
+            msg = messageBuilder.notifyNextTurn(gameModel.getCurrPlayer());
         }
         return msg;
     }
