@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.util;
 
-import it.polimi.ingsw.client.clientcard.CardPrinter;
+import it.polimi.ingsw.client.tui.clientcard.CardPrinter;
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.model.cards.playable.ResourceCard;
 import it.polimi.ingsw.model.exceptions.InvalidPositionException;

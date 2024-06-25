@@ -4,12 +4,12 @@ import it.polimi.ingsw.controller.exceptions.CannotJoinGameException;
 import it.polimi.ingsw.controller.messages.*;
 import it.polimi.ingsw.model.PawnColor;
 import it.polimi.ingsw.model.exceptions.*;
-import it.polimi.ingsw.server.Loggable;
+import it.polimi.ingsw.server.rmi.Loggable;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
 
-public class RMIClientSender extends ClientSender {
+public class RMIClientSender implements ClientSender {
 
     private RMIClientReceiver receiver;
     private Loggable stub;

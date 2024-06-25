@@ -45,7 +45,7 @@ public class Controller implements GameManager {
     private GameObserver messageBuilder;
 
     /**
-     * This attribute stays for the list of all players that are playing the game at the moment
+     * This attribute stays for the list of the players that are waiting for the game to start
      */
     private LinkedHashMap<PawnColor, String> players;
     /**
@@ -275,11 +275,11 @@ public class Controller implements GameManager {
      * This method allows, to every connected player, to actually choose if they want to play the starter card
      * by the front or the back and it's a STARTER phase method.
      * It returns a StarterCardAckMessage or it specifically returns a startChoosingObjectiveMessage depending on
-     * if all players've already chosen the starter card side or if someone hasn't done it yet.
+     * if all players have already chosen the starter card side or if someone hasn't done it yet.
      * @param playerNickname the player that is choosing the side of the card
      * @param side the side that the player's just chosen (could be FRONT or BACK)
      * @return
-     * if all players've chosen the side of their starter card, the method returns a StartChoosingObjectiveMessage which
+     * if all players have chosen the side of their starter card, the method returns a StartChoosingObjectiveMessage which
      * gives the player infos (based on how they put down their starter card) and it also gives the common and secret
      * objectives so that the OBJECTIVES phase can start.
      * Otherwise, the method returns a StarterCardAckMessage in order to signalize that the player's chosen the side
@@ -499,11 +499,12 @@ public class Controller implements GameManager {
     private synchronized HashMap<String, AcknowledgeMessage> checkEndGame() throws NoOneIsConnectedException {
         HashMap<String, AcknowledgeMessage> msg = null;
         //if game ended but last turn not started yet
-        if(gameModel.checkTheEnd() && missingRounds ==-1) {
+        if(gameModel.checkEndPhase() && missingRounds ==-1) {
             missingRounds = 2;
             if(gameModel.areDeckFinished())
                 msg = messageBuilder.notifyGameEnding(null);
             else
+                //il curr ha raggiunto 20
                 msg = messageBuilder.notifyGameEnding(gameModel.getCurrPlayer());
         }
 
@@ -535,7 +536,7 @@ public class Controller implements GameManager {
         }
         else{
             //otherwise simply notify next player to play
-            msg = messageBuilder.notifyNextTurn(gameModel.getCurrPlayer());
+            msg = messageBuilder.notifyNextTurn(gameModel.getCurrPlayer());   
         }
         return msg;
     }

@@ -1,19 +1,13 @@
 package it.polimi.ingsw.client.tui;
 
-import it.polimi.ingsw.client.clientcard.CardPrinter;
+import it.polimi.ingsw.client.tui.clientcard.*;
 import it.polimi.ingsw.client.UIManager;
-import it.polimi.ingsw.client.clientcard.*;
 import it.polimi.ingsw.controller.PlayerInfo;
 import it.polimi.ingsw.controller.messages.ChatMessage;
 import it.polimi.ingsw.model.cards.Kingdom;
 import it.polimi.ingsw.model.cards.SpecialObject;
 import it.polimi.ingsw.model.cards.objective.*;
 import it.polimi.ingsw.model.cards.playable.*;
-import it.polimi.ingsw.model.exceptions.InvalidAngleCoveredException;
-import it.polimi.ingsw.model.exceptions.InvalidPositionException;
-import it.polimi.ingsw.model.exceptions.RequirementsNotRespectedException;
-import it.polimi.ingsw.model.exceptions.TargetNotPresentException;
-import it.polimi.ingsw.model.util.XMLparser;
 
 import java.util.*;
 
@@ -33,22 +27,6 @@ public class TUI implements UIManager {
     private String nickname;
     private String currPlayer;
 
-    private static String getKingdomColor(Kingdom k){
-        if(k==null)
-            return ConsoleColors.TEXT_RESET;
-        switch(k){
-            case Fungi:
-                return ConsoleColors.TEXT_RED;
-            case Animal:
-                return ConsoleColors.TEXT_CYAN;
-            case Plant:
-                return ConsoleColors.TEXT_GREEN;
-            case Insect:
-                return ConsoleColors.TEXT_PURPLE;
-            default:
-                return ConsoleColors.TEXT_RESET;
-        }
-    }
 
     public TUI(){
         this.messages = new LinkedList<>();
@@ -65,9 +43,15 @@ public class TUI implements UIManager {
         return nickname;
     }
 
+    public HashMap<String, PlayerInfo> getOthersPlayerInfo() {
+        return othersPlayerInfo;
+    }
+
+
     @Override
     public void showConnection() {
         System.out.println("Waiting for other players");
+        this.showCommand();
     }
 
     @Override
@@ -134,6 +118,7 @@ public class TUI implements UIManager {
         if(!msg.getSender().equals(nickname) && (msg.getRecipient()==null || msg.getRecipient().equals(nickname)))
             System.out.println("\nYou received a message");
         viewChat();
+        this.showCommand();
     }
 
     /**
@@ -257,8 +242,8 @@ public class TUI implements UIManager {
         if(nextPlayer!=null) {
             currPlayer = nextPlayer;
             if (nextPlayer.equals(nickname)) {
-                viewGold();
-                viewResource();
+                viewPlayerInfo();
+                viewHandCards();
 
                 System.out.println("Is your turn");
             } else {
@@ -286,6 +271,8 @@ public class TUI implements UIManager {
      */
     @Override
     public void showMustPick(){
+        viewResource();
+        viewGold();
         System.out.println("You have to pick a card");
     }
 
@@ -355,68 +342,83 @@ public class TUI implements UIManager {
      * This method allows to print the specific information of the common objectives calling the draw() method present
      * in the "copy" card (...Client) of the "real" card created in the server and received through the SKT/RMI
      */
-    public void viewCommonObjective(){
+    public int viewCommonObjective(){
 
-        System.out.println(ConsoleColors.TEXT_BLUE + "COMMON OBJECTIVE: \n" + ConsoleColors.TEXT_RESET);
-        //scorro array dei common objectives
-        for(int i=0; i<this.commonObjectives.length; i++) {
+        try {
+            if(commonObjectives.length>0);
+            System.out.println(ConsoleColors.TEXT_BLUE + "COMMON OBJECTIVE: \n" + ConsoleColors.TEXT_RESET);
+            //scorro array dei common objectives
+            for(int i=0; i<this.commonObjectives.length; i++) {
 
-            if (this.commonObjectives[i] instanceof DiagonalConfigurationObjectiveCard) {
-                DiagonalConfigurationObjectiveCardClient diagonalConfigurationObjectiveCardClient = new DiagonalConfigurationObjectiveCardClient((DiagonalConfigurationObjectiveCard) this.commonObjectives[i]);
-                diagonalConfigurationObjectiveCardClient.draw();
-            } else if (this.commonObjectives[i] instanceof PairOfObjectsObjectiveCard) {
-                PairOfObjectsObjectiveCardClient pairOfObjectsObjectiveCardClient = new PairOfObjectsObjectiveCardClient((PairOfObjectsObjectiveCard) this.commonObjectives[i]);
-                pairOfObjectsObjectiveCardClient.draw();
-            } else if (this.commonObjectives[i] instanceof TrioOfObjectsObjectiveCard) {
-                TrioOfObjectsObjectiveCardClient trioOfObjectsObjectiveCardClient = new TrioOfObjectsObjectiveCardClient((TrioOfObjectsObjectiveCard) this.commonObjectives[i]);
-                trioOfObjectsObjectiveCardClient.draw();
-            } else if (this.commonObjectives[i] instanceof TrioOfResourcesObjectiveCard) {
-                TrioOfResourcesObjectiveCardClient trioOfResourcesObjectiveCardClient = new TrioOfResourcesObjectiveCardClient((TrioOfResourcesObjectiveCard) this.commonObjectives[i]);
-                trioOfResourcesObjectiveCardClient.draw();
-            } else if (this.commonObjectives[i] instanceof VerticalConfigurationObjectiveCard) {
-                VerticalConfigurationObjectiveCardClient verticalConfigurationObjectiveCardClient = new VerticalConfigurationObjectiveCardClient((VerticalConfigurationObjectiveCard) this.commonObjectives[i]);
-                verticalConfigurationObjectiveCardClient.draw();
+                if (this.commonObjectives[i] instanceof DiagonalConfigurationObjectiveCard) {
+                    DiagonalConfigurationObjectiveCardClient diagonalConfigurationObjectiveCardClient = new DiagonalConfigurationObjectiveCardClient((DiagonalConfigurationObjectiveCard) this.commonObjectives[i]);
+                    diagonalConfigurationObjectiveCardClient.draw();
+                } else if (this.commonObjectives[i] instanceof PairOfObjectsObjectiveCard) {
+                    PairOfObjectsObjectiveCardClient pairOfObjectsObjectiveCardClient = new PairOfObjectsObjectiveCardClient((PairOfObjectsObjectiveCard) this.commonObjectives[i]);
+                    pairOfObjectsObjectiveCardClient.draw();
+                } else if (this.commonObjectives[i] instanceof TrioOfObjectsObjectiveCard) {
+                    TrioOfObjectsObjectiveCardClient trioOfObjectsObjectiveCardClient = new TrioOfObjectsObjectiveCardClient((TrioOfObjectsObjectiveCard) this.commonObjectives[i]);
+                    trioOfObjectsObjectiveCardClient.draw();
+                } else if (this.commonObjectives[i] instanceof TrioOfResourcesObjectiveCard) {
+                    TrioOfResourcesObjectiveCardClient trioOfResourcesObjectiveCardClient = new TrioOfResourcesObjectiveCardClient((TrioOfResourcesObjectiveCard) this.commonObjectives[i]);
+                    trioOfResourcesObjectiveCardClient.draw();
+                } else if (this.commonObjectives[i] instanceof VerticalConfigurationObjectiveCard) {
+                    VerticalConfigurationObjectiveCardClient verticalConfigurationObjectiveCardClient = new VerticalConfigurationObjectiveCardClient((VerticalConfigurationObjectiveCard) this.commonObjectives[i]);
+                    verticalConfigurationObjectiveCardClient.draw();
+                }
             }
-        }
-        System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------\n");
+            System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------\n");
 
+
+        }catch (NullPointerException e ){
+           this.showError("The common objective have not been distributed yet ");
+           return 0;
+        }
+
+    return 1;
     }
 
     /**
      * This method allows to print the specific information of the player's secret objective calling the draw() method present
      * in the "copy" card (...Client) of the "real" card created in the server and received through the SKT/RMI
      */
-    public void viewSecretObjective(){
-        System.out.println(ConsoleColors.TEXT_BLUE + "SECRET OBJECTIVE: \n"+ConsoleColors.TEXT_RESET);
-        //scorro array dei common objectives
-        for(int i=0; i<this.secretObjectives.size(); i++){
+    public int viewSecretObjective(){
+        try{
+            if(secretObjectives.size()>0);
+            System.out.println(ConsoleColors.TEXT_BLUE + "SECRET OBJECTIVE: \n"+ConsoleColors.TEXT_RESET);
+            //scorro array dei common objectives
+            for(int i=0; i<this.secretObjectives.size(); i++){
 
-            try{
-                if (this.secretObjectives.get(i) instanceof DiagonalConfigurationObjectiveCard) {
-                    DiagonalConfigurationObjectiveCardClient diagonalConfigurationObjectiveCardClient = new DiagonalConfigurationObjectiveCardClient((DiagonalConfigurationObjectiveCard) this.secretObjectives.get(i));
-                    diagonalConfigurationObjectiveCardClient.draw();
-                } else if (this.secretObjectives.get(i) instanceof PairOfObjectsObjectiveCard) {
-                    PairOfObjectsObjectiveCardClient pairOfObjectsObjectiveCardClient = new PairOfObjectsObjectiveCardClient((PairOfObjectsObjectiveCard) this.secretObjectives.get(i));
-                    pairOfObjectsObjectiveCardClient.draw();
-                } else if (this.secretObjectives.get(i) instanceof TrioOfObjectsObjectiveCard) {
-                    TrioOfObjectsObjectiveCardClient trioOfObjectsObjectiveCardClient = new TrioOfObjectsObjectiveCardClient((TrioOfObjectsObjectiveCard) this.secretObjectives.get(i));
-                    trioOfObjectsObjectiveCardClient.draw();
-                } else if (this.secretObjectives.get(i) instanceof TrioOfResourcesObjectiveCard) {
-                    TrioOfResourcesObjectiveCardClient trioOfResourcesObjectiveCardClient = new TrioOfResourcesObjectiveCardClient((TrioOfResourcesObjectiveCard) this.secretObjectives.get(i));
-                    trioOfResourcesObjectiveCardClient.draw();
-                } else if (this.secretObjectives.get(i) instanceof VerticalConfigurationObjectiveCard) {
-                    VerticalConfigurationObjectiveCardClient verticalConfigurationObjectiveCardClient = new VerticalConfigurationObjectiveCardClient((VerticalConfigurationObjectiveCard) this.secretObjectives.get(i));
-                    verticalConfigurationObjectiveCardClient.draw();
+                try{
+                    if (this.secretObjectives.get(i) instanceof DiagonalConfigurationObjectiveCard) {
+                        DiagonalConfigurationObjectiveCardClient diagonalConfigurationObjectiveCardClient = new DiagonalConfigurationObjectiveCardClient((DiagonalConfigurationObjectiveCard) this.secretObjectives.get(i));
+                        diagonalConfigurationObjectiveCardClient.draw();
+                    } else if (this.secretObjectives.get(i) instanceof PairOfObjectsObjectiveCard) {
+                        PairOfObjectsObjectiveCardClient pairOfObjectsObjectiveCardClient = new PairOfObjectsObjectiveCardClient((PairOfObjectsObjectiveCard) this.secretObjectives.get(i));
+                        pairOfObjectsObjectiveCardClient.draw();
+                    } else if (this.secretObjectives.get(i) instanceof TrioOfObjectsObjectiveCard) {
+                        TrioOfObjectsObjectiveCardClient trioOfObjectsObjectiveCardClient = new TrioOfObjectsObjectiveCardClient((TrioOfObjectsObjectiveCard) this.secretObjectives.get(i));
+                        trioOfObjectsObjectiveCardClient.draw();
+                    } else if (this.secretObjectives.get(i) instanceof TrioOfResourcesObjectiveCard) {
+                        TrioOfResourcesObjectiveCardClient trioOfResourcesObjectiveCardClient = new TrioOfResourcesObjectiveCardClient((TrioOfResourcesObjectiveCard) this.secretObjectives.get(i));
+                        trioOfResourcesObjectiveCardClient.draw();
+                    } else if (this.secretObjectives.get(i) instanceof VerticalConfigurationObjectiveCard) {
+                        VerticalConfigurationObjectiveCardClient verticalConfigurationObjectiveCardClient = new VerticalConfigurationObjectiveCardClient((VerticalConfigurationObjectiveCard) this.secretObjectives.get(i));
+                        verticalConfigurationObjectiveCardClient.draw();
+                    }
+
+                }catch (ClassCastException e){
+                    e.printStackTrace();
                 }
-
-            }catch (ClassCastException e){
-                e.printStackTrace();
             }
+            System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------\n");
 
-
+        }catch (NullPointerException e){
+            this.showError("The secret objective have not been distributed yet ");
+            return 0;
         }
-        System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------\n");
 
+        return 1;
     }
 
     /**
@@ -478,7 +480,6 @@ public class TUI implements UIManager {
 
             }else
                 System.out.println("There are no visible gold cards \n");
-            System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------\n");
         }
     }
 
@@ -530,7 +531,6 @@ public class TUI implements UIManager {
                 }
             }else
                 System.out.println("There are no visible resource cards \n");
-            System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------\n");
         }
     }
 
@@ -540,7 +540,6 @@ public class TUI implements UIManager {
      * and the board)
      */
     public void viewPlayerInfo(){
-        this.clearTerminal(0);
         this.printTitle();
         System.out.println("These are your information");
         System.out.println("You have done "+ this.yourPlayerInfo.getScore() + " points");
@@ -581,6 +580,7 @@ public class TUI implements UIManager {
 //        this.printTitle();
         try {
             username = username.substring(0,1).toUpperCase() + username.substring(1);
+            this.othersPlayerInfo.get(username).getScore();
             System.out.println("The following information are the one of " + username + " game");
             System.out.println(username + " has done " + this.othersPlayerInfo.get(username).getScore() + " points");
 
@@ -604,7 +604,7 @@ public class TUI implements UIManager {
             System.out.println("- MANUSCRIPT: " + this.othersPlayerInfo.get(username).getStats().getNumberOfObjects(SpecialObject.Manuscript));
 
             if (this.othersPlayerInfo.get(username).getMap() != null) {
-                System.out.println("The player has the follwoing board:");
+                System.out.println("The player has the following board:");
                 CardPrinter.printMap(this.othersPlayerInfo.get(username).getMap());
             }
         }catch (NullPointerException e){
@@ -638,26 +638,32 @@ public class TUI implements UIManager {
      */
     public void viewChat(){
         System.out.println("\nCHAT");
-        for(ChatMessage m : messages){
-            if(m.getSender().equals(nickname)){
-                if(m.getRecipient()==null)
-                    System.out.println("[to: everyone] " + m.getMessage());
-                else
-                    System.out.println("[to: "+
-                            ConsoleColors.colorFromPawnColor(othersPlayerInfo.get(m.getRecipient()).getColor())+
-                            m.getRecipient()+
+        if(messages.isEmpty()){
+            System.out.println("There aren't any messages yet");
+        }else {
+            for(ChatMessage m : messages){
+                if(m.getSender().equals(nickname)){
+                    if(m.getRecipient()==null)
+                        System.out.println("[to: everyone] " + m.getMessage());
+                    else
+                        System.out.println("[to: "+
+                                ConsoleColors.colorFromPawnColor(othersPlayerInfo.get(m.getRecipient()).getColor())+
+                                m.getRecipient()+
+                                ConsoleColors.TEXT_RESET+
+                                "] " + m.getMessage());
+                }
+                else if(m.getRecipient()==null || m.getRecipient().equals(nickname))
+                    System.out.println("[from: "+
+                            ConsoleColors.colorFromPawnColor(othersPlayerInfo.get(m.getSender()).getColor())+
+                            m.getSender()+
                             ConsoleColors.TEXT_RESET+
                             "] " + m.getMessage());
             }
-            else if(m.getRecipient()==null || m.getRecipient().equals(nickname))
-                System.out.println("[from: "+
-                        ConsoleColors.colorFromPawnColor(othersPlayerInfo.get(m.getSender()).getColor())+
-                        m.getSender()+
-                        ConsoleColors.TEXT_RESET+
-                        "] " + m.getMessage());
-        }
 
-        System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------");
+            System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------");
+
+
+        }
         //this.viewCommand();
     }
 
@@ -669,6 +675,10 @@ public class TUI implements UIManager {
         showCommand();
     }
 
+
+    /**
+     * This method prints the ascii art of the game's title
+     */
     public void printTitle(){
         System.out.println("   ____          _             _   _       _                   _ _     ");
         System.out.println("  / ___|___   __| | _____  __ | \\ | | __ _| |_ _   _ _ __ __ _| (_)___ ");
@@ -679,28 +689,9 @@ public class TUI implements UIManager {
         System.out.println("\n");
     }
 
-    public void clearTerminal(int linesToPreserve) {
-        String ANSI_RESET = "\u001B[0m";
-        String ANSI_CLEAR_SCREEN = "\u001B[2J";
-        String ANSI_MOVE_CURSOR_UP = "\u001B[%dA"; // Move cursor up by specified number of lines
-        // Move the cursor up by the specified number of lines
-        System.out.print(String.format(ANSI_MOVE_CURSOR_UP, linesToPreserve));
-        // Clear the screen
-        System.out.print(ANSI_CLEAR_SCREEN);
-        // Move the cursor to the beginning (optional)
-        System.out.print("\u001B[H");
-        System.out.flush();
-    }
-
-    public static void waitSeconds(int seconds) {
-        long startTime = System.currentTimeMillis();
-        long targetTime = startTime + seconds * 1000L;
-
-        while (System.currentTimeMillis() < targetTime) {
-            // Loop until the current time exceeds the target time
-        }
-    }
-
+    /**
+     * This method is used to say to the user that he is able to do an action
+     */
     public void showCommand(){
         System.out.println(ConsoleColors.TEXT_YELLOW+ "\nFor obtaining the full list of command type /help while for obtaining the parameter of a specific action type /help [command]" + ConsoleColors.TEXT_RESET);
         System.out.println("Decide which command you want to do:");
@@ -727,8 +718,6 @@ public class TUI implements UIManager {
         System.out.println("/viewCommonObjective");
         System.out.println("/viewSecretObjective");
         System.out.println("/viewStarterCard");
-//        System.out.println("/viewResourceVisibile");
-//        System.out.println("/viewGoldVisible");
         System.out.println("/viewChat");
         System.out.println("/currPlayer");
         System.out.println("/viewHand \n");
@@ -764,8 +753,8 @@ public class TUI implements UIManager {
                 System.out.println("/playCard + index (index of the card you want to play) +  angle (angel of the card you want to cover: 0 for UL / 1 for UR / 2 for DL /3  for DR)+  targetIDcard (ID of the card you want to cover) + side (0 for back / 1 for front)");
                 break;
             case "chat":
-                System.out.println("/chat + broadCast + message ");
-                System.out.println("/chat + username (username of the receiver) + message");
+                System.out.println("/chat + broadcast + message (you have to write the message between \"\")");
+                System.out.println("/chat + username (username of the receiver) + message (you have to write the message between \"\")");
                 break;
             case "playerInfo":
                 System.out.println("/playerInfo + username (username of the player you want to view)");
@@ -781,7 +770,4 @@ public class TUI implements UIManager {
         }
     }
 
-    public static void main(String[] args) throws InterruptedException, TargetNotPresentException, InvalidPositionException, RequirementsNotRespectedException, InvalidAngleCoveredException {
-
-    }
 }

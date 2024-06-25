@@ -11,7 +11,7 @@ public class ReconnectionMessage extends StartGameMessage{
      */
     private ArrayList<ObjectiveCard> secretObjective;
     /**
-     * Array of the two common objectives of the player that's rejoining the game now.
+     * Array of the two common objectives
      */
     private ObjectiveCard[] commonObjectives;
 

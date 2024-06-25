@@ -1,16 +1,15 @@
 package it.polimi.ingsw.client.connections;
 
 import it.polimi.ingsw.client.UIUpdater;
-import it.polimi.ingsw.clientmessage.*;
+import it.polimi.ingsw.client.clientmessage.*;
 import it.polimi.ingsw.controller.messages.ErrorMessage;
-import it.polimi.ingsw.controller.messages.PingMessage;
 import it.polimi.ingsw.model.PawnColor;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class SKTClientSender extends ClientSender {
+public class SKTClientSender implements ClientSender {
 
     private ObjectOutputStream outputStream;
     private Socket socket;

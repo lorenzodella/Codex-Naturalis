@@ -340,7 +340,7 @@ public class Game implements GameObservable{
      * @return 1 if the player has reached 20 points (or more) or if the deck is empty, 0 otherwise
      */
     @Override
-    public boolean checkTheEnd() {
+    public boolean checkEndPhase() {
         return currPlayer.getScore() >= 20 || areDeckFinished();
     }
 
@@ -358,6 +358,7 @@ public class Game implements GameObservable{
 
     /**
      * This method, at the end of the game, computes the points of the secret objective of every player
+     * @return list of players updated
      */
     @Override
     public List<Player> computePlayerSecretObjectives(){
@@ -370,6 +371,7 @@ public class Game implements GameObservable{
 
     /**
      * This method adds, per each player, the points of the common objective
+     * @return list of players updated
      */
     @Override
     public List<Player> computeCommonObjectives(){
@@ -385,6 +387,7 @@ public class Game implements GameObservable{
     /**
      * This method returns to the controller the player that won the game
      * @return the player that won
+     * @throws DrawMatchException if two or more players have the same score
      */
     //da decidere come gestire il caso di parità
     @Override

@@ -15,7 +15,7 @@ public class ObjectGoldCard extends GoldCard{
      * You need to count the occurrences of that object (on the playertable) to
      * set the amount of points that the user deserves
      */
-    private SpecialObject specialObject;
+    private final SpecialObject specialObject;
 
     public ObjectGoldCard(String ID, Corner[] frontCorners, Corner[] backCorners,
                           Kingdom kingdom, HashMap<Kingdom, Integer> requirements,
@@ -56,8 +56,7 @@ public class ObjectGoldCard extends GoldCard{
     @Override
     public int computePoints(PlayerTable table) {
         if(this.getSide() == PlayableCard.FRONT) {
-            int res = table.getStats().getNumberOfObjects(this.specialObject);
-            return res * 1;
+            return table.getStats().getNumberOfObjects(this.specialObject);
         }else
             return 0;
     }

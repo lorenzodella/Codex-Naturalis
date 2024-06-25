@@ -16,7 +16,12 @@ import java.rmi.NotBoundException;
 
 public class ClientMain {
 
-
+    //TODO: da finire 
+    /**
+     * This is the main that is started when the Client jar is executed. It
+     * @param args The first param si the choice between TUI or GUI (1 for TUI / 2 for GUI). The second parameter is the type of the connection (1 for RMI/ 2 for SKT).
+     *             The third is the IP address of the server that the client is connecting to. The last is number of the port: SKT = 12346 or RMI = 12345
+     */
     public static void main(String[] args) {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));

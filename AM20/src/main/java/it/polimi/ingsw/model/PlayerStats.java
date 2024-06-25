@@ -46,14 +46,6 @@ public class PlayerStats implements Serializable {
                 .allMatch(e -> resources.get(e.getKey()) >= e.getValue());
     }
 
-    public void addKingdomOrObject(Kingdom kingdom, SpecialObject object){
-        if(kingdom != null)
-            this.resources.put(kingdom, this.getNumberOfResources(kingdom)+1);
-        else if(object != null){
-            this.specialObjects.put(object, this.getNumberOfObjects(object)+1);
-        }
-    }
-
     public void removeKingdomOrObject(Kingdom kingdom, SpecialObject object){
         if(kingdom != null)
             this.resources.put(kingdom, this.getNumberOfResources(kingdom)-1);
@@ -66,17 +58,6 @@ public class PlayerStats implements Serializable {
         this.resources.put(kingdom, this.getNumberOfResources(kingdom)+1);
     }
 
-    public void addSpecialObjects(SpecialObject object){
-        this.specialObjects.put(object, this.getNumberOfObjects(object)+1);
-    }
-
-    public void removeKingdom(Kingdom kingdom){
-        this.resources.put(kingdom, this.getNumberOfResources(kingdom)-1);
-    }
-
-    public void removeSpecialObjects(SpecialObject obj){
-        this.specialObjects.put(obj, this.getNumberOfObjects(obj)+1);
-    }
 
     public void addKingdom(Kingdom kingdom, int num){
         this.resources.put(kingdom, this.resources.get(kingdom)+num);

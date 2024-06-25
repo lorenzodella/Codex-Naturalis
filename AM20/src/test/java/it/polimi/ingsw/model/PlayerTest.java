@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.client.clientcard.CardPrinter;
+import it.polimi.ingsw.client.tui.clientcard.CardPrinter;
 import it.polimi.ingsw.model.cards.Corner;
 import it.polimi.ingsw.model.exceptions.InvalidPlayingException;
 import it.polimi.ingsw.model.cards.Kingdom;
@@ -11,7 +11,6 @@ import it.polimi.ingsw.model.exceptions.InvalidAngleCoveredException;
 import it.polimi.ingsw.model.exceptions.InvalidPositionException;
 import it.polimi.ingsw.model.exceptions.RequirementsNotRespectedException;
 import it.polimi.ingsw.model.exceptions.TargetNotPresentException;
-import it.polimi.ingsw.model.util.DynamicMap;
 import it.polimi.ingsw.model.util.XMLparser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

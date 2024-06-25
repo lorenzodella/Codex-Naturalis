@@ -32,7 +32,7 @@ public interface GameObservable {
     Player pickCard(int deck, int visibleCardIndex) throws FinishedCardStackException, InvalidArgumentException;
     Player pickCard(int deck) throws FinishedCardStackException, InvalidArgumentException;
     boolean nextTurn() throws InvalidPlayingException;
-    boolean checkTheEnd();
+    boolean checkEndPhase();
     List<Player> computePlayerSecretObjectives();
     List<Player> computeCommonObjectives();
     Player checkWinner() throws DrawMatchException;

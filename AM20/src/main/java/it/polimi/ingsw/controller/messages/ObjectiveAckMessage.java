@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class ObjectiveAckMessage extends Message {
     /**
-     * This attribute a 2 items array that contains the 2 secret objectives
+     * This attribute is an arrayList of 2 items that contains the 2 secret objectives
      */
     private ArrayList<ObjectiveCard> secretObjectives;
 

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.client.clientcard.CardPrinter;
+import it.polimi.ingsw.client.tui.clientcard.CardPrinter;
 import it.polimi.ingsw.model.exceptions.InvalidPlayingException;
 import it.polimi.ingsw.model.cards.Corner;
 import it.polimi.ingsw.model.cards.Kingdom;
@@ -174,11 +174,11 @@ class GameTest {
     void endDecks() throws InvalidArgumentException, FinishedCardStackException {
         for (int i = 0; i < 34; i++) {
             game.pickCard(Deck.GOLD_CARDS);
-            assertFalse(game.checkTheEnd());
+            assertFalse(game.checkEndPhase());
         }
         for (int i = 0; i < 30; i++) {
             game.pickCard(Deck.RESOURCE_CARDS);
-            assertFalse(game.checkTheEnd());
+            assertFalse(game.checkEndPhase());
         }
         assertThrows(FinishedCardStackException.class, ()->game.pickCard(Deck.GOLD_CARDS));
         assertThrows(FinishedCardStackException.class, ()->game.pickCard(Deck.RESOURCE_CARDS));
@@ -191,7 +191,7 @@ class GameTest {
         assertThrows(FinishedCardStackException.class, ()->game.pickCard(Deck.GOLD_CARDS, 0));
         assertThrows(FinishedCardStackException.class, ()->game.pickCard(Deck.RESOURCE_CARDS, 0));
 
-        assertTrue(game.checkTheEnd());
+        assertTrue(game.checkEndPhase());
     }
 
     @Test
@@ -217,11 +217,11 @@ class GameTest {
                 oldc = newc;
             }
             game.pickCard(Deck.GOLD_CARDS);
-        }while(!game.checkTheEnd());
+        }while(!game.checkEndPhase());
 
         assertTrue(p.getScore()>=20);
         assertEquals(p, game.checkWinner());
-        assertTrue(game.checkTheEnd());
+        assertTrue(game.checkEndPhase());
 
         CardPrinter.printMap(p.getTable().getMap());
     }

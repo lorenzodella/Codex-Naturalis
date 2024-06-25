@@ -10,8 +10,9 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ConnectionAckMessage extends Message{
+
     /**
-     * this attribute stands for the nickname of the player that needs to be connected to the game
+     * This is the username of the player that connect or reconnect to the game
      */
     private String nickname;
 

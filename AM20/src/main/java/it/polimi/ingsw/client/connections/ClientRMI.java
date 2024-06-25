@@ -1,8 +1,7 @@
 package it.polimi.ingsw.client.connections;
 
 import it.polimi.ingsw.client.UIUpdater;
-import it.polimi.ingsw.controller.messages.ErrorMessage;
-import it.polimi.ingsw.server.Loggable;
+import it.polimi.ingsw.server.rmi.Loggable;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;

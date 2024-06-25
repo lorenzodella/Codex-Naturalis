@@ -161,24 +161,4 @@ public class GameFrame extends JFrame {
         }
     }
 
-    public static void main(String[] args) {
-        GUI gui = new GUI();
-        GUIController guiController = new GUIController(null, gui);
-
-        gui.updateYourPlayerInfo(new PlayerInfo(PawnColor.GREEN));
-
-        HashMap<String, PlayerInfo> map = new HashMap<>();
-        map.put("Player1", new PlayerInfo(PawnColor.RED));
-        gui.updateOtherPlayerInfo(map);
-
-        //gui.gameFrame.playerPanel.getDeckPanel().updateResource(null, null, getExampleResourceCard("R18"));
-
-        gui.showStartGame();
-    }
-
-    static ResourceCard getExampleResourceCard(String id){
-        ArrayList<PlayableCard> ResourceCard = XMLparser.parseResourceCards("/xml/resourceCards.xml");
-        return (ResourceCard) ResourceCard.stream().filter(x->x.getID().equals(id)).findAny().orElse(null);
-    }
-
 }

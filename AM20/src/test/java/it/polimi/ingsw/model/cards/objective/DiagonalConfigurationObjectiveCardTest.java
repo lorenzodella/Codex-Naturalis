@@ -31,10 +31,6 @@ class DiagonalConfigurationObjectiveCardTest {
         return (DiagonalConfigurationObjectiveCard) DiagonalConfigurationObjectiveCard.stream().filter(x->x.getID().equals("O90")).findAny().orElse(null);
     }
 
-    CornerGoldCard getExampleCornerGoldCard(String id){
-        ArrayList<PlayableCard> CornerGoldCard = XMLparser.parseGoldCards("/xml/goldCards.xml");
-        return (CornerGoldCard) CornerGoldCard.stream().filter(x->x.getID().equals(id)).findAny().orElse(null);
-    }
 
     List<PlayableCard> getKingdomGoldCard(Kingdom k){
         ArrayList<PlayableCard> CornerGoldCard = XMLparser.parseGoldCards("/xml/goldCards.xml");

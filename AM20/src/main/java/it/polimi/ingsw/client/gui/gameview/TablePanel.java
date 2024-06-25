@@ -132,14 +132,6 @@ public class TablePanel extends JScrollPane {
         }
     }
 
-    private JButton createCard1(PlayableCard card){
-        JButton b = new JButton();
-        b.setPreferredSize(GUIUtils.cardDim);
-        b.setOpaque(true);
-        b.setFocusPainted(false);
-        b.setText(card.getID() +"-"+ card.getOrder() +"-"+ card.getSide());
-        return b;
-    }
 
     /**
      * Create an ImagePanel with the card image.

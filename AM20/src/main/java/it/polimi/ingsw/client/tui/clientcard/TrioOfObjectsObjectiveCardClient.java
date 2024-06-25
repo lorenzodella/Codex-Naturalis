@@ -1,0 +1,22 @@
+package it.polimi.ingsw.client.tui.clientcard;
+
+import it.polimi.ingsw.model.cards.objective.TrioOfObjectsObjectiveCard;
+
+public class TrioOfObjectsObjectiveCardClient implements  ObjectiveCardClient {
+    /**
+     * Card that has to be printed out
+     */
+    private TrioOfObjectsObjectiveCard trioOfObjectsObjectiveCard;
+
+    public TrioOfObjectsObjectiveCardClient(TrioOfObjectsObjectiveCard trioOfObjectsObjectiveCard) {
+        this.trioOfObjectsObjectiveCard = trioOfObjectsObjectiveCard;
+    }
+
+    /**
+     * This method allows to print the information of the card
+     */
+    public void draw(){
+        System.out.println("- TRIO OF OBJECTS OBJECTIVE: ");
+        System.out.println("You get 2 points every time you collect an Inkwell, a Manuscript and a Quill \n");
+    }
+}

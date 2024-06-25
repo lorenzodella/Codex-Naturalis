@@ -1,16 +1,13 @@
 package it.polimi.ingsw.server;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import it.polimi.ingsw.server.rmi.ServerRMI;
+import it.polimi.ingsw.server.socket.ServerSKT;
+
 import java.net.*;
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.rmi.server.UnicastRemoteObject;
-import java.util.Enumeration;
 
 // to test against console:
 //  /usr/bin/nc 127.0.0.1 1234

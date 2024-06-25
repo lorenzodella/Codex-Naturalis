@@ -11,7 +11,7 @@ public class StartChoosingObjectiveMessage extends StarterCardAckMessage {
      */
     private ObjectiveCard[] commonObjectives;
     /**
-     * This attribute a 2 items array that contains the 2 secret objectives
+     * This attribute is an arrayList of 2 items that contains the 2 secret objectives
      * ps: the player now needs to choose the secret objective they want
      */
     private ArrayList<ObjectiveCard> secretObjectives;
