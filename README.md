@@ -7,9 +7,9 @@ Implementazione del tavolo da gioco [Codex Naturalis](https://www.craniocreation
 # Documentazione
 
 ### UML
-Presso i seguenti link è possibile visionare l'UML iniziale che definisce la struttura iniziale del model e la cartella dove è presenta l'UMOL autogenerato da IntellijIdea:
+Presso i seguenti link è possibile visionare l'UML iniziale che definisce la struttura iniziale del model e la cartella dove è presenta l'UMOL autogenerato da Intellij:
 
- 1. [UML-inital](https://github.com/lorenzodella/IS24-AM20/tree/main/Deliverables).
+ 1. [UML-initial](https://github.com/lorenzodella/IS24-AM20/tree/main/Deliverables).
  2. [UML-final](https://github.com/lorenzodella/IS24-AM20/tree/main/Deliverables).
 
 
@@ -18,12 +18,12 @@ Tutta la JavaDoc generata è presenta nella cartella [JavaDoc](https://github.co
 
 ### Sequence Diagram 
 
-
-
+Il sequence diagram che abbiamo ideato e consegnato durante la second PeerReview è presente nella cartella [Sequence Diagram](https://github.com/lorenzodella/IS24-AM20/tree/main/Deliverables). 
 
 
 ### PeerReview
 
+Le due PeerReview sono invece disponibili nella cartella [PeerReview](https://github.com/lorenzodella/IS24-AM20/tree/main/Deliverables). 
 
 # Funzionalità
 
@@ -46,6 +46,8 @@ Di seguito sono riportate le funzionalità che abbiamo realizzato:
 
 # Compilazione
 
+I jar sono stati realizzati con l'utilizzo di Maven Shade Plugin tramite il comando `mvn clean compile package`. I Jar sono disponibili alla cartella [Jar](https://github.com/lorenzodella/IS24-AM20/tree/main/Deliverables).
+
 
 
 # Esecuzione
@@ -55,7 +57,7 @@ Per poter giocare bisogna innanzitutto eseguire il Jar del server, mentre quando
 
 ### Server
 
-Per poter eseguire il jar del server è necessario lanciare il jar da linea di comando, specificando come primo parametro il numero della porta dell'RMI (abbiamo deciso che per RMI la porta da specificare è 12345) e come secondo parametro il numero della porta di SKT (nel nostro caso è sempre 12346). Di seguito un esempio per lanciare il jar correttamente:
+Per poter eseguire il jar del server è necessario lanciare il jar da linea di comando, specificando come primo parametro il numero della porta dell'RMI (abbiamo deciso che per RMI la porta da specificare è 12345) e come secondo parametro il numero della porta di SKT (nel nostro caso è sempre 12346). Di seguito il comando per lanciare il jar correttamente:
 
 ```
 java -jar ./AM20-server.jar 12345 12346
@@ -75,17 +77,15 @@ java -jar ./AM20-client.jar 2 1 <ip> 12345
 ```
 
 
-## Cose improtanti da sapere
+## Cose importanti da sapere
+
+Il jar del Client può essere anche lanciato senza specificare nessun parametro. Infatti, quando verrà lanciato il jar, il MainThread chiederà all'utente la scelta riguardo UI e connesione, l'indirizzo IP del server e il numero di porta (SKT :12346 o RMI :12345).
 
 >[!IMPORTANT]
 >Il messaggio nella TUI va scritto tra doppi apici. Il comando da eseguire quindi è:
 >```
 >/chat <dest> "message"
 >```
-
-
-
-
 
  
 # Componenti del gruppo
