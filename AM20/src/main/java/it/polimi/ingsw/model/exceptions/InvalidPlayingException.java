@@ -1,5 +1,9 @@
 package it.polimi.ingsw.model.exceptions;
 
+/**
+ *
+ */
+
 public class InvalidPlayingException extends Exception{
     String reason;
 

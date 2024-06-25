@@ -183,17 +183,24 @@ public class ClientHandler implements Runnable{
 
                 }else if(message.getAction().equals(ClientMessage.PLAY_CARD)){
                     PlayCardMessage msg = (PlayCardMessage) message;
+
+                    //MESSAGGI DEI CLIENT ATTUALMENTE CONNESSI
                     HashMap<String, AcknowledgeMessage> res;
 
                     try {
                         res = this.manager.getController().playCard(msg.getPlayerNickname(),msg.getCardIndex(), msg.getAngle(), msg.getTargetID(),msg.getSide());
+
+                        //PER OGNI CLIENT SO LA SUA CONNESSIONE
                         HashMap<String, Connection> connectedPlayer = this.manager.getConnections();
+
+                        //ITERO SUI CLIENT ATTUALMENTE CONNESSI
                         for(String s : res.keySet()){
                             try {
+                                //CHIAMO CALLAKNOWLEDGEMESSAGE SULLE CONNECTION CONNECTEDPLAYER.GET(S)
                                 connectedPlayer.get(s).callAcknowledgeMessage(res.get(s));
                             } catch (IOException e) {
+                                //SE NON LO TROVO SIGNIFICA CHE QUALCUNO SI E DISCONNESSO
                                 this.manager.detectDisconnection(s);
-
                             }
                         }
                     } catch (InvalidArgumentException | TargetNotPresentException | InvalidAngleCoveredException |
