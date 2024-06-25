@@ -4,23 +4,30 @@
 Implementazione del tavolo da gioco [Codex Naturalis](https://www.craniocreations.it/prodotto/codex-naturalis).
 
 
-
-
-
 # Documentazione
 
 ### UML
 Presso i seguenti link è possibile visionare l'UML iniziale che definisce la struttura iniziale del model e la cartella dove è presenta l'UMOL autogenerato da IntellijIdea:
 
+ 1. [UML-inital](https://github.com/lorenzodella/IS24-AM20/tree/main/Deliverables).
+ 2. [UML-final](https://github.com/lorenzodella/IS24-AM20/tree/main/Deliverables).
+
 
 ### JavaDoc
+Tutta la JavaDoc generata è presenta nella cartella [JavaDoc](https://github.com/lorenzodella/IS24-AM20/tree/main/Deliverables/Javadoc).
 
-### Sequence Diagram # 
+### Sequence Diagram 
+
+
+
+
 
 ### PeerReview
 
 
 # Funzionalità
+
+Di seguito sono riportate le funzionalità che abbiamo realizzato:
 
 
 |  Funzionalità   | Base  | Avanzata |
@@ -54,7 +61,7 @@ Per poter eseguire il jar del server è necessario lanciare il jar da linea di c
 java -jar ./AM20-server.jar 12345 12346
 ```
 
-### CLient
+### Client
 
 Per poter eseguire il client è necessario specificare 4 parametri:
 1. scelta della UI: 1 per la TUI e 2 per la GUI
@@ -68,16 +75,22 @@ java -jar ./AM20-client.jar 2 1 <ip> 12345
 ```
 
 
-## Come eseguire
+## Cose improtanti da sapere
+
+>[!IMPORTANT]
+>Il messaggio nella TUI va scritto tra doppi apici. Il comando da eseguire quindi è:
+>```
+>/chat <dest> "message"
+>```
 
 
-Il messaggio nella TUI va scritto tra doppi apici. Il comando da eseguire quindi è:
-```
-/chat <dest> "message"
-```
 
 
 
  
 # Componenti del gruppo
+
++ [Mattia Doro](https://github.com/mado002)
++ [Eleonora Ficarelli](https://github.com/EleonoraFicarelli)
++ [Irene Ferrente](https://github.com/Ireneeer)
 
