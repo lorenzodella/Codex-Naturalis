@@ -7,7 +7,7 @@ Implementazione del tavolo da gioco [Codex Naturalis](https://www.craniocreation
 # Documentazione
 
 ### UML
-Presso i seguenti link è possibile visionare l'UML iniziale che definisce la struttura iniziale del model e la cartella dove è presenta l'UMOL autogenerato da Intellij:
+Presso i seguenti link è possibile visionare l'UML iniziale che definisce la struttura iniziale del model e la cartella dove è presenta l'UML autogenerato da Intellij:
 
  1. [UML-initial](https://github.com/lorenzodella/IS24-AM20/tree/main/Deliverables).
  2. [UML-final](https://github.com/lorenzodella/IS24-AM20/tree/main/Deliverables).
