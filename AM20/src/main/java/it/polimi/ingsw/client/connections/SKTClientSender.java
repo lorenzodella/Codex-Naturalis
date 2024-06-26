@@ -9,18 +9,32 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+/**
+ * This class is the SKTClientSender class of the client side of the application.
+ * It allows the client to send messages to the server using a socket connection.
+ * It implements the ClientSender interface in order to be called from UI listeners.
+ */
 public class SKTClientSender implements ClientSender {
 
+    /**
+     * The ObjectOutputStream used to write the messages to the server.
+     */
     private ObjectOutputStream outputStream;
-    private Socket socket;
+    /**
+     * The socket used to connect to the server.
+     */
     private UIUpdater uiUpdater;
 
     public SKTClientSender(Socket socket, UIUpdater updater) throws IOException{
         this.outputStream = new ObjectOutputStream(socket.getOutputStream());
-        this.socket = socket;
         this.uiUpdater = updater;
     }
 
+    /**
+     * This method allows the client to send a {@link LoginMessage} to the server.
+     * @param client username of the player
+     * @param color color chosen by the player
+     */
     @Override
     public void login(String client, PawnColor color) {
 
@@ -32,6 +46,12 @@ public class SKTClientSender implements ClientSender {
         }
     }
 
+    /**
+     * This method allows the client to send a {@link NewGameMessage} to the server.
+     * @param client username of the first player
+     * @param color color chosen by the player
+     * @param numPlayers num of player required by the first player
+     */
     @Override
     public void startNewGame(String client, PawnColor color, int numPlayers) {
         try{
@@ -42,6 +62,11 @@ public class SKTClientSender implements ClientSender {
         }
     }
 
+    /**
+     * This method allows the client to send a {@link ChooseStarterCardSideMessage} to the server.
+     * @param nickname username of the player
+     * @param side side chosen by the player
+     */
     @Override
     public void chooseStarterCardSide(String nickname, int side) {
         try {
@@ -53,6 +78,11 @@ public class SKTClientSender implements ClientSender {
 
     }
 
+    /**
+     * This method allows the client to send a {@link ChooseObjectiveMessage} to the server.
+     * @param nickname username of the player
+     * @param index index of the objective chosen by the player
+     */
     @Override
     public void chooseObjective(String nickname, int index) {
         try {
@@ -64,6 +94,14 @@ public class SKTClientSender implements ClientSender {
 
     }
 
+    /**
+     * This method allows the client to send a {@link PlayCardMessage} to the server.
+     * @param playerNickname username of the player
+     * @param cardIndex index of the card played by the player
+     * @param angle angle to cover
+     * @param targetID id of the card over which the player wants to play the card
+     * @param side side chosen by the player
+     */
     @Override
     public void playCard(String playerNickname, int cardIndex, int angle, String targetID, int side) {
         try {
@@ -75,6 +113,11 @@ public class SKTClientSender implements ClientSender {
 
     }
 
+    /**
+     * This method allows the client to send a {@link PickCardDeckMessage} to the server.
+     * @param playerNickname username of the player
+     * @param deck deck chosen by the player
+     */
     @Override
     public void pickCard(String playerNickname, int deck) {
         try{
@@ -86,6 +129,12 @@ public class SKTClientSender implements ClientSender {
 
     }
 
+    /**
+     * This method allows the client to send a {@link PickCardVisibleMessage} to the server.
+     * @param playerNickname username of the player
+     * @param deck deck chosen by the player
+     * @param index index of the card chosen by the player
+     */
     @Override
     public void pickCard(String playerNickname, int deck, int index) {
         try{
@@ -96,6 +145,12 @@ public class SKTClientSender implements ClientSender {
         }
     }
 
+    /**
+     * This method allows the client to send a {@link SendChatMessage} to the server.
+     * @param sender username of the sender
+     * @param recipient username of the recipient
+     * @param message message sent by the sender
+     */
     @Override
     public void sendChatMessage(String sender, String recipient, String message) {
         try{
@@ -107,6 +162,11 @@ public class SKTClientSender implements ClientSender {
 
     }
 
+    /**
+     * This method allows the client to send a {@link SendChatBroadcastMessage} to the server.
+     * @param sender username of the sender
+     * @param message message sent by the sender
+     */
     @Override
     public void sendBroadcastChatMessage(String sender, String message) {
         try {
@@ -118,6 +178,10 @@ public class SKTClientSender implements ClientSender {
 
     }
 
+    /**
+     * This method allows the client to send a {@link ClientMessage} to the server.
+     * @throws IOException if the server is not reachable
+     */
     @Override
     public void sendPingMessage() throws IOException {
         outputStream.writeObject(new ClientMessage());

@@ -88,8 +88,9 @@ public class Game implements GameObservable{
 
     /**
      * This method
-     * 1. creates and suffles both gold and resource deck card
+     * 1. creates and shuffles both gold and resource deck card
      * 2. displays two visible cards on the table (per each deck)
+     * @return an array of two decks: the first one is the gold deck, the second one is the resource deck
      */
     @Override
     public Deck[] initDecks(){
@@ -113,6 +114,7 @@ public class Game implements GameObservable{
      * 1. saves the initial cards into an arraylist (by reading them from the XML file)
      * 2. it shuffles the cards
      * 3. gives an initial card to every player
+     * @return the list of players updated
      */
     @Override
     public List<Player> giveStarterCards(){
@@ -130,6 +132,7 @@ public class Game implements GameObservable{
      * This method gives the initial cards to every player:
      * it creates a linkedList per each player that contains 3 elements
      * (a gold card and two resource cards)
+     * @return the list of players updated
      */
     @Override
     public List<Player> giveInitialCards() {
@@ -153,8 +156,11 @@ public class Game implements GameObservable{
     /**
      * This method allows the player p to choose the side (front/back) of the initial card
      * that it's been given to them
-     * @param side it stands for the side of the card: front or back
-     * @param nickname it stands for the player that's taking the action
+     * @param side the side of the card: front or back
+     * @param nickname the player that has taking the action
+     * @return the player that has just chosen the side of the card
+     * @throws InvalidArgumentException if the side is not 0 or 1
+     * @throws InvalidPlayingException if the player has already played their starter card
      */
     @Override
     public Player chooseStarterCardSide(int side, String nickname) throws InvalidArgumentException, InvalidPlayingException {
@@ -175,7 +181,8 @@ public class Game implements GameObservable{
      * 3.  creates an array of two elements, saving the two common objectives
      * 4.  creates an array of two elements that contains two possible secret objectives and it allows the player to choose
      *     their own secret objective between this two elements (by calling the chooseSecretObjective method)
-     */
+    * @return the list of players updated
+    */
     @Override
     public List<Player> initObjectiveCards(){
         ArrayList<ObjectiveCard> tmp = new ArrayList<>(XMLparser.parseObjectiveCards("/xml/objectiveCards.xml"));
@@ -199,6 +206,7 @@ public class Game implements GameObservable{
      * @param index the player p selects the objective by choosing the index (0 or 1) of the array that contains the two possible
      *              secret objectives
      * @param nickname the nickname is the nickname of the player that's taking the action
+     * @return the player that has just chosen the objective
      */
     @Override
     public Player chooseObjective(int index, String nickname) throws InvalidArgumentException, InvalidPlayingException {
@@ -238,6 +246,8 @@ public class Game implements GameObservable{
      * @throws TargetNotPresentException if the target is not present
      * @throws InvalidAngleCoveredException if positioning the angle in that spot is incorrect
      * @throws InvalidPositionException if positioning the card in that spot is incorrect
+     * @throws RequirementsNotRespectedException if the requirements are not satisfied
+     * @throws InvalidArgumentException if the index of the card is incorrect
      */
     @Override
     public Player playCard(int indexCard, int angle, String targetID, int side) throws InvalidArgumentException, TargetNotPresentException, InvalidAngleCoveredException, InvalidPositionException, RequirementsNotRespectedException {
@@ -257,6 +267,7 @@ public class Game implements GameObservable{
      * @param deck : this attribute stands for the specific deck that you want to pick a card from
      * @return the current player that's just picked the card
      * @throws FinishedCardStackException if the deck's done
+     * @throws InvalidArgumentException if the deck is not 0 or 1
      */
     @Override
     public Player pickCard(int deck) throws FinishedCardStackException, InvalidArgumentException {
@@ -315,6 +326,7 @@ public class Game implements GameObservable{
     /**
      * Sets current player as the next player, following playing order and checking if he's online.
      * @return true if next player is the first player, so a new turn started
+     * @throws InvalidPlayingException if no player is connected
      */
     @Override
     public boolean nextTurn() throws InvalidPlayingException{
@@ -389,7 +401,6 @@ public class Game implements GameObservable{
      * @return the player that won
      * @throws DrawMatchException if two or more players have the same score
      */
-    //da decidere come gestire il caso di parità
     @Override
     public Player checkWinner() throws DrawMatchException{
         Player winner = players.get(0);

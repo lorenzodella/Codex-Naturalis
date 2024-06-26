@@ -6,6 +6,11 @@ import it.polimi.ingsw.controller.messages.StopGameMessage;
 import java.io.IOException;
 import java.rmi.RemoteException;
 
+/**
+ * This class is the EndGameTimer class of the server side of the application.
+ * It allows the server to understand if the game has ended because all players left the game.
+ * It starts a countdown of 60 seconds and if no one has reconnected in that time, the game ends.
+ */
 public class EndGameTimer {
 
     private Thread t;

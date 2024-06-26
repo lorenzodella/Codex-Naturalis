@@ -17,9 +17,16 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * This class is used to parse the XML files that contain the cards
+ */
 public class XMLparser {
 
-    //STARTER CARDS
+    /**
+     * This method is used to parse the starter cards
+     * @param filePath : the path of the file that contains the starter cards
+     * @return the list of starter cards
+     */
     public static ArrayList<PlayableCard> parseStarterCards(String filePath) {
         //lista da ritornare
         ArrayList<PlayableCard> starterCards = new ArrayList<>();
@@ -76,7 +83,11 @@ public class XMLparser {
         return starterCards;
     }
 
-    //GOLD CARDS
+    /**
+     * This method is used to parse the gold cards
+     * @param filePath : the path of the file that contains the gold cards
+     * @return the list of gold cards
+     */
     public static ArrayList<PlayableCard> parseGoldCards(String filePath) {
         ArrayList<PlayableCard> goldCards = new ArrayList<>();
 
@@ -199,7 +210,11 @@ public class XMLparser {
         return goldCards;
     }
 
-    //RESOURCE CARDS
+    /**
+     * This method is used to parse the resource cards
+     * @param filePath : the path of the file that contains the resource cards
+     * @return the list of resource cards
+     */
     public static ArrayList<PlayableCard> parseResourceCards(String filePath) {
         ArrayList<PlayableCard> resourceCard = new ArrayList<>();
         try {
@@ -246,7 +261,11 @@ public class XMLparser {
         return resourceCard;
     }
 
-    //OBJECTIVE CARDS
+    /**
+     * This method is used to parse the objective cards
+     * @param filePath : the path of the file that contains the objective cards
+     * @return the list of objective cards
+     */
     public static ArrayList<ObjectiveCard> parseObjectiveCards(String filePath) {
         ArrayList<ObjectiveCard> objectiveCards = new ArrayList<>();
         try {
@@ -411,7 +430,11 @@ public class XMLparser {
 
 
     //METODI
-//metodo che "crea" hashmap dei req a partire dalla reqList
+    /**
+     * This method is used to parse the requirements of a gold card
+     * @param requirementsList : the list of requirements
+     * @return the hashmap that contains the requirements
+     */
     private static HashMap<Kingdom, Integer> getGoldCardRequirements(NodeList requirementsList) {
         //inizializzo la lista
         HashMap<Kingdom, Integer> requirements = Kingdom.createEmptyMap();
@@ -429,6 +452,11 @@ public class XMLparser {
         return requirements;
     }
 
+    /**
+     * This method is used to parse the corners of a card
+     * @param list : the list of corners
+     * @return the array of corners
+     */
     private static Corner[] getCorners(NodeList list) {
         //inizializzo le var tmp
         Corner cornerTmp;
@@ -450,6 +478,11 @@ public class XMLparser {
         return corners;
     }
 
+    /**
+     * This method is used to parse the resources of a starter card
+     * @param list : the list of resources
+     * @return the list of resources
+     */
     private static ArrayList<Kingdom> getStarterCardResources(NodeList list) {
         //inizializzo la lista
         ArrayList<Kingdom> resources = new ArrayList<>();

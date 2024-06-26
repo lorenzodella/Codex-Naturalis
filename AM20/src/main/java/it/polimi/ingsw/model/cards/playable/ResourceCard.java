@@ -99,6 +99,9 @@ public class ResourceCard extends PlayableCard implements PointsProvider {
             return 0;
     }
 
+    /**
+     * @return the number of points given by the play of this card
+     */
     public int getPoints() {
         return points;
     }

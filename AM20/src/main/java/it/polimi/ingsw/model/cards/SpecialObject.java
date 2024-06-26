@@ -23,6 +23,10 @@ public enum SpecialObject {
         }
     }
 
+    /**
+     * This method creates an empty map of special objects
+     * @return the empty map
+     */
     public static HashMap<SpecialObject, Integer> createEmptyMap(){
         HashMap<SpecialObject, Integer> map = new HashMap<>();
         map.put(SpecialObject.Quill, 0);

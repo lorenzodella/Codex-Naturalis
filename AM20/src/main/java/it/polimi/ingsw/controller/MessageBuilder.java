@@ -11,6 +11,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * This class is the MessageBuilder class of the controller side of the application.
+ * It allows the controller to build messages to be sent to the connected players according to a specific game event.
+ */
 public class MessageBuilder implements GameObserver {
 
     /**
@@ -35,6 +39,12 @@ public class MessageBuilder implements GameObserver {
     private Set<String> connectedPlayerNicknames;
 
     //LISTA SOLO DEI CONNECTED PLAYERS DATO CHE DEVE MANDARE MESSAGGI SOLO AI PLAYER CHE SONO DAVVERO CONNESSI
+
+    /**
+     * This constructor creates a new MessageBuilder with the list of connected players since
+     * it needs to send messages only to the players that are actually connected
+     * @param players the list of connected players
+     */
     public MessageBuilder(Set<String> players) {
         this.connectedPlayerNicknames = players;
     }
@@ -65,6 +75,7 @@ public class MessageBuilder implements GameObserver {
      * @param players the list of players
      * @param resourceCardDeck the resource card deck
      * @param goldCardDeck the gold card deck
+     * @param commonObjectives the common objectives
      * @return a map containing the messages to be sent to the connected players
      */
     @Override
@@ -182,6 +193,11 @@ public class MessageBuilder implements GameObserver {
         return connectionAckMessages;
     }
 
+    /**
+     * Notifies all the connected players with information about all the players connected to the game
+     * @param players list of player
+     * @return a map containing the messages that needs to be sent to all connected players
+     */
     @Override
     public HashMap<String, ConnectionAckMessage> notifyDefaultPlayerInfo(List<Player> players) {
         if (connectionAckMessages == null)
@@ -277,6 +293,12 @@ public class MessageBuilder implements GameObserver {
         objectiveAckMessages.get(player.getNickname()).setResult("You chose your secret objective. Waiting for the other player");
         return objectiveAckMessages;
     }
+
+    /**
+     * Notifies to all the connected players that the game can start and the first player is "first"
+     * @param first the first player
+     * @return a map containing the messages that needs to be sent to all connected players
+     */
     @Override
     public HashMap<String, ObjectiveAckMessage> notifyGameStarted(Player first) {
         if(objectiveAckMessages == null)
@@ -330,6 +352,7 @@ public class MessageBuilder implements GameObserver {
         acknowledgeMessages.get(player.getNickname()).setMustPick(true);
         return acknowledgeMessages;
     }
+
     /**
      * Notifies to all the connected players that this specific player has just picked a card
      * @param player the specific player that's just picked a card
@@ -423,6 +446,11 @@ public class MessageBuilder implements GameObserver {
         return acknowledgeMessages;
     }
 
+    /**
+     * Notifies to all connected players that the last round has just started.
+     * After every player will have played one more time the game will end.
+     * @return a map containing the messages that needs to be sent to all connected players
+     */
     @Override
     public HashMap<String, AcknowledgeMessage> notifyLastRound() {
         if(acknowledgeMessages == null)
@@ -439,6 +467,11 @@ public class MessageBuilder implements GameObserver {
         return acknowledgeMessages;
     }
 
+    /**
+     * Notifies to all connected players with updated information after having computed the scores given by the objectives
+     * @param players list of players
+     * @return a map containing the messages that needs to be sent to all connected players
+     */
     @Override
     public HashMap<String, AcknowledgeMessage> notifyPlayerObjectives(List<Player> players) {
         if(acknowledgeMessages == null)

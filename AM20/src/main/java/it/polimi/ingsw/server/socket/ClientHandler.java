@@ -15,11 +15,14 @@ import it.polimi.ingsw.model.exceptions.*;
 import it.polimi.ingsw.server.Connection;
 import it.polimi.ingsw.server.ServerManager;
 
-//TODO: ELEONORA
-
 /* Threac che ascolta, su un certo socket, e ogni volta che riceve un messaggio lo interpreta e compie
    ciò che gli viene detto di fare  (invocando un metodo del controller)
 */
+/**
+ * This class is the ClientHandler class of the server side of the application.
+ * It's the thread that listens on a certain socket, and every time it receives a message it interprets it and does
+ * what it is told to do (invoking a method of the controller).
+ */
 public class ClientHandler implements Runnable{
     /**
      * This attribute stands for the serverManager reference
@@ -38,7 +41,10 @@ public class ClientHandler implements Runnable{
         this.objectInputStream = new ObjectInputStream(socket.getInputStream());
     }
 
-    
+    /**
+     * This method is the one that listens on the socket and interprets the messages received from the client.
+     * It invokes the controller's methods based on the message received.
+     */
     @Override
     public void run() {
 

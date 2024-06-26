@@ -39,13 +39,18 @@ public class PlayerStats implements Serializable {
      * This method is called every time that a gold card is played and, it checks if the
      * requirements (number of resources) are satisfied
      * @param req : hashmap that says the number of occurrences per each kingdom
-     * @return 1 if the requirements are satisfied, 0 otherwise
+     * @return true if the requirements are satisfied, false otherwise
      */
     public boolean checkRequirements(HashMap<Kingdom, Integer> req){
         return req.entrySet().stream()
                 .allMatch(e -> resources.get(e.getKey()) >= e.getValue());
     }
 
+    /**
+     * This method removes a kingdom or an object from the player's stats
+     * @param kingdom : the kingdom that's being removed
+     * @param object : the object that's being removed
+     */
     public void removeKingdomOrObject(Kingdom kingdom, SpecialObject object){
         if(kingdom != null)
             this.resources.put(kingdom, this.getNumberOfResources(kingdom)-1);
@@ -54,15 +59,30 @@ public class PlayerStats implements Serializable {
         }
     }
 
+    /**
+     * This method adds a kingdom to the player's stats
+     * @param kingdom : the kingdom that's being added
+     */
     public void addKingdom(Kingdom kingdom){
         this.resources.put(kingdom, this.getNumberOfResources(kingdom)+1);
     }
 
 
+    /**
+     * This method adds an object to the player's stats
+     * @param kingdom : the object that's being added
+     * @param num : the number of occurrences of that object
+     */
     public void addKingdom(Kingdom kingdom, int num){
         this.resources.put(kingdom, this.resources.get(kingdom)+num);
 
     }
+
+    /**
+     * This method adds an object to the player's stats
+     * @param specialObject : the object that's being added
+     * @param num : the number of occurrences of that object
+     */
     public void addObject(SpecialObject specialObject, int num){
         this.specialObjects.put(specialObject, this.specialObjects.get(specialObject)+ num);
     }

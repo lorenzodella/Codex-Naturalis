@@ -7,6 +7,9 @@ import it.polimi.ingsw.model.exceptions.*;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * This interface represents the game model, which is observable by the view
+ */
 public interface GameObservable {
 
 

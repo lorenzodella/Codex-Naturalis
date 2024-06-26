@@ -4,7 +4,13 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Objects;
 
+/**
+ * This class represents a corner of a card with its content
+ */
 public class Corner implements Serializable {
+    /**
+     * these are the 4 possible corners of a card (UL = Upper Left, UR = Upper Right, DL = Down Left, DR = Down Right)
+     */
     public static final int UL = 0;
     public static final int UR = 1;
     public static final int DL = 2;
@@ -19,8 +25,8 @@ public class Corner implements Serializable {
     private Kingdom contentKingdom;
     /**
      * this attribute is a boolean that says if the corner is visible or hidden
-     * T --> hidden corner
-     * F --> visible corner
+     * true --> hidden corner
+     * false --> visible corner
      */
     private boolean hidden;
 
@@ -46,6 +52,10 @@ public class Corner implements Serializable {
         return corners;
     }
 
+    /**
+     * this method sets the corner as hidden when it's covered by a card
+     * @param hidden : the boolean that says if the corner is hidden or not
+     */
     public void setHidden(boolean hidden) {
         this.hidden = hidden;
     }

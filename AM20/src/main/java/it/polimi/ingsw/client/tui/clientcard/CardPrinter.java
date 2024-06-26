@@ -11,8 +11,16 @@ import java.awt.*;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This class is used to print the map of the cards in the TUI.
+ */
 public class CardPrinter {
 
+    /**
+     * This method is used to get the color of the kingdom.
+     * @param k is the kingdom.
+     * @return the color of the kingdom.
+     */
     private static String getKingdomColor(Kingdom k){
         if(k==null)
             return ConsoleColors.TEXT_RESET;
@@ -30,6 +38,11 @@ public class CardPrinter {
         }
     }
 
+    /**
+     * This method is used to get the char representation of a special object.
+     * @param o is the special object.
+     * @return the special object representation.
+     */
     private static String getSpecialObject(SpecialObject o){
         if(o==null)
             return " ";
@@ -45,18 +58,30 @@ public class CardPrinter {
         }
     }
 
-    private static String parseCorner(Corner c, char simbol){
+    /**
+     * This method is used to parse a corner of a card given its content.
+     * @param c is the corner.
+     * @param symbol is the symbol to use.
+     * @return the corner representation.
+     */
+    private static String parseCorner(Corner c, char symbol){
         if(c==null)
             return "─";
         else if(c.isHidden())
             return " ";
         else if(c.getContentKingdom()!=null)
-            return getKingdomColor(c.getContentKingdom())+simbol+ConsoleColors.TEXT_RESET;
+            return getKingdomColor(c.getContentKingdom())+symbol+ConsoleColors.TEXT_RESET;
         else if(c.getContentObject()!=null)
             return getSpecialObject(c.getContentObject())+ConsoleColors.TEXT_RESET;
-        return String.valueOf(simbol);
+        return String.valueOf(symbol);
     }
 
+    /**
+     * This method is used to decode a card corner and print his representation.
+     * @param c is the card.
+     * @param corner is the corner to decode.
+     * @return the corner representation.
+     */
     private static String decodeCardCorner(PlayableCard c, int corner){
         Corner[] corners = c.getSide()==PlayableCard.FRONT ? c.getFrontCorners() : c.getBackCorners();
         StringBuilder s = new StringBuilder();
@@ -83,6 +108,10 @@ public class CardPrinter {
 
     }
 
+    /**
+     * This method is used to print the map of the cards.
+     * @param map is the map of the cards.
+     */
     public static void printMap(DynamicMap<String, PlayableCard> map){
         int min = map.min();
         int tmp;

@@ -13,6 +13,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * This class is the PingThread class of the server side of the application.
+ * It allows the server to understand if all players are still connected to the game, based on how they connected to the game in first place (if with socket or RMI).
+ * Every 5 seconds it does this specific check.
+ */
 public class PingThread implements Runnable{
     /**
      * This attribute stand as the reference of the serverManager

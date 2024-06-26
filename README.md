@@ -46,7 +46,7 @@ Di seguito sono riportate le funzionalità che abbiamo realizzato:
 
 # Compilazione
 
-I jar sono stati realizzati con l'utilizzo di Maven Shade Plugin tramite il comando `mvn clean compile package`. I Jar sono disponibili alla cartella [Jar](https://github.com/lorenzodella/IS24-AM20/tree/main/Deliverables).
+I jar sono stati realizzati con l'utilizzo di Maven Assembly Plugin tramite il comando `mvn clean compile package`. I Jar sono disponibili alla cartella [Jar](https://github.com/lorenzodella/IS24-AM20/tree/main/Deliverables).
 
 
 

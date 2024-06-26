@@ -2,6 +2,9 @@ package it.polimi.ingsw.client.tui;
 
 import it.polimi.ingsw.model.PawnColor;
 
+/**
+ * This class contains the ANSI escape codes for colors in the console.
+ */
 public class ConsoleColors {
 
     public static final String TEXT_RESET  = "\u001B[0m";

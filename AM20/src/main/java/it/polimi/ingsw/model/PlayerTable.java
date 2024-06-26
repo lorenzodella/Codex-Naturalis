@@ -24,6 +24,9 @@ public class PlayerTable {
      * It basically says the number of resources and the number of visible objects.
      */
     private PlayerStats stats;
+    /**
+     * This attribute stands for the number of cards that have been played by this player
+     */
     private int numOfCards = 0;
 
     public PlayerTable(){
@@ -62,7 +65,7 @@ public class PlayerTable {
      * an integer, corresponding to the angle of that card that should be covered by inserting a valid new card
      * @param lastInsertedCard the valid card that is just been inserted
      * @throws TargetNotPresentException last inserted card is not present
-     * @throws InvalidPositionException
+     * @throws InvalidPositionException no card cant be inserted in that position
      */
     private void insertDummyCards(PlayableCard lastInsertedCard) throws TargetNotPresentException, InvalidPositionException {
         String id = lastInsertedCard.getID() + ";";
@@ -170,7 +173,6 @@ public class PlayerTable {
      *    card is correct
      * 2. it updates the resources' statistics --> it basically updates the player's statistics because, when the player
      *    plays the card, it may be covering some objects or resources
-     * NON SERVE ANCHE CARD ID??
      * @param c : card that needs to be covered
      * @param angle : angle of "c" that's going to be covered
      * @throws InvalidAngleCoveredException if positioning the angle in that spot is incorrect
@@ -253,6 +255,14 @@ public class PlayerTable {
         return numOfConfigurations;
     }
 
+    /**
+     * This method checks if there's a diagonal configuration in the matrix.
+     * @param card : the card that's being analyzed
+     * @param kingdom : the kingdom to which the configuration belongs
+     * @param corner : the corner that needs to be covered
+     * @param alreadyUsedCards : the cards that have already been used
+     * @return the cards that have been used in the configuration
+     */
     private HashSet<PlayableCard> checkDiagonally(PlayableCard card, Kingdom kingdom,
                                                     int corner, HashSet<PlayableCard> alreadyUsedCards){
         HashSet<PlayableCard> tmp = new HashSet<>();
@@ -293,6 +303,15 @@ public class PlayerTable {
         return numOfConfigurations;
     }
 
+    /**
+     * This method checks if there's a vertical configuration in the matrix.
+     * @param card : the card that's being analyzed
+     * @param kingdom1 : the first kingdom to which the configuration belongs
+     * @param kingdom2 : the second kingdom to which the configuration belongs
+     * @param corner : the corner that needs to be covered
+     * @param alreadyUsedCards : the cards that have already been used
+     * @return the cards that have been used in the configuration
+     */
     private HashSet<PlayableCard> checkVertically(PlayableCard card, Kingdom kingdom1, Kingdom kingdom2,
                                                     int corner, HashSet<PlayableCard> alreadyUsedCards){
         HashSet<PlayableCard> tmp = new HashSet<>();

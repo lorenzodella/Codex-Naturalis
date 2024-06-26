@@ -10,6 +10,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ * This class is the controller of the TUI. It reads the input from the terminal and calls the server to do the specific action
+ */
 public class TUIController extends ClientController implements Runnable{
 
     //private String username;

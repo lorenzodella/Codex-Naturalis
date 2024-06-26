@@ -7,18 +7,36 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
 
+/**
+ * This class is the SKTClientReceiver class of the client side of the application.
+ * It allows the client to receive messages from the server using a socket connection.
+ * It implements the Runnable interface in order to be executed in a separate thread.
+ */
 public class SKTClientReceiver implements Runnable {
 
+    /**
+     * The ObjectInputStream used to read the messages from the server.
+     */
     private ObjectInputStream objectInputStream;
+    /**
+     * The UIUpdater called to update the UI after receiving a message.
+     */
     private UIUpdater uiUpdater;
-
+    /**
+     * The socket used to connect to the server.
+     */
     private Socket socket;
+
     public SKTClientReceiver(Socket socket, UIUpdater uiUpdater) throws IOException {
         this.socket = socket;
         this.uiUpdater = uiUpdater;
         //this.objectInputStream = new ObjectInputStream(socket.getInputStream());
     }
 
+    /**
+     * This method allows the client to receive a ChatMessage from the server.
+     * It calls UIUpdater methods according to the message received.
+     */
     @Override
     public void run(){
         try {

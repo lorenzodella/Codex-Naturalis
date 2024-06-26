@@ -101,6 +101,7 @@ public class Player {
     /**
      * This method actually puts down a card by the side that's specified by the parameter "side"
      * @param side: This attribute stands for the side of the card (front of back)
+     * @throws InvalidPlayingException if the player has already played their starter card
      */
     public void positionStarterCard(int side) throws InvalidPlayingException {
         if(starterCard.getOrder()>=0)
@@ -152,6 +153,7 @@ public class Player {
      * Basically, this method, chooses one (the one that's in the index position) of the two objective cards that
      * have been given.
      * @param index: this attribute stands for the index of the card that the player want to choose
+     * @throws InvalidPlayingException if the player has already chosen their objective card
      */
     //dopo la chaimata al metodo il  sarà sempre in posizione zero e quello in posizione 1 saraà null
     public void chooseObjectiveCard(int index) throws InvalidPlayingException {

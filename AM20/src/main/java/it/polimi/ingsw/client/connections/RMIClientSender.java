@@ -9,16 +9,21 @@ import it.polimi.ingsw.server.rmi.Loggable;
 import java.io.IOException;
 import java.rmi.RemoteException;
 
+/**
+ * This class is the RMIClientSender class of the client side of the application.
+ * It allows the client to send messages to the server using an RMI connection.
+ * It implements the ClientSender interface in order to be called from UI listeners.
+ */
 public class RMIClientSender implements ClientSender {
 
+    /**
+     * The RMIClientReceiver used to parse the return values of method invocation on the server.
+     */
     private RMIClientReceiver receiver;
+    /**
+     * The Loggable stub reference used to call the server methods.
+     */
     private Loggable stub;
-
-//    public RMIClientSender(String host, int port) throws RemoteException, NotBoundException {
-//        Registry registry = LocateRegistry.getRegistry(host, port);
-//        stub = (Loggable) registry.lookup("Loggable");
-//        //receiver = new RMIClientReceiver();
-//    }
 
     public RMIClientSender(Loggable stub, RMIClientReceiver receiver){
         this.stub = stub;
@@ -63,7 +68,7 @@ public class RMIClientSender implements ClientSender {
     }
 
     /**
-     *  This method call the stub of the server through the chooseStarterCardSide() method and return the message received to the RMIClientReceiver
+     * This method call the stub of the server through the chooseStarterCardSide() method and return the message received to the RMIClientReceiver
      * In addition, it manages the different Exception sending them to the RMIClientReceiver
      * @param nickname username of the player that has chosen the side of the starter card
      * @param side side chosen (0 for back / 1 for front)

@@ -4,6 +4,10 @@ import it.polimi.ingsw.model.PawnColor;
 
 import java.io.IOException;
 
+/**
+ * Interface that represents the sender of a client that can send messages to the server.
+ * It allows the client to send messages to the server based on the actions performed by the player.
+ */
 public interface ClientSender {
     void login(String client, PawnColor color);
     void startNewGame(String client, PawnColor color, int numPlayers);

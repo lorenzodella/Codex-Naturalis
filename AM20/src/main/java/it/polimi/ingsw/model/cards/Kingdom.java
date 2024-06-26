@@ -26,6 +26,10 @@ public enum Kingdom {
         }
     }
 
+    /**
+     * This method creates an empty map of kingdoms
+     * @return the empty map
+     */
     public static HashMap<Kingdom, Integer> createEmptyMap(){
         HashMap<Kingdom, Integer> map = new HashMap<>();
         map.put(Kingdom.Fungi, 0);

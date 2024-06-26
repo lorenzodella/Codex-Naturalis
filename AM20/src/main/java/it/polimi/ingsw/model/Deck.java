@@ -32,10 +32,16 @@ public class Deck {
         return cards;
     }
 
+    /**
+     * This method shuffles the deck
+     */
     public void shuffle(){
         Collections.shuffle(cards);
     }
 
+    /**
+     * This method initializes the visible cards by popping the first two cards from the deck
+     */
     public void initVisibleCards(){
         visibleCards[0] = cards.pop();
         visibleCards[1] = cards.pop();
@@ -102,10 +108,6 @@ public class Deck {
             this.visibleCards[index] = null;
         }
         return res;
-    }
-
-    public boolean isEmpty(){
-        return cards.isEmpty();
     }
 }
 

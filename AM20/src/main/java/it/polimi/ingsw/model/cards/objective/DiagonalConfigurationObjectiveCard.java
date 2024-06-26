@@ -9,11 +9,10 @@ public class DiagonalConfigurationObjectiveCard extends ObjectiveCard{
     private Kingdom kingdom;
     /**
      * This attribute says which corner (of the card that's been placed on the top of the configuration) has been covered.
-     * PS:
-     * 0 = UL
-     * 1 = UR
-     * 2 = DL
-     * 3 = DR
+     * @see it.polimi.ingsw.model.cards.Corner#UL
+     * @see it.polimi.ingsw.model.cards.Corner#UR
+     * @see it.polimi.ingsw.model.cards.Corner#DL
+     * @see it.polimi.ingsw.model.cards.Corner#DR
      */
     private int coveredCorner;
 

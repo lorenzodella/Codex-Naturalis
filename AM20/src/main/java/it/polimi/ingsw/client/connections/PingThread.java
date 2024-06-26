@@ -9,6 +9,11 @@ import it.polimi.ingsw.server.ServerManager;
 import java.io.IOException;
 import java.util.Set;
 
+/**
+ * This class is the PingThread class of the client side of the application.
+ * It allows the client to understand if the server is still alive.
+ * Every 5 seconds it does this specific check.
+ */
 public class PingThread implements Runnable{
     private ClientSender sender; //this
     private UIManager manager; //this

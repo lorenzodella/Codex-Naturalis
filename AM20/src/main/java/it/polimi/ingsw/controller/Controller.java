@@ -66,21 +66,20 @@ public class Controller implements GameManager {
         phase = NOGAME;
     }
 
+    //**test oriented methods**
     protected GameObservable getGameModel() {
         return gameModel;
     }
-
     protected GameObserver getMessageBuilder() {
         return messageBuilder;
     }
-
     protected List<String> getPlayers() {
         return new ArrayList<>(players.values());
     }
-
     protected int getNumPlayers() {
         return numPlayers;
     }
+    //**test oriented methods**
 
     public Set<String> getConnectedPlayers(){
         if(gameModel!=null)
@@ -124,7 +123,8 @@ public class Controller implements GameManager {
      * @return messages to be sent to connected players
      * @throws InvalidConnectionStateException if player is already disconnected
      * @throws InvalidArgumentException if player is not part of current game
-     * @throws NoOneIsConnectedException game should stop if player disconnected during first phase of the game or if all players disconnected
+     * @throws NoOneIsConnectedException if all players disconnected
+     * @throws InvalidDisconnectionException if the player disconnected during the preliminary phase of the game
      */
     @Override
     public synchronized HashMap<String, AcknowledgeMessage> disconnectPlayer(String nickname)
@@ -286,7 +286,7 @@ public class Controller implements GameManager {
      * objectives so that the OBJECTIVES phase can start.
      * Otherwise, the method returns a StarterCardAckMessage in order to signalize that the player's chosen the side
      * correctly and it gives them the player infos of that playing.
-     * @throws InvalidArgumentException
+     * @throws InvalidArgumentException if the parameters are not valid
      * @throws InvalidPlayingException if someone tries to put the starter card in an unappropriated position
      */
     @Override
@@ -382,13 +382,13 @@ public class Controller implements GameManager {
      * 1. PlayAckMessage("Pick a card", yourPlayerInfo, mustPick: "True") if there are still cards to be drawn
      * 2. PlayAckMessage("Your turn is over", YourPlayerInfo, NextPlayer, mustPick: "False") if there aren't any more cards to be drawn
      * @throws InvalidArgumentException if the par are invalid
-     * @throws TargetNotPresentException
-     * @throws InvalidAngleCoveredException
-     * @throws InvalidPositionException
-     * @throws RequirementsNotRespectedException 
+     * @throws TargetNotPresentException if the target card is not present
+     * @throws InvalidAngleCoveredException if the angle is not valid
+     * @throws InvalidPositionException if the position is not valid
+     * @throws RequirementsNotRespectedException if the requirements are not respected
      * @throws InvalidPlayingException if the phase is not PLAY or if it's not the player's turn or if the player is now
      * by himself and needs to wait for the others to reconnect
-     * @throws NoOneIsConnectedException
+     * @throws NoOneIsConnectedException if nobody is connected at the moment
      */
     @Override
     public synchronized HashMap<String, AcknowledgeMessage> playCard(String playerNickname, int indexCard, int angle, String targetID, int side)
@@ -428,11 +428,11 @@ public class Controller implements GameManager {
      * @param deck the deck that the player needs to pick a card from
      * @return it returns a PickAckMessage that specified that their turn is over, it gives them their new player infos
      * and says who the next player is.
-     * @throws InvalidArgumentException
-     * @throws FinishedCardStackException
+     * @throws InvalidArgumentException if the deck is not valid
+     * @throws FinishedCardStackException if the deck is empty
      * @throws InvalidPlayingException if the phase is not PLAY or if it's not the player's turn or if the player is now
      * by himself and needs to wait for the others to reconnect
-     * @throws NoOneIsConnectedException
+     * @throws NoOneIsConnectedException if nobody is connected at the moment
      */
     @Override
     public synchronized HashMap<String, AcknowledgeMessage> pickCard(String playerNickname, int deck) throws InvalidArgumentException, FinishedCardStackException,
@@ -463,10 +463,10 @@ public class Controller implements GameManager {
      * @param index teh index of the array that stands for the two visible cards (could only be 0 or 1)
      * @return it returns a PickAckMessage that specified that their turn is over, it gives them their new player infos
      *         and says who the next player is.
-     * @throws InvalidArgumentException
-     * @throws FinishedCardStackException
-     * @throws InvalidPlayingException
-     * @throws NoOneIsConnectedException
+     * @throws InvalidArgumentException if the deck or the index are not valid
+     * @throws FinishedCardStackException if the deck is empty
+     * @throws InvalidPlayingException if the phase is not PLAY or if it's not the player's turn or if the player is now
+     * @throws NoOneIsConnectedException if nobody is connected at the moment
      */
     @Override
     public synchronized HashMap<String, AcknowledgeMessage> pickCard(String playerNickname, int deck, int index) throws InvalidArgumentException, FinishedCardStackException,
@@ -495,7 +495,7 @@ public class Controller implements GameManager {
      * 1. checks if the player has reached 20 points after every playing of a card
      * 2. checks if there's no cards to be picked up
      * 3. allows the final turn to begin
-     * @return .......
+     * @return a message that says if the game is ended or if the last turn is starting or if the next player needs to play
      * @throws NoOneIsConnectedException if nobody is connected at the moment
      */
     private synchronized HashMap<String, AcknowledgeMessage> checkEndGame() throws NoOneIsConnectedException {

@@ -9,14 +9,12 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
-// to test against console:
-//  /usr/bin/nc 127.0.0.1 1234
-// and type in console: server will receive.
-// it will NOT block socket (for now..) when timeout.
-
+/**
+ * This class is the main class of the server side of the application.
+ * It creates the server manager, the RMI server and the socket server.
+ */
 public class ServerMain
 {
-    //TODO: ELEONORA
     public static void main(String[] args) {
 
         if(args.length != 2){
@@ -33,6 +31,7 @@ public class ServerMain
 
         ServerManager manager = new ServerManager();
 
+        //--RMI server--
         try {
 
             ServerRMI obj = new ServerRMI(manager);
@@ -47,8 +46,7 @@ public class ServerMain
             System.err.println("Error creating RMI server");
         }
 
-        //---------------
-
+        //--Socket server--
         ServerSKT serverSKT = new ServerSKT(Integer.parseInt(args[1]), manager);
         System.err.println("Server SKT ready");
         serverSKT.startServer();

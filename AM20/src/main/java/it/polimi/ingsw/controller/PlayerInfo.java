@@ -7,7 +7,10 @@ import it.polimi.ingsw.model.util.DynamicMap;
 
 import java.io.Serializable;
 
-
+/**
+ * This class is the PlayerInfo class of the controller side of the application.
+ * It contains all the information on the player to be sent to everyone who is connected to the game.
+ */
 public class PlayerInfo implements Serializable {
     /**
      * This attribute stands for the score of the player

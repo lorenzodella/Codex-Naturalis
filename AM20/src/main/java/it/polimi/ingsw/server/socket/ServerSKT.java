@@ -5,6 +5,10 @@ import it.polimi.ingsw.server.ServerManager;
 import java.io.*;
 import java.net.*;
 
+/**
+ * This class is the ServerSKT class of the server side of the application.
+ * It allows the server to create a thread pool and the object serverSocket that allows to accept connections from the clients.
+ */
 public class ServerSKT {
 
     /**
@@ -27,7 +31,10 @@ public class ServerSKT {
         this.port = port;
     }
 
-    //spiegazione metodo
+    /**
+     * This method creates a serverSocket and waits for a connection.
+     * When a connection is established, it creates a new thread that listens on the socket.
+     */
     public void startServer() {
         //creazione insieme di thread
         //ExecutorService executor = Executors.newCachedThreadPool();

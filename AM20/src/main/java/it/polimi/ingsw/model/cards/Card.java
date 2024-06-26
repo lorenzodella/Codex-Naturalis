@@ -36,5 +36,9 @@ public abstract class Card implements Serializable {
     }
 
     public abstract int getSide();
+
+    /**
+     * This method changes the displayed side of the card
+     */
     public abstract void flip();
 }

@@ -11,6 +11,10 @@ import it.polimi.ingsw.model.cards.playable.*;
 
 import java.util.*;
 
+/**
+ * This class is the Text User Interface of the client side of the application.
+ * It allows the user to interact with the game through the terminal.
+ */
 public class TUI implements UIManager {
 
     private List<PlayableCard> cards;
@@ -47,18 +51,26 @@ public class TUI implements UIManager {
         return othersPlayerInfo;
     }
 
-
+    /**
+     * This method allows to show the user that he is connected to the server
+     */
     @Override
     public void showConnection() {
         System.out.println("Waiting for other players");
         this.showCommand();
     }
 
+    /**
+     * This method allows to show the user that the game is starting
+     */
     @Override
     public void showStartGame() {
         System.out.println("The game is starting now");
     }
 
+    /**
+     * This method allows to show the user that someone is reconnected to the server
+     */
     @Override
     public void showReconnection(String result, boolean isJoining) {
         System.out.println(result);
@@ -219,11 +231,20 @@ public class TUI implements UIManager {
 
     }
 
+    /**
+     * This method allows to print the result of a received message
+     * @param result string that inform about the result
+     */
     @Override
     public void showResult(String result) {
         System.out.println(result);
     }
 
+    /**
+     * This method allows to print the important message of a received message
+     * @param result string that inform about the result
+     * @param importantMessage string that inform about the important message
+     */
     @Override
     public void showImportantMessage(String result, String importantMessage) {
         if(importantMessage!=null) {
@@ -384,35 +405,35 @@ public class TUI implements UIManager {
      */
     public int viewSecretObjective(){
         try{
-            if(secretObjectives.size()>0);
-            System.out.println(ConsoleColors.TEXT_BLUE + "SECRET OBJECTIVE: \n"+ConsoleColors.TEXT_RESET);
-            //scorro array dei common objectives
-            for(int i=0; i<this.secretObjectives.size(); i++){
+            if(secretObjectives.size()>0) {
+                System.out.println(ConsoleColors.TEXT_BLUE + "SECRET OBJECTIVE: \n" + ConsoleColors.TEXT_RESET);
+                //scorro array dei common objectives
+                for (int i = 0; i < this.secretObjectives.size(); i++) {
 
-                try{
-                    if (this.secretObjectives.get(i) instanceof DiagonalConfigurationObjectiveCard) {
-                        DiagonalConfigurationObjectiveCardClient diagonalConfigurationObjectiveCardClient = new DiagonalConfigurationObjectiveCardClient((DiagonalConfigurationObjectiveCard) this.secretObjectives.get(i));
-                        diagonalConfigurationObjectiveCardClient.draw();
-                    } else if (this.secretObjectives.get(i) instanceof PairOfObjectsObjectiveCard) {
-                        PairOfObjectsObjectiveCardClient pairOfObjectsObjectiveCardClient = new PairOfObjectsObjectiveCardClient((PairOfObjectsObjectiveCard) this.secretObjectives.get(i));
-                        pairOfObjectsObjectiveCardClient.draw();
-                    } else if (this.secretObjectives.get(i) instanceof TrioOfObjectsObjectiveCard) {
-                        TrioOfObjectsObjectiveCardClient trioOfObjectsObjectiveCardClient = new TrioOfObjectsObjectiveCardClient((TrioOfObjectsObjectiveCard) this.secretObjectives.get(i));
-                        trioOfObjectsObjectiveCardClient.draw();
-                    } else if (this.secretObjectives.get(i) instanceof TrioOfResourcesObjectiveCard) {
-                        TrioOfResourcesObjectiveCardClient trioOfResourcesObjectiveCardClient = new TrioOfResourcesObjectiveCardClient((TrioOfResourcesObjectiveCard) this.secretObjectives.get(i));
-                        trioOfResourcesObjectiveCardClient.draw();
-                    } else if (this.secretObjectives.get(i) instanceof VerticalConfigurationObjectiveCard) {
-                        VerticalConfigurationObjectiveCardClient verticalConfigurationObjectiveCardClient = new VerticalConfigurationObjectiveCardClient((VerticalConfigurationObjectiveCard) this.secretObjectives.get(i));
-                        verticalConfigurationObjectiveCardClient.draw();
+                    try {
+                        if (this.secretObjectives.get(i) instanceof DiagonalConfigurationObjectiveCard) {
+                            DiagonalConfigurationObjectiveCardClient diagonalConfigurationObjectiveCardClient = new DiagonalConfigurationObjectiveCardClient((DiagonalConfigurationObjectiveCard) this.secretObjectives.get(i));
+                            diagonalConfigurationObjectiveCardClient.draw();
+                        } else if (this.secretObjectives.get(i) instanceof PairOfObjectsObjectiveCard) {
+                            PairOfObjectsObjectiveCardClient pairOfObjectsObjectiveCardClient = new PairOfObjectsObjectiveCardClient((PairOfObjectsObjectiveCard) this.secretObjectives.get(i));
+                            pairOfObjectsObjectiveCardClient.draw();
+                        } else if (this.secretObjectives.get(i) instanceof TrioOfObjectsObjectiveCard) {
+                            TrioOfObjectsObjectiveCardClient trioOfObjectsObjectiveCardClient = new TrioOfObjectsObjectiveCardClient((TrioOfObjectsObjectiveCard) this.secretObjectives.get(i));
+                            trioOfObjectsObjectiveCardClient.draw();
+                        } else if (this.secretObjectives.get(i) instanceof TrioOfResourcesObjectiveCard) {
+                            TrioOfResourcesObjectiveCardClient trioOfResourcesObjectiveCardClient = new TrioOfResourcesObjectiveCardClient((TrioOfResourcesObjectiveCard) this.secretObjectives.get(i));
+                            trioOfResourcesObjectiveCardClient.draw();
+                        } else if (this.secretObjectives.get(i) instanceof VerticalConfigurationObjectiveCard) {
+                            VerticalConfigurationObjectiveCardClient verticalConfigurationObjectiveCardClient = new VerticalConfigurationObjectiveCardClient((VerticalConfigurationObjectiveCard) this.secretObjectives.get(i));
+                            verticalConfigurationObjectiveCardClient.draw();
+                        }
+
+                    } catch (ClassCastException e) {
+                        e.printStackTrace();
                     }
-
-                }catch (ClassCastException e){
-                    e.printStackTrace();
                 }
+                System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------\n");
             }
-            System.out.println("\n----------------------------------------------------------------------------------------------------------------------------------------------\n");
-
         }catch (NullPointerException e){
             this.showError("The secret objective have not been distributed yet ");
             return 0;
@@ -425,10 +446,7 @@ public class TUI implements UIManager {
      * This method allows to print the specific information of the gold deck (both the top card and the visible cards)
      * using the draw() method as before
      */
-    //TODO
     public void viewGold(){
-
-
         System.out.println(ConsoleColors.TEXT_BLUE+"GOLD DECK:"+ConsoleColors.TEXT_RESET);
         if(goldTop == null && goldVisible == null){
             System.out.println("There aren't any gold card available\n");
@@ -487,7 +505,6 @@ public class TUI implements UIManager {
      * This method allows to print the specific information of the resource deck (both the top card and the visible cards)
      * using the draw() method as before
      */
-    //TODO
     public void viewResource(){
         System.out.println(ConsoleColors.TEXT_BLUE+"RESORUCE DECK" + ConsoleColors.TEXT_RESET);
         if(resourceTop == null && resourceVisible == null){
