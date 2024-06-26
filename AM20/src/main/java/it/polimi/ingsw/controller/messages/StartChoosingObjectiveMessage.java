@@ -1,4 +1,8 @@
 package it.polimi.ingsw.controller.messages;
+/**
+ * Message that needs to be sent, to all players, when all players chose their starter card, in order to inform them
+ * that they can finally start choosing their secret obejective
+ */
 
 import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
 

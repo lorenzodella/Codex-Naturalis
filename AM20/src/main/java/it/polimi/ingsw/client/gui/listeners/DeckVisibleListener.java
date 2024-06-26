@@ -8,7 +8,9 @@ import it.polimi.ingsw.client.gui.GUIController;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+/**
+ * Listener that detects clicks on the visible cards buttons.
+ */
 public class DeckVisibleListener extends ClientController implements ActionListener {
     private CardButton selectedCardButton;
     private GUIController guiController;
@@ -17,6 +19,12 @@ public class DeckVisibleListener extends ClientController implements ActionListe
         super(sender);
         this.guiController = guiController;
     }
+
+    /**
+     * Every time that the listener detects a click on this button, it calls a client sender's method in order to
+     * send the request of drawing the visible card, to the server.
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton b = (JButton) e.getSource();

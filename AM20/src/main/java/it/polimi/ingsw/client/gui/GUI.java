@@ -18,12 +18,29 @@ import java.util.HashMap;
 import java.util.List;
 
 public class GUI implements UIManager {
-
+    /**
+     * nickname of the player
+     */
     String nickname;
+    /**
+     * nickname of the current player
+     */
     String currPlayer;
+    /**
+     * window of the game
+     */
     GameFrame gameFrame;
+    /**
+     * initial window
+     */
     StartScreenFrame startScreenFrame;
+    /**
+     * pop up that allows the player to choose the starter card side
+     */
     StarterCardDialog starterCardDialog;
+    /**
+     * pop up that allows the player to choose the secret objective
+     */
     SecretObjectiveDialog secretObjectiveDialog;
 
     public GUI() {
@@ -53,12 +70,18 @@ public class GUI implements UIManager {
         return nickname;
     }
 
+
+    /**
+     * This method allows to show the user that he is connected to the server
+     */
     @Override
     public void showConnection() {
         GUIUtils.disposeDialog();
         GUIUtils.showMessage(gameFrame,"Waiting for other players");
     }
-
+    /**
+     * This method allows to show the user that the game is starting
+     */
     @Override
     public void showStartGame() {
         GUIUtils.disposeDialog();
@@ -69,7 +92,9 @@ public class GUI implements UIManager {
         starterCardDialog.setVisible(true);
 
     }
-
+    /**
+     * This method allows to show the user that someone is reconnected to the server
+     */
     @Override
     public void showReconnection(String result, boolean isJoining) {
         if(isJoining) {
@@ -125,14 +150,20 @@ public class GUI implements UIManager {
     }
 
 
-
+    /**
+     * This method updates the cards in your hand, in the panel
+     * @param cards list of the card that the player can play
+     */
     @Override
     public void updateCards(List<PlayableCard> cards) {
         if(cards!=null){
             gameFrame.getYourCardsPanel().update(cards);
         }
     }
-
+    /**
+     * This method updates the player's chat with the new message that he just received
+     * @param msg message received by the server
+     */
     @Override
     public void updateChatMessage(ChatMessage msg) {
         if(msg.getRecipient()==null || msg.getRecipient().equals(nickname)) {
@@ -141,7 +172,12 @@ public class GUI implements UIManager {
                 GUIUtils.showChatMessage(gameFrame, gameFrame.getChat());
         }
     }
-
+    /**
+     * The first time this method receives an arrayList of two elements, then the player decides which one he prefers.
+     * The second time the arrayList is made of a secretObjective (the one he had chosen).
+     * This method allows to update the panel that contains the choosen secret objective.
+     * @param secretObjectives of the player
+     */
     @Override
     public void updateSecretObjectives(ArrayList<ObjectiveCard> secretObjectives) {
         if(secretObjectives!=null) {
@@ -153,34 +189,57 @@ public class GUI implements UIManager {
             }
         }
     }
-
+    /**
+     * This method updates the panel that shows the gold deck and the two gold visible cards.
+     * @param goldTop gold card on the top of the deck
+     * @param goldVisible array of the two visible gold cards
+     */
     @Override
     public void updateGold(PlayableCard goldTop, PlayableCard[] goldVisible) {
         gameFrame.updateGoldDeckPanels(goldTop, goldVisible);
     }
-
+    /**
+     * This method updates the panel that shows the resource deck and the two resource visible cards.
+     * @param resourceTop resource card on the top of the deck
+     * @param resourceVisible array of the two visible resource cards
+     */
     @Override
     public void updateResource(PlayableCard resourceTop, PlayableCard[] resourceVisible) {
         gameFrame.updateResourceCardsPanels(resourceTop, resourceVisible);
     }
-
+    /**
+     * This method updates the panel that shows the player info
+     * (color chosen, score, map of the player table and occurrences of every kingdom and objects)
+     * @param yourPlayerInfo info of the player
+     */
     @Override
     public void updateYourPlayerInfo(PlayerInfo yourPlayerInfo) {
         if(yourPlayerInfo!=null)
             gameFrame.updateYourInfo(yourPlayerInfo);
     }
-
+    /**
+     * This method updates the panel that shows all other players info
+     * @param otherPlayerInfo map where for each username of the other players, you can obtain the their info
+     *                        (color chosen, score, map of the player table and occurrences of every kingdom and objects)
+     */
     @Override
     public void updateOtherPlayerInfo(HashMap<String, PlayerInfo> otherPlayerInfo) {
         if(otherPlayerInfo!=null)
             gameFrame.updateOtherPlayers(otherPlayerInfo);
     }
-
+    /**
+     * This method updates the panel that shows the common objectives
+     * @param commonObjectives array of the two common objective
+     */
     @Override
     public void updateCommonObjectives(ObjectiveCard[] commonObjectives) {
         gameFrame.updateCommonObjectivePanels(commonObjectives);
     }
-
+    /**
+     * This method shows a pop up that allows the player to choose the side of the starter card and
+     * it shows every change.
+     * @param starterCard starter card of the player
+     */
     @Override
     public void updateStarterCard(StarterCard starterCard) {
         if(starterCard!=null) {
@@ -188,12 +247,19 @@ public class GUI implements UIManager {
         }
 
     }
-
+    /**
+     * This method shows a new received message into the log area
+     * @param result string that inform about the result
+     */
     @Override
     public void showResult(String result) {
         log(result);
     }
-
+    /**
+     * This method shows a new received message into the log area and it shows a pop up that contains the message.
+     * @param result string that inform about the result
+     * @param importantMessage string that inform about the important message
+     */
     @Override
     public void showImportantMessage(String result, String importantMessage) {
         if(importantMessage!=null) {
@@ -201,7 +267,12 @@ public class GUI implements UIManager {
             GUIUtils.showImportantInfo(gameFrame, result+"\n"+importantMessage);
         }
     }
-
+    /**
+     * This method allows to check if it's player turn or not.
+     * If it is so, the method shows a pop up and a message into the log area saying "it's your turn"
+     * Otherwise the method shows a pop up and a message into the log area saying "it's ... turn"
+     * @param nextPlayer username of the next player that has to play
+     */
     @Override
     public void showNextTurn(String nextPlayer) {
         if(nextPlayer!=null) {
@@ -223,7 +294,11 @@ public class GUI implements UIManager {
         }
 
     }
-
+    /**
+     * This method allows the client to inform the user that the game is ended and that if he wants to play again,
+     * he has to relaunch the application.
+     * It also blocks all buttons of the gui.
+     */
     @Override
     public void updateStopGame() {
         nickname = null;
@@ -235,14 +310,20 @@ public class GUI implements UIManager {
         gameFrame.getYourCardsPanel().setCardsClickable(false);
         GUIUtils.showInfo(gameFrame, "Game is over. You have to relaunch application to play again");
     }
-
+    /**
+     * This method shows a pop up saying "you need to pick a card" and it makes the
+     * deck panel bottoms clickable
+     */
     @Override
     public void showMustPick() {
         gameFrame.getDeckPanel().setCardsClickable(true);
         GUIUtils.showInfo(gameFrame, "You have to pick a card");
 
     }
-
+    /**
+     * This method allows to print the content of the error message into a pop up
+     * @param error string that inform about the error
+     */
     @Override
     public void showError(String error){
         GUIUtils.showError(gameFrame, error);

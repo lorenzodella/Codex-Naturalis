@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model.exceptions;
-
+/**
+ * EXCEPTION THROWN WHEN A PLAYER WANTS TO DISCONNECT FROM THE GAME BUT HE HAD ALREADY DISCONNECTED THE GAME PREVIOUSLY
+ */
 public class InvalidConnectionStateException extends Exception{
     String message;
 

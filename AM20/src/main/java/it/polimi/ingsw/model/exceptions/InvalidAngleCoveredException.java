@@ -1,5 +1,9 @@
 package it.polimi.ingsw.model.exceptions;
 
+/**
+ * EXCEPTION THROWN WHEN A PLAYER WANTS TO PLAY A CARD BY COVERING AN ANGLE THAT DOES NOT EXIST OR AN ANGLE THAT IS
+ * ALREADY COVERED BY ANOTHER CARD
+ */
 public class InvalidAngleCoveredException extends Exception{
     private final int angle;
     private final String cardID;

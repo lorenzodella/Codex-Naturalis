@@ -1,4 +1,8 @@
 package it.polimi.ingsw.controller.messages;
+/**
+ * Message that needs to be sent, to all players, when a player takes an action (such as picking or playing a card),
+ * to inform all others of the action that has just occurred
+ */
 
 import it.polimi.ingsw.controller.PlayerInfo;
 import it.polimi.ingsw.model.cards.playable.PlayableCard;

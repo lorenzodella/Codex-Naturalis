@@ -8,9 +8,19 @@ import it.polimi.ingsw.client.gui.GUIController;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+/**
+ * YourCardsListener sents information about the selected card to the MapListener.
+ * Every time that this listener detects a click on a button it calls a client sender's method in order to
+ * send the request of playing the selected card in that specific spot, to the server.
+ */
 public class MapListener extends ClientController implements ActionListener {
+    /**
+     * button of the selected card sent from  {@link YourCardsListener}
+     */
     private CardButton selectedCardButton;
+    /**
+     * reference to the GUIcontroller
+     */
     private GUIController guiController;
     
     public MapListener(ClientSender sender, GUIController guiController) {
@@ -19,6 +29,11 @@ public class MapListener extends ClientController implements ActionListener {
         reset();
     }
 
+    /**
+     * Every time that the listener detects a click on this button, it calls a client sender's method in order to
+     * send the request of playing this specific card "selectedCardButton" in this specific position, to the server.
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton b = (CardButton) e.getSource();

@@ -1,5 +1,8 @@
 package it.polimi.ingsw.controller.messages;
-
+/**
+ * Message that needs to be sent, to all players, when a player plays a card, in order to inform all the others of the
+ * action that's occurred
+ */
 import it.polimi.ingsw.controller.PlayerInfo;
 
 import java.util.HashMap;

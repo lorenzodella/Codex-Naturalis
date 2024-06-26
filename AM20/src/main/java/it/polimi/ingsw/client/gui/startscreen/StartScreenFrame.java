@@ -1,5 +1,4 @@
 package it.polimi.ingsw.client.gui.startscreen;
-
 import it.polimi.ingsw.client.gui.GUI;
 import it.polimi.ingsw.client.gui.GUIController;
 import it.polimi.ingsw.client.gui.GUIUtils;
@@ -9,7 +8,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
-
+/**
+ * Frame that shows the initial window of the game
+ */
 public class StartScreenFrame extends JFrame {
     private StartPanel startPanel;
 

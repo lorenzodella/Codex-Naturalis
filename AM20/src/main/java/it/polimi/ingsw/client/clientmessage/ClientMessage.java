@@ -1,7 +1,9 @@
 package it.polimi.ingsw.client.clientmessage;
-
 import java.io.Serializable;
-
+/**
+ * SUPERCLASS THAT REPRESENTS A MESSAGE SENT FROM THE CLIENT (THAT CONNECTED WITH SOCKET) TO THE SERVER.
+ * THEY REPRESENT THE REQUEST TO MAKE A SPECIFIC GAME ACTION (SUCH AS CREATING A NEW GAME...).
+ */
 public class ClientMessage implements Serializable {
     public static final String LOGIN = "Login";
     public static final String NEWGAME = "NewGame";

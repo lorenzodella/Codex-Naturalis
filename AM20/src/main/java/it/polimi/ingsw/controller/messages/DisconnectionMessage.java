@@ -1,5 +1,7 @@
 package it.polimi.ingsw.controller.messages;
-
+/**
+ * Message that needs to be sent, to all players, when a player disconnects
+ */
 public class DisconnectionMessage extends PickAckMessage {
     /**
      * this attribute is true every time that a player disconnected right after playing a card (without picking

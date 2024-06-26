@@ -1,12 +1,14 @@
 package it.polimi.ingsw.controller.messages;
-
 import it.polimi.ingsw.controller.PlayerInfo;
 import it.polimi.ingsw.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.model.cards.playable.StarterCard;
 
 import java.util.HashMap;
 import java.util.List;
-
+/**
+ * Message that needs to be sent, to all players, when the number of the connected players has reached the number of
+ * players that was established by the player that created the game
+ */
 public class StartGameMessage extends ConnectionAckMessage {
 
     /**

@@ -1,17 +1,14 @@
 package it.polimi.ingsw.model;
-
 import it.polimi.ingsw.model.exceptions.InvalidPlayingException;
 import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.model.exceptions.*;
 
 import java.util.List;
 import java.util.Set;
-
 /**
- * This interface represents the game model, which is observable by the view
+ * INTERFACE THAT EXPOSES THE METHODS FROM THE MODEL TO THE CONTROLLER (MICRO ACTIONS OF THE GAME)
  */
 public interface GameObservable {
-
 
     //getters
     Set<String> getConnectedPlayers();

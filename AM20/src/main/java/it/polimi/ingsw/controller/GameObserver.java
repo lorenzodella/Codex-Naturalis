@@ -1,5 +1,4 @@
 package it.polimi.ingsw.controller;
-
 import it.polimi.ingsw.controller.messages.*;
 import it.polimi.ingsw.model.Deck;
 import it.polimi.ingsw.model.Player;
@@ -7,8 +6,9 @@ import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
 
 import java.util.HashMap;
 import java.util.List;
-
-//TODO: ELEONORA
+/**
+ * INTERFACE THAT CONTAINS ALL THE METHODS THAT THE CONTROLLER NEEDS TO CALL WHEN IT RECEIVES A GAME EVENT
+ */
 public interface GameObserver {
 
     HashMap<String, AcknowledgeMessage> notifyPlayerDisconnected(String playerNickname);

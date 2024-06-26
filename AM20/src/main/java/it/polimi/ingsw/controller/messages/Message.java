@@ -1,7 +1,9 @@
 package it.polimi.ingsw.controller.messages;
 
 import java.io.Serializable;
-
+/**
+ * SUPERCLASS THAT REPRESENTS A GENERIC MESSAGE SENT FROM THE SERVER TO THE CLIENT
+ */
 public class Message implements Serializable {
 
     /**

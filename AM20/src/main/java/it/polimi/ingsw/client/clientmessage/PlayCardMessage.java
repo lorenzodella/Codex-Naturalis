@@ -1,5 +1,7 @@
 package it.polimi.ingsw.client.clientmessage;
-
+/**
+ * Message from the client to the server as a formal request to play a card
+ */
 public class PlayCardMessage extends ClientMessage{
     /**
      * the nickname of the player that wants to play a card

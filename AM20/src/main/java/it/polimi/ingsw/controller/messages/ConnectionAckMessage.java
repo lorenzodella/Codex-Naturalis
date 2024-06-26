@@ -1,4 +1,7 @@
 package it.polimi.ingsw.controller.messages;
+/**
+ * Message that needs to be sent, to all players, when a player joins/rejoins the game
+ */
 
 import it.polimi.ingsw.controller.PlayerInfo;
 import it.polimi.ingsw.model.cards.objective.ObjectiveCard;

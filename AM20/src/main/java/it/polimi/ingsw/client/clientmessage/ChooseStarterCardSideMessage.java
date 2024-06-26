@@ -1,5 +1,7 @@
 package it.polimi.ingsw.client.clientmessage;
-
+/**
+ * Message from the client to the server as a formal request to choose the side of the starter card
+ */
 public class ChooseStarterCardSideMessage extends ClientMessage{
     /**
      * nickname of the player

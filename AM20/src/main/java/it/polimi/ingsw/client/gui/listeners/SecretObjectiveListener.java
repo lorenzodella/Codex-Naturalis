@@ -8,7 +8,9 @@ import it.polimi.ingsw.client.gui.GUIUtils;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+/**
+ * Listener that detects clicks on the secret objective cards during the Objective phase
+ */
 public class SecretObjectiveListener extends ClientController implements ActionListener {
     private GUIController guiController;
 
@@ -16,7 +18,11 @@ public class SecretObjectiveListener extends ClientController implements ActionL
         super(sender);
         this.guiController = guiController;
     }
-
+    /**
+     * Every time that the listener detects a click on this button, it calls a client sender's method in order to
+     * send the request of choosing this card as a secret object, to the server.
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         //capisco qual è l'obiettivo scelto

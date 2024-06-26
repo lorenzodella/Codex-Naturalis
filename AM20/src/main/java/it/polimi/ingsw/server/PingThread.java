@@ -22,8 +22,7 @@ public class PingThread implements Runnable{
     /**
      * This attribute stand as the reference of the serverManager
      */
-    /*mi serve avere la lista dei player connessi che ha il controller
-      l'hashmap che specifica com'è connesso ogni player*/
+    /*mi serve avere la lista dei player connessi che ha il controller l'hashmap che specifica com'è connesso ogni player*/
     private ServerManager serverManager; //this
 
     public PingThread(ServerManager serverManager){

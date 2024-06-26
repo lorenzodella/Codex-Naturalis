@@ -12,24 +12,28 @@ import it.polimi.ingsw.model.exceptions.InvalidConnectionStateException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
-public class ServerManager {
-    //per ogni utente dice se è connesso con RMI o SOCKET
-
-    //per ogni utente che si è collegato all'inzio della partita ho memorizzato il modo in cui si sono connessi
     /**
-     * This attribute is a map that, per each player, says how they connected to the game (if with socket or RMI)
+     * THE SERVER MANAGER CLASS ACTS LIKE AN INTERMEDIARY BETWEEN SERVER RMI AND SERVER SKT.
+     * IT CONTAINS THE CONTROLLER REFERENCE AND THE CONNECTIONS HASHMAP THAT SPECIFIES, PER EACH PLAYER, THEIR TYPE OF CONNECTION
+     */
+public class ServerManager {
+    /**
+     * map that, per each player, says how they connected to the game (could be socket or RMI)
      */
     private HashMap<String, Connection> connections;
     //il controller ha la lista dei nickname dei player che sono realmente collegati
     /**
-     * This attribute stands for the controller reference
+     * the controller reference
      */
     private Controller controller;
     /**
-     * This attribute is a timer
+     * 60 seconds timer that's used every time that there's only one player left (and all others disconnected) in the game
      */
     private EndGameTimer timer;
+    /**
+     * thread that starts when the first player connects to the game and makes sure that the connection with all players
+     * is still alive
+     */
     private Thread t;
 
     public ServerManager(){
@@ -37,6 +41,10 @@ public class ServerManager {
         reset();
     }
 
+    /**
+     * When all players disconnected the game, the server needs to reset to the initial state, waiting for another game to start.
+     * it resets the controller reference and the connection hashmap.
+     */
     public synchronized void reset(){
         System.out.println("Server reset");
         this.resetTimer();
@@ -44,6 +52,11 @@ public class ServerManager {
         controller = new Controller();
     }
 
+        /**
+         * Adds a connection to the connections hashmap that takes track of the nicknames of all players and their type of connection
+         * @param nickname nickname of the player
+         * @param connection type of connection
+         */
     public synchronized void addConnection(String nickname, Connection connection){
         connections.put(nickname, connection);
         if(t==null || !t.isAlive()) {
@@ -60,18 +73,26 @@ public class ServerManager {
         return controller;
     }
 
+    /**
+     * Stops the EndGameTimer
+     * @see EndGameTimer
+     */
     public synchronized void resetTimer(){
         this.timer.stop();
     }
-
+    /**
+     * Starts the EndGameTimer
+     * @see EndGameTimer
+     */
     public synchronized void startTimer(Connection connection){
         this.timer.startCountdown(connection);
     }
 
     /**
-     * This method allows the serverManager to remove the player that's just left the game :
-     * 1. it removes the nickname for the connected players' nicknames
-     * 2. it sends an AcknowledgeMessage to all other players telling them that the "nickname" player just left the game
+     * It detects every disconnection:
+     * 1. it removes the nickname from the connections hashmap
+     * 2. it notifies the controller of the event
+     * 3. it sends the acknowledge message informing all other players of teh event
      * @param nickname the nickname of the player that just left the game
      */
     //questo è il metodo che gestisce quando un client si è disconnesso
@@ -81,6 +102,7 @@ public class ServerManager {
         try {
             res = this.getController().disconnectPlayer(nickname);
             System.out.println(nickname + " disconnected!");
+
             //if there's one player left start countdown
             Map.Entry<String, AcknowledgeMessage> m = res.entrySet().iterator().next();
             if(m.getValue().getNumOfConnectedPlayers()==1)

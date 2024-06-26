@@ -1,4 +1,7 @@
 package it.polimi.ingsw.server.rmi;
+/**
+ * CLASS THAT IS EXPORTED TO THE RMI REGISTRY IN ORDER TO ALLOW THE CLIENT TO INVOKE ITS METHODS
+ */
 
 import it.polimi.ingsw.controller.exceptions.CannotJoinGameException;
 import it.polimi.ingsw.controller.exceptions.NoOneIsConnectedException;
@@ -14,13 +17,10 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
 import java.util.Map;
 
-//classe che implementa la ricezione delle azioni dalla classe RMI
 public class ServerRMI extends UnicastRemoteObject implements Loggable{
-
     /**
-     * this attribute stands as a reference to the serverManager
+     * reference to the serverManager
      */
-    //per ogni utente dice se è connesso con RMI o SOCKET
     private ServerManager manager;
 
     public ServerRMI(ServerManager manager) throws RemoteException {
@@ -28,9 +28,9 @@ public class ServerRMI extends UnicastRemoteObject implements Loggable{
         this.manager = manager;
     }
 
-    //TODO: RIGUARDARE
     /**
      * This method actually allows the client "client" to join the game
+     * and it notifies all players of the action that has just occurred.
      * @param client the client that's joining the game
      * @param callback client's reference that allows the server to contact the client when something significant happens
      * @return a connectionAckMessage
@@ -70,7 +70,7 @@ public class ServerRMI extends UnicastRemoteObject implements Loggable{
         return res.get(client);
     }
 
-    //TODO: RIGUARDARE
+
     /**
      * This method actually allows, to the client that want to start a new game, to start a new game
      * @param client the client that just started the game, the one that created it
@@ -97,9 +97,10 @@ public class ServerRMI extends UnicastRemoteObject implements Loggable{
         }
     }
 
-    //TODO: RIGUARDARE
+
     /**
-     * This method actually allows the player that has "nickname" as their nickname to choose the starter card side.
+     * This method actually allows the player that has "nickname" as their nickname to choose the starter card side
+     * and it notifies all players of the action that has just occurred.
      * @param nickname the nickname of the player that's choosing the side of the card
      * @param side the side of the card that the player's just chosen (could only be front or back)
      * @return a starterCardAckMessage to the player that's just chosen the side
@@ -124,10 +125,11 @@ public class ServerRMI extends UnicastRemoteObject implements Loggable{
         return res.get(nickname);
     }
 
-    //TODO: RIGUARDARE
+
     /**
      * This method actually allows the player that has "nickname" as their nickname to choose their secret objective
-     * between the 2 possible objectives.
+     * between the 2 possible objectives
+     * and it notifies all players of the action that has just occurred.
      * @param nickname the nickname of the player that's choosing the side of the card
      * @param index the index, of the 2 items' array that contains the two possible secret objectives, of the specific
      *              secret objective that's been chosen.
@@ -154,10 +156,11 @@ public class ServerRMI extends UnicastRemoteObject implements Loggable{
         return res.get(nickname);
     }
 
-    //TODO: RIGUARDARE
+
     /**
      * This method actually allows the player that has "playerNickname" as their nickname to play the card that's found
-     * in the "cardIndex" position of the 3 items' array of their own cards.
+     * in the "cardIndex" position of the 3 items' array of their own cards
+     * and it notifies all players of the action that has just occurred.
      * @param playerNickname the nickname of the player that's playing the card
      * @param cardIndex the specific index of the card that the player wants to play now
      * @param angle the angle of the targetID card is going to be covered with the card that is being played
@@ -198,11 +201,11 @@ public class ServerRMI extends UnicastRemoteObject implements Loggable{
         }
         return res.get(playerNickname);
     }
-    //TODO: RIGUARDARE
+
 
     /**
-     * This method actually allows the player that has "playerNickname" as their nickname to pick a card from the specific
-     * "deck".
+     * This method actually allows the player that has "playerNickname" as their nickname to pick a card from the specific "deck"
+     * and it notifies all players of the action that has just occurred.
      * @param playerNickname the nickname of the player that needs to pick a card
      * @param deck the specific deck where the player is picking up the card from (could only be gold or resource)
      * @return an AcknowledgeMessage to the player that's just picked the card
@@ -234,10 +237,11 @@ public class ServerRMI extends UnicastRemoteObject implements Loggable{
         return res.get(playerNickname);
     }
 
-    //TODO: RIGUARDARE
+
     /**
      * This method actually allows the player that has "playerNickname" as their nickname to pick the card that's found
-     * in the index "index" of the "deck"'s visible cards.
+     * in the index "index" of the "deck"'s visible cards
+     * and it notifies all players of the action that has just occurred.
      * @param playerNickname the nickname of the player that needs to pick a card
      * @param deck the specific deck where the player is picking up the card from (could only be gold or resource)
      * @param index the index, of the 2 items' array, of the card that the player's chosen to pick up
@@ -269,9 +273,9 @@ public class ServerRMI extends UnicastRemoteObject implements Loggable{
         }
         return res.get(playerNickname);
     }
-    //TODO: RIGUARDARE
+
     /**
-     * This method allows the player "sender" to actually send a message to the "recipient" that contains "message" in it.
+     * This method allows the player "sender" to actually send a message to the "recipient" that contains "message" in it
      * @param sender the nickname of the player that's sending a message
      * @param recipient the nickname of the player that's receiving the message
      * @param message the actual message
@@ -290,7 +294,6 @@ public class ServerRMI extends UnicastRemoteObject implements Loggable{
         }
         return m;
     }
-    //TODO: RIGUARDARE
 
     /**
      * This method allows the sender player to send a message to all other players.

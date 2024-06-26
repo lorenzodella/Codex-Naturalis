@@ -1,5 +1,9 @@
 package it.polimi.ingsw.controller.messages;
 
+/**
+ * DAL SERVER
+ * Message that is sent from a sender to a receiver every time that someone wants to talk to another player in private
+ */
 public class ChatMessage extends Message{
 
     /**

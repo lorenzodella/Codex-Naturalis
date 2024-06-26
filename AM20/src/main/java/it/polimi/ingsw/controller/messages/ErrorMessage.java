@@ -1,8 +1,10 @@
 package it.polimi.ingsw.controller.messages;
-
+/**
+ * Message that needs to be sent, to the player that just made a mistake, to inform him of the error that just occurred
+ */
 public class ErrorMessage extends Message{
     /**
-     * this attribute stands for the type of error
+     * type of error
      */
     private String error;
 

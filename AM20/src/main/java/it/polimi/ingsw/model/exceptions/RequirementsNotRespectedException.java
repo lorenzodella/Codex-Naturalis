@@ -4,8 +4,13 @@ import it.polimi.ingsw.model.cards.Kingdom;
 
 import java.util.HashMap;
 import java.util.stream.Collectors;
-
+/**
+ * EXCEPTION THROWN WHEN A PLAYER WANTS TO PLAY A GOLD CARD WITHOUT HAVING ALL THE REQUESTED REQUIREMENTS
+ */
 public class RequirementsNotRespectedException extends Exception{
+    /**
+     *
+     */
     private final HashMap<Kingdom, Integer> req;
 
     public RequirementsNotRespectedException(HashMap<Kingdom, Integer> req){this.req = req;}

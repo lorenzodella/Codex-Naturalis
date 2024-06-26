@@ -1,6 +1,4 @@
 package it.polimi.ingsw.client;
-
-
 import it.polimi.ingsw.controller.PlayerInfo;
 import it.polimi.ingsw.controller.messages.ChatMessage;
 import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
@@ -10,7 +8,9 @@ import it.polimi.ingsw.model.cards.playable.StarterCard;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
+/**
+ * INTERFACE THAT REPRESENTS THE UI AND IT EXPOSES THE METHODS THAT ALLOW TO MODIFY THE UI (GUI OR TUI)
+ */
 public interface UIManager {
 
     void setNickname(String nickname);

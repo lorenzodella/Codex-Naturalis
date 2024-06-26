@@ -1,5 +1,8 @@
 package it.polimi.ingsw.model.exceptions;
 
+/**
+ * EXCEPTION THROWN WHEN A DECK IS FINISHED
+ */
 public class FinishedCardStackException extends Exception{
 
     @Override

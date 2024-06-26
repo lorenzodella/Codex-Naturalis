@@ -13,13 +13,22 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
-
+/**
+ * STARTING PANEL THAT CONTAINS THE TWO BUTTONS FOR JOINING OR CREATING A NEW GAME.
+ */
 public class StartPanel extends JPanel {
     //una scritta e due bottoni
+    /**
+     * button for creating a new game
+     */
     JButton newGameButton;
+    /**
+     * button for joining an already existing game
+     */
     JButton joinGameButton;
-    JLabel title;
-
+    /**
+     * background image
+     */
     Image image;
 
     public StartPanel(){
@@ -69,9 +78,17 @@ public class StartPanel extends JPanel {
 
     }
 
+    /**
+     * this method adds the listener for the new game button
+     * @param newGameListener the listener of the new game button
+     */
     public void setNewGameListener(NewGameListener newGameListener){
         newGameButton.addActionListener(newGameListener);
     }
+    /**
+     * this method adds the listener for the joing game button
+     * @param joinGameListener the listener of the join game button
+     */
     public void setJoinGameListener(JoinGameListener joinGameListener){
         joinGameButton.addActionListener(joinGameListener);
     }

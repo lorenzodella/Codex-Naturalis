@@ -1,7 +1,8 @@
 package it.polimi.ingsw.client;
-
 import it.polimi.ingsw.controller.messages.*;
-
+/**
+ * CLASS THAT, BASED ON THE EVENTS THAT IT RECEIVES FROM THE RECEIVER, UPDATES THE UI UPDATER
+ */
 public class UIUpdater  {
 
     private UIManager manager;

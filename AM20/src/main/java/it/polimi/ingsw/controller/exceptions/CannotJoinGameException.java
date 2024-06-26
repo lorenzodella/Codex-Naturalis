@@ -1,5 +1,7 @@
 package it.polimi.ingsw.controller.exceptions;
-
+/**
+ * EXCEPTION THROWN WHEN THE SERVER DOES NOT ACCEPT A JOIN REQUEST FOR ANY SPECIFIC REASON
+ */
 public class CannotJoinGameException extends Exception{
     private final String reason;
 

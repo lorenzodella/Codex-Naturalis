@@ -1,5 +1,7 @@
 package it.polimi.ingsw.client.clientmessage;
-
+/**
+ * Message from the client to the server as a formal request to draw a card from the deck
+ */
 public class PickCardDeckMessage extends ClientMessage{
     /**
      * nickname of the player that needs to pick a card now

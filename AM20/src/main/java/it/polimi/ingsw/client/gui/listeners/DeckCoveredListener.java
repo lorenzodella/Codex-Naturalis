@@ -7,7 +7,9 @@ import it.polimi.ingsw.client.gui.GUIController;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+/**
+ * Listener that detects clicks on the deck cards buttons.
+ */
 public class DeckCoveredListener extends ClientController implements ActionListener {
     private GUIController guiController;
 
@@ -15,7 +17,11 @@ public class DeckCoveredListener extends ClientController implements ActionListe
         super(sender);
         this.guiController = guiController;
     }
-
+    /**
+     * Every time that the listener detects a click on this button, it calls a client sender's method in order to
+     * send the request of drawing the covered card on top of the deck, to the server.
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton b = (JButton) e.getSource();

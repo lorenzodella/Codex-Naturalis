@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model.exceptions;
-
+/**
+ * EXCEPTION THROWN WHEN THE VALUE OF ANY PARAMETER PASSED TO THE METHOD IS NOT ACCEPTED
+ */
 public class InvalidArgumentException extends Exception{
     private final String argumentName;
     private final Object argumentValue;

@@ -8,7 +8,10 @@ import it.polimi.ingsw.server.Connection;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-//TODO: ELEONORA
+/**
+ * INTERFACE THAT SHOWS ALL THE RMI METHODS THAT CAN BE INVOKED BY THE CLIENT.
+ * EACH METHOD REPRESENTS A SPECIFIC GAME ACTION (SUCH AS LOGIN, STARTGAME...)
+ */
 public interface Loggable extends Remote {
     //metodi che vengono chiamati dal client sul server rmi
     ConnectionAckMessage login(String client, PawnColor color, Connection callback) throws RemoteException, CannotJoinGameException;

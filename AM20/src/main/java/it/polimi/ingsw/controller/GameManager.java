@@ -1,5 +1,4 @@
 package it.polimi.ingsw.controller;
-
 import it.polimi.ingsw.controller.exceptions.CannotJoinGameException;
 import it.polimi.ingsw.controller.exceptions.InvalidDisconnectionException;
 import it.polimi.ingsw.model.PawnColor;
@@ -10,8 +9,9 @@ import it.polimi.ingsw.model.exceptions.*;
 import it.polimi.ingsw.model.exceptions.InvalidArgumentException;
 
 import java.util.HashMap;
-
-//TODO: ELEONORA
+/**
+ * INTERFACE THAT EXPOSES THE CONTROLLER'S METHODS TO THE NET (MACRO ACTIONS OF THE GAME)
+ */
 
 public interface GameManager {
 

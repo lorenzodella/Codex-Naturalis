@@ -1,5 +1,7 @@
 package it.polimi.ingsw.client.clientmessage;
-
+/**
+ * Message from the client to the server as a formal request to draw a visible card
+ */
 public class PickCardVisibleMessage extends ClientMessage{
     /**
      * the nickname of the player that wants to pick one of the two visible cards

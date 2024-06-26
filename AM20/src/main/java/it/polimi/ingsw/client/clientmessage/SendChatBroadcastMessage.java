@@ -1,5 +1,7 @@
 package it.polimi.ingsw.client.clientmessage;
-
+/**
+ * Message from the client to the server in order to send a BroadcastChatMessage
+ */
 public class SendChatBroadcastMessage extends ClientMessage {
     /**
      * the nickname of the sender

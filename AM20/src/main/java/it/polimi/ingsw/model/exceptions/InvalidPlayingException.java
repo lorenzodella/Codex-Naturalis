@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model.exceptions;
-
 /**
- *
+ * EXCEPTION THROWN WHEN A PLAYER WANTS TO MAKE AN INVALID ACTION (AN ACTION THAT COMES FROM ANOTHER GAME PHASE)
  */
 
 public class InvalidPlayingException extends Exception{

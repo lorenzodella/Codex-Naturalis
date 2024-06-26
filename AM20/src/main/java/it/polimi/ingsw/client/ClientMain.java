@@ -1,5 +1,4 @@
 package it.polimi.ingsw.client;
-
 import it.polimi.ingsw.client.connections.*;
 import it.polimi.ingsw.client.gui.GUI;
 import it.polimi.ingsw.client.gui.GUIController;
@@ -13,10 +12,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.rmi.NotBoundException;
-
+/**
+ * MAIN CLASS OF THE CLIENT SIDE OF THE APPLICATION.
+ * IT ALLOWS TO THE USER TO CHOOSE THE TYPE OF UI AND TO CONNECT TO THE SERVER.
+ */
 public class ClientMain {
-
-    //TODO: da finire 
     /**
      * This is the main that is started when the Client jar is executed. It
      * @param args The first param si the choice between TUI or GUI (1 for TUI / 2 for GUI). The second parameter is the type of the connection (1 for RMI/ 2 for SKT).

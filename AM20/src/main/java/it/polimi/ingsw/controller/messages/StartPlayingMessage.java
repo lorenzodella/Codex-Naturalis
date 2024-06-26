@@ -1,8 +1,11 @@
 package it.polimi.ingsw.controller.messages;
-
+/**
+ * Message that needs to be sent, to all players, when all players have chosen their objective i order to inform them
+ * that they can finally start playing the game
+ */
 public class StartPlayingMessage extends ObjectiveAckMessage{
     /**
-     * the player that needs to start playing
+     * the first player of the round
      */
     private String firstPlayer;
 

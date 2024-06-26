@@ -9,7 +9,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+/**
+ * Listener that detects clicks on "create a new game" button, during the preliminary phase, and
+ * displays a pop up with all the requested information that you need to send to the server in order to create a new game.
+ */
 public class NewGameListener extends ClientController implements ActionListener {
     public NewGameListener(ClientSender sender){
         super(sender);
@@ -22,7 +25,13 @@ public class NewGameListener extends ClientController implements ActionListener 
         showInputDialog(b.getRootPane());
     }
 
-    //metodo che permette di username e numPlayers
+    /**
+     * Every time that the listener detects a click on this button, it shows a pop up with all the requested information
+     * that the player needs to give in order to create a game.
+     * Once the player has filled up with all the info, it calls a client sender's method in order to send the request of
+     * creating the game, to the server.
+     * @param c parent component
+     */
     public void showInputDialog(Component c) {
         JComboBox<ImageIcon> colorComboBox = GUIUtils.getImageIconJComboBox();
 

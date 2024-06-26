@@ -1,7 +1,8 @@
 package it.polimi.ingsw.client.clientmessage;
-
 import it.polimi.ingsw.model.PawnColor;
-
+/**
+ * Message from the client to the server as a formal request to create a new game
+ */
 public class NewGameMessage extends ClientMessage {
     /**
      * Nickname of the player that wants to create a new game

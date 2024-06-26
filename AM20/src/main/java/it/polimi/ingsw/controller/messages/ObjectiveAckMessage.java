@@ -1,4 +1,7 @@
 package it.polimi.ingsw.controller.messages;
+/**
+ * Message that needs to be sent, to the player that just chose their secret objective
+ */
 
 import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
 
