@@ -14,6 +14,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+/**
+ * This class is the dialog that allows the player to choose the secret objective
+ */
 public class SecretObjectiveDialog extends JDialog implements ActionListener{
     JButton confirm;
     CardButton objective0;
@@ -64,21 +67,10 @@ public class SecretObjectiveDialog extends JDialog implements ActionListener{
         pack();
     }
 
-    static TrioOfObjectsObjectiveCard getExampleTrioOfObjectsObjectiveCard(){
-        ArrayList<ObjectiveCard> TrioOfObjectsObjectiveCard = XMLparser.parseObjectiveCards("/xml/objectiveCards.xml");
-        return (TrioOfObjectsObjectiveCard) TrioOfObjectsObjectiveCard.stream().filter(x->x.getID().equals("O99")).findAny().orElse(null);
-    }
-    static VerticalConfigurationObjectiveCard getExampleVerticalConfigurationObjectiveCard(){
-        ArrayList<ObjectiveCard> VerticalConfigurationObjectiveCard = XMLparser.parseObjectiveCards("/xml/objectiveCards.xml");
-        return (VerticalConfigurationObjectiveCard) VerticalConfigurationObjectiveCard.stream().filter(x->x.getID().equals("O94")).findAny().orElse(null);
-    }
-    public static void main(String[] args) {
-
-        SecretObjectiveDialog d = new SecretObjectiveDialog(null);
-        d.update(getExampleVerticalConfigurationObjectiveCard(), getExampleTrioOfObjectsObjectiveCard());
-        d.setVisible(true);
-    }
-
+    /**
+     * This method allows to select one of the two secret objectives
+     * @param e the click event
+     */
     @Override
     public void actionPerformed(ActionEvent e){
         objective1.setSelected(false);
@@ -94,10 +86,20 @@ public class SecretObjectiveDialog extends JDialog implements ActionListener{
         confirm.setName(button.getName());
     }
 
+    /**
+     * This method allows to update the secret objectives
+     * @param card0 the first secret objective
+     * @param card1 the second secret objective
+     */
     public void update(ObjectiveCard card0, ObjectiveCard card1){
         objective0.update(card0);
         objective1.update(card1);
     }
+
+    /**
+     * This method allows to set the listener for the secret objective
+     * @param secretObjectiveListener the listener for the secret objective
+     */
     public void setObjectiveListener(SecretObjectiveListener secretObjectiveListener){
         confirm.addActionListener(secretObjectiveListener);
     }

@@ -16,7 +16,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Class Chat creates a chat window that allows client to communicate to each other
+ */
 public class Chat extends JDialog implements ActionListener{
+
     private JLabel senderLabel;
 	private JScrollPane centerP;
 	private JPanel visorP;
@@ -28,13 +32,6 @@ public class Chat extends JDialog implements ActionListener{
 	private LocalDateTime date;
 	private JComboBox<String> comboBox;
 	private ChatListener chatListener;
-
-	public static void main(String[] args) {
-		Chat c = new Chat(null);
-		c.setPlayers(Arrays.asList("Player1", "Player2", "Player3"));
-		c.setNickname("Nickname");
-		c.setVisible(true);
-	}
 
 	public Chat(Frame parent) {
 		super(parent);
@@ -111,6 +108,10 @@ public class Chat extends JDialog implements ActionListener{
 		input.requestFocus();
 	}
 
+	/**
+	 * Method sets the players to which the client can send messages
+	 * @param players is a list of players
+	 */
 	public void setPlayers(List<String> players){
 		for(String player : players)
 			comboBox.addItem(player);
@@ -119,14 +120,28 @@ public class Chat extends JDialog implements ActionListener{
 		senderLabel.setText(nickname);
 	}
 
+	/**
+	 * Method sets the chat listener
+	 * @param chatListener is the chat listener
+	 */
 	public void setChatListener(ChatListener chatListener){
 		this.chatListener = chatListener;
 	}
-	
+
+	/**
+	 * Method called when user clicks on the send button
+	 * @param e is the event
+	 */
 	public void actionPerformed(ActionEvent e) {
 		sendMessage(input.getText(), String.valueOf(comboBox.getSelectedItem()));
 	}
-	
+
+	/**
+	 * Method updates the chat window with the message sent by the client
+	 * @param message is the panel displaying the message sent by the client
+	 * @param time is the panel displaying the time the message was sent
+	 * @param align is the alignment of the message (left if received, right if sent)
+	 */
 	private void update(JPanel message, JTextArea time, int align) {
 		FlowLayout fl = new FlowLayout(align);
 		fl.setHgap(2);
@@ -160,7 +175,12 @@ public class Chat extends JDialog implements ActionListener{
       	lastPanel = panel;
 		input.requestFocus();
 	}
-	
+
+	/**
+	 * Method notifies the listener and adds the message to the chat window
+	 * @param text is the message to be sent
+	 * @param recipient is the recipient of the message
+	 */
 	private void sendMessage(String text, String recipient) {
 		if(input.getText().trim().isEmpty()) {
 			input.setText("");
@@ -205,7 +225,12 @@ public class Chat extends JDialog implements ActionListener{
 		
 		input.setText("");
 	}
-	
+
+	/**
+	 * Method adds the message received by the client to the chat window
+	 * @param text is the message received
+	 * @param sender is the sender of the message
+	 */
 	public void receiveMessage(String text, String sender) {
 		LocalDateTime now = LocalDateTime.now();
 		checkDate(now);
@@ -242,7 +267,11 @@ public class Chat extends JDialog implements ActionListener{
 		
 		update(msgP, time, FlowLayout.LEFT);
 	}
-	
+
+	/**
+	 * Method checks if the date of the message is the same as the current date
+	 * @param now is the current date
+	 */
 	private void checkDate(LocalDateTime now) {
 		if(date==null || date.getDayOfMonth() != now.getDayOfMonth()) {
 			date = now;

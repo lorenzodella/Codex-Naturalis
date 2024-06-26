@@ -28,7 +28,6 @@ public class PlayerPanel extends JPanel {
      * @param playerInfoPanel the panel that contains all the info of this specific player
      * @param logPanel the log panel that says every single move of every single player
      */
-
     public PlayerPanel(CommonObjectivePanel commonObjectivePanel, SecretObjectivePanel secretObjectivePanel,
                        YourCardsPanel yourCardsPanel , TablePanel tablePanel, DeckPanel deckPanel,
                        PlayerInfoPanel playerInfoPanel, LogPanel logPanel){

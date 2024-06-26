@@ -6,18 +6,20 @@ import javax.swing.*;
 import javax.swing.text.DefaultCaret;
 import java.awt.*;
 
+/**
+ * Panel that contains the log of the game. It is updated every time a player makes a move.
+ * It also contains a button that opens the chat
+ */
 public class LogPanel extends JPanel {
     private JTextArea logTextArea;
-    private Chat chat;
     private JButton chatButton;
 
     /**
      * Panel that contains all the texts that describe every single move of every single player
-     * @param chat message to everyone
+     * @param chat the chat that is opened by the chat button
      */
     public LogPanel(Chat chat){
         super();
-        this.chat = chat;
 
         setLayout(new BorderLayout());
         //setPreferredSize(new Dimension(300, 300));
@@ -42,10 +44,17 @@ public class LogPanel extends JPanel {
 
     }
 
+    /**
+     * This method allows to add a new log string to the log panel
+     * @param log the message to print
+     */
     public void log(String log){
         logTextArea.append(log + "\n");
     }
 
+    /**
+     * This method allows to disable the chat button. Used when the game is over
+     */
     public void disableChat(){
         chatButton.removeActionListener(chatButton.getActionListeners()[0]);
     }

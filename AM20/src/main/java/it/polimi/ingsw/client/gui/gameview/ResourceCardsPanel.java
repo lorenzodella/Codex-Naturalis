@@ -12,10 +12,17 @@ import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
 
+/**
+ * The resource cards panel used for both visible cards and top of the deck
+ */
 public class ResourceCardsPanel extends JPanel {
     CardButton o1;
     CardButton o2;
+    /**
+     * If the cards are visible or not
+     */
     boolean visible;
+
     public ResourceCardsPanel(boolean visible) {
         super();
         this.visible = visible;
@@ -51,7 +58,11 @@ public class ResourceCardsPanel extends JPanel {
         }
     }
 
-    //2 update
+    /**
+     * This method allows to update the cards every time that a player picks a card
+     * @param visibleCard1 the new resource visible card 1
+     * @param visibleCard2 the new resource visible card 2
+     */
     public void updateVisible(ResourceCard visibleCard1, ResourceCard visibleCard2){
         if(visibleCard1!=null)
             o1.update(visibleCard1);
@@ -63,6 +74,11 @@ public class ResourceCardsPanel extends JPanel {
         else
             o2.clear();
     }
+
+    /**
+     * This method allows to update the top of the deck
+     * @param top the new top of the resource deck
+     */
     public void updateTop(ResourceCard top){
         if(top != null){
             top.setSide(PlayableCard.BACK);
@@ -74,15 +90,27 @@ public class ResourceCardsPanel extends JPanel {
         }
     }
 
+    /**
+     * This method allows to set the listener for the top of the deck
+     * @param deckCoveredListener the listener
+     */
     public void setDeckCoveredListener(DeckCoveredListener deckCoveredListener){
         o1.addActionListener(deckCoveredListener);
     }
 
+    /**
+     * This method allows to set the listener for the visible cards
+     * @param deckVisibleListener the listener
+     */
     public void setDeckVisibleListener(DeckVisibleListener deckVisibleListener){
         o1.addActionListener(deckVisibleListener);
         o2.addActionListener(deckVisibleListener);
     }
 
+    /**
+     * This method allows to set the cards clickable or not. Used when the player has to pick a card
+     * @param clickable true if the cards have to be clickable, false otherwise
+     */
     public void setCardsClickable(boolean clickable){
         o1.setClickable(clickable);
         if(o2!=null)

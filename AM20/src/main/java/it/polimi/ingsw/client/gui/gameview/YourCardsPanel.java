@@ -10,8 +10,14 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.util.List;
 
+/**
+ * Panel that contains the hand cards of a player
+ */
 public class YourCardsPanel extends JPanel {
 
+    /**
+     * The three cards of the player
+     */
     CardButton[] cardButtons;
 
     public YourCardsPanel() {
@@ -60,6 +66,10 @@ public class YourCardsPanel extends JPanel {
         add(cardButtons[2]);
     }
 
+    /**
+     * This method allows to update the cards every time there's a change
+     * @param cards the cards of the player
+     */
     public void update(List<PlayableCard> cards){
         if(cards.size()>=1)
             cardButtons[0].update(cards.get(0));
@@ -80,12 +90,20 @@ public class YourCardsPanel extends JPanel {
 
     }
 
+    /**
+     * This method allows to set the cards clickable or not. Used when it's the player's turn
+     * @param clickable true if the cards are clickable, false otherwise
+     */
     public void setCardsClickable(boolean clickable){
         for(CardButton card : cardButtons){
             card.setClickable(clickable);
         }
     }
 
+    /**
+     * This method allows to set the listener of the cards
+     * @param listener the listener of the cards
+     */
     public void setYourCardsListener(YourCardsListener listener){
         listener.setCardButtons(cardButtons);
         for(CardButton card : cardButtons){
@@ -93,6 +111,9 @@ public class YourCardsPanel extends JPanel {
         }
     }
 
+    /**
+     * This method allows to hide the cards for other players
+     */
     public void setHidden(){
         for(CardButton card : cardButtons){
             card.hid();

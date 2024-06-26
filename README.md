@@ -90,6 +90,7 @@ Il jar del Client può essere anche lanciato senza specificare nessun parametro.
  
 # Componenti del gruppo
 
++ [Lorenzo Della Matera](https://github.com/lorenzodella)
 + [Mattia Doro](https://github.com/mado002)
 + [Eleonora Ficarelli](https://github.com/EleonoraFicarelli)
 + [Irene Ferrente](https://github.com/Ireneeer)

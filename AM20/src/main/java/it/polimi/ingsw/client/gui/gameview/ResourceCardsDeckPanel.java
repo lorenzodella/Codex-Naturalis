@@ -10,6 +10,9 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 
+/**
+ * The resource cards deck panel contains the two resource visible cards and the top of the resource deck
+ */
 public class ResourceCardsDeckPanel extends JPanel {
     ResourceCardsPanel resourceCardsPanelCovered;
     ResourceCardsPanel resourceCardsPanelVisible;
@@ -21,7 +24,6 @@ public class ResourceCardsDeckPanel extends JPanel {
      * @param resourceCardsPanelCovered panel of the top of the resource deck
      * @param resourceCardsPanelVisible panel of the two visible cards
      */
-
     public ResourceCardsDeckPanel(ResourceCardsPanel resourceCardsPanelCovered, ResourceCardsPanel resourceCardsPanelVisible) {
         super();
         this.resourceCardsPanelCovered = resourceCardsPanelCovered;
@@ -63,11 +65,20 @@ public class ResourceCardsDeckPanel extends JPanel {
         resourceCardsPanelCovered.updateTop(top);
     }
 
+    /**
+     * This method allows to set the listeners for the resource cards deck
+     * @param deckCoveredListener the listener for the covered deck
+     * @param deckVisibleListener the listener for the visible deck
+     */
     public void setDeckListener(DeckCoveredListener deckCoveredListener, DeckVisibleListener deckVisibleListener){
         resourceCardsPanelCovered.setDeckCoveredListener(deckCoveredListener);
         resourceCardsPanelVisible.setDeckVisibleListener(deckVisibleListener);
     }
 
+    /**
+     * This method allows to set the cards clickable or not. This is useful when the player has to pick a card
+     * @param clickable true if the cards are clickable, false otherwise
+     */
     public void setCardsClickable(boolean clickable){
         resourceCardsPanelCovered.setCardsClickable(clickable);
         resourceCardsPanelVisible.setCardsClickable(clickable);

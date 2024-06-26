@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.ImageObserver;
 
+/**
+ * This class extends ImageIcon to allow for translucent images.
+ */
 public class CardIcon extends ImageIcon {
 
     private boolean translucent = false;

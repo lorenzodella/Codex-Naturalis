@@ -9,13 +9,23 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 /**
- * Simple JPanel with an image as background.
+ * Simple JButton with an image as background.
  * It's used for displaying card images
  */
 public class CardButton extends JButton {
+    /**
+     * If the button is clickable
+     */
     private boolean clickable = false;
+    /**
+     * The card associated with the button
+     */
     private Card card;
 
+    /**
+     * Constructor for a CardButton with a name. Used for dummy cards in the map.
+     * @param name the name of the button
+     */
     public CardButton(String name){
         super();
         setName(name);
@@ -27,6 +37,10 @@ public class CardButton extends JButton {
         setFocusPainted(false);
     }
 
+    /**
+     * Constructor for a CardButton with a card. Used for cards in the game.
+     * @param card the card associated with the button
+     */
     public CardButton(Card card) {
         super();
         this.card = card;
@@ -34,6 +48,11 @@ public class CardButton extends JButton {
         setFocusPainted(false);
     }
 
+    /**
+     * Constructor for a CardButton with a card. Used for cards in the game.
+     * @param card the card associated with the button
+     * @param clickable if the button is clickable
+     */
     public CardButton(Card card, boolean clickable){
         super();
         this.card = card;
@@ -42,6 +61,9 @@ public class CardButton extends JButton {
         setFocusPainted(false);
     }
 
+    /**
+     * Constructor for an empty card button.
+     */
     public CardButton(){
         super();
         clear();
@@ -68,6 +90,10 @@ public class CardButton extends JButton {
 
     }
 
+    /**
+     * Set the icons for the button. The icons are set for different states of the button.
+     * @param image the image to set as icon
+     */
     private void setIcons(Image image){
         CardIcon icon = null, translucentIcon = null;
         if(image!=null) {
@@ -87,6 +113,9 @@ public class CardButton extends JButton {
         setRolloverIcon(translucentIcon);
     }
 
+    /**
+     * Enable the mouse flipping for the card. The card will flip when the right mouse button is clicked.
+     */
     public void enableMouseFlipping(){
         addMouseListener(new MouseAdapter() {
 
@@ -104,6 +133,10 @@ public class CardButton extends JButton {
         });
     }
 
+    /**
+     * Get the card side associated with the button.
+     * @return the side of the card
+     */
     public int getCardSide(){
         return card.getSide();
     }
@@ -125,31 +158,27 @@ public class CardButton extends JButton {
         //setIcon(new CardIcon(image, selected));
     }
 
-    //    protected void paintComponent(Graphics g) {
-//        Graphics2D g2 = (Graphics2D) g.create();
-//        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.7f));
-//        super.paintComponent(g2);
-//        Insets insets = getInsets(); //draw within border
-//        int w = getWidth() - insets.left - insets.right;
-//        int h = getHeight() - insets.top - insets.bottom;
-//        renderImage(g2, image, insets.left, insets.top, w, h);
-//        g2.dispose();
-//    }
-//
-//    protected void renderImage(Graphics g, Image image, int x, int y, int w, int h){
-//        g.drawImage(image, x, y, w, h, this);
-//    }
-
+    /**
+     * Load the image of the card.
+     * @return the image of the card
+     */
     private Image loadCardImage() {
         String side = card.getSide() == PlayableCard.FRONT ? "front" : "back";
         return GUIUtils.loadImage("/CODEX_cards_gold_"+side+"/"+card.getID()+".png");
     }
 
+    /**
+     * Update the card associated with the button.
+     * @param card the new card to associate with the button
+     */
     public void update(Card card){
         this.card = card;
         set();
     }
 
+    /**
+     * Clear the button. The button will be empty and not clickable.
+     */
     public void clear(){
         //carta con interno grigio, contorno visibile e non cliccable
         this.card = null;
@@ -160,12 +189,18 @@ public class CardButton extends JButton {
         setIcons(null);
     }
 
+    /**
+     * Hide the button. The button will be gray and not clickable.
+     */
     public void hid(){
         setOpaque(true);
         setBackground(Color.LIGHT_GRAY);
         setEnabled(false);
     }
 
+    /**
+     * Flip the card associated with the button.
+     */
     public void flip(){
         if(card!=null) {
             card.flip();

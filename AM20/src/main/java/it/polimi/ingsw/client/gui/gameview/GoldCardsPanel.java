@@ -13,9 +13,15 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
 import java.awt.*;
 
+/**
+ * The gold cards panel used for both visible cards and top of the deck
+ */
 public class GoldCardsPanel extends JPanel {
     CardButton o1;
     CardButton o2;
+    /**
+     * If the cards are visible or not
+     */
     boolean visible;
 
     public GoldCardsPanel(boolean visible) {
@@ -53,16 +59,28 @@ public class GoldCardsPanel extends JPanel {
         }
     }
 
+    /**
+     * This method allows to set the listener for the top of the deck
+     * @param deckCoveredListener the listener
+     */
     public void setDeckCoveredListener(DeckCoveredListener deckCoveredListener){
         o1.addActionListener(deckCoveredListener);
     }
 
+    /**
+     * This method allows to set the listener for the visible cards
+     * @param deckVisibleListener the listener
+     */
     public void setDeckVisibleListener(DeckVisibleListener deckVisibleListener){
         o1.addActionListener(deckVisibleListener);
         o2.addActionListener(deckVisibleListener);
     }
 
-    //2 update
+    /**
+     * This method allows to update the visible cards
+     * @param visibleCard1 the first visible card
+     * @param visibleCard2 the second visible card
+     */
     public void updateVisible(GoldCard visibleCard1, GoldCard visibleCard2){
         if(visibleCard1 != null)
             o1.update(visibleCard1);
@@ -74,6 +92,11 @@ public class GoldCardsPanel extends JPanel {
         else
             o2.clear();
     }
+
+    /**
+     * This method allows to update the top of the deck
+     * @param top the top of the deck
+     */
     public void updateTop(GoldCard top){
         if(top != null){
             top.setSide(PlayableCard.BACK);
@@ -85,6 +108,10 @@ public class GoldCardsPanel extends JPanel {
         }
     }
 
+    /**
+     * This method allows to set the cards clickable or not. This is useful when the player has to pick a card
+     * @param clickable true if the cards are clickable, false otherwise
+     */
     public void setCardsClickable(boolean clickable){
         o1.setClickable(clickable);
         if(o2!=null)

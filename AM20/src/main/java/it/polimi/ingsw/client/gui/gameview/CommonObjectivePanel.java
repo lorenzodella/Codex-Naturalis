@@ -7,8 +7,17 @@ import it.polimi.ingsw.model.cards.objective.ObjectiveCard;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
+/**
+ * Panel that contains the common objectives of all players
+ */
 public class CommonObjectivePanel extends JPanel {
+    /**
+     * The first common objective card
+     */
     private CardButton o1;
+    /**
+     * The second common objective card
+     */
     private CardButton o2;
 
     public CommonObjectivePanel(){

@@ -71,6 +71,10 @@ public class DeckPanel extends JPanel {
         resourceCardsDeckPanel.update(visibleCard1, visibleCard2, top);
     }
 
+    /**
+     * This method allows to set the cards clickable or not. Used when the player has to pick a card
+     * @param clickable true if the cards are clickable, false otherwise
+     */
     public void setCardsClickable(boolean clickable){
         goldCardsDeckPanel.setCardsClickable(clickable);
         resourceCardsDeckPanel.setCardsClickable(clickable);

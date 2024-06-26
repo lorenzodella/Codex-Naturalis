@@ -14,8 +14,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+/**
+ * This class is the dialog that allows the player to choose the side of the starter card
+ */
 public class StarterCardDialog extends JDialog implements ActionListener{
     JButton confirm;
+    /**
+     * The card that the player can choose
+     */
     CardButton starterCard;
     JTextArea message;
 
@@ -57,18 +63,11 @@ public class StarterCardDialog extends JDialog implements ActionListener{
         setResizable(false);
         pack();
     }
-    static StarterCard getExampleStarterCard(){
-        ArrayList<PlayableCard> starterCards = XMLparser.parseStarterCards("/xml/starterCards.xml");
-        return (StarterCard) starterCards.stream().filter(x->x.getID().equals("S85")).findAny().orElse(null);
-    }
 
-    public static void main(String[] args) {
-
-        StarterCardDialog d = new StarterCardDialog(null);
-        d.update(getExampleStarterCard());
-        d.setVisible(true);
-    }
-
+    /**
+     * This method allows to flip the starter card to choose the other side
+     * @param e the click event
+     */
     @Override
     public void actionPerformed(ActionEvent e){
         starterCard.flip();
@@ -82,6 +81,11 @@ public class StarterCardDialog extends JDialog implements ActionListener{
     public void update(StarterCard card){
         starterCard.update(card);
     }
+
+    /**
+     * This method allows to set the listener for the starter card
+     * @param starterCardListener the listener for the starter card
+     */
     public void setStarterCardListener(StarterCardListener starterCardListener){
         confirm.addActionListener(starterCardListener);
     }

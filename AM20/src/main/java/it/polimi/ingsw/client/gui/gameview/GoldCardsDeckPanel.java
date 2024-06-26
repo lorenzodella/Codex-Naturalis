@@ -10,6 +10,9 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 
+/**
+ * The gold cards deck panel contains the two gold visible cards and the top of the gold deck
+ */
 public class GoldCardsDeckPanel extends JPanel {
     GoldCardsPanel goldCardsPanelCovered;
     GoldCardsPanel goldCardsPanelVisible;
@@ -67,6 +70,10 @@ public class GoldCardsDeckPanel extends JPanel {
         goldCardsPanelVisible.setDeckVisibleListener(deckVisibleListener);
     }
 
+    /**
+     * This method allows to set the cards clickable or not. This is useful when the player has to pick a card
+     * @param clickable true if the cards are clickable, false otherwise
+     */
     public void setCardsClickable(boolean clickable){
         goldCardsPanelCovered.setCardsClickable(clickable);
         goldCardsPanelVisible.setCardsClickable(clickable);

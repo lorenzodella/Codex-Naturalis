@@ -34,11 +34,4 @@ public class StartScreenFrame extends JFrame {
     public StartPanel getStartPanel() {
         return startPanel;
     }
-
-    public static void main(String[] args) {
-//        GUI gui = new GUI();
-//        new GUIController(null, gui);
-//        gui.showStartScreen();
-        new StartScreenFrame().setVisible(true);
-    }
 }

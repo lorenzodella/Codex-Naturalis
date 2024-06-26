@@ -19,10 +19,26 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
+/**
+ * The class GameFrame represents the main frame of the game.
+ * It contains the panels that represent the game elements.
+ */
 public class GameFrame extends JFrame {
+    /**
+     * Displays the player's game elements.
+     */
     private PlayerPanel playerPanel;
+    /**
+     * Contains the panels that represent the game elements of the other players.
+     */
     private HashMap<String, PlayerPanel> otherPlayerPanels;
+    /**
+     * The chat panel.
+     */
     private Chat chat;
+    /**
+     * The tabbed pane that contains the player's panel and the other players' panels.
+     */
     private JTabbedPane tabbedPane;
 
     public GameFrame(){
@@ -95,12 +111,20 @@ public class GameFrame extends JFrame {
         return chat;
     }
 
+    /**
+     * Sets the player's nickname, updating the player's panel and the chat.
+     * @param nickname the player's nickname
+     */
     public void setNickname(String nickname){
         playerPanel.getPlayerInfoPanel().setNickname(nickname);
         chat.setNickname(nickname);
     }
 
-
+    /**
+     * Updates the panels showing gold cards in every player's panel.
+     * @param goldTop the top gold card
+     * @param goldVisible the visible gold cards
+     */
     public void updateGoldDeckPanels(PlayableCard goldTop, PlayableCard[] goldVisible){
         playerPanel.getDeckPanel().updateGold((GoldCard) goldVisible[0], (GoldCard) goldVisible[1], (GoldCard) goldTop);
         for(PlayerPanel otherPlayerPanel: otherPlayerPanels.values()){
@@ -108,6 +132,11 @@ public class GameFrame extends JFrame {
         }
     }
 
+    /**
+     * Updates the panels showing resource cards in every player's panel.
+     * @param resourceTop the top resource card
+     * @param resourceVisible the visible resource cards
+     */
     public void updateResourceCardsPanels(PlayableCard resourceTop, PlayableCard[] resourceVisible){
         playerPanel.getDeckPanel().updateResource((ResourceCard) resourceVisible[0], (ResourceCard) resourceVisible[1], (ResourceCard) resourceTop);
         for(PlayerPanel otherPlayerPanel: otherPlayerPanels.values()){
@@ -115,6 +144,10 @@ public class GameFrame extends JFrame {
         }
     }
 
+    /**
+     * Updates the panels showing common objective cards in every player's panel.
+     * @param commonObjectives the common objective cards
+     */
     public void updateCommonObjectivePanels(ObjectiveCard[] commonObjectives){
         playerPanel.getCommonObjectivePanel().update(commonObjectives);
         for(PlayerPanel otherPlayerPanel: otherPlayerPanels.values()){
@@ -122,7 +155,10 @@ public class GameFrame extends JFrame {
         }
     }
 
-
+    /**
+     * Updates the player's info panel, showing the player's score, stats and color.
+     * @param playerInfo the player's info
+     */
     public void updateYourInfo(PlayerInfo playerInfo){
         if(playerInfo.getMap()!=null)
             playerPanel.getTablePanel().update(playerInfo.getMap());
@@ -130,6 +166,10 @@ public class GameFrame extends JFrame {
 
     }
 
+    /**
+     * Updates the other players info panel, showing the player's score, stats and color.
+     * @param otherPlayerInfo the other players' info
+     */
     public void updateOtherPlayers(HashMap<String, PlayerInfo> otherPlayerInfo){
         if(otherPlayerPanels == null){
             createOtherPlayerPanels(otherPlayerInfo);
@@ -141,6 +181,10 @@ public class GameFrame extends JFrame {
         }
     }
 
+    /**
+     * The first time the other players' panels are created, they are added to the tabbed pane.
+     * @param otherPlayerInfo the other players' info
+     */
     private void createOtherPlayerPanels(HashMap<String, PlayerInfo> otherPlayerInfo) {
         otherPlayerPanels = new HashMap<>();
         chat.setPlayers(new ArrayList<>(otherPlayerInfo.keySet()));

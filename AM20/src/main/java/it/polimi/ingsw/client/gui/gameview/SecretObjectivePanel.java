@@ -8,7 +8,13 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 
+/**
+ * Panel that contains the secret objective of a player
+ */
 public class SecretObjectivePanel extends JPanel {
+    /**
+     * The secret objective card
+     */
     CardButton o1;
     public SecretObjectivePanel(){
         super();
@@ -34,6 +40,9 @@ public class SecretObjectivePanel extends JPanel {
             o1.clear();
     }
 
+    /**
+     * This method allows to hide the secret objective card for other players
+     */
     public void setHidden(){
         o1.hid();
     }

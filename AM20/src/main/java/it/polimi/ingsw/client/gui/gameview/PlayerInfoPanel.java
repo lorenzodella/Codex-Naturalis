@@ -10,6 +10,9 @@ import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.*;
 
+/**
+ * Panel that contains the player's info. It shows the player's score, stats and the player name
+ */
 public class PlayerInfoPanel extends JPanel {
     JLabel playerNameLabel;
     JLabel scoreLabel;
@@ -34,7 +37,6 @@ public class PlayerInfoPanel extends JPanel {
      * resource and every object that a player has in their player table.
      * @param playerName teh player's name
      */
-
     public PlayerInfoPanel(String playerName) {
         super();
 
@@ -54,6 +56,11 @@ public class PlayerInfoPanel extends JPanel {
 
     }
 
+    /**
+     * This method creates the top panel of the player info panel that contains the player name, the player score and the player pawn
+     * @param playerName the player nickname
+     * @return the top panel
+     */
     private JPanel topPanel(String playerName){
         JPanel topPanel = new JPanel(new GridBagLayout());
         topPanel.setOpaque(false);
@@ -91,6 +98,10 @@ public class PlayerInfoPanel extends JPanel {
         return topPanel;
     }
 
+    /**
+     * This method creates the center panel of the player info panel that contains the player stats
+     * @return the center panel
+     */
     private JPanel centerPanel(){
         JPanel centerPanel = new JPanel();
         centerPanel.setOpaque(false);
@@ -201,16 +212,5 @@ public class PlayerInfoPanel extends JPanel {
         playerNameLabel.setText(nickname);
     }
 
-
-    public static void main(String[] args) {
-        JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(250, 300);
-        PlayerInfoPanel panel = new PlayerInfoPanel("You");
-        frame.add(panel);
-        frame.setVisible(true);
-
-        panel.update(1, new PlayerStats(), PawnColor.BLUE);
-    }
 
 }
