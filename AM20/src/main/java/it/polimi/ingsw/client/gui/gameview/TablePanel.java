@@ -53,6 +53,8 @@ public class TablePanel extends JScrollPane {
         layeredPane.setFocusable(true);
 
         setViewportView(layeredPane);
+
+        setPreferredSize(new Dimension(0, 0));
     }
 
     /**

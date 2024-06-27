@@ -68,8 +68,6 @@ public class GameFrame extends JFrame {
 
         TablePanel tablePanel = new TablePanel();
 
-        PlayerStats playerStats = new PlayerStats();
-
         PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel("You");
 
         chat = new Chat(this);
