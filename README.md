@@ -51,8 +51,6 @@ I jar sono stati realizzati con l'utilizzo di Maven Assembly Plugin tramite il c
 
 
 # Esecuzione
-Per essere eseguito questo progetto ha bisogno di Java versione    . 
-
 Per poter giocare bisogna innanzitutto eseguire il Jar del server, mentre quando si vuole giocare bisogna lanciare il Jar del client. 
 
 ### Server
