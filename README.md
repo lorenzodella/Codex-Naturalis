@@ -14,7 +14,7 @@ Presso i seguenti link è possibile visionare l'UML iniziale che definisce la st
 
 
 ### JavaDoc
-Tutta la JavaDoc generata è presenta nella cartella [JavaDoc](https://github.com/lorenzodella/IS24-AM20/tree/main/Deliverables/Javadoc).
+Tutta la JavaDoc generata è presente nella cartella [JavaDoc](https://github.com/lorenzodella/IS24-AM20/tree/main/Deliverables/Javadoc).
 
 ### Sequence Diagram 
 
