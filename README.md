@@ -9,8 +9,8 @@ Implementazione del tavolo da gioco [Codex Naturalis](https://www.craniocreation
 ### UML
 Presso i seguenti link è possibile visionare l'UML iniziale che definisce la struttura iniziale del model e la cartella dove è presenta l'UML autogenerato da Intellij:
 
- 1. [UML-initial](https://github.com/lorenzodella/IS24-AM20/tree/main/Deliverables).
- 2. [UML-final](https://github.com/lorenzodella/IS24-AM20/tree/main/Deliverables).
+ 1. [UML-initial](https://github.com/lorenzodella/IS24-AM20/tree/main/Deliverables/UML/Initial).
+ 2. [UML-final](https://github.com/lorenzodella/IS24-AM20/tree/main/Deliverables/UML/Final).
 
 
 ### JavaDoc
@@ -18,12 +18,12 @@ Tutta la JavaDoc generata è presenta nella cartella [JavaDoc](https://github.co
 
 ### Sequence Diagram 
 
-Il sequence diagram che abbiamo ideato e consegnato durante la second PeerReview è presente nella cartella [Sequence Diagram](https://github.com/lorenzodella/IS24-AM20/tree/main/Deliverables). 
+Il sequence diagram che abbiamo ideato e consegnato durante la second PeerReview è presente nella cartella [Sequence Diagram](https://github.com/lorenzodella/IS24-AM20/tree/main/Deliverables/SequenceDiagrams). 
 
 
 ### PeerReview
 
-Le due PeerReview sono invece disponibili nella cartella [PeerReview](https://github.com/lorenzodella/IS24-AM20/tree/main/Deliverables). 
+Le due PeerReview sono invece disponibili nella cartella [PeerReview](https://github.com/lorenzodella/IS24-AM20/tree/main/Deliverables/PeerReview). 
 
 # Funzionalità
 
@@ -46,7 +46,7 @@ Di seguito sono riportate le funzionalità che abbiamo realizzato:
 
 # Compilazione
 
-I jar sono stati realizzati con l'utilizzo di Maven Assembly Plugin tramite il comando `mvn clean compile package`. I Jar sono disponibili alla cartella [Jar](https://github.com/lorenzodella/IS24-AM20/tree/main/Deliverables).
+I jar sono stati realizzati con l'utilizzo di Maven Assembly Plugin tramite il comando `mvn clean compile package`. I Jar sono disponibili alla cartella [Jar](https://github.com/lorenzodella/IS24-AM20/tree/main/Deliverables/JAR).
 
 
 
