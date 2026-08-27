@@ -1,95 +1,100 @@
-# Prova finale di Ingegneria del Software - AA 23/24
+# Codex Naturalis — Final Project (Software Engineering, 2023/24)
 
+<h1 align="center">
+  <img src="/docs/logo.jpg" height=500 >
+</h1>
 
-Implementazione del tavolo da gioco [Codex Naturalis](https://www.craniocreations.it/prodotto/codex-naturalis).
+Implementation of the physical board game "Codex Naturalis" adapted as a Java networked application.
 
+[📖 Requirements](/docs/requirements.pdf)
 
-# Documentazione
+[🌐 Official website](https://www.craniocreations.it/prodotto/codex-naturalis)
 
-### UML
-Presso i seguenti link è possibile visionare l'UML iniziale che definisce la struttura iniziale del model e la cartella dove è presenta l'UML autogenerato da Intellij:
+## Documentation
 
- 1. [UML-initial](https://github.com/lorenzodella/IS24-AM20/tree/main/Deliverables/UML/Initial).
- 2. [UML-final](https://github.com/lorenzodella/IS24-AM20/tree/main/Deliverables/UML/Final).
+- **UML diagrams**: Initial and final UML diagrams are available in the Deliverables folder:
+	- [UML (Initial)](https://github.com/lorenzodella/IS24-AM20/tree/main/Deliverables/UML/Initial)
+	- [UML (Final)](https://github.com/lorenzodella/IS24-AM20/tree/main/Deliverables/UML/Final)
+- **JavaDoc**: Generated JavaDoc is in the Deliverables/JavaDoc folder: [JavaDoc](https://github.com/lorenzodella/IS24-AM20/tree/main/Deliverables/Javadoc)
+- **Sequence diagrams**: Available here: [Sequence Diagrams](https://github.com/lorenzodella/IS24-AM20/tree/main/Deliverables/SequenceDiagrams)
+- **Peer reviews**: Two peer review reports are in: [PeerReview](https://github.com/lorenzodella/IS24-AM20/tree/main/Deliverables/PeerReview)
 
+## Features
 
-### JavaDoc
-Tutta la JavaDoc generata è presente nella cartella [JavaDoc](https://github.com/lorenzodella/IS24-AM20/tree/main/Deliverables/Javadoc).
+Implemented features (Basic vs Advanced):
 
-### Sequence Diagram 
+| Feature | Basic | Advanced |
+|---|---:|:---:|
+| Simplified rules | ✅ | |
+| Full rules | ✅ | |
+| Socket-based networking | ✅ | |
+| RMI-based networking | ✅ | |
+| Text UI (TUI) | ✅ | |
+| Graphical UI (GUI) | ✅ | |
+| Multiple simultaneous games | | ❌ |
+| Persistence (save/load) | | ❌ |
+| Resilience to disconnections | | ✅ |
+| In-game chat | | ✅ |
 
-Il sequence diagram che abbiamo ideato e consegnato durante la second PeerReview è presente nella cartella [Sequence Diagram](https://github.com/lorenzodella/IS24-AM20/tree/main/Deliverables/SequenceDiagrams). 
+## Build
 
+The project is built with Maven. An assembled jar (using the Maven Assembly Plugin) can be produced with:
 
-### PeerReview
+```bash
+mvn clean compile package
+```
 
-Le due PeerReview sono invece disponibili nella cartella [PeerReview](https://github.com/lorenzodella/IS24-AM20/tree/main/Deliverables/PeerReview). 
+Prebuilt jars are available in Deliverables/JAR.
 
-# Funzionalità
+## Run
 
-Di seguito sono riportate le funzionalità che abbiamo realizzato:
-
-
-|  Funzionalità   | Base  | Avanzata |
-|-----|---|---|
-| Regole semplificate | ✅ | |
-| Regole complete | ✅ | |
-| Socket | ✅ | |
-| RMI | ✅ | |
-| TUI | ✅ | |
-| GUI | ✅ | |
-| Partite Multiple | | :x: |
-| Persistenza | | :x: |
-| Resilienza alle disconnessioni | | ✅ |
-| Chat | | ✅ |
-
-
-# Compilazione
-
-I jar sono stati realizzati con l'utilizzo di Maven Assembly Plugin tramite il comando `mvn clean compile package`. I Jar sono disponibili alla cartella [Jar](https://github.com/lorenzodella/IS24-AM20/tree/main/Deliverables/JAR).
-
-
-
-# Esecuzione
-Per poter giocare bisogna innanzitutto eseguire il Jar del server, mentre quando si vuole giocare bisogna lanciare il Jar del client. 
+You must start the server before launching any clients.
 
 ### Server
 
-Per poter eseguire il jar del server è necessario lanciare il jar da linea di comando, specificando come primo parametro il numero della porta dell'RMI (abbiamo deciso che per RMI la porta da specificare è 12345) e come secondo parametro il numero della porta di SKT (nel nostro caso è sempre 12346). Di seguito il comando per lanciare il jar correttamente:
+Run the server jar and provide two arguments: the RMI port and the socket (SKT) port. The project uses `12345` for RMI and `12346` for sockets by default. Example:
 
-```
+```bash
 java -jar ./AM20-server.jar 12345 12346
 ```
 
 ### Client
 
-Per poter eseguire il client è necessario specificare 4 parametri:
-1. scelta della UI: 1 per la TUI e 2 per la GUI
-2. scelta della tipologia di connessione: 1 RMI e 2 SKT
-3. indirizzo IP del server
-4. numero di porta di SKT (12346) o RMI (12345)
+The client accepts four arguments (or you can run it without arguments and use the interactive prompts):
 
-Un esempio per lanciare il client con la scelta di GUI e RMI è:
+1. UI choice: `1` = TUI, `2` = GUI
+2. Connection type: `1` = RMI, `2` = Socket
+3. Server IP address
+4. Server port (RMI: 12345, Socket: 12346)
+
+Example (GUI + RMI):
+
+```bash
+java -jar ./AM20-client.jar 2 1 <server-ip> 12345
 ```
-java -jar ./AM20-client.jar 2 1 <ip> 12345
+
+If you launch the client without parameters, it will prompt you interactively for the above choices.
+
+### Chat usage (TUI)
+
+In the TUI, chat messages must be wrapped in double quotes. Example command:
+
+```text
+/chat <destination> "message"
 ```
 
+## Notes
 
-## Cose importanti da sapere
+- Default ports used by the project: RMI = `12345`, Socket = `12346`.
+- The assembled jars are placed in `Deliverables/JAR`.
 
-Il jar del Client può essere anche lanciato senza specificare nessun parametro. Infatti, quando verrà lanciato il jar, il MainThread chiederà all'utente la scelta riguardo UI e connesione, l'indirizzo IP del server e il numero di porta (SKT :12346 o RMI :12345).
+## Team
 
->[!IMPORTANT]
->Il messaggio nella TUI va scritto tra doppi apici. Il comando da eseguire quindi è:
->```
->/chat <dest> "message"
->```
+- Lorenzo Della Matera — https://github.com/lorenzodella
+- Mattia Doro — https://github.com/mado002
+- Eleonora Ficarelli — https://github.com/EleonoraFicarelli
+- Irene Ferrente — https://github.com/Ireneeer
 
- 
-# Componenti del gruppo
+## Disclaimer
 
-+ [Lorenzo Della Matera](https://github.com/lorenzodella)
-+ [Mattia Doro](https://github.com/mado002)
-+ [Eleonora Ficarelli](https://github.com/EleonoraFicarelli)
-+ [Irene Ferrente](https://github.com/Ireneeer)
-
+Codex Naturalis is a board game developed and published by Cranio Creations Srl. The graphic contents of this project attributable to the editorial board product are used with the prior approval of Cranio Creations Srl for educational purposes only. The distribution, copying or reproduction of the contents and images in any form outside the project is prohibited, as is the redistribution and publication of the contents and images for purposes other than those mentioned above. Commercial use of the aforementioned contents is also prohibited.
