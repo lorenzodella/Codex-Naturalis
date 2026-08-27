@@ -6,11 +6,13 @@
 
 Implementation of the physical board game "Codex Naturalis" adapted as a Java networked application.
 
+**Final Grade:** **30 / 30**
+
+## Documentation
+
 [📖 Requirements](/docs/requirements.pdf)
 
 [🌐 Official website](https://www.craniocreations.it/prodotto/codex-naturalis)
-
-## Documentation
 
 - **UML diagrams**: Initial and final UML diagrams are available in the Deliverables folder:
 	- [UML (Initial)](https://github.com/lorenzodella/IS24-AM20/tree/main/Deliverables/UML/Initial)
